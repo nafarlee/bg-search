@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/nafarlee/bgs/issues"
   },
-  "homepage": "https://github.com/nafarlee/bgs#readme"
+  "homepage": "https://github.com/nafarlee/bgs#readme",
+  "devDependencies": {
+    "eslint": "5.15.3"
+  }
 }
