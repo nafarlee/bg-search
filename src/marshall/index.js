@@ -1,4 +1,4 @@
-const { id, name } = require('./lib');
+const { description, id, name } = require('./lib');
 
 function marshall(game) {
   const suggestedNumplayers = game
@@ -27,7 +27,7 @@ function marshall(game) {
   return {
     id: id(game),
     name: name(game),
-    description: game.description[0],
+    description: description(game),
     year: parseInt(game.yearpublished[0].$.value, 10),
     players: {
       minimum: parseInt(game.minplayers[0].$.value, 10),

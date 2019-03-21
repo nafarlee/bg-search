@@ -16,7 +16,12 @@ function name(game) {
   };
 }
 
+function description(game) {
+  return game.description[0];
+}
+
 module.exports = {
+  description,
   id,
   name,
 };
