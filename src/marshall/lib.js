@@ -20,8 +20,13 @@ function description(game) {
   return game.description[0];
 }
 
+function year(game) {
+  return parseInt(game.yearpublished[0].$.value, 10);
+}
+
 module.exports = {
   description,
   id,
   name,
+  year,
 };
