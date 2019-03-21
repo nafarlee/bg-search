@@ -54,7 +54,14 @@ function playtime(game) {
   };
 }
 
+function age(game) {
+  return {
+    minimum: parseInt(game.minage[0].$.value, 10),
+  };
+}
+
 module.exports = {
+  age,
   description,
   id,
   name,

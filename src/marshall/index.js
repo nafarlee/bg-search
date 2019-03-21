@@ -1,4 +1,5 @@
 const {
+  age,
   description,
   id,
   name,
@@ -34,9 +35,7 @@ function marshall(game) {
     year: year(game),
     players: players(game),
     playtime: playtime(game),
-    age: {
-      minimum: parseInt(game.minage[0].$.value, 10),
-    },
+    age: age(game),
     ...links,
   };
 }
