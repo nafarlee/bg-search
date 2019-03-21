@@ -1,3 +1,5 @@
+const id = require('./id');
+
 function marshall(game) {
   const suggestedNumplayers = game
     .poll
@@ -23,7 +25,7 @@ function marshall(game) {
   }, {});
 
   return {
-    id: parseInt(game.$.id, 10),
+    id: id(game),
     name: {
       primary: game.name.find(x => x.$.type === 'primary').$.value,
       alternates: game.name.filter(x => x.$.type === 'alternate').map(x => x.$.value),
