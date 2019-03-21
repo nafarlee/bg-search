@@ -3,6 +3,7 @@ const {
   id,
   name,
   players,
+  playtime,
   year,
 } = require('./lib');
 
@@ -32,10 +33,7 @@ function marshall(game) {
     description: description(game),
     year: year(game),
     players: players(game),
-    playtime: {
-      minimum: parseInt(game.minplaytime[0].$.value, 10),
-      maximum: parseInt(game.maxplaytime[0].$.value, 10),
-    },
+    playtime: playtime(game),
     age: {
       minimum: parseInt(game.minage[0].$.value, 10),
     },

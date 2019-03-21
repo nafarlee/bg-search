@@ -47,10 +47,18 @@ function players(game) {
   };
 }
 
+function playtime(game) {
+  return {
+    minimum: parseInt(game.minplaytime[0].$.value, 10),
+    maximum: parseInt(game.maxplaytime[0].$.value, 10),
+  };
+}
+
 module.exports = {
   description,
   id,
   name,
   players,
+  playtime,
   year,
 };
