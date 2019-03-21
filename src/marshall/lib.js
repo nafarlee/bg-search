@@ -60,10 +60,34 @@ function age(game) {
   };
 }
 
+function links(game) {
+  const sections = {
+    boardgamecategory: 'categories',
+    boardgamemechanic: 'mechanics',
+    boardgamefamily: 'families',
+    boardgameexpansion: 'expansions',
+    boardgamecompilation: 'compilations',
+    boardgameimplementation: 'implementations',
+    boardgamedesigner: 'designers',
+    boardgameartist: 'artists',
+    boardgamepublisher: 'publishers',
+  };
+
+  return game
+    .link
+    .reduce((accum, current) => {
+      const section = sections[current.$.type];
+      accum[section] = accum[section] || [];
+      accum[section].push(parseInt(current.$.id, 10));
+      return accum;
+    }, {});
+}
+
 module.exports = {
   age,
   description,
   id,
+  links,
   name,
   players,
   playtime,

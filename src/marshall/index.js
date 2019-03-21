@@ -2,6 +2,7 @@ const {
   age,
   description,
   id,
+  links,
   name,
   players,
   playtime,
@@ -9,25 +10,6 @@ const {
 } = require('./lib');
 
 function marshall(game) {
-  const sections = {
-    boardgamecategory: 'categories',
-    boardgamemechanic: 'mechanics',
-    boardgamefamily: 'families',
-    boardgameexpansion: 'expansions',
-    boardgamecompilation: 'compilations',
-    boardgameimplementation: 'implementations',
-    boardgamedesigner: 'designers',
-    boardgameartist: 'artists',
-    boardgamepublisher: 'publishers',
-  };
-
-  const links = game.link.reduce((accum, current) => {
-    const section = sections[current.$.type];
-    accum[section] = accum[section] || [];
-    accum[section].push(parseInt(current.$.id, 10));
-    return accum;
-  }, {});
-
   return {
     id: id(game),
     name: name(game),
@@ -36,7 +18,7 @@ function marshall(game) {
     players: players(game),
     playtime: playtime(game),
     age: age(game),
-    ...links,
+    ...links(game),
   };
 }
 
