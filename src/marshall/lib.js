@@ -24,9 +24,33 @@ function year(game) {
   return parseInt(game.yearpublished[0].$.value, 10);
 }
 
+function players(game) {
+  const suggestedNumplayers = game
+    .poll
+    .find(x => x.$.name === 'suggested_numplayers');
+
+  return {
+    minimum: parseInt(game.minplayers[0].$.value, 10),
+    maximum: parseInt(game.maxplayers[0].$.value, 10),
+    community: {
+      votes: parseInt(suggestedNumplayers.$.totalvotes, 10),
+      counts: suggestedNumplayers.results.reduce((obj, current) => {
+        const results = {};
+        current.result.forEach((x) => {
+          results[x.$.value.toLowerCase().replace(/ /g, '-')] = parseInt(x.$.numvotes, 10);
+        });
+        const count = current.$.numplayers;
+        obj[count] = results;
+        return obj;
+      }, {}),
+    },
+  };
+}
+
 module.exports = {
   description,
   id,
   name,
+  players,
   year,
 };
