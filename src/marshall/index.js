@@ -1,5 +1,4 @@
-const id = require('./id');
-const name = require('./name');
+const { id, name } = require('./lib');
 
 function marshall(game) {
   const suggestedNumplayers = game

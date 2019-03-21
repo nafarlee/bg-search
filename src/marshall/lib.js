@@ -1,5 +1,9 @@
 const { partition } = require('lodash');
 
+function id(game) {
+  return parseInt(game.$.id, 10);
+}
+
 function name(game) {
   const [
     primaries,
@@ -12,4 +16,7 @@ function name(game) {
   };
 }
 
-module.exports = name;
+module.exports = {
+  id,
+  name,
+};
