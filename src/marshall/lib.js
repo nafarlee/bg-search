@@ -92,6 +92,9 @@ function links(game) {
     boardgamepublisher(record) {
       return ['publishers', record.$.value];
     },
+    boardgameintegration(record) {
+      return ['integrates-with', record.$.value];
+    },
   };
 
   return game
