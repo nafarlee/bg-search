@@ -11,7 +11,6 @@ function randomInt(max) {
 
 const baseURL = 'https://api.geekdo.com/xmlapi2/things';
 const id = [...Array(500).keys()].map(() => randomInt(270000));
-const start = process.hrtime();
 get(`${baseURL}?id=${id}&stats=1&type=boardgame,boardgameexpansion`)
   .then(parseString)
   .then((body) => {
