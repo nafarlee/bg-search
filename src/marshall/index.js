@@ -6,6 +6,7 @@ const {
   name,
   players,
   playtime,
+  ratings,
   year,
 } = require('./lib');
 
@@ -18,6 +19,7 @@ function marshall(game) {
     players: players(game),
     playtime: playtime(game),
     age: age(game),
+    ratings: ratings(game),
     ...links(game),
   };
 }
