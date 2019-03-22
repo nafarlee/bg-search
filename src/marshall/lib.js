@@ -62,23 +62,44 @@ function age(game) {
 
 function links(game) {
   const sections = {
-    boardgamecategory: 'categories',
-    boardgamemechanic: 'mechanics',
-    boardgamefamily: 'families',
-    boardgameexpansion: 'expansions',
-    boardgamecompilation: 'compilations',
-    boardgameimplementation: 'implementations',
-    boardgamedesigner: 'designers',
-    boardgameartist: 'artists',
-    boardgamepublisher: 'publishers',
+    boardgamecategory(record) {
+      return ['categories', record.$.value];
+    },
+    boardgamemechanic(record) {
+      return ['mechanics', record.$.value];
+    },
+    boardgamefamily(record) {
+      return ['families', record.$.value];
+    },
+    boardgameexpansion(record) {
+      const category = record.$.inbound ? 'expands' : 'expanded-by';
+      return [category, parseInt(record.$.id, 10)];
+    },
+    boardgamecompilation(record) {
+      const category = record.$.inbound ? 'contains' : 'contained-in';
+      return [category, parseInt(record.$.id, 10)];
+    },
+    boardgameimplementation(record) {
+      const category = record.$.inbound ? 'reimplements' : 'reimplimented-by';
+      return [category, parseInt(record.$.id, 10)];
+    },
+    boardgamedesigner(record) {
+      return ['designers', record.$.value];
+    },
+    boardgameartist(record) {
+      return ['artists', record.$.value];
+    },
+    boardgamepublisher(record) {
+      return ['publishers', record.$.value];
+    },
   };
 
   return game
     .link
     .reduce((accum, current) => {
-      const section = sections[current.$.type];
-      accum[section] = accum[section] || [];
-      accum[section].push(parseInt(current.$.id, 10));
+      const [group, item] = sections[current.$.type](current);
+      accum[group] = accum[group] || [];
+      accum[group].push(item);
       return accum;
     }, {});
 }
