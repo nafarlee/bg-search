@@ -29,7 +29,7 @@ function players(game) {
     .poll
     .find(x => x.$.name === 'suggested_numplayers');
 
-  const community = suggestedNumplayers.$.totalvotes === 0
+  const community = suggestedNumplayers.$.totalvotes === '0'
     ? undefined
     : {
       votes: parseInt(suggestedNumplayers.$.totalvotes, 10),
