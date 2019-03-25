@@ -22,7 +22,7 @@ exports.pull = functions
 
     if (!doc.exists) throw new Error('Metadata document not found!');
     const index = doc.get('index');
-    const newIndex = index + 499;
+    const newIndex = index + 500;
     const IDs = _.range(index, newIndex).join(',');
     batch.update(db.collection('_').doc('_'), { index: newIndex });
     const xml = await get(`${baseURL}?stats=1&type=boardgame,boardgameexpansion&id=${IDs}`);
