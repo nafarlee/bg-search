@@ -29,6 +29,10 @@ exports.pull = functions
 
     const body = await parseString(xml);
 
+    if (!body.items.item) {
+      return batch.update(db.collection('_').doc('_'), { index: 1 });
+    }
+
     body.items.item.forEach((item) => {
       const native = marshall(item);
       batch.set(db.collection('games').doc(`${native.id}`), native);
