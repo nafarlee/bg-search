@@ -11,8 +11,8 @@ function name(game) {
   ] = partition(game.name, record => record.$.type === 'primary');
 
   return {
-    'name-primary': primaries[0].$.value,
-    'name-alternates': alternates.map(x => x.$.value),
+    'primary-name': primaries[0].$.value,
+    'alternate-names': alternates.map(x => x.$.value),
   };
 }
 
