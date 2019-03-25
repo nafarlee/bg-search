@@ -30,12 +30,12 @@ function players(game) {
     .find(x => x.$.name === 'suggested_numplayers');
 
   const result = {
-    minimum: parseInt(game.minplayers[0].$.value, 10),
-    maximum: parseInt(game.maxplayers[0].$.value, 10),
+    'minimum-players': parseInt(game.minplayers[0].$.value, 10),
+    'maximum-players': parseInt(game.maxplayers[0].$.value, 10),
   };
 
   if (suggestedNumplayers.$.totalvotes !== '0') {
-    result.community = {
+    result['community-recommended-players'] = {
       votes: parseInt(suggestedNumplayers.$.totalvotes, 10),
       counts: suggestedNumplayers.results.reduce((obj, current) => {
         const results = {};

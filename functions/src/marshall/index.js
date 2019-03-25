@@ -18,7 +18,7 @@ function marshall(game) {
     ...name(game),
     description: description(game),
     year: year(game),
-    players: players(game),
+    ...players(game),
     playtime: playtime(game),
     age: age(game),
     ratings: ratings(game),
