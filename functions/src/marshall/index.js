@@ -21,7 +21,7 @@ function marshall(game) {
     ...players(game),
     ...playtime(game),
     ...age(game),
-    ratings: ratings(game),
+    ...ratings(game),
     weight: weight(game),
     ...links(game),
     'last-updated': (new Date()).toString(),

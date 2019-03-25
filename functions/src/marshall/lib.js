@@ -115,10 +115,10 @@ function links(game) {
 function ratings(game) {
   const getValue = property => game.statistics[0].ratings[0][property][0].$.value;
   return {
-    count: getValue('usersrated'),
-    average: getValue('average'),
-    bayes: getValue('bayesaverage'),
-    deviation: getValue('stddev'),
+    'ratings-count': getValue('usersrated'),
+    'ratings-average': getValue('average'),
+    'ratings-bayes': getValue('bayesaverage'),
+    'ratings-deviation': getValue('stddev'),
   };
 }
 
