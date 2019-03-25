@@ -28,9 +28,7 @@ exports.pull = functions
         const newIndex = index + 499;
         const IDs = _.range(index, newIndex).join(',');
         batch.update(db.collection('_').doc('_'), { index: newIndex });
-        return get(
-          `${baseURL}?stats=1&type=boardgame,boardgameexpansion&id=${IDs}`,
-        );
+        return get(`${baseURL}?stats=1&type=boardgame,boardgameexpansion&id=${IDs}`);
       })
       .then(parseString)
       .then((body) => {
