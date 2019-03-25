@@ -115,16 +115,16 @@ function links(game) {
 function ratings(game) {
   const getValue = property => game.statistics[0].ratings[0][property][0].$.value;
   return {
-    'ratings-count': getValue('usersrated'),
-    'ratings-average': getValue('average'),
-    'ratings-bayes': getValue('bayesaverage'),
-    'ratings-deviation': getValue('stddev'),
+    'rating-votes': getValue('usersrated'),
+    'average-rating': getValue('average'),
+    'bayes-rating': getValue('bayesaverage'),
+    'rating-deviation': getValue('stddev'),
   };
 }
 
 function weight(game) {
   return {
-    'weight-count': game.statistics[0].ratings[0].numweights[0].$.value,
+    'weight-votes': game.statistics[0].ratings[0].numweights[0].$.value,
     'average-weight': game.statistics[0].ratings[0].averageweight[0].$.value,
   };
 }
