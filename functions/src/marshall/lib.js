@@ -34,7 +34,7 @@ function players(game) {
     maximum: parseInt(game.maxplayers[0].$.value, 10),
   };
 
-  if (suggestedNumplayers.$.totalvotes === '0') {
+  if (suggestedNumplayers.$.totalvotes !== '0') {
     result.community = {
       votes: parseInt(suggestedNumplayers.$.totalvotes, 10),
       counts: suggestedNumplayers.results.reduce((obj, current) => {
