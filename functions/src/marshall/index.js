@@ -20,7 +20,7 @@ function marshall(game) {
     year: year(game),
     ...players(game),
     ...playtime(game),
-    age: age(game),
+    ...age(game),
     ratings: ratings(game),
     weight: weight(game),
     ...links(game),
