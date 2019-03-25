@@ -29,9 +29,13 @@ function players(game) {
     .poll
     .find(x => x.$.name === 'suggested_numplayers');
 
-  const community = suggestedNumplayers.$.totalvotes === '0'
-    ? undefined
-    : {
+  const result = {
+    minimum: parseInt(game.minplayers[0].$.value, 10),
+    maximum: parseInt(game.maxplayers[0].$.value, 10),
+  };
+
+  if (suggestedNumplayers.$.totalvotes === '0') {
+    result.community = {
       votes: parseInt(suggestedNumplayers.$.totalvotes, 10),
       counts: suggestedNumplayers.results.reduce((obj, current) => {
         const results = {};
@@ -43,12 +47,9 @@ function players(game) {
         return obj;
       }, {}),
     };
+  }
 
-  return {
-    minimum: parseInt(game.minplayers[0].$.value, 10),
-    maximum: parseInt(game.maxplayers[0].$.value, 10),
-    community,
-  };
+  return result;
 }
 
 function playtime(game) {
