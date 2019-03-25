@@ -124,8 +124,8 @@ function ratings(game) {
 
 function weight(game) {
   return {
-    count: game.statistics[0].ratings[0].numweights[0].$.value,
-    average: game.statistics[0].ratings[0].averageweight[0].$.value,
+    'weight-count': game.statistics[0].ratings[0].numweights[0].$.value,
+    'average-weight': game.statistics[0].ratings[0].averageweight[0].$.value,
   };
 }
 

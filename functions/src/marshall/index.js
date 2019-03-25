@@ -22,7 +22,7 @@ function marshall(game) {
     ...playtime(game),
     ...age(game),
     ...ratings(game),
-    weight: weight(game),
+    ...weight(game),
     ...links(game),
     'last-updated': (new Date()).toString(),
   };
