@@ -2,6 +2,9 @@
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "version": "0.0.1",
+  "engines": {
+    "node": "8"
+  },
   "scripts": {
     "eslint": "eslint",
     "firebase": "firebase",
