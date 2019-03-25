@@ -15,28 +15,23 @@ admin.initializeApp();
 exports.pull = functions
   .pubsub
   .topic('pull')
-  .onPublish(() => {
+  .onPublish(async () => {
     const db = admin.firestore();
     const batch = db.batch();
-    return db
-      .collection('_')
-      .doc('_')
-      .get()
-      .then((doc) => {
-        if (!doc.exists) throw new Error('Metadata document not found!');
-        const index = doc.get('index');
-        const newIndex = index + 499;
-        const IDs = _.range(index, newIndex).join(',');
-        batch.update(db.collection('_').doc('_'), { index: newIndex });
-        return get(`${baseURL}?stats=1&type=boardgame,boardgameexpansion&id=${IDs}`);
-      })
-      .then(parseString)
-      .then((body) => {
-        if (!body.items.item) throw new Error('No BGG documents found!');
-        body.items.item.forEach((item) => {
-          const native = marshall(item);
-          batch.set(db.doc(`games/${native.id}`), native);
-        });
-        return batch.commit();
-      });
+    const doc = await db.collection('_').doc('_').get();
+
+    if (!doc.exists) throw new Error('Metadata document not found!');
+    const index = doc.get('index');
+    const newIndex = index + 499;
+    const IDs = _.range(index, newIndex).join(',');
+    batch.update(db.collection('_').doc('_'), { index: newIndex });
+    const xml = await get(`${baseURL}?stats=1&type=boardgame,boardgameexpansion&id=${IDs}`);
+
+    const body = await parseString(xml);
+
+    body.items.item.forEach((item) => {
+      const native = marshall(item);
+      batch.set(db.collection('games').doc(native.id), native);
+    });
+    return batch.commit();
   });
