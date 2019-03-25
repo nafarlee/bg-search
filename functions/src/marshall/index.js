@@ -15,7 +15,7 @@ function marshall(game) {
   return {
     'api-version': 1,
     id: id(game),
-    name: name(game),
+    ...name(game),
     description: description(game),
     year: year(game),
     players: players(game),
