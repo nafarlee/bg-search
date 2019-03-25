@@ -13,7 +13,7 @@ const {
 
 function marshall(game) {
   return {
-    'api-version': 1,
+    'api-version': 2,
     id: id(game),
     ...name(game),
     description: description(game),
