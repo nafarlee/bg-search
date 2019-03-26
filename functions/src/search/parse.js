@@ -28,6 +28,7 @@ const Language = PS.createLanguage({
       PS.string('family'),
       PS.string('mechanic'),
       PS.string('publish'),
+      PS.string('designer'),
     );
   },
 
