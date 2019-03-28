@@ -73,4 +73,4 @@ module.exports = PS.createLanguage({
       PS.string('<='),
     );
   },
-});
+}).Query;
