@@ -61,3 +61,10 @@ test('single relational term searches', () => {
     });
   });
 });
+
+test('multiple declarative term searches', () => {
+  const query = declarativeTags
+    .map(tag => `${randomSpace(3)}${tag}:catan${randomSpace(3)}`)
+    .join(' ');
+  language.tryParse(query);
+});
