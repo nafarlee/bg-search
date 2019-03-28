@@ -1,5 +1,9 @@
 const language = require('./language');
 
+function randomSpace(max) {
+  return ' '.repeat(Math.floor(Math.random() * max));
+}
+
 test('empty search', () => {
   language.tryParse('');
 });
@@ -19,7 +23,7 @@ test('single declarative term searches', () => {
     'publish',
     'designer',
   ].forEach((tag) => {
-    language.tryParse(`${tag}:catan`);
+    language.tryParse(`${randomSpace(3)}${tag}:catan${randomSpace(3)}`);
   });
 });
 
@@ -49,7 +53,7 @@ test('single relational term searches', () => {
   ];
   tags.forEach((tag) => {
     operators.forEach((op) => {
-      language.tryParse(`${tag}${op}1994`);
+      language.tryParse(`${randomSpace(3)}${tag}${op}1994${randomSpace(3)}`);
     });
   });
 });
