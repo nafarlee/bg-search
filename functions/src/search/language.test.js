@@ -4,6 +4,10 @@ test('empty search', () => {
   language.tryParse('');
 });
 
+test('whitespace search', () => {
+  language.tryParse(' ');
+});
+
 test('single declarative term searches', () => {
   [
     'name',
