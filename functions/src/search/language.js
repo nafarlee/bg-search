@@ -2,19 +2,15 @@ const PS = require('parsimmon');
 
 module.exports = PS.createLanguage({
   Query(r) {
-    return r.Termlist;
-  },
-
-  Termlist(r) {
     return PS.alt(
+      PS.seq(PS.optWhitespace, r.Term, PS.optWhitespace),
       PS.seq(
         PS.optWhitespace,
         r.Term,
         PS.whitespace,
-        r.Termlist,
+        r.Query,
         PS.optWhitespace,
       ),
-      r.Term,
       PS.end,
     );
   },
@@ -52,20 +48,26 @@ module.exports = PS.createLanguage({
   },
 
   Term(r) {
-    return PS.seq(
-      r.Tag,
-      r.Operator,
-      r.Value,
+    return PS.alt(
+      PS.seq(r.DeclarativeTag, PS.string(':'), PS.alt(r.SimpleValue, r.QuotedValue)),
+      PS.seq(r.RelationalTag, r.RelationalOperator, r.SimpleValue),
     );
   },
 
-  Value() {
-    return PS.regexp(/[^" ]+/);
+  SimpleValue() {
+    return PS.regexp(/[^ ]+/);
   },
 
-  Operator() {
+  QuotedValue() {
+    return PS.seq(
+      PS.string('"'),
+      PS.regexp(/[^" ]+/),
+      PS.string('"'),
+    );
+  },
+
+  RelationalOperator() {
     return PS.alt(
-      PS.string(':'),
       PS.string('='),
       PS.string('>'),
       PS.string('>='),
