@@ -79,3 +79,18 @@ test('minimal or clause', () => {
   ].join(randomSpace(3));
   language.tryParse(query);
 });
+
+test('length or clause', () => {
+  const query = [
+    '',
+    'name:catan',
+    'or',
+    'year=1994',
+    'or',
+    'year=1994',
+    'or',
+    'year=1994',
+    '',
+  ].join(randomSpace(3));
+  language.tryParse(query);
+});
