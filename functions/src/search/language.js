@@ -23,6 +23,10 @@ module.exports = PS.createLanguage({
     );
   },
 
+  Or() {
+    return PS.regexp(/or/i);
+  },
+
   DeclarativeTag() {
     return PS.alt(
       PS.string('name'),
