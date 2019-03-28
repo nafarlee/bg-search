@@ -11,6 +11,7 @@ module.exports = PS.createLanguage({
         r.Query,
         PS.optWhitespace,
       ),
+      PS.whitespace,
       PS.end,
     );
   },
