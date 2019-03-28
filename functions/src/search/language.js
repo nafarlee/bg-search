@@ -5,14 +5,32 @@ module.exports = PS.createLanguage({
     return PS.alt(
       PS.seq(
         PS.optWhitespace,
-        r.Term,
+        r.Expression,
         PS.whitespace,
         r.Query,
         PS.optWhitespace,
       ),
-      PS.seq(PS.optWhitespace, r.Term, PS.optWhitespace),
+      PS.seq(PS.optWhitespace, r.Expression, PS.optWhitespace),
       PS.whitespace,
       PS.end,
+    );
+  },
+
+  Expression(r) {
+    return PS.alt(
+      r.OrChain,
+      r.Term,
+    );
+  },
+
+  OrChain(r) {
+    return PS.seq(
+      r.Term,
+      PS.whitespace,
+      r.Or,
+      PS.whitespace,
+      r.Term,
+      PS.seq(PS.whitespace, r.Or, PS.whitespace, r.Term).many(),
     );
   },
 
