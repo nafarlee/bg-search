@@ -1,6 +1,6 @@
 const PS = require('parsimmon');
 
-const Language = PS.createLanguage({
+module.exports = PS.createLanguage({
   Query(r) {
     return r.Termlist;
   },
@@ -74,5 +74,3 @@ const Language = PS.createLanguage({
     );
   },
 });
-
-console.log(Language.Query.parse('name:cool name:no'));
