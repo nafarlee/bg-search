@@ -15,6 +15,13 @@ module.exports = PS.createLanguage({
     );
   },
 
+  Term(r) {
+    return PS.alt(
+      PS.seq(r.DeclarativeTag, PS.string(':'), PS.alt(r.SimpleValue, r.QuotedValue)),
+      PS.seq(r.RelationalTag, r.RelationalOperator, r.SimpleValue),
+    );
+  },
+
   DeclarativeTag() {
     return PS.alt(
       PS.string('name'),
@@ -25,6 +32,18 @@ module.exports = PS.createLanguage({
       PS.string('mechanic'),
       PS.string('publish'),
       PS.string('designer'),
+    );
+  },
+
+  SimpleValue() {
+    return PS.regexp(/[^ ]+/);
+  },
+
+  QuotedValue() {
+    return PS.seq(
+      PS.string('"'),
+      PS.regexp(/[^" ]+/),
+      PS.string('"'),
     );
   },
 
@@ -44,25 +63,6 @@ module.exports = PS.createLanguage({
       PS.string('max-players'),
       PS.string('min-playtime'),
       PS.string('max-playtime'),
-    );
-  },
-
-  Term(r) {
-    return PS.alt(
-      PS.seq(r.DeclarativeTag, PS.string(':'), PS.alt(r.SimpleValue, r.QuotedValue)),
-      PS.seq(r.RelationalTag, r.RelationalOperator, r.SimpleValue),
-    );
-  },
-
-  SimpleValue() {
-    return PS.regexp(/[^ ]+/);
-  },
-
-  QuotedValue() {
-    return PS.seq(
-      PS.string('"'),
-      PS.regexp(/[^" ]+/),
-      PS.string('"'),
     );
   },
 
