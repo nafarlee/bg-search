@@ -68,3 +68,7 @@ test('multiple declarative term searches', () => {
     .join(' ');
   language.tryParse(query);
 });
+
+test('minimal or clause', () => {
+  language.tryParse('name:catan or year=1994');
+});
