@@ -104,11 +104,11 @@ module.exports = PS.createLanguage({
 
   RelationalOperator() {
     return PS.alt(
+      PS.string('>='),
+      PS.string('<='),
       PS.string('='),
       PS.string('>'),
-      PS.string('>='),
       PS.string('<'),
-      PS.string('<='),
     );
   },
 }).Language;
