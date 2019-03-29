@@ -18,15 +18,19 @@ module.exports = PS.createLanguage({
 
   Expression(r) {
     return PS.alt(
-      PS.seq(
-        r.SubExpression,
-        PS.whitespace,
-        r.Or,
-        PS.whitespace,
-        r.SubExpression,
-        PS.seq(PS.whitespace, r.Or, PS.whitespace, r.SubExpression).many(),
-      ),
+      r.OrChain,
       r.SubExpression,
+    );
+  },
+
+  OrChain(r) {
+    return PS.seq(
+      r.SubExpression,
+      PS.whitespace,
+      r.Or,
+      PS.whitespace,
+      r.SubExpression,
+      PS.seq(PS.whitespace, r.Or, PS.whitespace, r.SubExpression).many(),
     );
   },
 
