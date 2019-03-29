@@ -134,3 +134,33 @@ test('grouping multiple terms', () => {
     language.tryParse(query);
   });
 });
+
+test('complete test', () => {
+  spaces.forEach((s) => {
+    const query = [
+      '',
+      'rating-votes>=1000',
+      ' ',
+      'name:catan',
+      ' ',
+      'or',
+      ' ',
+      'year>=1993',
+      ' ',
+      'or',
+      ' ',
+      '(',
+      'mechanic:dice',
+      ' ',
+      'age>4',
+      ' ',
+      'or',
+      ' ',
+      'age<4',
+      ' ',
+      ')',
+      '',
+    ].join(s);
+    language.tryParse(query);
+  });
+});
