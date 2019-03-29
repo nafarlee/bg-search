@@ -94,3 +94,7 @@ test('lengthy or clause', () => {
   ].join(randomSpace(3));
   language.tryParse(query);
 });
+
+test('grouping single term', () => {
+  language.tryParse('(name:catan)');
+});
