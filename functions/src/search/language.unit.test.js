@@ -80,7 +80,7 @@ test('minimal or clause', () => {
   language.tryParse(query);
 });
 
-test('length or clause', () => {
+test('lengthy or clause', () => {
   const query = [
     '',
     'name:catan',
