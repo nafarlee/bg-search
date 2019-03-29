@@ -18,8 +18,22 @@ module.exports = PS.createLanguage({
 
   Expression(r) {
     return PS.alt(
+      PS.seq(
+        r.SubExpression,
+        PS.whitespace,
+        r.Or,
+        PS.whitespace,
+        r.SubExpression,
+        PS.seq(PS.whitespace, r.Or, PS.whitespace, r.SubExpression).many(),
+      ),
+      r.SubExpression,
+    );
+  },
+
+  SubExpression(r) {
+    return PS.alt(
       r.Group,
-      r.Factor,
+      r.Term,
     );
   },
 
@@ -30,20 +44,6 @@ module.exports = PS.createLanguage({
       r.ExpressionList,
       PS.optWhitespace,
       PS.string(')'),
-    );
-  },
-
-  Factor(r) {
-    return PS.alt(
-      PS.seq(
-        r.Term,
-        PS.whitespace,
-        r.Or,
-        PS.whitespace,
-        r.Term,
-        PS.seq(PS.whitespace, r.Or, PS.whitespace, r.Term).many(),
-      ),
-      r.Term,
     );
   },
 
