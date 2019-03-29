@@ -52,9 +52,12 @@ module.exports = PS.createLanguage({
   },
 
   Term(r) {
-    return PS.alt(
-      r.DeclarativeTerm,
-      r.RelationalTerm,
+    return PS.seq(
+      PS.string('-').atMost(1),
+      PS.alt(
+        r.DeclarativeTerm,
+        r.RelationalTerm,
+      ),
     );
   },
 
