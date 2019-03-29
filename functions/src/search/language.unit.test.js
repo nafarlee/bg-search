@@ -103,3 +103,14 @@ test('grouping single term', () => {
   ].join(randomSpace(3));
   language.tryParse(query);
 });
+
+test('grouping single term', () => {
+  const query = [
+    '(',
+    'year>1994',
+    '',
+    'name:catan',
+    ')',
+  ].join(randomSpace(3));
+  language.tryParse(query);
+});
