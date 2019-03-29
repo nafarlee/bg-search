@@ -108,7 +108,7 @@ test('grouping single term', () => {
   const query = [
     '(',
     'year>1994',
-    '',
+    ' ',
     'name:catan',
     ')',
   ].join(randomSpace(3));
