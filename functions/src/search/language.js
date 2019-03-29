@@ -79,7 +79,7 @@ module.exports = PS.createLanguage({
   QuotedValue() {
     return PS.seq(
       PS.string('"'),
-      PS.regexp(/[^" ]+/),
+      PS.regexp(/[^"]+/),
       PS.string('"'),
     );
   },
