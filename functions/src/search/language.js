@@ -3,48 +3,47 @@ const PS = require('parsimmon');
 module.exports = PS.createLanguage({
   Language(r) {
     return PS.alt(
-      PS.seq(
-        PS.optWhitespace,
-        r.Query,
-        PS.optWhitespace,
-        PS.end,
-      ),
-      PS.whitespace,
+      PS.seq(PS.optWhitespace, r.ExpressionList, PS.optWhitespace, PS.end),
+      PS.seq(PS.whitespace, PS.end),
       PS.end,
     );
   },
 
-  Query(r) {
+  ExpressionList(r) {
     return PS.alt(
-      PS.seq(
-        r.Expression,
-        PS.whitespace,
-        r.Query,
-      ),
+      PS.seq(r.Expression, PS.whitespace, r.ExpressionList),
       r.Expression,
     );
   },
 
   Expression(r) {
     return PS.alt(
-      PS.seq(
-        PS.string('('),
-        PS.seq(PS.optWhitespace, r.Expression, PS.optWhitespace).many(),
-        PS.string(')'),
-      ),
-      r.OrChain,
-      r.Term,
+      r.Group,
+      r.Factor,
     );
   },
 
-  OrChain(r) {
+  Group(r) {
     return PS.seq(
+      PS.string('('),
+      PS.optWhitespace,
+      r.ExpressionList,
+      PS.optWhitespace,
+      PS.string(')'),
+    );
+  },
+
+  Factor(r) {
+    return PS.alt(
+      PS.seq(
+        r.Term,
+        PS.whitespace,
+        r.Or,
+        PS.whitespace,
+        r.Term,
+        PS.seq(PS.whitespace, r.Or, PS.whitespace, r.Term).many(),
+      ),
       r.Term,
-      PS.whitespace,
-      r.Or,
-      PS.whitespace,
-      r.Term,
-      PS.seq(PS.whitespace, r.Or, PS.whitespace, r.Term).many(),
     );
   },
 
