@@ -78,7 +78,9 @@ test('minimal or clause', () => {
     const query = [
       '',
       'name:catan',
+      ' ',
       'or',
+      ' ',
       'year=1994',
       '',
     ].join(s);
@@ -91,11 +93,17 @@ test('lengthy or clause', () => {
     const query = [
       '',
       'name:catan',
+      ' ',
       'or',
+      ' ',
       'year=1994',
+      ' ',
       'or',
+      ' ',
       'year=1994',
+      ' ',
       'or',
+      ' ',
       'year=1994',
       '',
     ].join(s);
