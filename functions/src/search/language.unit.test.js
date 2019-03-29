@@ -1,9 +1,5 @@
 const language = require('./language');
 
-function randomSpace(max) {
-  return ' '.repeat(Math.floor(Math.random() * max));
-}
-
 const declarativeTags = [
   'name',
   'art',
@@ -40,6 +36,8 @@ const relationalOperators = [
   '<=',
 ];
 
+const spaces = ['', ' '];
+
 test('empty search', () => {
   language.tryParse('');
 });
@@ -50,67 +48,81 @@ test('whitespace search', () => {
 
 test('single declarative term searches', () => {
   declarativeTags.forEach((tag) => {
-    language.tryParse(`${randomSpace(3)}${tag}:catan${randomSpace(3)}`);
+    spaces.forEach((s) => {
+      language.tryParse(`${s}${tag}:catan${s}`);
+    });
   });
 });
 
 test('single relational term searches', () => {
   relationalTags.forEach((tag) => {
     relationalOperators.forEach((op) => {
-      language.tryParse(`${randomSpace(3)}${tag}${op}1994${randomSpace(3)}`);
+      spaces.forEach((s) => {
+        language.tryParse(`${s}${tag}${op}1994${s}`);
+      });
     });
   });
 });
 
 test('multiple declarative term searches', () => {
-  const query = declarativeTags
-    .map(tag => `${randomSpace(3)}${tag}:catan${randomSpace(3)}`)
-    .join(' ');
-  language.tryParse(query);
+  spaces.forEach((s) => {
+    const query = declarativeTags
+      .map(tag => `${s}${tag}:catan${s}`)
+      .join(' ');
+    language.tryParse(query);
+  });
 });
 
 test('minimal or clause', () => {
-  const query = [
-    '',
-    'name:catan',
-    'or',
-    'year=1994',
-    '',
-  ].join(randomSpace(3));
-  language.tryParse(query);
+  spaces.forEach((s) => {
+    const query = [
+      '',
+      'name:catan',
+      'or',
+      'year=1994',
+      '',
+    ].join(s);
+    language.tryParse(query);
+  });
 });
 
 test('lengthy or clause', () => {
-  const query = [
-    '',
-    'name:catan',
-    'or',
-    'year=1994',
-    'or',
-    'year=1994',
-    'or',
-    'year=1994',
-    '',
-  ].join(randomSpace(3));
-  language.tryParse(query);
+  spaces.forEach((s) => {
+    const query = [
+      '',
+      'name:catan',
+      'or',
+      'year=1994',
+      'or',
+      'year=1994',
+      'or',
+      'year=1994',
+      '',
+    ].join(s);
+    language.tryParse(query);
+  });
 });
 
 test('grouping single term', () => {
-  const query = [
-    '(',
-    'name:catan',
-    ')',
-  ].join(randomSpace(3));
-  language.tryParse(query);
+  spaces.forEach((s) => {
+    const query = [
+      '(',
+      'name:catan',
+      ')',
+    ].join(s);
+    language.tryParse(query);
+  });
 });
 
 test('grouping single term', () => {
-  const query = [
-    '(',
-    'year>1994',
-    ' ',
-    'name:catan',
-    ')',
-  ].join(randomSpace(3));
-  language.tryParse(query);
+  spaces.forEach((s) => {
+    const query = [
+      '(',
+      'year>1994',
+      ' ',
+      'name:catan',
+      ')',
+    ].join(s);
+    language.tryParse(query);
+  });
 });
