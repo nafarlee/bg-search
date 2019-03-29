@@ -1,18 +1,27 @@
 const PS = require('parsimmon');
 
 module.exports = PS.createLanguage({
-  Query(r) {
+  Language(r) {
     return PS.alt(
       PS.seq(
         PS.optWhitespace,
+        r.Query,
+        PS.optWhitespace,
+        PS.end,
+      ),
+      PS.whitespace,
+      PS.end,
+    );
+  },
+
+  Query(r) {
+    return PS.alt(
+      PS.seq(
         r.Expression,
         PS.whitespace,
         r.Query,
-        PS.optWhitespace,
       ),
-      PS.seq(PS.optWhitespace, r.Expression, PS.optWhitespace),
-      PS.whitespace,
-      PS.end,
+      r.Expression,
     );
   },
 
@@ -98,4 +107,4 @@ module.exports = PS.createLanguage({
       PS.string('<='),
     );
   },
-}).Query;
+}).Language;
