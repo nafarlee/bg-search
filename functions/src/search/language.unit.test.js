@@ -114,7 +114,7 @@ test('grouping single term', () => {
   });
 });
 
-test('grouping single term', () => {
+test('grouping multiple terms', () => {
   spaces.forEach((s) => {
     const query = [
       '(',
