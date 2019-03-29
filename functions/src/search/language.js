@@ -27,6 +27,11 @@ module.exports = PS.createLanguage({
 
   Expression(r) {
     return PS.alt(
+      PS.seq(
+        PS.string('('),
+        PS.seq(PS.optWhitespace, r.Expression, PS.optWhitespace).many(),
+        PS.string(')'),
+      ),
       r.OrChain,
       r.Term,
     );
