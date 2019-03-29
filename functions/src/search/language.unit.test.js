@@ -64,6 +64,14 @@ test('single relational term searches', () => {
   });
 });
 
+test('single negative declarative term searches', () => {
+  declarativeTags.forEach((tag) => {
+    spaces.forEach((s) => {
+      language.tryParse(`${s}-${tag}:catan${s}`);
+    });
+  });
+});
+
 test('multiple declarative term searches', () => {
   spaces.forEach((s) => {
     const query = declarativeTags
