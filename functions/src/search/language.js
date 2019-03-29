@@ -49,8 +49,24 @@ module.exports = PS.createLanguage({
 
   Term(r) {
     return PS.alt(
-      PS.seq(r.DeclarativeTag, PS.string(':'), r.Value),
-      PS.seq(r.RelationalTag, r.RelationalOperator, r.SimpleValue),
+      r.DeclarativeTerm,
+      r.RelationalTerm,
+    );
+  },
+
+  DeclarativeTerm(r) {
+    return PS.seq(
+      r.DeclarativeTag,
+      PS.string(':'),
+      r.Value,
+    );
+  },
+
+  RelationalTerm(r) {
+    return PS.seq(
+      r.RelationalTag,
+      r.RelationalOperator,
+      r.SimpleValue,
     );
   },
 
