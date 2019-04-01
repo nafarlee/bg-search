@@ -30,7 +30,7 @@ exports.pull = functions
     const body = await parseString(xml);
 
     if (!body.items.item) {
-      return batch.update(db.collection('_').doc('_'), { index: 1 });
+      return db.collection('_').doc('_').update({ index: 1 });
     }
 
     body.items.item.forEach((item) => {
