@@ -66,7 +66,7 @@ module.exports = PS.createLanguage({
       r.DeclarativeTag,
       PS.string(':'),
       r.Value,
-    );
+    ).map(([tag,, value]) => ({ type: 'DECLARATIVE', tag, value }));
   },
 
   RelationalTerm(r) {
