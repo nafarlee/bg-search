@@ -31,7 +31,14 @@ module.exports = PS.createLanguage({
       PS.whitespace,
       r.SubExpression,
       PS.seq(PS.whitespace, r.Or, PS.whitespace, r.SubExpression).many(),
-    );
+    ).map(([first,,,, second, rest]) => ({
+      type: 'OR',
+      terms: [
+        first,
+        second,
+        ...rest.map(([,,, term]) => term),
+      ],
+    }));
   },
 
   SubExpression(r) {
