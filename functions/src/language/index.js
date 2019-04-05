@@ -127,22 +127,8 @@ module.exports = PS.createLanguage({
   },
 
   RelationalTag() {
-    return PS.alt(
-      PS.string('rating-votes'),
-      PS.string('average-rating'),
-      PS.string('geek-rating'),
-      PS.string('rating-deviation'),
-      PS.string('average-weight'),
-      PS.string('weight-votes'),
-      PS.string('year'),
-      PS.string('age'),
-      PS.string('min-players'),
-      PS.string('rec-players'),
-      PS.string('best-players'),
-      PS.string('max-players'),
-      PS.string('min-playtime'),
-      PS.string('max-playtime'),
-    );
+    const pattern = Object.keys(tokens.tags.relational).join('|');
+    return PS.regexp(new RegExp(pattern, 'i'));
   },
 
   RelationalOperator() {
