@@ -115,7 +115,7 @@ module.exports = PS.createLanguage({
   },
 
   SimpleValue() {
-    return PS.regexp(/[^) ]+/);
+    return PS.regexp(/[^") ]+/);
   },
 
   QuotedValue() {
