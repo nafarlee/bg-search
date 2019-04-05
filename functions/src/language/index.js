@@ -1,5 +1,7 @@
 const PS = require('parsimmon');
 
+const tokens = require('./tokens');
+
 module.exports = PS.createLanguage({
   Language(r) {
     return PS.alt(
@@ -108,16 +110,8 @@ module.exports = PS.createLanguage({
   },
 
   DeclarativeTag() {
-    return PS.alt(
-      PS.string('name'),
-      PS.string('art'),
-      PS.string('category'),
-      PS.string('desc'),
-      PS.string('family'),
-      PS.string('mechanic'),
-      PS.string('publish'),
-      PS.string('designer'),
-    );
+    const pattern = Object.keys(tokens.tags.declarative).join('|');
+    return PS.regexp(new RegExp(pattern, 'i'));
   },
 
   SimpleValue() {
