@@ -13,6 +13,16 @@ test('whitespace search', () => {
     .toEqual([]);
 });
 
+test('quoted term', () => {
+  expect(language.tryParse('name:"7 wonders"'))
+    .toEqual([{
+      tag: 'name',
+      value: '7 wonders',
+      type: 'DECLARATIVE',
+      negate: false,
+    }]);
+});
+
 test('single declarative term searches', () => {
   Object.keys(tokens.tags.declarative).forEach((tag) => {
     spaces.forEach((s) => {
