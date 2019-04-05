@@ -11,8 +11,10 @@ module.exports = PS.createLanguage({
 
   ExpressionList(r) {
     return PS.alt(
-      PS.seq(r.Expression, PS.whitespace, r.ExpressionList),
-      r.Expression,
+      PS.seq(r.Expression, PS.whitespace, r.ExpressionList)
+        .map(([exp,, exps]) => [exp, ...exps]),
+      r.Expression
+        .map(x => [x]),
     );
   },
 
