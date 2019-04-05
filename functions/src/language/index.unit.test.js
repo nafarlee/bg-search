@@ -1,40 +1,5 @@
 const language = require('./index');
-
-const declarativeTags = [
-  'name',
-  'art',
-  'category',
-  'desc',
-  'family',
-  'mechanic',
-  'publish',
-  'designer',
-];
-
-const relationalTags = [
-  'rating-votes',
-  'average-rating',
-  'geek-rating',
-  'rating-deviation',
-  'average-weight',
-  'weight-votes',
-  'year',
-  'age',
-  'min-players',
-  'rec-players',
-  'best-players',
-  'max-players',
-  'min-playtime',
-  'max-playtime',
-];
-
-const relationalOperators = [
-  '=',
-  '>',
-  '>=',
-  '<',
-  '<=',
-];
+const tokens = require('./tokens');
 
 const spaces = ['', ' '];
 
@@ -49,7 +14,7 @@ test('whitespace search', () => {
 });
 
 test('single declarative term searches', () => {
-  declarativeTags.forEach((tag) => {
+  Object.keys(tokens.tags.declarative).forEach((tag) => {
     spaces.forEach((s) => {
       expect(language.tryParse(`${s}${tag}:catan${s}`))
         .toEqual([{
@@ -63,8 +28,8 @@ test('single declarative term searches', () => {
 });
 
 test('single relational term searches', () => {
-  relationalTags.forEach((tag) => {
-    relationalOperators.forEach((op) => {
+  Object.keys(tokens.tags.relational).forEach((tag) => {
+    Object.keys(tokens.operators).forEach((op) => {
       spaces.forEach((s) => {
         expect(language.tryParse(`${s}${tag}${op}1994${s}`))
           .toEqual([{
@@ -80,7 +45,7 @@ test('single relational term searches', () => {
 });
 
 test('single negative declarative term searches', () => {
-  declarativeTags.forEach((tag) => {
+  Object.keys(tokens.tags.declarative).forEach((tag) => {
     spaces.forEach((s) => {
       expect(language.tryParse(`${s}-${tag}:catan${s}`))
         .toEqual([{
@@ -95,11 +60,11 @@ test('single negative declarative term searches', () => {
 
 test('multiple declarative term searches', () => {
   spaces.forEach((s) => {
-    const query = declarativeTags
+    const query = Object.keys(tokens.tags.declarative)
       .map(tag => `${s}${tag}:catan${s}`)
       .join(' ');
     const actual = language.tryParse(query);
-    const expected = declarativeTags.map(tag => ({
+    const expected = Object.keys(tokens.tags.declarative).map(tag => ({
       negate: false,
       type: 'DECLARATIVE',
       value: 'catan',
