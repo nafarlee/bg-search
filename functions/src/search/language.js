@@ -3,9 +3,10 @@ const PS = require('parsimmon');
 module.exports = PS.createLanguage({
   Language(r) {
     return PS.alt(
-      PS.seq(PS.optWhitespace, r.ExpressionList, PS.optWhitespace, PS.end),
-      PS.seq(PS.whitespace, PS.end),
-      PS.end,
+      PS.seq(PS.optWhitespace, r.ExpressionList, PS.optWhitespace, PS.end)
+        .map(([, exps]) => exps),
+      PS.seq(PS.whitespace, PS.end).result([]),
+      PS.end.result([]),
     );
   },
 
