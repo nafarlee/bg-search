@@ -132,12 +132,10 @@ module.exports = PS.createLanguage({
   },
 
   RelationalOperator() {
-    return PS.alt(
-      PS.string('>='),
-      PS.string('<='),
-      PS.string('='),
-      PS.string('>'),
-      PS.string('<'),
-    );
+    const pattern = Object
+      .keys(tokens.operators)
+      .sort((a, b) => b.length - a.length)
+      .join('|');
+    return PS.regexp(new RegExp(pattern));
   },
 }).Language;
