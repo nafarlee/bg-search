@@ -57,7 +57,11 @@ module.exports = PS.createLanguage({
       r.ExpressionList,
       PS.optWhitespace,
       PS.string(')'),
-    );
+    ).map(([,, terms]) => (
+      terms.length === 1
+        ? terms[0]
+        : { type: 'AND', terms }
+    ));
   },
 
   Term(r) {
