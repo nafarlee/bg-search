@@ -58,7 +58,7 @@ module.exports = PS.createLanguage({
         r.DeclarativeTerm,
         r.RelationalTerm,
       ),
-    );
+    ).map(([[sign], term]) => ({ negate: sign === '-', ...term }));
   },
 
   DeclarativeTerm(r) {
