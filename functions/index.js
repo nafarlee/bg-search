@@ -42,31 +42,34 @@ exports.pull = functions
     return batch.commit();
   });
 
-exports.search = functions.https.onRequest(async (req, res) => {
-  const query = req.query.query || '';
-  const order = req.query.order || 'bayes-rating';
-  const direction = req.query.direction || 'desc';
-  console.log({ query, order, direction });
-  const predicates = language.tryParse(query);
+exports.search = functions
+  .runWith({ timeoutSeconds: 540 })
+  .https
+  .onRequest(async (req, res) => {
+    const query = req.query.query || '';
+    const order = req.query.order || 'bayes-rating';
+    const direction = req.query.direction || 'desc';
+    console.log({ query, order, direction });
+    const predicates = language.tryParse(query);
 
-  const db = admin.firestore();
-  const results = [];
-  db.collection('games')
-    .orderBy(order, direction)
-    .stream()
-    .on('data', (doc) => {
-      const data = doc.data();
-      try {
-        if (verify(predicates, data)) results.push(data);
-      } catch (e) {
-        console.log({ query, game: data });
-        throw e;
-      }
-      if (results.length >= 10) {
+    const db = admin.firestore();
+    const results = [];
+    db.collection('games')
+      .orderBy(order, direction)
+      .stream()
+      .on('data', (doc) => {
+        const data = doc.data();
+        try {
+          if (verify(predicates, data)) results.push(data);
+        } catch (e) {
+          console.log({ query, game: data });
+          throw e;
+        }
+        if (results.length >= 10) {
+          res.status(200).send(results);
+        }
+      })
+      .on('end', () => {
         res.status(200).send(results);
-      }
-    })
-    .on('end', () => {
-      res.status(200).send(results);
-    });
-});
+      });
+  });
