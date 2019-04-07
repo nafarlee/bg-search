@@ -73,8 +73,24 @@ module.exports = PS.createLanguage({
       PS.alt(
         r.DeclarativeTerm,
         r.RelationalTerm,
+        r.MetaTerm,
       ),
     ).map(([[sign], term]) => ({ negate: sign === '-', ...term }));
+  },
+
+  MetaTerm(r) {
+    return PS.seq(
+      PS.string('is:'),
+      r.MetaValue,
+    ).map(([, value]) => ({
+      type: 'META',
+      value: tokens.values.meta[value],
+    }));
+  },
+
+  MetaValue() {
+    const pattern = Object.keys(tokens.values.meta).join('|');
+    return PS.regexp(new RegExp(pattern, 'i'));
   },
 
   DeclarativeTerm(r) {
