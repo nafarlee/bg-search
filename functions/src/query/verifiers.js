@@ -15,6 +15,11 @@ function NAME(term, game) {
   return includes(game['primary-name'], term.value);
 }
 
+function ARTIST(term, game) {
+  return any(game.artists, a => includes(a, term.value));
+}
+
 module.exports = {
+  ARTIST,
   NAME,
 };
