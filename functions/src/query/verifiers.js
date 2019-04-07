@@ -55,8 +55,13 @@ function RATING_VOTES(term, game) {
   return operators[term.operator](term.value, game['rating-votes']);
 }
 
+function AVERAGE_RATING(term, game) {
+  return operators[term.operator](term.value, game['averate-rating']);
+}
+
 module.exports = {
   ARTIST,
+  AVERAGE_RATING,
   CATEGORY,
   DESCRIPTION,
   DESIGNER,
