@@ -35,11 +35,16 @@ function MECHANIC(term, game) {
   return any(game.mechanics, m => includes(m, term.value));
 }
 
+function PUBLISHER(term, game) {
+  return any(game.publishers, p => includes(p, term.value));
+}
+
 module.exports = {
   ARTIST,
   CATEGORY,
   DESCRIPTION,
   FAMILY,
   MECHANIC,
+  PUBLISHER,
   NAME,
 };
