@@ -7,29 +7,14 @@ const singleFieldSubstrings = _.mapValues({
   DESCRIPTION: 'description',
 }, field => (term, game) => includes(game[field], term.value));
 
-function ARTIST(term, game) {
-  return _.some(game.artists, a => includes(a, term.value));
-}
-
-function CATEGORY(term, game) {
-  return _.some(game.categories, c => includes(c, term.value));
-}
-
-function FAMILY(term, game) {
-  return _.some(game.families, f => includes(f, term.value));
-}
-
-function MECHANIC(term, game) {
-  return _.some(game.mechanics, m => includes(m, term.value));
-}
-
-function PUBLISHER(term, game) {
-  return _.some(game.publishers, p => includes(p, term.value));
-}
-
-function DESIGNER(term, game) {
-  return _.some(game.designers, d => includes(d, term.value));
-}
+const multipleFieldSubstrings = _.mapValues({
+  ARTIST: 'artists',
+  CATEGORY: 'categories',
+  FAMILY: 'families',
+  MECHANIC: 'mechanics',
+  PUBLISHER: 'publishers',
+  DESIGNER: 'designers',
+}, field => (term, game) => _.some(game[field], i => includes(i, term.value)));
 
 const operators = {
   EQUAL: (a, b) => a == b, // eslint-disable-line
@@ -61,15 +46,10 @@ function AVERAGE_WEIGHT(term, game) {
 
 module.exports = {
   ...singleFieldSubstrings,
-  ARTIST,
+  ...multipleFieldSubstrings,
   AVERAGE_RATING,
   AVERAGE_WEIGHT,
-  CATEGORY,
-  DESIGNER,
-  FAMILY,
   GEEK_RATING,
-  MECHANIC,
-  PUBLISHER,
   RATING_DEVIATION,
   RATING_VOTES,
 };
