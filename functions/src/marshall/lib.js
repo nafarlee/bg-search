@@ -68,37 +68,67 @@ function age(game) {
 function links(game) {
   const sections = {
     boardgamecategory(record) {
-      return ['categories', record.$.value];
+      return ['categories', {
+        id: parseInt(record.$.id, 10),
+        value: record.$.value,
+      }];
     },
     boardgamemechanic(record) {
-      return ['mechanics', record.$.value];
+      return ['mechanics', {
+        id: parseInt(record.$.id, 10),
+        value: record.$.value,
+      }];
     },
     boardgamefamily(record) {
-      return ['families', record.$.value];
+      return ['families', {
+        id: parseInt(record.$.id, 10),
+        value: record.$.value,
+      }];
     },
     boardgameexpansion(record) {
       const category = record.$.inbound ? 'expands' : 'expanded-by';
-      return [category, parseInt(record.$.id, 10)];
+      return [category, {
+        id: parseInt(record.$.id, 10),
+        value: record.$.value,
+      }];
     },
     boardgamecompilation(record) {
       const category = record.$.inbound ? 'contains' : 'contained-in';
-      return [category, parseInt(record.$.id, 10)];
+      return [category, {
+        id: parseInt(record.$.id, 10),
+        value: record.$.value,
+      }];
     },
     boardgameimplementation(record) {
       const category = record.$.inbound ? 'reimplements' : 'reimplimented-by';
-      return [category, parseInt(record.$.id, 10)];
+      return [category, {
+        id: parseInt(record.$.id, 10),
+        value: record.$.value,
+      }];
     },
     boardgamedesigner(record) {
-      return ['designers', record.$.value];
+      return ['designers', {
+        id: parseInt(record.$.id, 10),
+        value: record.$.value,
+      }];
     },
     boardgameartist(record) {
-      return ['artists', record.$.value];
+      return ['artists', {
+        id: parseInt(record.$.id, 10),
+        value: record.$.value,
+      }];
     },
     boardgamepublisher(record) {
-      return ['publishers', record.$.value];
+      return ['publishers', {
+        id: parseInt(record.$.id, 10),
+        value: record.$.value,
+      }];
     },
     boardgameintegration(record) {
-      return ['integrates-with', record.$.value];
+      return ['integrates-with', {
+        id: parseInt(record.$.id, 10),
+        value: record.$.value,
+      }];
     },
   };
 
