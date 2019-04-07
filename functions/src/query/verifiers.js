@@ -17,11 +17,11 @@ const multipleFieldSubstrings = _.mapValues({
 }, field => (term, game) => _.some(game[field], i => includes(i, term.value)));
 
 const operators = {
-  EQUAL: (a, b) => a == b, // eslint-disable-line
-  GT: (a, b) => a > b,
-  GTE: (a, b) => a >= b,
-  LT: (a, b) => a < b,
-  LTE: (a, b) => a <= b,
+  EQUAL: (a, b) => parseFloat(a) === parseFloat(b),
+  GT: (a, b) => parseFloat(a) > parseFloat(b),
+  GTE: (a, b) => parseFloat(a) >= parseFloat(b),
+  LT: (a, b) => parseFloat(a) < parseFloat(b),
+  LTE: (a, b) => parseFloat(a) <= parseFloat(b),
 };
 
 const simpleRelationalComparisons = _.mapValues({
