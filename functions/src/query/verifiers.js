@@ -43,6 +43,14 @@ function DESIGNER(term, game) {
   return any(game.designers, d => includes(d, term.value));
 }
 
+const operators = {
+  EQUAL: (a, b) => a == b, // eslint-disable-line
+  GT: (a, b) => a > b,
+  GTE: (a, b) => a >= b,
+  LT: (a, b) => a < b,
+  LTE: (a, b) => a <= b,
+};
+
 module.exports = {
   ARTIST,
   CATEGORY,
