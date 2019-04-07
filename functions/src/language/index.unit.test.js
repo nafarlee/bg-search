@@ -47,7 +47,7 @@ test('single relational term searches', () => {
             type: 'RELATIONAL',
             value: '1994',
             operator: tokens.operators[op],
-            tag,
+            tag: tokens.tags.relational[tag],
           }]);
       });
     });
@@ -104,10 +104,10 @@ test('minimal or clause', () => {
           value: 'catan',
           negate: false,
         }, {
-          tag: 'year',
+          tag: tokens.tags.relational.year,
           type: 'RELATIONAL',
           value: '1994',
-          operator: '=',
+          operator: tokens.operators['='],
           negate: false,
         }],
       }]);
@@ -142,22 +142,22 @@ test('lengthy or clause', () => {
           value: 'catan',
           negate: false,
         }, {
-          tag: 'year',
+          tag: tokens.tags.relational.year,
           type: 'RELATIONAL',
           value: '1994',
-          operator: '=',
+          operator: tokens.operators['='],
           negate: false,
         }, {
-          tag: 'year',
+          tag: tokens.tags.relational.year,
           type: 'RELATIONAL',
           value: '1994',
-          operator: '=',
+          operator: tokens.operators['='],
           negate: false,
         }, {
-          tag: 'year',
+          tag: tokens.tags.relational.year,
           type: 'RELATIONAL',
           value: '1994',
-          operator: '=',
+          operator: tokens.operators['='],
           negate: false,
         }],
       }]);
@@ -194,10 +194,10 @@ test('grouping multiple terms', () => {
       .toEqual([{
         type: 'AND',
         terms: [{
-          tag: 'year',
+          tag: tokens.tags.relational.year,
           type: 'RELATIONAL',
           value: '1994',
-          operator: '>',
+          operator: tokens.operators['>'],
           negate: false,
         }, {
           tag: tokens.tags.declarative.name,
@@ -239,9 +239,9 @@ test('complete test', () => {
     ].join(s);
     expect(language.tryParse(query))
       .toEqual([{
-        tag: 'rating-votes',
+        tag: tokens.tags.relational['rating-votes'],
         value: '1000',
-        operator: '>=',
+        operator: tokens.operators['>='],
         negate: false,
         type: 'RELATIONAL',
       }, {
@@ -252,8 +252,8 @@ test('complete test', () => {
           value: 'catan',
           negate: false,
         }, {
-          tag: 'year',
-          operator: '>=',
+          tag: tokens.tags.relational.year,
+          operator: tokens.operators['>='],
           value: '1993',
           type: 'RELATIONAL',
           negate: false,
@@ -267,14 +267,14 @@ test('complete test', () => {
           }, {
             type: 'OR',
             terms: [{
-              tag: 'age',
-              operator: '>',
+              tag: tokens.tags.relational.age,
+              operator: tokens.operators['>'],
               value: '4',
               negate: false,
               type: 'RELATIONAL',
             }, {
-              tag: 'age',
-              operator: '<',
+              tag: tokens.tags.relational.age,
+              operator: tokens.operators['<'],
               value: '4',
               negate: true,
               type: 'RELATIONAL',

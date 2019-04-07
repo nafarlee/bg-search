@@ -96,8 +96,8 @@ module.exports = PS.createLanguage({
       r.SimpleValue,
     ).map(([tag, operator, value]) => ({
       type: 'RELATIONAL',
-      tag,
-      operator,
+      tag: tokens.tags.relational[tag],
+      operator: tokens.operators[operator],
       value,
     }));
   },
