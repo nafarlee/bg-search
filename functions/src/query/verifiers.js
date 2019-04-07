@@ -61,12 +61,17 @@ function BEST_PLAYERS(term, game) {
   });
 }
 
+function EXPANSION(_term, game) {
+  return game.expands && game.expands.length > 0;
+}
+
 module.exports = _.mapValues({
   ...singleFieldSubstrings,
   ...multipleFieldSubstrings,
   ...simpleRelationalComparisons,
   BEST_PLAYERS,
   RECOMMENDED_PLAYERS,
+  EXPANSION,
 }, fn => (term, game) => (
   term.negate ? !fn(term, game) : fn(term, game)
 ));
