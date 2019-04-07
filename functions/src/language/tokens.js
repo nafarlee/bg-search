@@ -34,6 +34,10 @@ const operators = [
   'LTE',
 ].reduce(mirror, {});
 
+const meta = [
+  'EXPANSION',
+].reduce(mirror, {});
+
 module.exports = {
   operators: {
     '=': operators.EQUAL,
@@ -41,6 +45,9 @@ module.exports = {
     '>=': operators.GTE,
     '<': operators.LT,
     '<=': operators.LTE,
+  },
+  values: {
+    expansion: meta.EXPANSION,
   },
   tags: {
     declarative: {
