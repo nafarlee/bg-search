@@ -7,6 +7,8 @@ const admin = require('firebase-admin');
 
 const get = require('./src/get');
 const marshall = require('./src/marshall');
+const language = require('./src/language');
+const verify = require('./src/query');
 
 const baseURL = 'https://api.geekdo.com/xmlapi2/things';
 
@@ -39,3 +41,27 @@ exports.pull = functions
     });
     return batch.commit();
   });
+
+exports.search = functions.https.onRequest(async (req, res) => {
+  const query = req.query.query || '';
+  const order = req.query.order || 'bayes-rating';
+  const direction = req.query.order || 'desc';
+  console.log({ query, order, direction });
+  const predicates = language.tryParse(query);
+
+  const db = admin.firestore();
+  const results = [];
+  db.collection('games')
+    .orderBy(order, direction)
+    .stream()
+    .on('data', (doc) => {
+      const data = doc.data();
+      if (verify(predicates, data)) results.push(data);
+      if (results.length >= 10) {
+        res.status(200).send(results);
+      }
+    })
+    .on('end', () => {
+      res.status(200).send(results);
+    });
+});
