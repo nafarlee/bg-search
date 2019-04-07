@@ -59,10 +59,12 @@ function BEST_PLAYERS(term, game) {
   });
 }
 
-module.exports = {
+module.exports = _.mapValues({
   ...singleFieldSubstrings,
   ...multipleFieldSubstrings,
   ...simpleRelationalComparisons,
   BEST_PLAYERS,
   RECOMMENDED_PLAYERS,
-};
+}, fn => (term, game) => (
+  term.negate ? !fn(term, game) : fn(term, game)
+));
