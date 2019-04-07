@@ -19,7 +19,12 @@ function ARTIST(term, game) {
   return any(game.artists, a => includes(a, term.value));
 }
 
+function CATEGORY(term, game) {
+  return any(game.categories, a => includes(a, term.value));
+}
+
 module.exports = {
   ARTIST,
+  CATEGORY,
   NAME,
 };
