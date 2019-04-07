@@ -54,8 +54,15 @@ exports.search = functions
 
     const db = admin.firestore();
     const results = [];
-    return db.collection('games')
-      .orderBy(order, direction)
+    let col = db.collection('games').orderBy(order, direction)
+    if (req.query.checkpoint) {
+      const snapshot = await db
+        .collection('games')
+        .doc(req.query.checkpoint)
+        .get();
+      col = col.startAfter(snapshot);
+    }
+    return col
       .stream()
       .on('data', (doc) => {
         const data = doc.data();
