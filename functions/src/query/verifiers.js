@@ -23,8 +23,13 @@ function CATEGORY(term, game) {
   return any(game.categories, a => includes(a, term.value));
 }
 
+function DESCRIPTION(term, game) {
+  return includes(game.description, term.value);
+}
+
 module.exports = {
   ARTIST,
   CATEGORY,
+  DESCRIPTION,
   NAME,
 };
