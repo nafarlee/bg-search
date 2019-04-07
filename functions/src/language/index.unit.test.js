@@ -16,7 +16,7 @@ test('whitespace search', () => {
 test('quoted term', () => {
   expect(language.tryParse('name:"7 wonders"'))
     .toEqual([{
-      tag: 'name',
+      tag: tokens.tags.declarative.name,
       value: '7 wonders',
       type: 'DECLARATIVE',
       negate: false,
@@ -31,7 +31,7 @@ test('single declarative term searches', () => {
           negate: false,
           type: 'DECLARATIVE',
           value: 'catan',
-          tag,
+          tag: tokens.tags.declarative[tag],
         }]);
     });
   });
@@ -46,7 +46,7 @@ test('single relational term searches', () => {
             negate: false,
             type: 'RELATIONAL',
             value: '1994',
-            operator: op,
+            operator: tokens.operators[op],
             tag,
           }]);
       });
@@ -62,7 +62,7 @@ test('single negative declarative term searches', () => {
           negate: true,
           type: 'DECLARATIVE',
           value: 'catan',
-          tag,
+          tag: tokens.tags.declarative[tag],
         }]);
     });
   });
@@ -78,7 +78,7 @@ test('multiple declarative term searches', () => {
       negate: false,
       type: 'DECLARATIVE',
       value: 'catan',
-      tag,
+      tag: tokens.tags.declarative[tag],
     }));
     expect(actual).toEqual(expected);
   });
@@ -99,7 +99,7 @@ test('minimal or clause', () => {
       .toEqual([{
         type: 'OR',
         terms: [{
-          tag: 'name',
+          tag: tokens.tags.declarative.name,
           type: 'DECLARATIVE',
           value: 'catan',
           negate: false,
@@ -137,7 +137,7 @@ test('lengthy or clause', () => {
       .toEqual([{
         type: 'OR',
         terms: [{
-          tag: 'name',
+          tag: tokens.tags.declarative.name,
           type: 'DECLARATIVE',
           value: 'catan',
           negate: false,
@@ -174,7 +174,7 @@ test('grouping single term', () => {
     expect(language.tryParse(query))
       .toEqual([{
         type: 'DECLARATIVE',
-        tag: 'name',
+        tag: tokens.tags.declarative.name,
         value: 'catan',
         negate: false,
       }]);
@@ -200,7 +200,7 @@ test('grouping multiple terms', () => {
           operator: '>',
           negate: false,
         }, {
-          tag: 'name',
+          tag: tokens.tags.declarative.name,
           type: 'DECLARATIVE',
           value: 'catan',
           negate: false,
@@ -247,7 +247,7 @@ test('complete test', () => {
       }, {
         type: 'OR',
         terms: [{
-          tag: 'name',
+          tag: tokens.tags.declarative.name,
           type: 'DECLARATIVE',
           value: 'catan',
           negate: false,
@@ -260,7 +260,7 @@ test('complete test', () => {
         }, {
           type: 'AND',
           terms: [{
-            tag: 'mechanic',
+            tag: tokens.tags.declarative.mechanic,
             type: 'DECLARATIVE',
             value: 'dice',
             negate: false,
