@@ -17,3 +17,8 @@ test('match rec-players', () => {
   const input = 'rec-players>2';
   expect(verify(language.tryParse(input), catan)).toBe(true);
 });
+
+test('match -is:expansion', () => {
+  const input = '-is:expansion';
+  expect(verify(language.tryParse(input), catan)).toBe(true);
+});
