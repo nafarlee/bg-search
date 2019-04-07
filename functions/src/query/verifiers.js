@@ -27,9 +27,14 @@ function DESCRIPTION(term, game) {
   return includes(game.description, term.value);
 }
 
+function FAMILY(term, game) {
+  return any(game.families, a => includes(a, term.value));
+}
+
 module.exports = {
   ARTIST,
   CATEGORY,
   DESCRIPTION,
+  FAMILY,
   NAME,
 };
