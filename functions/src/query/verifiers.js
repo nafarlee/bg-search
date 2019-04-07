@@ -67,9 +67,14 @@ function RATING_DEVIATION(term, game) {
   return operators[term.operator](term.value, game['rating-deviation']);
 }
 
+function AVERAGE_WEIGHT(term, game) {
+  return operators[term.operator](term.value, game['average-weight']);
+}
+
 module.exports = {
   ARTIST,
   AVERAGE_RATING,
+  AVERAGE_WEIGHT,
   CATEGORY,
   DESCRIPTION,
   DESIGNER,
