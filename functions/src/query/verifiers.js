@@ -39,10 +39,15 @@ function PUBLISHER(term, game) {
   return any(game.publishers, p => includes(p, term.value));
 }
 
+function DESIGNER(term, game) {
+  return any(game.designers, d => includes(d, term.value));
+}
+
 module.exports = {
   ARTIST,
   CATEGORY,
   DESCRIPTION,
+  DESIGNER,
   FAMILY,
   MECHANIC,
   PUBLISHER,
