@@ -62,7 +62,7 @@ exports.search = functions
         try {
           if (verify(predicates, data)) results.push(data);
         } catch (e) {
-          console.log({ query, game: data });
+          console.error({ query, game: data });
           throw e;
         }
         if (results.length >= 10) {
