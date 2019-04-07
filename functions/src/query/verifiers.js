@@ -5,9 +5,7 @@ function includes(str, substr) {
 }
 
 function NAME(term, game) {
-  return game['primary-name']
-    .toLowerCase()
-    .includes(term.value.toLowerCase());
+  return includes(game['primary-name'], term.value);
 }
 
 module.exports = {
