@@ -37,7 +37,7 @@ const simpleRelationalComparisons = _.mapValues({
   MAXIMUM_PLAYERS: 'maximum-players',
   MINIMUM_PLAYTIME: 'minimum-playtime',
   MAXIMUM_PLAYTIME: 'maximum-playtime',
-}, field => (term, game) => operators[term.operator](term.value, game[field]));
+}, field => (term, game) => operators[term.operator](game[field], term.value));
 
 function RECOMMENDED_PLAYERS(term, game) {
   const { counts } = game['community-recommended-players'];
