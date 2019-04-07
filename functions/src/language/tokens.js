@@ -47,7 +47,9 @@ module.exports = {
     '<=': operators.LTE,
   },
   values: {
-    expansion: meta.EXPANSION,
+    meta: {
+      expansion: meta.EXPANSION,
+    },
   },
   tags: {
     declarative: {
