@@ -65,11 +65,7 @@ exports.search = functions
           console.error({ query, game: data });
           throw e;
         }
-        if (results.length >= 10) {
-          res.status(200).send(results);
-        }
+        if (results.length >= 10) res.status(200).send(results);
       })
-      .on('end', () => {
-        res.status(200).send(results);
-      });
+      .on('end', () => res.status(200).send(results));
   });
