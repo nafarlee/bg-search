@@ -56,7 +56,12 @@ exports.search = functions.https.onRequest(async (req, res) => {
     .stream()
     .on('data', (doc) => {
       const data = doc.data();
-      if (verify(predicates, data)) results.push(data);
+      try {
+        if (verify(predicates, data)) results.push(data);
+      } catch (e) {
+        console.log({ query, game: data });
+        throw e;
+      }
       if (results.length >= 10) {
         res.status(200).send(results);
       }
