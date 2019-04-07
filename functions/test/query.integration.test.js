@@ -7,3 +7,13 @@ test('match', () => {
   const tree = language.tryParse(input);
   expect(verify(tree, catan)).toBe(true);
 });
+
+test('match best-players', () => {
+  const input = 'best-players=4';
+  expect(verify(language.tryParse(input), catan)).toBe(true);
+});
+
+test('match rec-players', () => {
+  const input = 'rec-players>2';
+  expect(verify(language.tryParse(input), catan)).toBe(true);
+});
