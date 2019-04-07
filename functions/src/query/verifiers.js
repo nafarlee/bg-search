@@ -20,7 +20,7 @@ function ARTIST(term, game) {
 }
 
 function CATEGORY(term, game) {
-  return any(game.categories, a => includes(a, term.value));
+  return any(game.categories, c => includes(c, term.value));
 }
 
 function DESCRIPTION(term, game) {
@@ -28,7 +28,7 @@ function DESCRIPTION(term, game) {
 }
 
 function FAMILY(term, game) {
-  return any(game.families, a => includes(a, term.value));
+  return any(game.families, f => includes(f, term.value));
 }
 
 module.exports = {
