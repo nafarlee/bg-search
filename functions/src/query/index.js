@@ -16,6 +16,6 @@ const baseVerifier = iterator => (terms, game) => (
 );
 
 verifyAND = baseVerifier(_.every);
-verifyOR = baseVerifier(_.every);
+verifyOR = baseVerifier(_.some);
 
 module.exports = verifyAND;
