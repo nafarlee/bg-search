@@ -40,6 +40,7 @@ const simpleRelationalComparisons = _.mapValues({
 }, field => (term, game) => operators[term.operator](game[field], term.value));
 
 function RECOMMENDED_PLAYERS(term, game) {
+  if (!game['community-recommended-players']) return false;
   const { counts } = game['community-recommended-players'];
   return _.some(counts, (count, votes) => {
     if (!operators[term.operator](count, term.value)) return false;
@@ -50,6 +51,7 @@ function RECOMMENDED_PLAYERS(term, game) {
 }
 
 function BEST_PLAYERS(term, game) {
+  if (!game['community-recommended-players']) return false;
   const { counts } = game['community-recommended-players'];
   return _.some(counts, (count, votes) => {
     if (!operators[term.operator](count, term.value)) return false;
