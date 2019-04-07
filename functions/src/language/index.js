@@ -81,15 +81,15 @@ module.exports = PS.createLanguage({
   MetaTerm(r) {
     return PS.seq(
       PS.string('is:'),
-      r.MetaValue,
+      r.MetaTag,
     ).map(([, value]) => ({
       type: 'META',
-      value: tokens.values.meta[value],
+      tag: tokens.tags.meta[value],
     }));
   },
 
-  MetaValue() {
-    const pattern = Object.keys(tokens.values.meta).join('|');
+  MetaTag() {
+    const pattern = Object.keys(tokens.tags.meta).join('|');
     return PS.regexp(new RegExp(pattern, 'i'));
   },
 

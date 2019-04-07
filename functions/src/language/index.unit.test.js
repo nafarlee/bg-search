@@ -55,12 +55,12 @@ test('single relational term searches', () => {
 });
 
 test('single meta term searches', () => {
-  Object.keys(tokens.values.meta).forEach((value) => {
+  Object.keys(tokens.tags.meta).forEach((value) => {
     spaces.forEach((s) => {
       expect(language.tryParse(`${s}is:${value}${s}`))
         .toEqual([{
           type: 'META',
-          value: tokens.values.meta[value],
+          tag: tokens.tags.meta[value],
           negate: false,
         }]);
     });

@@ -46,12 +46,10 @@ module.exports = {
     '<': operators.LT,
     '<=': operators.LTE,
   },
-  values: {
+  tags: {
     meta: {
       expansion: meta.EXPANSION,
     },
-  },
-  tags: {
     declarative: {
       name: tags.NAME,
       art: tags.ARTIST,
