@@ -54,6 +54,19 @@ test('single relational term searches', () => {
   });
 });
 
+test('single meta term searches', () => {
+  Object.keys(tokens.values.meta).forEach((value) => {
+    spaces.forEach((s) => {
+      expect(language.tryParse(`${s}is:${value}${s}`))
+        .toEqual([{
+          type: 'META',
+          value: tokens.values.meta[value],
+          negate: false,
+        }]);
+    });
+  });
+});
+
 test('single negative declarative term searches', () => {
   Object.keys(tokens.tags.declarative).forEach((tag) => {
     spaces.forEach((s) => {
