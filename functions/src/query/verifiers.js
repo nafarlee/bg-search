@@ -31,10 +31,15 @@ function FAMILY(term, game) {
   return any(game.families, f => includes(f, term.value));
 }
 
+function MECHANIC(term, game) {
+  return any(game.mechanics, m => includes(m, term.value));
+}
+
 module.exports = {
   ARTIST,
   CATEGORY,
   DESCRIPTION,
   FAMILY,
+  MECHANIC,
   NAME,
 };
