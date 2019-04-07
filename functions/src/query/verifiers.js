@@ -51,6 +51,10 @@ const operators = {
   LTE: (a, b) => a <= b,
 };
 
+function RATING_VOTES(term, game) {
+  return operators[term.operator](term.value, game['rating-votes']);
+}
+
 module.exports = {
   ARTIST,
   CATEGORY,
@@ -59,5 +63,6 @@ module.exports = {
   FAMILY,
   MECHANIC,
   PUBLISHER,
+  RATING_VOTES,
   NAME,
 };
