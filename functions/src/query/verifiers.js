@@ -2,9 +2,10 @@ const _ = require('lodash');
 
 const includes = (str, substr) => _.includes(_.toLower(str), _.toLower(substr));
 
-function NAME(term, game) {
-  return includes(game['primary-name'], term.value);
-}
+const singleFieldSubstrings = _.mapValues({
+  NAME: 'primary-name',
+  DESCRIPTION: 'description',
+}, field => (term, game) => includes(game[field], term.value));
 
 function ARTIST(term, game) {
   return _.some(game.artists, a => includes(a, term.value));
@@ -12,10 +13,6 @@ function ARTIST(term, game) {
 
 function CATEGORY(term, game) {
   return _.some(game.categories, c => includes(c, term.value));
-}
-
-function DESCRIPTION(term, game) {
-  return includes(game.description, term.value);
 }
 
 function FAMILY(term, game) {
@@ -63,11 +60,11 @@ function AVERAGE_WEIGHT(term, game) {
 }
 
 module.exports = {
+  ...singleFieldSubstrings,
   ARTIST,
   AVERAGE_RATING,
   AVERAGE_WEIGHT,
   CATEGORY,
-  DESCRIPTION,
   DESIGNER,
   FAMILY,
   GEEK_RATING,
@@ -75,5 +72,4 @@ module.exports = {
   PUBLISHER,
   RATING_DEVIATION,
   RATING_VOTES,
-  NAME,
 };
