@@ -1,8 +1,6 @@
-function includes(str, substr) {
-  return str
-    .toLowercase()
-    .includes(substr.toLowerCase());
-}
+const _ = require('lodash');
+
+const includes = (str, substr) => _.includes(_.toLower(str), _.toLower(substr));
 
 function any(xs, pred) {
   for (const x of xs) {
