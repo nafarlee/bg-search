@@ -45,7 +45,7 @@ exports.pull = functions
 exports.search = functions.https.onRequest(async (req, res) => {
   const query = req.query.query || '';
   const order = req.query.order || 'bayes-rating';
-  const direction = req.query.order || 'desc';
+  const direction = req.query.direction || 'desc';
   console.log({ query, order, direction });
   const predicates = language.tryParse(query);
 
