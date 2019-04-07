@@ -54,7 +54,7 @@ exports.search = functions
 
     const db = admin.firestore();
     const results = [];
-    db.collection('games')
+    return db.collection('games')
       .orderBy(order, direction)
       .stream()
       .on('data', (doc) => {
