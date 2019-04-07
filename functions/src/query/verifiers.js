@@ -42,7 +42,7 @@ const simpleRelationalComparisons = _.mapValues({
 function RECOMMENDED_PLAYERS(term, game) {
   if (!game['community-recommended-players']) return false;
   const { counts } = game['community-recommended-players'];
-  return _.some(counts, (count, votes) => {
+  return _.some(counts, (votes, count) => {
     if (!operators[term.operator](count, term.value)) return false;
     const total = votes.best + votes.recommended + votes['not-recommended'];
     const recommended = votes.best + votes.recommended;
@@ -53,7 +53,7 @@ function RECOMMENDED_PLAYERS(term, game) {
 function BEST_PLAYERS(term, game) {
   if (!game['community-recommended-players']) return false;
   const { counts } = game['community-recommended-players'];
-  return _.some(counts, (count, votes) => {
+  return _.some(counts, (votes, count) => {
     if (!operators[term.operator](count, term.value)) return false;
     const total = votes.best + votes.recommended + votes['not-recommended'];
     const recommended = votes.best;
