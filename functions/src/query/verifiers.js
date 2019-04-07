@@ -24,32 +24,23 @@ const operators = {
   LTE: (a, b) => a <= b,
 };
 
-function RATING_VOTES(term, game) {
-  return operators[term.operator](term.value, game['rating-votes']);
-}
-
-function AVERAGE_RATING(term, game) {
-  return operators[term.operator](term.value, game['averate-rating']);
-}
-
-function GEEK_RATING(term, game) {
-  return operators[term.operator](term.value, game['bayes-rating']);
-}
-
-function RATING_DEVIATION(term, game) {
-  return operators[term.operator](term.value, game['rating-deviation']);
-}
-
-function AVERAGE_WEIGHT(term, game) {
-  return operators[term.operator](term.value, game['average-weight']);
-}
+const simpleRelationalComparisons = _.mapValues({
+  RATING_VOTES: 'rating-votes',
+  AVERAGE_RATING: 'average-rating',
+  GEEK_RATING: 'bayes-rating',
+  RATING_DEVIATION: 'rating-deviation',
+  AVERAGE_WEIGHT: 'average-weight',
+  WEIGHT_VOTES: 'weight-votes',
+  YEAR: 'year',
+  AGE: 'minimum-age',
+  MINIMUM_PLAYERS: 'minimum-players',
+  MAXIMUM_PLAYERS: 'maximum-players',
+  MINIMUM_PLAYTIME: 'minimum-playtime',
+  MAXIMUM_PLAYTIME: 'maximum-playtime',
+}, field => (term, game) => operators[term.operator](term.value, game[field]));
 
 module.exports = {
   ...singleFieldSubstrings,
   ...multipleFieldSubstrings,
-  AVERAGE_RATING,
-  AVERAGE_WEIGHT,
-  GEEK_RATING,
-  RATING_DEVIATION,
-  RATING_VOTES,
+  ...simpleRelationalComparisons,
 };
