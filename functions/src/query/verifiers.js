@@ -63,6 +63,10 @@ function GEEK_RATING(term, game) {
   return operators[term.operator](term.value, game['bayes-rating']);
 }
 
+function RATING_DEVIATION(term, game) {
+  return operators[term.operator](term.value, game['rating-deviation']);
+}
+
 module.exports = {
   ARTIST,
   AVERAGE_RATING,
@@ -73,6 +77,7 @@ module.exports = {
   GEEK_RATING,
   MECHANIC,
   PUBLISHER,
+  RATING_DEVIATION,
   RATING_VOTES,
   NAME,
 };
