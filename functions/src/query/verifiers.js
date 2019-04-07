@@ -49,9 +49,20 @@ function RECOMMENDED_PLAYERS(term, game) {
   });
 }
 
+function BEST_PLAYERS(term, game) {
+  const { counts } = game['community-recommended-players'];
+  return _.some(counts, (count, votes) => {
+    if (!operators[term.operator](count, term.value)) return false;
+    const total = votes.best + votes.recommended + votes['not-recommended'];
+    const recommended = votes.best;
+    return recommended / total > 0.5;
+  });
+}
+
 module.exports = {
   ...singleFieldSubstrings,
   ...multipleFieldSubstrings,
   ...simpleRelationalComparisons,
+  BEST_PLAYERS,
   RECOMMENDED_PLAYERS,
 };
