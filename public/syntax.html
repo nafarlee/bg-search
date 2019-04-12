@@ -2,177 +2,150 @@
 <head>
   <style>
     body {
+      color: #444;
       font-family: sans-serif;
+      line-height: 1.5;
+      margin: 0 auto;
+      max-width: 50em;
     }
-    table {
-      table-layout: fixed;
-      width: 100%;
-      border-collapse: collapse;
+    section {
+      border: 2px solid #444;
+      padding: 1ex 1em;
     }
-    td, th {
+    code {
+      background-color: #eee;
       padding: 1ex;
-      border-collapse: collapse;
-      border: 1px solid;
     }
-    thead th:nth-child(1) {
-      width: 10%;
-      text-align: center;
-    }
-    td p {
-      margin-bottom: 0;
+    div {
+      border-left: 3px solid #444;
+      padding-left: 1em;
     }
   </style>
 </head>
-<h1>BG Search</h1>
-<h2>Simple Terms</h2>
-<table>
-  <thead>
-    <tr>
-      <th>Tag
-      <th>Aliases
-      <th>Description
-      <th>Example
 
-  <tbody>
-    <tr>
-      <td>name
-      <td>
-      <td>Matches a part of the games primary name
-      <td>
-          <code>name:catan</code>
-          <p>Matches any game with <strong>catan</strong> somewhere in it's name
+<section>
+  <h2>name</h2>
+  <h3>Declarative</h3>
+  <p>Matches a part of the games primary name</p>
+  <div>
+    <code>name:catan</code>
+    <p>Matches any game with <strong>catan</strong> somewhere in it's name</p>
+  </div>
+</section>
 
-  <tbody>
-    <tr>
-      <td>art
-      <td>
-      <td>Matches a part of the name of any of the game's artists
-      <td>
-        <div>
-          <code>art:jakub</code>
-          <p>Matches any game with art done by anyone named <strong>jakub</strong>
+<section>
+  <h2>art</h2>
+  <h3>Declarative</h3>
+  <p>Matches a part of the name of any of the game's artists</p>
+  <div>
+    <code>art:jakub</code>
+    <p>Matches any game with art done by anyone named <strong>jakub</strong>
+  </div>
+</section>
 
-  <tbody>
-    <tr>
-      <td>category
-      <td>
-        <td>Matches a part of the name of any of the game's
-          <a href="https://boardgamegeek.com/browse/boardgamecategory">
-            categories
-          </a>
-      <td>
-        <div>
-          <code>category:act</code>
-          <p>Matches any game in the
-            <strong>Abstract Strategy</strong>,
-            <strong>Industry / Manufacturing</strong>,
-            or <strong>Action / Dexterity</strong> categories
+<section>
+  <h2>category</h2>
+  <h3>Declarative</h3>
+  <p>
+    Matches a part of the name of any of the game's
+    <a href="https://boardgamegeek.com/browse/boardgamecategory">categories</a>
+  </p>
+  <div>
+    <code>category:act</code>
+    <p>Matches any game in the
+      <strong>Abstract Strategy</strong>,
+      <strong>Industry / Manufacturing</strong>,
+      or <strong>Action / Dexterity</strong> categories
+  </div>
+</section>
 
-  <tbody>
-    <tr>
-      <td>desc
-      <td>
-        <td>Matches part of the games description
-      <td>
-        <div>
-          <code>desc:flip</code>
-          <p>Matches any game that includes the word <strong>flip</strong> in
-            it's description
+<section>
+  <h2>desc</h2>
+  <h3>Declarative</h3>
+  <p>Matches part of the game's description</p>
+  <div>
+    <code>desc:flip</code>
+    <p>Matches any game that includes the word <strong>flip</strong> in
+      it's description
+  </div>
+</section>
 
-  <tbody>
-    <tr>
-      <td>family
-      <td>
-        <td>Matches a part of the name of any of the game's
-          <a href="https://boardgamegeek.com/browse/boardgamefamily">
-            families
-          </a>
-      <td>
-        <div>
-          <code>family:dominion</code>
-          <p>Matches any game in the <strong>Dominion</strong> family
+<section>
+  <h2>family</h2>
+  <h3>Declarative</h3>
+  <p>
+    Matches a part of the name of any of the game's
+    <a href="https://boardgamegeek.com/browse/boardgamefamily">families</a>
+  </p>
+  <div>
+    <code>family:dominion</code>
+    <p>Matches any game in the <strong>Dominion</strong> family
+  </div>
+</section>
 
-  <tbody>
-    <tr>
-      <td>mechanic
-      <td>
-        <td>Matches a part of the name of any of the game's
-          <a href="https://boardgamegeek.com/browse/boardgamemechanic">
-            mechanics
-          </a>
-      <td>
-        <div>
-          <code>mechanic:building</code>
-          <p>Matches any game with
-            <strong>Pattern Building</strong>,
-            <strong>Route/Network Building</strong>,
-            or <strong>Deck / Pool Building</strong>
-            mechanics
+<section>
+  <h2>mechanic</h2>
+  <h3>Declarative</h3>
+  <p>
+    Matches a part of the name of any of the game's
+    <a href="https://boardgamegeek.com/browse/boardgamemechanic">mechanics</a>
+  </p>
+  <div>
+    <code>mechanic:building</code>
+    <p>Matches any game with
+      <strong>Pattern Building</strong>,
+      <strong>Route/Network Building</strong>,
+      or <strong>Deck / Pool Building</strong>
+      mechanics
+  </div>
+</section>
 
-  <tbody>
-    <tr>
-      <td>publish
-      <td>
-        <td>Matches a part of the name of any of the game's publishers
-      <td>
-        <div>
-          <code>publish:z-man</code>
-          <p>Matches any game published by <strong>Z-Man Games</strong>
-            
-  <tbody>
-    <tr>
-      <td>design
-      <td>
-        <td>Matches a part of the name of any of the game's designers
-      <td>
-        <div>
-          <code>design:uwe</code>
-          <p>Matches any game designed by someone named <strong>Uwe</strong>
-</table>
+<section>
+  <h2>publish</h2>
+  <h3>Declarative</h3>
+  <p>Matches a part of the name of any of the game's publishers</p>
+  <div>
+    <code>publish:z-man</code>
+    <p>Matches any game published by <strong>Z-Man Games</strong>
+  </div>
+</section>
+          
+<section>
+  <h2>design</h2>
+  <h3>Declarative</h3>
+  <p>Matches a part of the name of any of the game's designers</p>
+  <div>
+    <code>design:uwe</code>
+    <p>Matches any game designed by someone named <strong>Uwe</strong>
+  </div>
+</section>
 
-<h2>Comparative Terms</h2>
-<p>All of the terms in this section may use one the following operators to
-  specify conditions:
-<ul>
-  <li>=
-  <li><
-  <li>>
-  <li>>=
-  <li><=
-</ul>
-<p><em>Note: A colon (:) may not be used with these terms
-<table>
-  <thead>
-    <tr>
-      <th>Tag
-      <th>Aliases
-      <th>Description
-      <th>Example
+<section>
+  <h2>rating-votes</h2>
+  <h3>Relational</h3>
+  <p>Compares against the number of user ratings the game has received</p>
+  <div>
+    <code>rating-votes>=1000</code>
+    <p>Matches any game with at least <strong>1000</strong> user ratings
+  </div>
+</section>
 
-  <tbody>
-    <tr>
-      <td>rating-votes
-      <td>
-      <td>Compares against the number of user ratings the game has received
-      <td>
-        <code>rating-votes>=1000</code>
-        <p>Matches any game with at least <strong>1000</strong> user ratings
+<section>
+  <h2>average-rating</h2>
+  <h3>Relational</h3>
+  <p>Compares against the average user rating of a game</p>
+  <div>
+    <code>average-rating<6.5</code>
+    <p>Matches any game with an average rating below <strong>6.5</strong>
+  </div>
+</section>
 
-  <tbody>
-    <tr>
-      <td>average-rating
-      <td>
-      <td>Compares against the average user rating of a game
-      <td>
-        <code>average-rating<6.5</code>
-        <p>Matches any game with an average rating below <strong>6.5</strong>
-
-  <tbody>
-    <tr>
-      <td>geek-rating
-      <td>
-      <td>Compares against the game's BGG GeekRating metric
-      <td>
-        <code>geek-rating>=8.0</code>
-        <p>Matches any game with a GeekRating of at least <strong>8.0</strong>
-</table>
+<section>
+  <h2>geek-rating</h2>
+  <h3>Relational</h3>
+  <p>Compares against the game's BGG GeekRating metric</p>
+  <div>
+    <code>geek-rating>=8.0</code>
+    <p>Matches any game with a GeekRating of at least <strong>8.0</strong>
+  </div>
+</section>
