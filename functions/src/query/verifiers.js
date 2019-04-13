@@ -69,6 +69,10 @@ function COLLECTION(_term, game) {
   return game.contains && game.contains.length > 0;
 }
 
+function REIMPLEMENTATION(_term, game) {
+  return game.reimplements && game.reimplements.length > 0;
+}
+
 module.exports = _.mapValues({
   ...singleFieldSubstrings,
   ...multipleFieldSubstrings,
@@ -77,6 +81,7 @@ module.exports = _.mapValues({
   RECOMMENDED_PLAYERS,
   EXPANSION,
   COLLECTION,
+  REIMPLEMENTATION,
 }, fn => (term, game) => (
   term.negate ? !fn(term, game) : fn(term, game)
 ));
