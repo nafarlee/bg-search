@@ -24,6 +24,56 @@
   </style>
 </head>
 
+<h1>Language</h1>
+
+<p>
+  A valid query in this language is comprised of any number of terms, combined
+  or modified in certain ways. All terms may be:
+</p>
+
+<ul>
+  <li>Separated by spaces for an <strong>AND</strong> relationship
+  <li>Separated by spaces and an "or" for an <strong>OR</strong> relationship
+  <li>Grouped by surrounding one more terms with parentheses. This is mostly
+      useful in conjunction with the "or" separator.
+  <li>Prefixed with a minus (-) to <strong>NEGATE</strong> the terms results
+</ul>
+
+<div>
+  <code>-is:expansion (mechanic:"Dice Rolling" best-players=2) or (category:economic best-players=4)</code>
+  <p>
+    For example, the above query would match any games, which are
+    <strong>not expansions</strong>, and are
+    <strong>either dice rolling</strong> games that play
+    <strong>best with 2 players</strong>, <strong>or</strong> are
+    <strong>economic games</strong> that play
+    <strong>best with 4 players</strong>
+  </p>
+</div>
+
+<p>There are also some behaviours that are specific to the type of the term:</p>
+
+<ul>
+  <li><strong>Declarative</strong> terms are always separated by a colon (:), and
+      may use quotes to specify values that contain spaces.
+      Eg. <code>name:"Race for the Galaxy"</code>
+  <li><strong>Relational</strong> terms usually work with comparing numbers,
+      and may be separated by
+      <strong>=</strong>,
+      <strong>></strong>,
+      <strong><</strong>,
+      <strong>>=</strong>, or
+      <strong><=</strong>
+      to specify relationships.
+      Eg. <code>average-rating>=7.5</code>
+  <li><strong>Meta</strong> terms always start with <strong>is</strong>, are
+      always separated by a <strong>colon (:)</strong>, but otherwise are only
+      allowed to have specific values.
+      Eg. <code>is:expansion</code>
+</ul>
+
+<h1>Term Reference</h1>
+
 <section>
   <h2>name</h2>
   <h3>Declarative</h3>
@@ -292,6 +342,7 @@
 
 <section>
   <h2>is:expansion</h2>
+  <h3>Meta</h3>
   <p>Only matches against expansions</p>
   <div>
     <code>is:expansion family:carcassonne</code>
