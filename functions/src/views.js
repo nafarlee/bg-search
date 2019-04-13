@@ -13,11 +13,13 @@ function search({ req, games, fnName }) {
       `<h1><a href="https://boardgamegeek.com/boardgame/${id}">${name} (${year})</a></h1>`
     ))
     .join('\n');
+
   return `
-<!DOCTYPE html>
-${headings}
-<br>
-<p><a href="${nextURL}">Next</a></p>`;
+    <!DOCTYPE html>
+    ${headings}
+    <br>
+    <p><a href="${nextURL}">Next</a></p>
+  `;
 }
 
 module.exports = {
