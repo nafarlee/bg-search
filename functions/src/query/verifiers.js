@@ -65,6 +65,10 @@ function EXPANSION(_term, game) {
   return game.expands && game.expands.length > 0;
 }
 
+function COLLECTION(_term, game) {
+  return game.contains && game.contains.length > 0;
+}
+
 module.exports = _.mapValues({
   ...singleFieldSubstrings,
   ...multipleFieldSubstrings,
@@ -72,6 +76,7 @@ module.exports = _.mapValues({
   BEST_PLAYERS,
   RECOMMENDED_PLAYERS,
   EXPANSION,
+  COLLECTION,
 }, fn => (term, game) => (
   term.negate ? !fn(term, game) : fn(term, game)
 ));

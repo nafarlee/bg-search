@@ -36,6 +36,7 @@ const operators = [
 
 const meta = [
   'EXPANSION',
+  'COLLECTION',
 ].reduce(mirror, {});
 
 module.exports = {
@@ -49,6 +50,7 @@ module.exports = {
   tags: {
     meta: {
       expansion: meta.EXPANSION,
+      collection: meta.COLLECTION,
     },
     declarative: {
       name: tags.NAME,
