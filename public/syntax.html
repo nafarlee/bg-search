@@ -30,7 +30,7 @@
   <p>Matches a part of the games primary name</p>
   <div>
     <code>name:catan</code>
-    <p>Matches any game with <strong>catan</strong> somewhere in it's name</p>
+    <p>Games with <strong>Catan</strong> in the name</p>
   </div>
 </section>
 
@@ -39,8 +39,8 @@
   <h3>Declarative</h3>
   <p>Matches a part of the name of any of the game's artists</p>
   <div>
-    <code>art:jakub</code>
-    <p>Matches any game with art done by anyone named <strong>jakub</strong>
+    <code>art:"jakub rozalski"</code>
+    <p>Games where Jakub Rozalski supplied artwork</p>
   </div>
 </section>
 
@@ -201,18 +201,8 @@
   <h3>Relational</h3>
   <p>Compares against the year a game was released</p>
   <div>
-    <code>year<2000</code>
-    <p>Matches any game released before the year <strong>2000</strong></p>
-  </div>
-</section>
-
-<section>
-  <h2>year</h2>
-  <h3>Relational</h3>
-  <p>Compares against the year a game was released</p>
-  <div>
-    <code>year<2000</code>
-    <p>Matches any game released before the year <strong>2000</strong></p>
+    <code>year=2018 family:"roll-and-write"</code>
+    <p>All the new Roll-and-Write games</p>
   </div>
 </section>
 
