@@ -74,7 +74,7 @@ exports.search = functions
           throw e;
         }
         if (results.length >= 10) {
-          res.status(200).send(views.search({ req, games: results }));
+          res.status(200).send(views.search({ req, fnName: 'search', games: results }));
         }
       })
       .on('end', () => res.status(200).send(views.search({ req, games: results })));
