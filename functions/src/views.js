@@ -10,7 +10,7 @@ function search({ req, games, fnName }) {
 
   const headings = games
     .map(({ 'primary-name': name, id, year }) => (
-      `<h1><a href="https://boardgamegeek.com/boardgame/${id}">${name} (${year})</a></h1>`
+      `<h2><a href="https://boardgamegeek.com/boardgame/${id}">${name} (${year})</a></h2>`
     ))
     .join('\n');
 
