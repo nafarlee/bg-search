@@ -14,7 +14,7 @@ const multipleFieldSubstrings = _.mapValues({
   MECHANIC: 'mechanics',
   PUBLISHER: 'publishers',
   DESIGNER: 'designers',
-}, field => (term, game) => _.some(game[field], i => includes(i, term.value)));
+}, field => (term, game) => _.some(game[field], i => includes(i.value, term.value)));
 
 const operators = {
   EQUAL: (a, b) => parseFloat(a) === parseFloat(b),
