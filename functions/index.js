@@ -9,6 +9,7 @@ const get = require('./src/get');
 const marshall = require('./src/marshall');
 const language = require('./src/language');
 const verify = require('./src/query');
+const views = require('./src/views');
 
 const baseURL = 'https://api.geekdo.com/xmlapi2/things';
 
@@ -72,7 +73,9 @@ exports.search = functions
           console.error({ query, game: data });
           throw e;
         }
-        if (results.length >= 10) res.status(200).send(results);
+        if (results.length >= 10) {
+          res.status(200).send(views.search({ req, games: results }));
+        }
       })
-      .on('end', () => res.status(200).send(results));
+      .on('end', () => res.status(200).send(views.search({ req, games: results })));
   });
