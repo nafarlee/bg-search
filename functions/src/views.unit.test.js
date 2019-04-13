@@ -4,10 +4,7 @@ test('no game results', () => {
   const req = {
     protocol: 'https',
     originalURL: '/search',
-    get(field) {
-      if (field === 'host') return 'example.com';
-      throw new Error('Attempted to get field other than host');
-    },
+    hostname: 'example.com',
   };
   expect(search({ req, games: [] }))
     .toBe('<!DOCTYPE html>\n<h1>No more results!</h1>');
@@ -17,10 +14,7 @@ test('first results page', () => {
   const req = {
     protocol: 'https',
     originalURL: '/search?query=name%3Acatan&order=bayes-rating&direction=desc',
-    get(field) {
-      if (field === 'host') return 'example.com';
-      throw new Error('Attempted to get field other than host');
-    },
+    hostname: 'example.com',
   };
   const games = [{
     'primary-name': 'Catan',
@@ -39,10 +33,7 @@ test('second results page', () => {
   const req = {
     protocol: 'https',
     originalURL: '/search?query=name%3Acatan&order=bayes-rating&checkpoint=42&direction=desc',
-    get(field) {
-      if (field === 'host') return 'example.com';
-      throw new Error('Attempted to get field other than host');
-    },
+    hostname: 'example.com',
   };
   const games = [{
     'primary-name': 'Catan',
