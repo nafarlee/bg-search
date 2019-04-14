@@ -47,6 +47,7 @@ exports.search = functions
   .runWith({ timeoutSeconds: 540 })
   .https
   .onRequest(async (req, res) => {
+    res.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 7}`);
     const query = req.query.query || '';
     const order = req.query.order || 'bayes-rating';
     const direction = req.query.direction || 'desc';
