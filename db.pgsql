@@ -1,5 +1,5 @@
 CREATE TABLE games (
-  id PRIMARY KEY,
+  id INTEGER PRIMARY KEY,
   last-updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   alternate-names TEXT[],
   artists TEXT[],
@@ -28,7 +28,7 @@ CREATE TABLE games (
 );
 
 CREATE TABLE player-recommendations (
-  id REFERENCES games ON DELETE CASCADE,
+  id INTEGER REFERENCES games ON DELETE CASCADE,
   players INT4RANGE,
   best INTEGER CHECK (best >= 0),
   recommended INTEGER CHECK (recommended >= 0),
