@@ -24,7 +24,7 @@ CREATE TABLE games (
   rating_votes INTEGER,
   reimplemented_by text[],
   weight_votes INTEGER,
-  year SMALLINT,
+  year SMALLINT
 );
 
 CREATE TABLE player_recommendations (
@@ -33,5 +33,5 @@ CREATE TABLE player_recommendations (
   best INTEGER CHECK (best >= 0),
   recommended INTEGER CHECK (recommended >= 0),
   not_recommended INTEGER CHECK (not_recommended >= 0),
-  PRIMARY KEY (id, players),
+  PRIMARY KEY (id, players)
 );
