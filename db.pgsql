@@ -13,7 +13,7 @@ CREATE TABLE games (
   designers TEXT[],
   expanded_by TEXT[],
   families TEXT[],
-  maximum_players SMALLINT CHECK (max_players > 0),
+  maximum_players SMALLINT CHECK (maximum_players > 0),
   maximum_playtime SMALLINT CHECK (maximum_playtime > 0),
   mechanics TEXT[],
   minimum_age SMALLINT CHECK (minimum_age > 0),
