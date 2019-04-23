@@ -2,7 +2,6 @@ DROP TABLE IF EXISTS games CASCADE;
 CREATE TABLE games (
   id INTEGER PRIMARY KEY,
   last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  alternate_names TEXT[],
   artists TEXT[],
   average_rating REAL,
   average_weight REAL,
@@ -26,6 +25,13 @@ CREATE TABLE games (
   reimplemented_by text[],
   weight_votes INTEGER,
   year SMALLINT
+);
+
+DROP TABLE IF EXISTS alternate_names CASCADE;
+CREATE TABLE alternate_names (
+  id INTEGER REFERENCES games ON DELETE CASCADE,
+  alternate_name TEXT,
+  PRIMARY KEY (id, alternate_name)
 );
 
 DROP TABLE IF EXISTS player_recommendations CASCADE;
