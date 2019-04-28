@@ -8,7 +8,6 @@ CREATE TABLE games (
   description TEXT,
   maximum_players SMALLINT CHECK (maximum_players > 0),
   maximum_playtime SMALLINT CHECK (maximum_playtime > 0),
-  mechanics TEXT[],
   minimum_age SMALLINT CHECK (minimum_age > 0),
   minimum_players SMALLINT CHECK (minimum_players > 0),
   minimum_playtime SMALLINT CHECK (minimum_playtime > 0),
@@ -19,6 +18,13 @@ CREATE TABLE games (
   reimplemented_by text[],
   weight_votes INTEGER,
   year SMALLINT
+);
+
+DROP TABLE IF EXISTS mechanics CASCADE;
+CREATE TABLE mechanics (
+  id INTEGER REFERENCES games ON DELETE CASCADE,
+  mechanic TEXT,
+  PRIMARY KEY (id, mechanic)
 );
 
 DROP TABLE IF EXISTS families CASCADE;
