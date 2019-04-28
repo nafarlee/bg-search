@@ -20,8 +20,8 @@ CREATE TABLE games (
 
 DROP TABLE IF EXISTS reimplementations CASCADE;
 CREATE TABLE reimplementations (
-  reimplementation INTEGER REFERENCES games ON DELETE CASCADE,
   original INTEGER REFERENCES games ON DELETE CASCADE,
+  reimplementation INTEGER REFERENCES games ON DELETE CASCADE,
   PRIMARY KEY (reimplementation, original)
 );
 
@@ -69,8 +69,8 @@ CREATE TABLE categories (
 
 DROP TABLE IF EXISTS collections CASCADE;
 CREATE TABLE collections (
-  collection INTEGER REFERENCES games ON DELETE CASCADE,
   item INTEGER REFERENCES games ON DELETE CASCADE,
+  collection INTEGER REFERENCES games ON DELETE CASCADE,
   PRIMARY KEY (collection, item)
 );
 
@@ -83,8 +83,8 @@ CREATE TABLE designers (
 
 DROP TABLE IF EXISTS expansions CASCADE;
 CREATE TABLE expansions (
-  expansion INTEGER REFERENCES games ON DELETE CASCADE,
   base INTEGER REFERENCES games ON DELETE CASCADE,
+  expansion INTEGER REFERENCES games ON DELETE CASCADE,
   PRIMARY KEY (expansion, base)
 );
 
