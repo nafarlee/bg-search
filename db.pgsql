@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS collections CASCADE;
 CREATE TABLE collections (
   collection INTEGER REFERENCES games ON DELETE CASCADE,
   item INTEGER REFERENCES games ON DELETE CASCADE,
-  PRIMARY KEY (id, collection)
+  PRIMARY KEY (collection, item)
 );
 
 DROP TABLE IF EXISTS designers CASCADE;
