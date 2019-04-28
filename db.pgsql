@@ -6,7 +6,6 @@ CREATE TABLE games (
   average_weight REAL,
   bayes_rating REAL,
   description TEXT,
-  families TEXT[],
   maximum_players SMALLINT CHECK (maximum_players > 0),
   maximum_playtime SMALLINT CHECK (maximum_playtime > 0),
   mechanics TEXT[],
@@ -20,6 +19,13 @@ CREATE TABLE games (
   reimplemented_by text[],
   weight_votes INTEGER,
   year SMALLINT
+);
+
+DROP TABLE IF EXISTS families CASCADE;
+CREATE TABLE families (
+  id INTEGER REFERENCES games ON DELETE CASCADE,
+  family TEXT,
+  PRIMARY KEY (id, family)
 );
 
 DROP TABLE IF EXISTS alternate_names CASCADE;
