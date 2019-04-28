@@ -14,9 +14,15 @@ CREATE TABLE games (
   primary_name TEXT,
   rating_deviation REAL,
   rating_votes INTEGER,
-  reimplemented_by text[],
   weight_votes INTEGER,
   year SMALLINT
+);
+
+DROP TABLE IF EXISTS reimplementations CASCADE;
+CREATE TABLE reimplementations (
+  reimplementation INTEGER REFERENCES games ON DELETE CASCADE,
+  original INTEGER REFERENCES games ON DELETE CASCADE,
+  PRIMARY KEY (reimplementation, original)
 );
 
 DROP TABLE IF EXISTS publishers CASCADE;
