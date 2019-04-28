@@ -5,7 +5,6 @@ CREATE TABLE games (
   average_rating REAL,
   average_weight REAL,
   bayes_rating REAL,
-  categories TEXT[],
   contained_in TEXT[],
   description TEXT,
   designers TEXT[],
@@ -38,6 +37,13 @@ CREATE TABLE artists (
   id INTEGER REFERENCES games ON DELETE CASCADE,
   artist TEXT,
   PRIMARY KEY (id, artist)
+);
+
+DROP TABLE IF EXISTS categories CASCADE;
+CREATE TABLE categories (
+  id INTEGER REFERENCES games ON DELETE CASCADE,
+  category TEXT,
+  PRIMARY KEY (id, category)
 );
 
 DROP TABLE IF EXISTS player_recommendations CASCADE;
