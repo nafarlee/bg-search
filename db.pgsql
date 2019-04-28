@@ -6,7 +6,6 @@ CREATE TABLE games (
   average_weight REAL,
   bayes_rating REAL,
   description TEXT,
-  designers TEXT[],
   expanded_by TEXT[],
   families TEXT[],
   maximum_players SMALLINT CHECK (maximum_players > 0),
@@ -50,6 +49,13 @@ CREATE TABLE collections (
   collection INTEGER REFERENCES games ON DELETE CASCADE,
   item INTEGER REFERENCES games ON DELETE CASCADE,
   PRIMARY KEY (id, collection)
+);
+
+DROP TABLE IF EXISTS designers CASCADE;
+CREATE TABLE designers (
+  id INTEGER REFERENCES games ON DELETE CASCADE,
+  designer TEXT,
+  PRIMARY KEY (id, designer)
 );
 
 DROP TABLE IF EXISTS player_recommendations CASCADE;
