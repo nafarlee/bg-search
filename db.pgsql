@@ -20,77 +20,77 @@ CREATE TABLE games (
 
 DROP TABLE IF EXISTS reimplementations CASCADE;
 CREATE TABLE reimplementations (
-  original INTEGER REFERENCES games ON DELETE CASCADE,
-  reimplementation INTEGER REFERENCES games ON DELETE CASCADE,
+  original INTEGER,
+  reimplementation INTEGER,
   PRIMARY KEY (reimplementation, original)
 );
 
 DROP TABLE IF EXISTS publishers CASCADE;
 CREATE TABLE publishers (
-  id INTEGER REFERENCES games ON DELETE CASCADE,
+  id INTEGER,
   publisher TEXT,
   PRIMARY KEY (id, publisher)
 );
 
 DROP TABLE IF EXISTS mechanics CASCADE;
 CREATE TABLE mechanics (
-  id INTEGER REFERENCES games ON DELETE CASCADE,
+  id INTEGER,
   mechanic TEXT,
   PRIMARY KEY (id, mechanic)
 );
 
 DROP TABLE IF EXISTS families CASCADE;
 CREATE TABLE families (
-  id INTEGER REFERENCES games ON DELETE CASCADE,
+  id INTEGER,
   family TEXT,
   PRIMARY KEY (id, family)
 );
 
 DROP TABLE IF EXISTS alternate_names CASCADE;
 CREATE TABLE alternate_names (
-  id INTEGER REFERENCES games ON DELETE CASCADE,
+  id INTEGER,
   alternate_name TEXT,
   PRIMARY KEY (id, alternate_name)
 );
 
 DROP TABLE IF EXISTS artists CASCADE;
 CREATE TABLE artists (
-  id INTEGER REFERENCES games ON DELETE CASCADE,
+  id INTEGER,
   artist TEXT,
   PRIMARY KEY (id, artist)
 );
 
 DROP TABLE IF EXISTS categories CASCADE;
 CREATE TABLE categories (
-  id INTEGER REFERENCES games ON DELETE CASCADE,
+  id INTEGER,
   category TEXT,
   PRIMARY KEY (id, category)
 );
 
 DROP TABLE IF EXISTS collections CASCADE;
 CREATE TABLE collections (
-  item INTEGER REFERENCES games ON DELETE CASCADE,
-  collection INTEGER REFERENCES games ON DELETE CASCADE,
+  item INTEGER,
+  collection INTEGER,
   PRIMARY KEY (collection, item)
 );
 
 DROP TABLE IF EXISTS designers CASCADE;
 CREATE TABLE designers (
-  id INTEGER REFERENCES games ON DELETE CASCADE,
+  id INTEGER,
   designer TEXT,
   PRIMARY KEY (id, designer)
 );
 
 DROP TABLE IF EXISTS expansions CASCADE;
 CREATE TABLE expansions (
-  base INTEGER REFERENCES games ON DELETE CASCADE,
-  expansion INTEGER REFERENCES games ON DELETE CASCADE,
+  base INTEGER,
+  expansion INTEGER,
   PRIMARY KEY (expansion, base)
 );
 
 DROP TABLE IF EXISTS player_recommendations CASCADE;
 CREATE TABLE player_recommendations (
-  id INTEGER REFERENCES games ON DELETE CASCADE,
+  id INTEGER,
   players INT4RANGE,
   best INTEGER CHECK (best >= 0),
   recommended INTEGER CHECK (recommended >= 0),
