@@ -12,12 +12,18 @@ CREATE TABLE games (
   minimum_players SMALLINT CHECK (minimum_players > 0),
   minimum_playtime SMALLINT CHECK (minimum_playtime > 0),
   primary_name TEXT,
-  publishers TEXT[],
   rating_deviation REAL,
   rating_votes INTEGER,
   reimplemented_by text[],
   weight_votes INTEGER,
   year SMALLINT
+);
+
+DROP TABLE IF EXISTS publishers CASCADE;
+CREATE TABLE publishers (
+  id INTEGER REFERENCES games ON DELETE CASCADE,
+  publisher TEXT,
+  PRIMARY KEY (id, publisher)
 );
 
 DROP TABLE IF EXISTS mechanics CASCADE;
