@@ -25,11 +25,17 @@ CREATE TABLE reimplementations (
   PRIMARY KEY (reimplementation, original)
 );
 
+DROP TABLE IF EXISTS games_publishers CASCADE;
+CREATE TABLE games_publishers (
+  game_id INTEGER REFERENCES games ON DELETE CASCADE,
+  publisher_id INTEGER REFERENCES publishers ON DELETE RESTRICT,
+  PRIMARY KEY (game_id, publisher_id)
+);
+
 DROP TABLE IF EXISTS publishers CASCADE;
 CREATE TABLE publishers (
-  id INTEGER,
-  publisher TEXT,
-  PRIMARY KEY (id, publisher)
+  id INTEGER PRIMARY KEY,
+  publisher TEXT
 );
 
 DROP TABLE IF EXISTS mechanics CASCADE;
