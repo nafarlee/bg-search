@@ -38,11 +38,17 @@ CREATE TABLE publishers (
   publisher TEXT
 );
 
+DROP TABLE IF EXISTS games_mechanics CASCADE;
+CREATE TABLE games_mechanics (
+  game_id INTEGER REFERENCES games ON DELETE CASCADE,
+  mechanic_id INTEGER REFERENCES mechanics ON DELETE RESTRICT,
+  PRIMARY KEY (game_id, mechanic_id)
+);
+
 DROP TABLE IF EXISTS mechanics CASCADE;
 CREATE TABLE mechanics (
-  id INTEGER,
-  mechanic TEXT,
-  PRIMARY KEY (id, mechanic)
+  id INTEGER PRIMARY KEY,
+  mechanic TEXT
 );
 
 DROP TABLE IF EXISTS families CASCADE;
