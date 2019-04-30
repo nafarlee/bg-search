@@ -18,12 +18,45 @@ CREATE TABLE games (
   year SMALLINT
 );
 
+DROP TABLE IF EXISTS alternate_names CASCADE;
+CREATE TABLE alternate_names (
+  id INTEGER,
+  alternate_name TEXT,
+  PRIMARY KEY (id, alternate_name)
+);
+
+DROP TABLE IF EXISTS player_recommendations CASCADE;
+CREATE TABLE player_recommendations (
+  id INTEGER REFERENCES games ON DELETE CASCADE,
+  players INT4RANGE,
+  best INTEGER CHECK (best >= 0),
+  recommended INTEGER CHECK (recommended >= 0),
+  not_recommended INTEGER CHECK (not_recommended >= 0),
+  PRIMARY KEY (id, players)
+);
+
+
 DROP TABLE IF EXISTS reimplementations CASCADE;
 CREATE TABLE reimplementations (
   original INTEGER,
   reimplementation INTEGER,
   PRIMARY KEY (reimplementation, original)
 );
+
+DROP TABLE IF EXISTS collections CASCADE;
+CREATE TABLE collections (
+  item INTEGER,
+  collection INTEGER,
+  PRIMARY KEY (collection, item)
+);
+
+DROP TABLE IF EXISTS expansions CASCADE;
+CREATE TABLE expansions (
+  base INTEGER,
+  expansion INTEGER,
+  PRIMARY KEY (expansion, base)
+);
+
 
 DROP TABLE IF EXISTS games_publishers CASCADE;
 CREATE TABLE games_publishers (
@@ -38,6 +71,7 @@ CREATE TABLE publishers (
   publisher TEXT
 );
 
+
 DROP TABLE IF EXISTS games_mechanics CASCADE;
 CREATE TABLE games_mechanics (
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
@@ -50,6 +84,7 @@ CREATE TABLE mechanics (
   id INTEGER PRIMARY KEY,
   mechanic TEXT
 );
+
 
 DROP TABLE IF EXISTS games_families CASCADE;
 CREATE TABLE games_families (
@@ -64,12 +99,6 @@ CREATE TABLE families (
   family TEXT
 );
 
-DROP TABLE IF EXISTS alternate_names CASCADE;
-CREATE TABLE alternate_names (
-  id INTEGER,
-  alternate_name TEXT,
-  PRIMARY KEY (id, alternate_name)
-);
 
 DROP TABLE IF EXISTS games_artists CASCADE;
 CREATE TABLE games_artists (
@@ -84,6 +113,7 @@ CREATE TABLE artists (
   artist TEXT
 );
 
+
 DROP TABLE IF EXISTS games_categories CASCADE;
 CREATE TABLE games_categories (
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
@@ -97,12 +127,6 @@ CREATE TABLE categories (
   category TEXT
 );
 
-DROP TABLE IF EXISTS collections CASCADE;
-CREATE TABLE collections (
-  item INTEGER,
-  collection INTEGER,
-  PRIMARY KEY (collection, item)
-);
 
 DROP TABLE IF EXISTS games_designers CASCADE;
 CREATE TABLE games_designers (
@@ -115,21 +139,4 @@ DROP TABLE IF EXISTS designers CASCADE;
 CREATE TABLE designers (
   id INTEGER PRIMARY KEY,
   designer TEXT
-);
-
-DROP TABLE IF EXISTS expansions CASCADE;
-CREATE TABLE expansions (
-  base INTEGER,
-  expansion INTEGER,
-  PRIMARY KEY (expansion, base)
-);
-
-DROP TABLE IF EXISTS player_recommendations CASCADE;
-CREATE TABLE player_recommendations (
-  id INTEGER REFERENCES games ON DELETE CASCADE,
-  players INT4RANGE,
-  best INTEGER CHECK (best >= 0),
-  recommended INTEGER CHECK (recommended >= 0),
-  not_recommended INTEGER CHECK (not_recommended >= 0),
-  PRIMARY KEY (id, players)
 );
