@@ -51,11 +51,17 @@ CREATE TABLE mechanics (
   mechanic TEXT
 );
 
+DROP TABLE IF EXISTS games_families CASCADE;
+CREATE TABLE games_families (
+  game_id INTEGER REFERENCES games ON DELETE CASCADE,
+  family_id INTEGER REFERENCES families ON DELETE RESTRICT,
+  PRIMARY KEY (game_id, family_id)
+);
+
 DROP TABLE IF EXISTS families CASCADE;
 CREATE TABLE families (
-  id INTEGER,
-  family TEXT,
-  PRIMARY KEY (id, family)
+  id INTEGER PRIMARY KEY,
+  family TEXT
 );
 
 DROP TABLE IF EXISTS alternate_names CASCADE;
