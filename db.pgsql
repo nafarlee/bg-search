@@ -126,7 +126,7 @@ CREATE TABLE expansions (
 
 DROP TABLE IF EXISTS player_recommendations CASCADE;
 CREATE TABLE player_recommendations (
-  id INTEGER,
+  id INTEGER REFERENCES games ON DELETE CASCADE,
   players INT4RANGE,
   best INTEGER CHECK (best >= 0),
   recommended INTEGER CHECK (recommended >= 0),
