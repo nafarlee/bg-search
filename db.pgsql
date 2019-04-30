@@ -20,7 +20,7 @@ CREATE TABLE games (
 
 DROP TABLE IF EXISTS alternate_names CASCADE;
 CREATE TABLE alternate_names (
-  id INTEGER,
+  id INTEGER REFERENCES games ON DELETE CASCADE,
   alternate_name TEXT,
   PRIMARY KEY (id, alternate_name)
 );
