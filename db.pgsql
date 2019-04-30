@@ -84,11 +84,17 @@ CREATE TABLE artists (
   artist TEXT
 );
 
+DROP TABLE IF EXISTS games_categories CASCADE;
+CREATE TABLE games_categories (
+  game_id INTEGER REFERENCES games ON DELETE CASCADE,
+  category_id INTEGER REFERENCES category_id ON DELETE RESTRICT,
+  PRIMARY KEY (game_id, category_id)
+);
+
 DROP TABLE IF EXISTS categories CASCADE;
 CREATE TABLE categories (
-  id INTEGER,
-  category TEXT,
-  PRIMARY KEY (id, category)
+  id INTEGER PRIMARY KEY,
+  category TEXT
 );
 
 DROP TABLE IF EXISTS collections CASCADE;
