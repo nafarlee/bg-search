@@ -104,11 +104,17 @@ CREATE TABLE collections (
   PRIMARY KEY (collection, item)
 );
 
+DROP TABLE IF EXISTS games_designers CASCADE;
+CREATE TABLE games_designers (
+  game_id INTEGER REFERENCES games ON DELETE CASCADE,
+  designer_id INTEGER REFERENCES designers ON DELETE RESTRICT,
+  PRIMARY KEY (game_id, designer_id)
+);
+
 DROP TABLE IF EXISTS designers CASCADE;
 CREATE TABLE designers (
-  id INTEGER,
-  designer TEXT,
-  PRIMARY KEY (id, designer)
+  id INTEGER PRIMARY KEY,
+  designer TEXT
 );
 
 DROP TABLE IF EXISTS expansions CASCADE;
