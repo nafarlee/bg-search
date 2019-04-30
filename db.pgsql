@@ -71,11 +71,17 @@ CREATE TABLE alternate_names (
   PRIMARY KEY (id, alternate_name)
 );
 
+DROP TABLE IF EXISTS games_artists CASCADE;
+CREATE TABLE games_artists (
+  game_id INTEGER REFERENCES games ON DELETE CASCADE,
+  artist_id INTEGER REFERENCES artists ON DELETE RESTRICT,
+  PRIMARY KEY (game_id, artist_id)
+);
+
 DROP TABLE IF EXISTS artists CASCADE;
 CREATE TABLE artists (
-  id INTEGER,
-  artist TEXT,
-  PRIMARY KEY (id, artist)
+  id INTEGER PRIMARY KEY,
+  artist TEXT
 );
 
 DROP TABLE IF EXISTS categories CASCADE;
