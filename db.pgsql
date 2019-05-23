@@ -124,7 +124,7 @@ CREATE TABLE categories (
 DROP TABLE IF EXISTS games_categories CASCADE;
 CREATE TABLE games_categories (
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
-  category_id INTEGER REFERENCES category_id ON DELETE RESTRICT,
+  category_id INTEGER REFERENCES categories ON DELETE RESTRICT,
   PRIMARY KEY (game_id, category_id)
 );
 
