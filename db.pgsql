@@ -59,6 +59,12 @@ CREATE TABLE expansions (
 );
 
 
+DROP TABLE IF EXISTS publishers CASCADE;
+CREATE TABLE publishers (
+  id INTEGER PRIMARY KEY,
+  publisher TEXT
+);
+
 DROP TABLE IF EXISTS games_publishers CASCADE;
 CREATE TABLE games_publishers (
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
@@ -66,12 +72,12 @@ CREATE TABLE games_publishers (
   PRIMARY KEY (game_id, publisher_id)
 );
 
-DROP TABLE IF EXISTS publishers CASCADE;
-CREATE TABLE publishers (
-  id INTEGER PRIMARY KEY,
-  publisher TEXT
-);
 
+DROP TABLE IF EXISTS mechanics CASCADE;
+CREATE TABLE mechanics (
+  id INTEGER PRIMARY KEY,
+  mechanic TEXT
+);
 
 DROP TABLE IF EXISTS games_mechanics CASCADE;
 CREATE TABLE games_mechanics (
@@ -80,12 +86,12 @@ CREATE TABLE games_mechanics (
   PRIMARY KEY (game_id, mechanic_id)
 );
 
-DROP TABLE IF EXISTS mechanics CASCADE;
-CREATE TABLE mechanics (
-  id INTEGER PRIMARY KEY,
-  mechanic TEXT
-);
 
+DROP TABLE IF EXISTS families CASCADE;
+CREATE TABLE families (
+  id INTEGER PRIMARY KEY,
+  family TEXT
+);
 
 DROP TABLE IF EXISTS games_families CASCADE;
 CREATE TABLE games_families (
@@ -94,12 +100,12 @@ CREATE TABLE games_families (
   PRIMARY KEY (game_id, family_id)
 );
 
-DROP TABLE IF EXISTS families CASCADE;
-CREATE TABLE families (
-  id INTEGER PRIMARY KEY,
-  family TEXT
-);
 
+DROP TABLE IF EXISTS artists CASCADE;
+CREATE TABLE artists (
+  id INTEGER PRIMARY KEY,
+  artist TEXT
+);
 
 DROP TABLE IF EXISTS games_artists CASCADE;
 CREATE TABLE games_artists (
@@ -108,12 +114,12 @@ CREATE TABLE games_artists (
   PRIMARY KEY (game_id, artist_id)
 );
 
-DROP TABLE IF EXISTS artists CASCADE;
-CREATE TABLE artists (
-  id INTEGER PRIMARY KEY,
-  artist TEXT
-);
 
+DROP TABLE IF EXISTS categories CASCADE;
+CREATE TABLE categories (
+  id INTEGER PRIMARY KEY,
+  category TEXT
+);
 
 DROP TABLE IF EXISTS games_categories CASCADE;
 CREATE TABLE games_categories (
@@ -122,22 +128,16 @@ CREATE TABLE games_categories (
   PRIMARY KEY (game_id, category_id)
 );
 
-DROP TABLE IF EXISTS categories CASCADE;
-CREATE TABLE categories (
-  id INTEGER PRIMARY KEY,
-  category TEXT
-);
 
+DROP TABLE IF EXISTS designers CASCADE;
+CREATE TABLE designers (
+  id INTEGER PRIMARY KEY,
+  designer TEXT
+);
 
 DROP TABLE IF EXISTS games_designers CASCADE;
 CREATE TABLE games_designers (
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
   designer_id INTEGER REFERENCES designers ON DELETE RESTRICT,
   PRIMARY KEY (game_id, designer_id)
-);
-
-DROP TABLE IF EXISTS designers CASCADE;
-CREATE TABLE designers (
-  id INTEGER PRIMARY KEY,
-  designer TEXT
 );
