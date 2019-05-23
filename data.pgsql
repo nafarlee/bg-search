@@ -145,13 +145,13 @@ VALUES
 
 INSERT INTO families
 VALUES
-  (13, 3),
-  (13, 11505);
+  (3, 'Catan'),
+  (11505, 'Promotional Board Games');
 
 INSERT INTO games_families
 VALUES
-  (3, 'Catan'),
-  (11505, 'Promotional Board Games');
+  (13, 3),
+  (13, 11505);
 
 INSERT INTO alternate_names
 VALUES
@@ -212,20 +212,6 @@ VALUES
   (13, '카탄'),
   (13, '카탄의 개척자');
 
-INSERT INTO games_artists
-VALUES
-  (13, 12036),
-  (13, 12382),
-  (13, 13034),
-  (13, 5442),
-  (13, 26874),
-  (13, 4959),
-  (13, 11825),
-  (13, 24191),
-  (13, 25612),
-  (13, 11883),
-  (13, 12063);
-
 INSERT INTO artists
 VALUES
   (12036, 'Volkan Baga'),
@@ -240,9 +226,23 @@ VALUES
   (11883, 'Franz Vohwinkel'),
   (12063, 'Stephen Graham Walsh');
 
-INSERT INTO games_categories VALUES (13, 1026);
+INSERT INTO games_artists
+VALUES
+  (13, 12036),
+  (13, 12382),
+  (13, 13034),
+  (13, 5442),
+  (13, 26874),
+  (13, 4959),
+  (13, 11825),
+  (13, 24191),
+  (13, 25612),
+  (13, 11883),
+  (13, 12063);
 
 INSERT INTO categories VALUES (1026, 'Negotiation');
+
+INSERT INTO games_categories VALUES (13, 1026);
 
 INSERT INTO collections
 VALUES
@@ -253,9 +253,9 @@ VALUES
   (13, 265030),
   (13, 152959);
 
-INSERT INTO games_designers VALUES (13, 11);
-
 INSERT INTO designers VALUES (11, 'Klaus Teuber');
+
+INSERT INTO games_designers VALUES (13, 11);
 
 INSERT INTO expansions
 VALUES
