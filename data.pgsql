@@ -41,7 +41,7 @@ VALUES
   (13, 1897),
   (13, 5549);
 
-INSERT INTO games_publishers
+INSERT INTO publishers
 VALUES
   (37, 'KOSMOS'),
   (267, '999 Games'),
@@ -85,7 +85,7 @@ VALUES
   (18477, 'Top Toys'),
   (13481, 'TRY SOFT');
 
-INSERT INTO publishers
+INSERT INTO games_publishers
 VALUES
   (13, 37),
   (13, 267),
@@ -129,26 +129,26 @@ VALUES
   (13, 18477),
   (13, 13481);
 
-INSERT INTO games_mechanics
+INSERT INTO mechanics
 VALUES
   (2072, 'Dice Rolling'),
   (2011, 'Modular Board'),
   (2081, 'Route/Network Building'),
   (2008, 'Trading');
 
-INSERT INTO mechanics
+INSERT INTO games_mechanics
 VALUES
   (13, 2072),
   (13, 2011),
   (13, 2081),
   (13, 2008);
 
-INSERT INTO games_families
+INSERT INTO families
 VALUES
   (13, 3),
   (13, 11505);
 
-INSERT INTO families
+INSERT INTO games_families
 VALUES
   (3, 'Catan'),
   (11505, 'Promotional Board Games');
