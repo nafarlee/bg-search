@@ -41,61 +41,117 @@ VALUES
   (13, 1897),
   (13, 5549);
 
+INSERT INTO games_publishers
+VALUES
+  (37, 'KOSMOS'),
+  (267, '999 Games'),
+  (4304, 'Albi'),
+  (7340, 'Astrel Games'),
+  (6784, 'Bergsala Enigma'),
+  (7162, 'Brain Games'),
+  (4358, 'Capcom Co., Ltd.'),
+  (31418, 'Catan Studio'),
+  (4335, 'Competo / Marektoy'),
+  (496, 'danspil'),
+  (41, 'Descartes Editeur'),
+  (2366, 'Devir'),
+  (26990, 'Dexy Co'),
+  (116, 'Eurogames'),
+  (5657, 'Filosofia Éditions'),
+  (4617, 'Galakta'),
+  (5530, 'Giochi Uniti'),
+  (21640, 'GP Games'),
+  (858, 'Grow Jogos e Brinquedos'),
+  (23382, 'HaKubia'),
+  (4417, 'Hanayama'),
+  (18852, 'Hobby World'),
+  (8822, 'Ideal Board Games'),
+  (31372, 'Igroljub'),
+  (29036, 'IntelliGames.BG'),
+  (5020, 'Ísöld ehf.'),
+  (6214, 'Kaissa Chess & Games'),
+  (8291, 'Korea Boardgames co., Ltd.'),
+  (2654, 'L&M Games'),
+  (5597, 'Laser plus'),
+  (3218, 'Lautapelit.fi'),
+  (3533, 'Logojogos'),
+  (10, 'Mayfair Games'),
+  (24886, 'Ninive Games'),
+  (22, 'Piatnik'),
+  (8313, 'Smart Ltd'),
+  (9235, 'Stupor Mundi'),
+  (9234, 'Swan Panasia Co., Ltd.'),
+  (42, 'Tilsit'),
+  (18477, 'Top Toys'),
+  (13481, 'TRY SOFT');
+
 INSERT INTO publishers
 VALUES
-  (13, 'KOSMOS'),
-  (13, '999 Games'),
-  (13, 'Albi'),
-  (13, 'Astrel Games'),
-  (13, 'Bergsala Enigma'),
-  (13, 'Brain Games'),
-  (13, 'Capcom Co., Ltd.'),
-  (13, 'Catan Studio'),
-  (13, 'Competo / Marektoy'),
-  (13, 'danspil'),
-  (13, 'Descartes Editeur'),
-  (13, 'Devir'),
-  (13, 'Dexy Co'),
-  (13, 'Eurogames'),
-  (13, 'Filosofia Éditions'),
-  (13, 'Galakta'),
-  (13, 'Giochi Uniti'),
-  (13, 'GP Games'),
-  (13, 'Grow Jogos e Brinquedos'),
-  (13, 'HaKubia'),
-  (13, 'Hanayama'),
-  (13, 'Hobby World'),
-  (13, 'Ideal Board Games'),
-  (13, 'Igroljub'),
-  (13, 'IntelliGames.BG'),
-  (13, 'Ísöld ehf.'),
-  (13, 'Kaissa Chess & Games'),
-  (13, 'Korea Boardgames co., Ltd.'),
-  (13, 'L&M Games'),
-  (13, 'Laser plus'),
-  (13, 'Lautapelit.fi'),
-  (13, 'Logojogos'),
-  (13, 'Mayfair Games'),
-  (13, 'Ninive Games'),
-  (13, 'Piatnik'),
-  (13, 'Smart Ltd'),
-  (13, 'Stupor Mundi'),
-  (13, 'Swan Panasia Co., Ltd.'),
-  (13, 'Tilsit'),
-  (13, 'Top Toys'),
-  (13, 'TRY SOFT');
+  (13, 37),
+  (13, 267),
+  (13, 4304),
+  (13, 7340),
+  (13, 6784),
+  (13, 7162),
+  (13, 4358),
+  (13, 31418),
+  (13, 4335),
+  (13, 496),
+  (13, 41),
+  (13, 2366),
+  (13, 26990),
+  (13, 116),
+  (13, 5657),
+  (13, 4617),
+  (13, 5530),
+  (13, 21640),
+  (13, 858),
+  (13, 23382),
+  (13, 4417),
+  (13, 18852),
+  (13, 8822),
+  (13, 31372),
+  (13, 29036),
+  (13, 5020),
+  (13, 6214),
+  (13, 8291),
+  (13, 2654),
+  (13, 5597),
+  (13, 3218),
+  (13, 3533),
+  (13, 10),
+  (13, 24886),
+  (13, 22),
+  (13, 8313),
+  (13, 9235),
+  (13, 9234),
+  (13, 42),
+  (13, 18477),
+  (13, 13481);
+
+INSERT INTO games_mechanics
+VALUES
+  (2072, 'Dice Rolling'),
+  (2011, 'Modular Board'),
+  (2081, 'Route/Network Building'),
+  (2008, 'Trading');
 
 INSERT INTO mechanics
 VALUES
-  (13, 'Dice Rolling'),
-  (13, 'Modular Board'),
-  (13, 'Route/Network Building'),
-  (13, 'Trading');
+  (13, 2072),
+  (13, 2011),
+  (13, 2081),
+  (13, 2008);
+
+INSERT INTO games_families
+VALUES
+  (13, 3),
+  (13, 11505);
 
 INSERT INTO families
 VALUES
-  (13, 'Catan'),
-  (13, 'Promotional Board Games');
+  (3, 'Catan'),
+  (11505, 'Promotional Board Games');
 
 INSERT INTO alternate_names
 VALUES
@@ -156,21 +212,37 @@ VALUES
   (13, '카탄'),
   (13, '카탄의 개척자');
 
+INSERT INTO games_artists
+VALUES
+  (13, 12036),
+  (13, 12382),
+  (13, 13034),
+  (13, 5442),
+  (13, 26874),
+  (13, 4959),
+  (13, 11825),
+  (13, 24191),
+  (13, 25612),
+  (13, 11883),
+  (13, 12063);
+
 INSERT INTO artists
 VALUES
-  (13, 'Volkan Baga'),
-  (13, 'Tanja Donner'),
-  (13, 'Pete Fenlon'),
-  (13, 'Jason Hawkins'),
-  (13, 'Michaela Kienle'),
-  (13, 'Harald Lieske'),
-  (13, 'Michael Menzel'),
-  (13, 'Marion Pott'),
-  (13, 'Matt Schwabel'),
-  (13, 'Franz Vohwinkel'),
-  (13, 'Stephen Graham Walsh');
+  (12036, 'Volkan Baga'),
+  (12382, 'Tanja Donner'),
+  (13034, 'Pete Fenlon'),
+  (5442, 'Jason Hawkins'),
+  (26874, 'Michaela Kienle'),
+  (4959, 'Harald Lieske'),
+  (11825, 'Michael Menzel'),
+  (24191, 'Marion Pott'),
+  (25612, 'Matt Schwabel'),
+  (11883, 'Franz Vohwinkel'),
+  (12063, 'Stephen Graham Walsh');
 
-INSERT INTO categories VALUES (13, 'Negotiation');
+INSERT INTO games_categories VALUES (13, 1026);
+
+INSERT INTO categories VALUES (1026, 'Negotiation');
 
 INSERT INTO collections
 VALUES
@@ -181,7 +253,9 @@ VALUES
   (13, 265030),
   (13, 152959);
 
-INSERT INTO designers VALUES (13, 'Klaus Teuber');
+INSERT INTO games_designers VALUES (13, 11);
+
+INSERT INTO designers VALUES (11, 'Klaus Teuber');
 
 INSERT INTO expansions
 VALUES
