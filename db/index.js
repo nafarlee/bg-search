@@ -1,14 +1,17 @@
 const { Client } = require('pg');
 
+const { name } = require('./transpile');
+
 (async () => {
   const client = new Client({
     user: 'postgres',
     database: 'postgres',
   });
   await client.connect();
-  const res = await client.query('SELECT * from games');
+  const query = name('catan');
+  const res = await client.query(query.text, query.values);
 
-  console.log(res.rows[0]);
+  console.log(res);
 
   await client.end();
 })();
