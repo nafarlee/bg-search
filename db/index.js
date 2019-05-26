@@ -1,6 +1,6 @@
 const { Client } = require('pg');
 
-const { name } = require('./transpile');
+const { NAME } = require('./transpile');
 
 (async () => {
   const client = new Client({
@@ -8,7 +8,7 @@ const { name } = require('./transpile');
     database: 'postgres',
   });
   await client.connect();
-  const query = name('catan');
+  const query = NAME('at');
   const res = await client.query(query.text, query.values);
 
   console.log(res.rows);
