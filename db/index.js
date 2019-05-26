@@ -11,7 +11,7 @@ const { name } = require('./transpile');
   const query = name('catan');
   const res = await client.query(query.text, query.values);
 
-  console.log(res);
+  console.log(res.rows);
 
   await client.end();
 })();
