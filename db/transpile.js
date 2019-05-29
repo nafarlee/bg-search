@@ -1,11 +1,14 @@
 const FIELDS = 'primary_name, year';
 
-module.exports.NAME = (value, negate = false) => ({
+const simple = field => (value, negate = false) => ({
   text: `SELECT ${FIELDS}
          FROM games
-         WHERE primary_name ${negate ? '!' : ''}~~* $1`,
+         WHERE ${field} ${negate ? '!' : ''}~~* $1`,
   values: [`%${value}%`],
 });
+
+module.exports.NAME = simple('primary_name');
+module.exports.DESCRIPTION = simple('description');
 
 module.exports.ARTIST = (value, negate = false) => ({
   text: `SELECT DISTINCT ${FIELDS}
@@ -22,12 +25,5 @@ module.exports.CATEGORY = (value, negate = false) => ({
          WHERE g.id = gc.game_id
            AND gc.category_id = c.id
            AND category ${negate ? '!' : ''}~~* $1`,
-  values: [`%${value}%`],
-});
-
-module.exports.DESCRIPTION = (value, negate = false) => ({
-  text: `SELECT ${FIELDS}
-         FROM games
-         WHERE description ${negate ? '!' : ''}~~* $1`,
   values: [`%${value}%`],
 });
