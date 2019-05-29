@@ -24,3 +24,10 @@ module.exports.CATEGORY = (value, negate = false) => ({
            AND category ${negate ? '!' : ''}~~* $1`,
   values: [`%${value}%`],
 });
+
+module.exports.DESCRIPTION = (value, negate = false) => ({
+  text: `SELECT ${FIELDS}
+         FROM games
+         WHERE description ${negate ? '!' : ''}~~* $1`,
+  values: [`%${value}%`],
+});
