@@ -45,4 +45,5 @@ module.exports = {
   WEIGHT_VOTES: relational('weight_votes'),
   YEAR: relational('year'),
   AGE: relational('minimum_age'),
+  MINIMUM_PLAYERS: relational('minimum_players'),
 };
