@@ -19,8 +19,10 @@ const junction = ({
   values: [`%${value}%`],
 });
 
-module.exports.NAME = simple('primary_name');
-module.exports.DESCRIPTION = simple('description');
+module.exports = {
+  NAME: simple('primary_name'),
+  DESCRIPTION: simple('description'),
 
-module.exports.ARTIST = junction({ target: 'artists', field: 'artist' });
-module.exports.CATEGORY = junction({ target: 'categories', field: 'category' });
+  ARTIST: junction({ target: 'artists', field: 'artist' }),
+  CATEGORY: junction({ target: 'categories', field: 'category' }),
+};
