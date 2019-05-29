@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const { Client } = require('pg');
 
 const { NAME } = require('./transpile');
