@@ -28,4 +28,5 @@ module.exports = {
   FAMILY: junction({ table: 'families', field: 'family' }),
   MECHANIC: junction({ table: 'mechanics', field: 'mechanic' }),
   PUBLISHER: junction({ table: 'publishers', field: 'publisher' }),
+  DESIGNER: junction({ table: 'designers', field: 'designer' }),
 };
