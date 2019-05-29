@@ -43,4 +43,5 @@ module.exports = {
   RATING_DEVIATION: relational('rating_deviation'),
   AVERAGE_WEIGHT: relational('average_weight'),
   WEIGHT_VOTES: relational('weight_votes'),
+  YEAR: relational('year'),
 };
