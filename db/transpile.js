@@ -47,4 +47,5 @@ module.exports = {
   AGE: relational('minimum_age'),
   MINIMUM_PLAYERS: relational('minimum_players'),
   MAXIMUM_PLAYERS: relational('maximum_players'),
+  MINIMUM_PLAYTIME: relational('minimum_playtime'),
 };
