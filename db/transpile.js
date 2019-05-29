@@ -26,4 +26,5 @@ module.exports = {
   ARTIST: junction({ target: 'artists', field: 'artist' }),
   CATEGORY: junction({ target: 'categories', field: 'category' }),
   FAMILY: junction({ target: 'families', field: 'family' }),
+  MECHANIC: junction({ target: 'mechanics', field: 'mechanic' }),
 };
