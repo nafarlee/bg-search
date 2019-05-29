@@ -19,6 +19,13 @@ const junction = ({
   values: [`%${value}%`],
 });
 
+const relational = field => (operator, value, negate = false) => ({
+  text: `SELECT ${FIELDS}
+         FROM games
+         WHERE ${negate ? 'NOT' : ''} ${field} ${operator} $1 `,
+  values: [value],
+});
+
 module.exports = {
   NAME: simple('primary_name'),
   DESCRIPTION: simple('description'),
