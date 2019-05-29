@@ -36,4 +36,6 @@ module.exports = {
   MECHANIC: junction({ table: 'mechanics', field: 'mechanic' }),
   PUBLISHER: junction({ table: 'publishers', field: 'publisher' }),
   DESIGNER: junction({ table: 'designers', field: 'designer' }),
+
+  RATING_VOTES: relational('rating_votes'),
 };
