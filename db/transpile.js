@@ -38,4 +38,5 @@ module.exports = {
   DESIGNER: junction({ table: 'designers', field: 'designer' }),
 
   RATING_VOTES: relational('rating_votes'),
+  AVERAGE_RATING: relational('average_rating'),
 };
