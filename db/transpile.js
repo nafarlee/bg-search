@@ -8,11 +8,11 @@ const simple = field => (value, negate = false) => ({
 });
 
 const junction = ({
-  target,
+  table,
   field,
 }) => (value, negate = false) => ({
   text: `SELECT DISTINCT ${FIELDS}
-         FROM games a, games_${target} ab, ${target} b
+         FROM games a, games_${table} ab, ${table} b
          WHERE a.id = ab.game_id
            AND ab.${field}_id = b.id
            AND ${field} ${negate ? '!' : ''}~~* $1`,
@@ -23,9 +23,9 @@ module.exports = {
   NAME: simple('primary_name'),
   DESCRIPTION: simple('description'),
 
-  ARTIST: junction({ target: 'artists', field: 'artist' }),
-  CATEGORY: junction({ target: 'categories', field: 'category' }),
-  FAMILY: junction({ target: 'families', field: 'family' }),
-  MECHANIC: junction({ target: 'mechanics', field: 'mechanic' }),
-  PUBLISHER: junction({ target: 'publishers', field: 'publisher' }),
+  ARTIST: junction({ table: 'artists', field: 'artist' }),
+  CATEGORY: junction({ table: 'categories', field: 'category' }),
+  FAMILY: junction({ table: 'families', field: 'family' }),
+  MECHANIC: junction({ table: 'mechanics', field: 'mechanic' }),
+  PUBLISHER: junction({ table: 'publishers', field: 'publisher' }),
 };
