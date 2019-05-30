@@ -1,6 +1,8 @@
 {
-  "api-version": 2,
+  "api-version": 3,
   "id": 13,
+  "image": "https://cf.geekdo-images.com/original/img/A-0yDJkve0avEicYQ4HoNO-HkK8=/0x0/pic2419375.jpg",
+  "thumbnail": "https://cf.geekdo-images.com/thumb/img/g8LvJsd2oLAub6AEKN_Xpdoi8Sw=/fit-in/200x150/pic2419375.jpg",
   "primary-name": "Catan",
   "alternate-names": [
     "CATAN",
@@ -65,228 +67,729 @@
   "minimum-players": 3,
   "maximum-players": 4,
   "community-recommended-players": {
-    "votes": 1324,
+    "votes": 1344,
     "counts": {
       "1": {
         "best": 1,
         "recommended": 3,
-        "not-recommended": 865
+        "not-recommended": 878
       },
       "2": {
         "best": 10,
-        "recommended": 145,
-        "not-recommended": 783
+        "recommended": 146,
+        "not-recommended": 796
       },
       "3": {
-        "best": 420,
-        "recommended": 703,
+        "best": 428,
+        "recommended": 715,
         "not-recommended": 73
       },
       "4": {
-        "best": 950,
-        "recommended": 277,
+        "best": 966,
+        "recommended": 280,
         "not-recommended": 28
       },
       "4+": {
         "best": 42,
-        "recommended": 131,
-        "not-recommended": 537
+        "recommended": 134,
+        "not-recommended": 543
       }
     }
   },
   "minimum-playtime": 60,
   "maximum-playtime": 120,
   "minimum-age": 10,
-  "rating-votes": "84025",
-  "average-rating": "7.19589",
-  "bayes-rating": "7.04227",
-  "rating-deviation": "1.46916",
-  "weight-votes": "6834",
-  "average-weight": "2.3415",
+  "rating-votes": 85268,
+  "average-rating": 7.19125,
+  "bayes-rating": 7.0357,
+  "rating-deviation": 1.47132,
+  "weight-votes": 6865,
+  "average-weight": 2.34,
   "categories": [
-    "Negotiation"
+    {
+      "id": 1026,
+      "value": "Negotiation"
+    }
   ],
   "mechanics": [
-    "Dice Rolling",
-    "Modular Board",
-    "Route/Network Building",
-    "Trading"
+    {
+      "id": 2072,
+      "value": "Dice Rolling"
+    },
+    {
+      "id": 2011,
+      "value": "Modular Board"
+    },
+    {
+      "id": 2081,
+      "value": "Route/Network Building"
+    },
+    {
+      "id": 2008,
+      "value": "Trading"
+    }
   ],
   "families": [
-    "Catan",
-    "Promotional Board Games"
+    {
+      "id": 3,
+      "value": "Catan"
+    },
+    {
+      "id": 11505,
+      "value": "Promotional Board Games"
+    }
   ],
   "expanded-by": [
-    167903,
-    178656,
-    26352,
-    86008,
-    60134,
-    149857,
-    173651,
-    202788,
-    131362,
-    39093,
-    32270,
-    169486,
-    211081,
-    187366,
-    259397,
-    186395,
-    196928,
-    131958,
-    86669,
-    110794,
-    189097,
-    167573,
-    2807,
-    183139,
-    104774,
-    176966,
-    926,
-    4101,
-    73809,
-    20038,
-    135378,
-    144419,
-    238135,
-    263939,
-    54528,
-    143249,
-    132481,
-    101942,
-    222394,
-    222393,
-    325,
-    223171,
-    4103,
-    217947,
-    265141,
-    271159,
-    27760,
-    34691,
-    222582,
-    42147,
-    128751,
-    91061,
-    95940,
-    89606,
-    21101,
-    41161,
-    21097,
-    21443,
-    21100,
-    21098,
-    21099,
-    144851,
-    90100,
-    22598,
-    19343,
-    20247,
-    10817,
-    21046,
-    1137,
-    84977,
-    26079,
-    167836,
-    306,
-    1361,
-    167841,
-    31933,
-    37690,
-    56157,
-    111377,
-    37969,
-    134277
+    {
+      "id": 167903,
+      "value": "20 Jahre Darmstadt Spielt"
+    },
+    {
+      "id": 178656,
+      "value": "Brettspiel Adventskalender 2015"
+    },
+    {
+      "id": 26352,
+      "value": "Catan Austria / Wien meets Catan"
+    },
+    {
+      "id": 86008,
+      "value": "Catan Geographies: Austria"
+    },
+    {
+      "id": 60134,
+      "value": "Catan Geographies: Bayern Edition"
+    },
+    {
+      "id": 149857,
+      "value": "Catan Geographies: Corsica"
+    },
+    {
+      "id": 173651,
+      "value": "Catan Geographies: Georgia"
+    },
+    {
+      "id": 202788,
+      "value": "Catan Geographies: Kennessee"
+    },
+    {
+      "id": 131362,
+      "value": "Catan Geographies: Mallorca"
+    },
+    {
+      "id": 39093,
+      "value": "Catan Geographies: North Rhine – Westphalia"
+    },
+    {
+      "id": 32270,
+      "value": "Catan Geographies: Settlers of Hesse"
+    },
+    {
+      "id": 169486,
+      "value": "Catan Geographies: The Carolinas"
+    },
+    {
+      "id": 211081,
+      "value": "Catan Länderszenarien: Polen"
+    },
+    {
+      "id": 187366,
+      "value": "Catan Länderszenarien: Rickshaw Run"
+    },
+    {
+      "id": 259397,
+      "value": "Catan Scenario: Crop Trust"
+    },
+    {
+      "id": 186395,
+      "value": "Catan Scenarios: Big Game Big Honor"
+    },
+    {
+      "id": 196928,
+      "value": "Catan Scenarios: Catanimals"
+    },
+    {
+      "id": 131958,
+      "value": "Catan Scenarios: Frenemies"
+    },
+    {
+      "id": 86669,
+      "value": "Catan Scenarios: Helpers of Catan"
+    },
+    {
+      "id": 110794,
+      "value": "Catan Scenarios: Oil Springs"
+    },
+    {
+      "id": 189097,
+      "value": "Catan Scenarios: Santa Claus"
+    },
+    {
+      "id": 167573,
+      "value": "Catan World Championship Berlin 2014 Special"
+    },
+    {
+      "id": 2807,
+      "value": "Catan: 5-6 Player Extension"
+    },
+    {
+      "id": 183139,
+      "value": "Catan: 999 Games 25 jaar Expansion"
+    },
+    {
+      "id": 104774,
+      "value": "Catan: Catakatoa"
+    },
+    {
+      "id": 176966,
+      "value": "Catan: Catan Day 2015 Exclusive Expansion"
+    },
+    {
+      "id": 926,
+      "value": "Catan: Cities & Knights"
+    },
+    {
+      "id": 4101,
+      "value": "Catan: Cities & Knights – 5-6 Player Extension"
+    },
+    {
+      "id": 73809,
+      "value": "Catan: Delmarva"
+    },
+    {
+      "id": 20038,
+      "value": "Catan: Event Cards"
+    },
+    {
+      "id": 135378,
+      "value": "Catan: Explorers & Pirates"
+    },
+    {
+      "id": 144419,
+      "value": "Catan: Explorers & Pirates – 5-6 Player Extension"
+    },
+    {
+      "id": 238135,
+      "value": "Catan: Hawaii (Szenario für Seefahrer)"
+    },
+    {
+      "id": 263939,
+      "value": "Catan: High Priests of the Inkas"
+    },
+    {
+      "id": 54528,
+      "value": "Catan: Indiana & Ohio"
+    },
+    {
+      "id": 143249,
+      "value": "Catan: New England"
+    },
+    {
+      "id": 132481,
+      "value": "Catan: New York"
+    },
+    {
+      "id": 101942,
+      "value": "Catan: Penn/Jersey"
+    },
+    {
+      "id": 222394,
+      "value": "Catan: Playmat Desert"
+    },
+    {
+      "id": 222393,
+      "value": "Catan: Playmat Gold"
+    },
+    {
+      "id": 325,
+      "value": "Catan: Seafarers"
+    },
+    {
+      "id": 223171,
+      "value": "Catan: Seafarers Scenario – Legend of the Sea Robbers"
+    },
+    {
+      "id": 4103,
+      "value": "Catan: Seafarers – 5-6 Player Extension"
+    },
+    {
+      "id": 217947,
+      "value": "Catan: Seefahrer – 20 Jahre Jubiläums-Edition"
+    },
+    {
+      "id": 265141,
+      "value": "Catan: Szenarien für Städte & Ritter – Die Legende der Eroberer"
+    },
+    {
+      "id": 271159,
+      "value": "Catan: Szenario Der Kölner Dom"
+    },
+    {
+      "id": 27760,
+      "value": "Catan: Traders & Barbarians"
+    },
+    {
+      "id": 34691,
+      "value": "Catan: Traders & Barbarians – 5-6 Player Extension"
+    },
+    {
+      "id": 222582,
+      "value": "Catan: World Championship Durango 2016 Special"
+    },
+    {
+      "id": 42147,
+      "value": "Der Hafenmeister"
+    },
+    {
+      "id": 128751,
+      "value": "Heroes & Capitols (fan expansion for Settlers of Catan)"
+    },
+    {
+      "id": 91061,
+      "value": "Hexen, Zauberer & Drachen (Fan expansion to Catan: Cities and Knights)"
+    },
+    {
+      "id": 95940,
+      "value": "Katani  pankur"
+    },
+    {
+      "id": 89606,
+      "value": "Kirche, Glaube & Reformation (Fan expansion to Catan: Cities and Knights)"
+    },
+    {
+      "id": 21101,
+      "value": "De Kolonisten van Catan: De Diamanten"
+    },
+    {
+      "id": 41161,
+      "value": "De Kolonisten van Catan: De drie Handelsteden van Noord-Nederland"
+    },
+    {
+      "id": 21097,
+      "value": "De Kolonisten van Catan: De Koloniën"
+    },
+    {
+      "id": 21443,
+      "value": "De Kolonisten van Catan: De Specialisten"
+    },
+    {
+      "id": 21100,
+      "value": "De Kolonisten van Catan: De Wereldwonderen"
+    },
+    {
+      "id": 21098,
+      "value": "De Kolonisten van Catan: De Woestijnruiters"
+    },
+    {
+      "id": 21099,
+      "value": "De Kolonisten van Catan: Het Grote Kanaal"
+    },
+    {
+      "id": 144851,
+      "value": "Mayfair Game Variants & Mini-Expansions Set #1"
+    },
+    {
+      "id": 90100,
+      "value": "Die Pioniere (fan expansion for The Settlers of Catan)"
+    },
+    {
+      "id": 22598,
+      "value": "Saggsen-Gadan: De säggs'schn Siedler / Catan-OFFENSIVE in Chemnitz"
+    },
+    {
+      "id": 19343,
+      "value": "The Settlers of Catan: The Fishermen of Catan"
+    },
+    {
+      "id": 20247,
+      "value": "The Settlers of Catan: The Great River"
+    },
+    {
+      "id": 10817,
+      "value": "Settlers of New Catan (and extra modules)"
+    },
+    {
+      "id": 21046,
+      "value": "Die Siedler von Catan: Atlantis – Szenarien & Varianten"
+    },
+    {
+      "id": 1137,
+      "value": "Die Siedler von Catan: Das Buch zum Spielen"
+    },
+    {
+      "id": 84977,
+      "value": "Die Siedler von Catan: Der Schokoladenmarkt"
+    },
+    {
+      "id": 26079,
+      "value": "Die Siedler von Catan: Die große Karawane"
+    },
+    {
+      "id": 167836,
+      "value": "Die Siedler von Catan: Hispania Edition"
+    },
+    {
+      "id": 306,
+      "value": "Die Siedler von Catan: Historische Szenarien"
+    },
+    {
+      "id": 1361,
+      "value": "Die Siedler von Catan: Historische Szenarien II"
+    },
+    {
+      "id": 167841,
+      "value": "Die Siedler von Catan: Hochzeitsturm"
+    },
+    {
+      "id": 31933,
+      "value": "Die Siedler von Catan: Renaissance in der Steiermark & Burgbau auf Chaffenberch"
+    },
+    {
+      "id": 37690,
+      "value": "Die Siedler von Catan: Rincewind und der Tourist  /  Die Gilden von Ankh-Morpork"
+    },
+    {
+      "id": 56157,
+      "value": "Die Siedler von Catan: Schätze, Drachen & Entdecker"
+    },
+    {
+      "id": 111377,
+      "value": "Die Siedler von Catan: Thüringen Edition"
+    },
+    {
+      "id": 37969,
+      "value": "Die Siedler von Luxemburg"
+    },
+    {
+      "id": 134277,
+      "value": "World Wonders (fan expansion to Catan)"
+    }
   ],
   "contained-in": [
-    17419,
-    182880,
-    191710,
-    269980,
-    265030,
-    152959
+    {
+      "id": 17419,
+      "value": "CATAN 3D Collector's Edition"
+    },
+    {
+      "id": 182880,
+      "value": "Catan: Big Box"
+    },
+    {
+      "id": 191710,
+      "value": "Catan: Big Box"
+    },
+    {
+      "id": 269980,
+      "value": "Catan: Big Box"
+    },
+    {
+      "id": 265030,
+      "value": "Catan: Big Box Jubileumeditie"
+    },
+    {
+      "id": 152959,
+      "value": "The Settlers of Catan  (containing 5/6 player expansion)"
+    }
   ],
   "reimplimented-by": [
-    17419,
-    38749,
-    244144,
-    67239,
-    161527,
-    182880,
-    194097,
-    3972,
-    172994,
-    229218,
-    52825,
-    3655,
-    4394,
-    6778,
-    27766,
-    189,
-    24511,
-    117985,
-    1897,
-    5549
+    {
+      "id": 17419,
+      "value": "CATAN 3D Collector's Edition"
+    },
+    {
+      "id": 38749,
+      "value": "Catan Geographies: Germany"
+    },
+    {
+      "id": 244144,
+      "value": "Catan Histories: Rise of the Inkas"
+    },
+    {
+      "id": 67239,
+      "value": "Catan Histories: Settlers of America – Trails to Rails"
+    },
+    {
+      "id": 161527,
+      "value": "Catan: Ancient Egypt"
+    },
+    {
+      "id": 182880,
+      "value": "Catan: Big Box"
+    },
+    {
+      "id": 194097,
+      "value": "Catan: Big Game Event Kit"
+    },
+    {
+      "id": 3972,
+      "value": "Catan: Portable Edition"
+    },
+    {
+      "id": 172994,
+      "value": "Catan: Traveler – Compact Edition"
+    },
+    {
+      "id": 229218,
+      "value": "A Game of Thrones: Catan – Brotherhood of the Watch"
+    },
+    {
+      "id": 52825,
+      "value": "De Kolonisten van de Lage Landen"
+    },
+    {
+      "id": 3655,
+      "value": "The Settlers of Canaan"
+    },
+    {
+      "id": 4394,
+      "value": "The Settlers of the Stone Age"
+    },
+    {
+      "id": 6778,
+      "value": "The Settlers of Zarahemla"
+    },
+    {
+      "id": 27766,
+      "value": "Die Siedler von Catan: Junior"
+    },
+    {
+      "id": 189,
+      "value": "Die Siedler von Nürnberg"
+    },
+    {
+      "id": 24511,
+      "value": "Simply Catan"
+    },
+    {
+      "id": 117985,
+      "value": "Star Trek: Catan"
+    },
+    {
+      "id": 1897,
+      "value": "Starfarers of Catan"
+    },
+    {
+      "id": 5549,
+      "value": "Das Wasser des Lebens"
+    }
   ],
   "designers": [
-    "Klaus Teuber"
+    {
+      "id": 11,
+      "value": "Klaus Teuber"
+    }
   ],
   "artists": [
-    "Volkan Baga",
-    "Tanja Donner",
-    "Pete Fenlon",
-    "Jason Hawkins",
-    "Michaela Kienle",
-    "Harald Lieske",
-    "Michael Menzel",
-    "Marion Pott",
-    "Matt Schwabel",
-    "Franz Vohwinkel",
-    "Stephen Graham Walsh"
+    {
+      "id": 12036,
+      "value": "Volkan Baga"
+    },
+    {
+      "id": 12382,
+      "value": "Tanja Donner"
+    },
+    {
+      "id": 13034,
+      "value": "Pete Fenlon"
+    },
+    {
+      "id": 5442,
+      "value": "Jason Hawkins"
+    },
+    {
+      "id": 26874,
+      "value": "Michaela Kienle"
+    },
+    {
+      "id": 4959,
+      "value": "Harald Lieske"
+    },
+    {
+      "id": 11825,
+      "value": "Michael Menzel"
+    },
+    {
+      "id": 24191,
+      "value": "Marion Pott"
+    },
+    {
+      "id": 25612,
+      "value": "Matt Schwabel"
+    },
+    {
+      "id": 11883,
+      "value": "Franz Vohwinkel"
+    },
+    {
+      "id": 12063,
+      "value": "Stephen Graham Walsh"
+    }
   ],
   "publishers": [
-    "KOSMOS",
-    "999 Games",
-    "Albi",
-    "Astrel Games",
-    "Bergsala Enigma",
-    "Brain Games",
-    "Capcom Co., Ltd.",
-    "Catan Studio",
-    "Competo / Marektoy",
-    "danspil",
-    "Descartes Editeur",
-    "Devir",
-    "Dexy Co",
-    "Eurogames",
-    "Filosofia Éditions",
-    "Galakta",
-    "Giochi Uniti",
-    "GP Games",
-    "Grow Jogos e Brinquedos",
-    "HaKubia",
-    "Hanayama",
-    "Hobby World",
-    "Ideal Board Games",
-    "Igroljub",
-    "IntelliGames.BG",
-    "Ísöld ehf.",
-    "Kaissa Chess & Games",
-    "Korea Boardgames co., Ltd.",
-    "L&M Games",
-    "Laser plus",
-    "Lautapelit.fi",
-    "Logojogos",
-    "Mayfair Games",
-    "Ninive Games",
-    "Piatnik",
-    "Smart Ltd",
-    "Stupor Mundi",
-    "Swan Panasia Co., Ltd.",
-    "Tilsit",
-    "Top Toys",
-    "TRY SOFT"
+    {
+      "id": 37,
+      "value": "KOSMOS"
+    },
+    {
+      "id": 267,
+      "value": "999 Games"
+    },
+    {
+      "id": 4304,
+      "value": "Albi"
+    },
+    {
+      "id": 7340,
+      "value": "Astrel Games"
+    },
+    {
+      "id": 6784,
+      "value": "Bergsala Enigma"
+    },
+    {
+      "id": 7162,
+      "value": "Brain Games"
+    },
+    {
+      "id": 4358,
+      "value": "Capcom Co., Ltd."
+    },
+    {
+      "id": 31418,
+      "value": "Catan Studio"
+    },
+    {
+      "id": 4335,
+      "value": "Competo / Marektoy"
+    },
+    {
+      "id": 496,
+      "value": "danspil"
+    },
+    {
+      "id": 41,
+      "value": "Descartes Editeur"
+    },
+    {
+      "id": 2366,
+      "value": "Devir"
+    },
+    {
+      "id": 26990,
+      "value": "Dexy Co"
+    },
+    {
+      "id": 116,
+      "value": "Eurogames"
+    },
+    {
+      "id": 5657,
+      "value": "Filosofia Éditions"
+    },
+    {
+      "id": 4617,
+      "value": "Galakta"
+    },
+    {
+      "id": 5530,
+      "value": "Giochi Uniti"
+    },
+    {
+      "id": 21640,
+      "value": "GP Games"
+    },
+    {
+      "id": 858,
+      "value": "Grow Jogos e Brinquedos"
+    },
+    {
+      "id": 23382,
+      "value": "HaKubia"
+    },
+    {
+      "id": 4417,
+      "value": "Hanayama"
+    },
+    {
+      "id": 18852,
+      "value": "Hobby World"
+    },
+    {
+      "id": 8822,
+      "value": "Ideal Board Games"
+    },
+    {
+      "id": 31372,
+      "value": "Igroljub"
+    },
+    {
+      "id": 29036,
+      "value": "IntelliGames.BG"
+    },
+    {
+      "id": 5020,
+      "value": "Ísöld ehf."
+    },
+    {
+      "id": 6214,
+      "value": "Kaissa Chess & Games"
+    },
+    {
+      "id": 8291,
+      "value": "Korea Boardgames co., Ltd."
+    },
+    {
+      "id": 2654,
+      "value": "L&M Games"
+    },
+    {
+      "id": 5597,
+      "value": "Laser plus"
+    },
+    {
+      "id": 3218,
+      "value": "Lautapelit.fi"
+    },
+    {
+      "id": 3533,
+      "value": "Logojogos"
+    },
+    {
+      "id": 10,
+      "value": "Mayfair Games"
+    },
+    {
+      "id": 24886,
+      "value": "Ninive Games"
+    },
+    {
+      "id": 22,
+      "value": "Piatnik"
+    },
+    {
+      "id": 8313,
+      "value": "Smart Ltd"
+    },
+    {
+      "id": 9235,
+      "value": "Stupor Mundi"
+    },
+    {
+      "id": 9234,
+      "value": "Swan Panasia Co., Ltd."
+    },
+    {
+      "id": 42,
+      "value": "Tilsit"
+    },
+    {
+      "id": 18477,
+      "value": "Top Toys"
+    },
+    {
+      "id": 13481,
+      "value": "TRY SOFT"
+    }
   ],
-  "last-updated": "Wed Mar 27 2019 23:49:44 GMT-0400 (EDT)"
+  "last-updated": "Wed May 29 2019 23:40:04 GMT-0400 (Eastern Daylight Time)"
 }
