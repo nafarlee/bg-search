@@ -78,4 +78,13 @@ module.exports = {
              AND ${negate ? 'NOT' : ''} best > (recommended + not_recommended)`,
     values: [toRange(operator, value)],
   }),
+
+  EXPANSION: (negate = false) => ({
+    text: `SELECT ${FIELDS}, expansion, base
+           FROM games
+           LEFT JOIN expansions
+             ON id = expansion
+           WHERE base IS ${negate ? '' : 'NOT'} NULL`,
+    values: null,
+  }),
 };
