@@ -80,7 +80,7 @@ module.exports = {
   }),
 
   EXPANSION: (negate = false) => ({
-    text: `SELECT ${FIELDS}, expansion, base
+    text: `SELECT ${FIELDS}
            FROM games
            LEFT JOIN expansions
              ON id = expansion
