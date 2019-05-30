@@ -62,7 +62,7 @@ module.exports = {
   MAXIMUM_PLAYTIME: relational('maximum_playtime'),
 
   RECOMMENDED_PLAYERS: (operator, value, negate = false) => ({
-    text: `SELECT ${FIELDS}, players
+    text: `SELECT ${FIELDS}
            FROM games g, player_recommendations pr
            WHERE g.id = pr.id
              AND players && $1::int4range
@@ -71,7 +71,7 @@ module.exports = {
   }),
 
   BEST_PLAYERS: (operator, value, negate = false) => ({
-    text: `SELECT ${FIELDS}, players
+    text: `SELECT ${FIELDS}
            FROM games g, player_recommendations pr
            WHERE g.id = pr.id
              AND players && $1::int4range
