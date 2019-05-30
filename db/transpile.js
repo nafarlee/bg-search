@@ -96,4 +96,13 @@ module.exports = {
            WHERE item IS ${negate ? '' : 'NOT'} NULL`,
     values: null,
   }),
+
+  REIMPLEMENTATION: (negate = false) => ({
+    text: `SELECT ${FIELDS}
+           FROM games
+           LEFT JOIN reimplementations
+             ON id = reimplementation
+           WHERE original IS ${negate ? '' : 'NOT'} NULL`,
+    values: null,
+  }),
 };
