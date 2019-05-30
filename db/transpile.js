@@ -26,6 +26,17 @@ const relational = field => (operator, value, negate = false) => ({
   values: [value],
 });
 
+function toRange(operator, value) {
+  switch (operator) {
+    case '>': return `(${value},)`;
+    case '<': return `(,${value})`;
+    case '<=': return `(,${value}]`;
+    case '>=': return `[${value},)`;
+    case '=': return `[${value},${value}]`;
+    default: throw new Error('Invalid operator');
+  }
+}
+
 module.exports = {
   NAME: simple('primary_name'),
   DESCRIPTION: simple('description'),
