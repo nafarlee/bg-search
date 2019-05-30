@@ -69,4 +69,13 @@ module.exports = {
              AND ${negate ? 'NOT' : ''} recommended > (best + not_recommended)`,
     values: [toRange(operator, value)],
   }),
+
+  BEST_PLAYERS: (operator, value, negate = false) => ({
+    text: `SELECT ${FIELDS}, players
+           FROM games g, player_recommendations pr
+           WHERE g.id = pr.id
+             AND players && $1::int4range
+             AND ${negate ? 'NOT' : ''} best > (recommended + not_recommended)`,
+    values: [toRange(operator, value)],
+  }),
 };
