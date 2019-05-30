@@ -87,4 +87,13 @@ module.exports = {
            WHERE base IS ${negate ? '' : 'NOT'} NULL`,
     values: null,
   }),
+
+  COLLECTION: (negate = false) => ({
+    text: `SELECT ${FIELDS}
+           FROM games
+           LEFT JOIN collections
+             ON id = collection
+           WHERE item IS ${negate ? '' : 'NOT'} NULL`,
+    values: null,
+  }),
 };
