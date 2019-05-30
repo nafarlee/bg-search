@@ -2,6 +2,8 @@ INSERT INTO games
 VALUES (
   13,
   DEFAULT,
+  DEFAULT
+  DEFAULT,
   7.19589,
   2.3415,
   7.04227,

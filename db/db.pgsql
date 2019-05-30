@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS games CASCADE;
 CREATE TABLE games (
   id INTEGER PRIMARY KEY,
+  image TEXT,
+  thumbnail TEXT,
   last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   average_rating REAL,
   average_weight REAL,
