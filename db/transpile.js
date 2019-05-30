@@ -60,4 +60,13 @@ module.exports = {
   MAXIMUM_PLAYERS: relational('maximum_players'),
   MINIMUM_PLAYTIME: relational('minimum_playtime'),
   MAXIMUM_PLAYTIME: relational('maximum_playtime'),
+
+  RECOMMENDED_PLAYERS: (operator, value, negate = false) => ({
+    text: `SELECT ${FIELDS}, players
+           FROM games g, player_recommendations pr
+           WHERE g.id = pr.id
+             AND players && $1::int4range
+             AND ${negate ? 'NOT' : ''} recommended > (best + not_recommended)`,
+    values: [toRange(operator, value)],
+  }),
 };
