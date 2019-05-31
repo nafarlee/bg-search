@@ -34,6 +34,8 @@ const tables = {
   },
 
   alternate_names(game) {
+    if (_.isEmpty(game.alternate_names)) return null;
+
     const values = _(game['alternate-names'])
       .map(n => [game.id, n])
       .flatten()
@@ -53,6 +55,8 @@ const tables = {
   },
 
   reimplementations(game) {
+    if (_.isEmpty(game.reimplements)) return null;
+
     const values = _(game.reimplements)
       .map(({ id }) => [id, game.id])
       .flatten()
@@ -75,6 +79,7 @@ const tables = {
 function insert(game) {
   return _(tables)
     .map(f => f(game))
+    .compact()
     .value();
 }
 
