@@ -21,11 +21,16 @@ const baseURL = 'https://api.geekdo.com/xmlapi2/things';
     .then(body => marshall(body.items.item[0]));
   await client.connect();
 
-  await client.query('BEGIN');
-  console.log(insert(game));
-  for (const query of insert(game)) {
-    await client.query(...query);
+  try {
+    await client.query('BEGIN');
+    console.log(insert(game));
+    for (const query of insert(game)) {
+      await client.query(...query);
+    }
+    await client.query('COMMIT');
+  } catch (e) {
+    await client.query('ROLLBACK');
+  } finally {
+    await client.end();
   }
-  await client.query('COMMIT');
-  await client.end();
 })();
