@@ -16,11 +16,16 @@ const baseURL = 'https://api.geekdo.com/xmlapi2/things';
     user: 'postgres',
     database: 'postgres',
   });
-  const game = await get(`${baseURL}?id=${_.random(1, 500)}&stats=1&type=boardgame,boardgameexpansion`)
-    .then(parseString)
-    .then(body => marshall(body.items.item[0]));
-  await client.connect();
+  const id = _.random(1, 500);
+  console.log('ID: ', id);
+  const body = await get(`${baseURL}?id=${id}&stats=1&type=boardgame,boardgameexpansion`)
+    .then(parseString);
 
+  if (!body.items.item) return;
+
+  const game = marshall(body.items.item[0]);
+
+  await client.connect();
   try {
     await client.query('BEGIN');
     console.log(insert(game));
