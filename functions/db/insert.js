@@ -5,7 +5,6 @@ function insert(game) {
     id: game.id,
     image: game.image,
     thumbnail: game.thumbnail,
-    last_updated: 'DEFAULT',
     average_rating: game['average-rating'],
     average_weight: game['average-weight'],
     bayes_rating: game['bayes-rating'],
