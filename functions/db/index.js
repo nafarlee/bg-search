@@ -3,6 +3,7 @@ const { promisify } = require('util');
 
 const { Client } = require('pg');
 const parseString = promisify(require('xml2js').parseString);
+const _ = require('lodash');
 
 const get = require('../src/get');
 const marshall = require('../src/marshall');
@@ -15,7 +16,7 @@ const baseURL = 'https://api.geekdo.com/xmlapi2/things';
     user: 'postgres',
     database: 'postgres',
   });
-  const game = await get(`${baseURL}?id=174430&stats=1&type=boardgame,boardgameexpansion`)
+  const game = await get(`${baseURL}?id=${_.random(1, 500)}&stats=1&type=boardgame,boardgameexpansion`)
     .then(parseString)
     .then(body => marshall(body.items.item[0]));
   await client.connect();
