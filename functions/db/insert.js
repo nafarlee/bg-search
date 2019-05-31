@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 const _ = require('lodash');
 
+function toSQL(table, columns, chunks) {
+}
+
 const tables = {
   games(game) {
     const fields = {
