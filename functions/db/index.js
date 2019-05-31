@@ -19,9 +19,12 @@ const baseURL = 'https://api.geekdo.com/xmlapi2/things';
     .then(parseString)
     .then(body => marshall(body.items.item[0]));
   await client.connect();
+
   await client.query('BEGIN');
-  const res = await client.query(...insert(game));
+  console.log(insert(game));
+  for (const query of insert(game)) {
+    await client.query(...query);
+  }
   await client.query('COMMIT');
-  console.log(res.rows);
   await client.end();
 })();
