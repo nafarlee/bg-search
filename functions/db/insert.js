@@ -46,7 +46,26 @@ const tables = {
       .join(', ');
 
     return [
-      `INSERT INTO alternate_names id, alternate_name
+      `INSERT INTO alternate_names (id, alternate_name)
+       VALUES ${midText};`,
+      values,
+    ];
+  },
+
+  reimplementations(game) {
+    const values = _(game.reimplements)
+      .map(({ id }) => [id, game.id])
+      .flatten()
+      .value();
+
+    const midText = _(values)
+      .map((_v, i) => `$${i + 1}`)
+      .chunk(2)
+      .map(pair => `(${pair.join(', ')})`)
+      .join(', ');
+
+    return [
+      `INSERT INTO reimplementations (original, reimplementation)
        VALUES ${midText};`,
       values,
     ];
