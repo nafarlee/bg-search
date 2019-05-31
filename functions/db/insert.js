@@ -54,7 +54,9 @@ const tables = {
 };
 
 function insert(game) {
-  return tables.games(game);
+  return _(tables)
+    .map(f => f(game))
+    .value();
 }
 
 module.exports = insert;
