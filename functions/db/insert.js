@@ -55,12 +55,21 @@ const tables = {
   },
 
   reimplementations(game) {
-    if (_.isEmpty(game.reimplements)) return null;
+    if (_.isEmpty(game.reimplements) && _.isEmpty(game['reimplemented-by'])) {
+      return null;
+    }
 
-    const values = _(game.reimplements)
+    const reimplements = _(game.reimplements)
       .map(({ id }) => [id, game.id])
       .flatten()
       .value();
+
+    const reimplementedBy = _(game['reimplemented-by'])
+      .map(({ id }) => [game.id, id])
+      .flatten()
+      .value();
+
+    const values = _.concat(reimplements, reimplementedBy);
 
     const midText = _(values)
       .map((_v, i) => `$${i + 1}`)
