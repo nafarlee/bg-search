@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const _ = require('lodash');
 
 const tables = {
   games(game) {
@@ -23,12 +24,31 @@ const tables = {
     };
 
     const keys = Object.keys(fields);
-    const positions = keys.map((_, i) => `$${i + 1}`).join(', ');
+    const positions = keys.map((_k, i) => `$${i + 1}`).join(', ');
 
     return [
       `INSERT INTO games (${keys.join(', ')})
        VALUES ( ${positions} );`,
       keys.map(k => fields[k]),
+    ];
+  },
+
+  alternate_names(game) {
+    const values = _(game['alternate-names'])
+      .map(n => [game.id, n])
+      .flatten()
+      .value();
+
+    const midText = _(values)
+      .map((_v, i) => `$${i + 1}`)
+      .chunk(2)
+      .map(pair => `(${pair.join(', ')})`)
+      .join(', ');
+
+    return [
+      `INSERT INTO alternate_names id, alternate_name
+       VALUES ${midText};`,
+      values,
     ];
   },
 };
