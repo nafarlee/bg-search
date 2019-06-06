@@ -39,14 +39,10 @@ const tables = {
       year: game.year,
     };
 
-    const keys = Object.keys(fields);
-    const positions = keys.map((_k, i) => `$${i + 1}`).join(', ');
+    const columns = _.keys(fields);
+    const values = _.map(columns, c => fields[c]);
 
-    return [
-      `INSERT INTO games (${keys.join(', ')})
-       VALUES ( ${positions} );`,
-      keys.map(k => fields[k]),
-    ];
+    return toSQL('games', columns, [values]);
   },
 
   alternate_names({ id, 'alternate-names': alternateNames }) {
