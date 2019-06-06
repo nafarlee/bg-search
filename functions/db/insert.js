@@ -99,6 +99,16 @@ const tables = {
       ),
     );
   },
+
+  publishers({ publishers }) {
+    if (_.isEmpty(publishers)) return null;
+
+    return toSQL(
+      'publishers',
+      ['id', 'publisher'],
+      publishers.map(p => [p.id, p.value]),
+    );
+  },
 };
 
 function insert(game) {
