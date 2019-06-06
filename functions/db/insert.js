@@ -49,14 +49,13 @@ const tables = {
     ];
   },
 
-  alternate_names(game) {
-    const alternateNames = game['alternate-names'];
+  alternate_names({ id, 'alternate-names': alternateNames }) {
     if (_.isEmpty(alternateNames)) return null;
 
     return toSQL(
       'alternate_names',
       ['id', 'alternate_name'],
-      alternateNames.map(n => [game.id, n]),
+      alternateNames.map(n => [id, n]),
     );
   },
 
