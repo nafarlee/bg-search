@@ -73,6 +73,19 @@ const tables = {
       ),
     );
   },
+
+  collections({ contains = [], id: gameID, 'contained-in': containedIn = [] }) {
+    if (_.isEmpty(contains) && _.isEmpty(containedIn)) return null;
+
+    return toSQL(
+      'collections',
+      ['item', 'collection'],
+      _.concat(
+        contains.map(({ id }) => [id, gameID]),
+        containedIn.map(({ id }) => [gameID, id]),
+      ),
+    );
+  },
 };
 
 function insert(game) {
