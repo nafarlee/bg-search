@@ -2,6 +2,19 @@
 const _ = require('lodash');
 
 function toSQL(table, columns, chunks) {
+  const values = _.flatten(chunks);
+  const positions = _(values)
+    .map((_v, i) => `$${i + 1}`)
+    .chunk(columns.length)
+    .map(chunk => `(${chunk.join(', ')})`)
+    .join(', ');
+
+  return [
+    `INSERT INTO ${table} (${columns.join(', ')})
+     VALUES ${positions};
+    `,
+    values,
+  ];
 }
 
 const tables = {
