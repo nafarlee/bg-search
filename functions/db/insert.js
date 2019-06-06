@@ -50,24 +50,14 @@ const tables = {
   },
 
   alternate_names(game) {
-    if (_.isEmpty(game['alternate-names'])) return null;
+    const alternateNames = game['alternate-names'];
+    if (_.isEmpty(alternateNames)) return null;
 
-    const values = _(game['alternate-names'])
-      .map(n => [game.id, n])
-      .flatten()
-      .value();
-
-    const midText = _(values)
-      .map((_v, i) => `$${i + 1}`)
-      .chunk(2)
-      .map(pair => `(${pair.join(', ')})`)
-      .join(', ');
-
-    return [
-      `INSERT INTO alternate_names (id, alternate_name)
-       VALUES ${midText};`,
-      values,
-    ];
+    return toSQL(
+      'alternate_names',
+      ['id', 'alternate_name'],
+      alternateNames.map(n => [game.id, n]),
+    );
   },
 
   reimplementations(game) {
