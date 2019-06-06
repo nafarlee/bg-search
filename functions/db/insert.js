@@ -59,34 +59,23 @@ const tables = {
     );
   },
 
-  reimplementations(game) {
-    if (_.isEmpty(game.reimplements) && _.isEmpty(game['reimplemented-by'])) {
+  reimplementations({
+    reimplements = [],
+    id: gameID,
+    'reimplemented-by': reimplementedBy = [],
+  }) {
+    if (_.isEmpty(reimplements) && _.isEmpty(reimplementedBy)) {
       return null;
     }
 
-    const reimplements = _(game.reimplements)
-      .map(({ id }) => [id, game.id])
-      .flatten()
-      .value();
-
-    const reimplementedBy = _(game['reimplemented-by'])
-      .map(({ id }) => [game.id, id])
-      .flatten()
-      .value();
-
-    const values = _.concat(reimplements, reimplementedBy);
-
-    const midText = _(values)
-      .map((_v, i) => `$${i + 1}`)
-      .chunk(2)
-      .map(pair => `(${pair.join(', ')})`)
-      .join(', ');
-
-    return [
-      `INSERT INTO reimplementations (original, reimplementation)
-       VALUES ${midText};`,
-      values,
-    ];
+    return toSQL(
+      'reimplementations',
+      ['original', 'reimplementation'],
+      _.concat(
+        reimplements.map(({ id }) => [id, gameID]),
+        reimplementedBy.map(({ id }) => [gameID, id]),
+      ),
+    );
   },
 };
 
