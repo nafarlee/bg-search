@@ -86,6 +86,19 @@ const tables = {
       ),
     );
   },
+
+  expansions({ expands = [], id: gameID, 'expanded-by': expandedBy = [] }) {
+    if (_.isEmpty(expands) && _.isEmpty(expandedBy)) return null;
+
+    return toSQL(
+      'expansions',
+      ['base', 'expansion'],
+      _.concat(
+        expands.map(({ id }) => [id, gameID]),
+        expandedBy.map(({ id }) => [gameID, id]),
+      ),
+    );
+  },
 };
 
 function insert(game) {
