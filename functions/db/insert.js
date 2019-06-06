@@ -50,7 +50,7 @@ const tables = {
   },
 
   alternate_names(game) {
-    if (_.isEmpty(game.alternate_names)) return null;
+    if (_.isEmpty(game['alternate-names'])) return null;
 
     const values = _(game['alternate-names'])
       .map(n => [game.id, n])
