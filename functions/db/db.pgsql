@@ -10,7 +10,7 @@ CREATE TABLE games (
   description TEXT,
   maximum_players SMALLINT CHECK (maximum_players >= 0),
   maximum_playtime SMALLINT CHECK (maximum_playtime >= 0),
-  minimum_age SMALLINT CHECK (minimum_age > 0),
+  minimum_age SMALLINT CHECK (minimum_age >= 0),
   minimum_players SMALLINT CHECK (minimum_players >= 0),
   minimum_playtime SMALLINT CHECK (minimum_playtime >= 0),
   primary_name TEXT,
