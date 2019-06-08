@@ -34,6 +34,7 @@ const baseURL = 'https://api.geekdo.com/xmlapi2/things';
     }
     await client.query('COMMIT');
   } catch (e) {
+    console.error(e);
     await client.query('ROLLBACK');
   } finally {
     await client.end();
