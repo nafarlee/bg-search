@@ -38,17 +38,21 @@ const junctionInsert = (table, columns, prop = table) => (game) => {
 };
 
 const soloJunctionInsert = (table, columns, props) => (game) => {
-  const [leftToRight, rightToLeft] = props;
-  if (_.every([game[leftToRight], game[rightToLeft]], _.isEmpty)) {
+  let leftToRight = game[props[0]];
+  let rightToLeft = game[props[1]];
+  if (_.every([leftToRight, rightToLeft], _.isEmpty)) {
     return null;
   }
+
+  leftToRight = game[props[0]] || [];
+  rightToLeft = game[props[1]] || [];
 
   return toSQL(
     table,
     columns,
     _.concat(
-      game[rightToLeft].map(({ id }) => [id, game.id]),
-      game[leftToRight].map(({ id }) => [game.id, id]),
+      rightToLeft.map(({ id }) => [id, game.id]),
+      leftToRight.map(({ id }) => [game.id, id]),
     ),
   );
 };
