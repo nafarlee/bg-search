@@ -94,7 +94,7 @@ const tables = {
   reimplementations: soloJunctionInsert(
     'reimplementations',
     ['original', 'reimplementation'],
-    ['reimplementedBy', 'reimplements'],
+    ['reimplemented-by', 'reimplements'],
   ),
 
   collections({ contains = [], id: gameID, 'contained-in': containedIn = [] }) {
