@@ -97,18 +97,11 @@ const tables = {
     ['reimplemented-by', 'reimplements'],
   ),
 
-  collections({ contains = [], id: gameID, 'contained-in': containedIn = [] }) {
-    if (_.isEmpty(contains) && _.isEmpty(containedIn)) return null;
-
-    return toSQL(
-      'collections',
-      ['item', 'collection'],
-      _.concat(
-        contains.map(({ id }) => [id, gameID]),
-        containedIn.map(({ id }) => [gameID, id]),
-      ),
-    );
-  },
+  collections: soloJunctionInsert(
+    'collections',
+    ['item', 'collection'],
+    ['contained-in', 'contains'],
+  ),
 
   expansions({ expands = [], id: gameID, 'expanded-by': expandedBy = [] }) {
     if (_.isEmpty(expands) && _.isEmpty(expandedBy)) return null;
