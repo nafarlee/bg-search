@@ -17,6 +17,16 @@ function toSQL(table, columns, chunks) {
   ];
 }
 
+const kvInsert = (table, columns, prop = table) => game => {
+  if (_.isEmpty(game[prop])) return null;
+
+  return toSQL(
+    table,
+    columns,
+    game[prop].map(p => [p.id, p.value]),
+  );
+};
+
 const tables = {
   games(game) {
     const fields = {
