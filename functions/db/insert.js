@@ -114,7 +114,6 @@ const tables = {
   ),
 
   publishers: kvInsert('publishers', ['id', 'publisher']),
-
   games_publishers: junctionInsert(
     'games_publishers',
     ['game_id', 'publisher_id'],
@@ -122,7 +121,6 @@ const tables = {
   ),
 
   mechanics: kvInsert('mechanics', ['id', 'mechanic']),
-
   games_mechanics: junctionInsert(
     'games_mechanics',
     ['game_id', 'mechanic_id'],
