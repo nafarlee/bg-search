@@ -109,6 +109,16 @@ const tables = {
       publishers.map(p => [p.id, p.value]),
     );
   },
+
+  games_publishers({ publishers, id }) {
+    if (_.isEmpty(publishers)) return null;
+
+    return toSQL(
+      'games_publishers',
+      ['game_id', 'publisher_id'],
+      publishers.map(({ value }) => [id, value]),
+    );
+  },
 };
 
 function insert(game) {
