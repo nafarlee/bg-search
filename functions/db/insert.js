@@ -91,24 +91,11 @@ const tables = {
     );
   },
 
-  reimplementations({
-    reimplements = [],
-    id: gameID,
-    'reimplemented-by': reimplementedBy = [],
-  }) {
-    if (_.isEmpty(reimplements) && _.isEmpty(reimplementedBy)) {
-      return null;
-    }
-
-    return toSQL(
-      'reimplementations',
-      ['original', 'reimplementation'],
-      _.concat(
-        reimplements.map(({ id }) => [id, gameID]),
-        reimplementedBy.map(({ id }) => [gameID, id]),
-      ),
-    );
-  },
+  reimplementations: soloJunctionInsert(
+    'reimplementations',
+    ['original', 'reimplementation'],
+    ['reimplementedBy', 'reimplements'],
+  ),
 
   collections({ contains = [], id: gameID, 'contained-in': containedIn = [] }) {
     if (_.isEmpty(contains) && _.isEmpty(containedIn)) return null;
