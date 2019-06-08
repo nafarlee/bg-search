@@ -128,6 +128,13 @@ const tables = {
     ['game_id', 'mechanic_id'],
     'mechanics',
   ),
+
+  families: kvInsert('families', ['id', 'family']),
+  games_families: junctionInsert(
+    'games_families',
+    ['game_id', 'family_id'],
+    'families',
+  ),
 };
 
 function insert(game) {
