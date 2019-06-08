@@ -135,6 +135,13 @@ const tables = {
     ['game_id', 'family_id'],
     'families',
   ),
+
+  artists: kvInsert('artists', ['id', 'artist']),
+  games_artists: junctionInsert(
+    'games_artists',
+    ['game_id', 'artist_id'],
+    'artists',
+  ),
 };
 
 function insert(game) {
