@@ -28,8 +28,9 @@ const baseURL = 'https://api.geekdo.com/xmlapi2/things';
   await client.connect();
   try {
     await client.query('BEGIN');
-    console.log(insert(game));
-    for (const query of insert(game)) {
+    const queries = insert(game);
+    for (const query of queries) {
+      console.log(query);
       await client.query(...query);
     }
     await client.query('COMMIT');
