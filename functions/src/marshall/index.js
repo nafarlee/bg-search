@@ -1,3 +1,5 @@
+const { get } = require('lodash');
+
 const {
   age,
   description,
@@ -15,8 +17,8 @@ function marshall(game) {
   return {
     'api-version': 3,
     id: id(game),
-    image: game.image[0],
-    thumbnail: game.thumbnail[0],
+    image: get(game, ['image', 0], null),
+    thumbnail: get(game, ['thumbnail', 0], null),
     ...name(game),
     description: description(game),
     year: year(game),
