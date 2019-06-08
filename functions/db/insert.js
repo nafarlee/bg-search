@@ -122,15 +122,7 @@ const tables = {
     );
   },
 
-  mechanics({ mechanics }) {
-    if (_.isEmpty(mechanics)) return null;
-
-    return toSQL(
-      'mechanics',
-      ['id', 'mechanic'],
-      mechanics.map(m => [m.id, m.value]),
-    );
-  },
+  mechanics: kvInsert('mechanics', ['id', 'mechanic']),
 };
 
 function insert(game) {
