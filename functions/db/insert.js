@@ -27,6 +27,16 @@ const kvInsert = (table, columns, prop = table) => game => {
   );
 };
 
+const junctionInsert = (table, columns, prop = table) => game => {
+  if (_.isEmpty(game[prop])) return null;
+
+  return toSQL(
+    table,
+    columns,
+    game[prop].map(({ value }) => [game.id, value]),
+  );
+};
+
 const tables = {
   games(game) {
     const fields = {
