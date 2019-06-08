@@ -33,7 +33,7 @@ const junctionInsert = (table, columns, prop = table) => game => {
   return toSQL(
     table,
     columns,
-    game[prop].map(({ value }) => [game.id, value]),
+    game[prop].map(({ id }) => [game.id, id]),
   );
 };
 
@@ -122,15 +122,11 @@ const tables = {
 
   publishers: kvInsert('publishers', ['id', 'publisher']),
 
-  games_publishers({ publishers, id }) {
-    if (_.isEmpty(publishers)) return null;
-
-    return toSQL(
-      'games_publishers',
-      ['game_id', 'publisher_id'],
-      publishers.map(({ value }) => [id, value]),
-    );
-  },
+  games_publishers: junctionInsert(
+    'games_publishers',
+    ['game_id', 'publisher_id'],
+    'publishers',
+  ),
 
   mechanics: kvInsert('mechanics', ['id', 'mechanic']),
 };
