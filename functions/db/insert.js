@@ -118,6 +118,12 @@ const tables = {
   ),
 
   mechanics: kvInsert('mechanics', ['id', 'mechanic']),
+
+  games_mechanics: junctionInsert(
+    'games_mechanics',
+    ['game_id', 'mechanic_id'],
+    'mechanics',
+  ),
 };
 
 function insert(game) {
