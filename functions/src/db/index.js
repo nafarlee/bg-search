@@ -5,8 +5,8 @@ const { Client } = require('pg');
 const parseString = promisify(require('xml2js').parseString);
 const _ = require('lodash');
 
-const get = require('../src/get');
-const marshall = require('../src/marshall');
+const get = require('../get');
+const marshall = require('../marshall');
 const insert = require('./insert');
 
 const baseURL = 'https://api.geekdo.com/xmlapi2/things';
