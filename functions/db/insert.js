@@ -17,7 +17,7 @@ function toSQL(table, columns, chunks) {
   ];
 }
 
-const kvInsert = (table, columns, prop = table) => game => {
+const kvInsert = (table, columns, prop = table) => (game) => {
   if (_.isEmpty(game[prop])) return null;
 
   return toSQL(
@@ -27,7 +27,7 @@ const kvInsert = (table, columns, prop = table) => game => {
   );
 };
 
-const junctionInsert = (table, columns, prop = table) => game => {
+const junctionInsert = (table, columns, prop = table) => (game) => {
   if (_.isEmpty(game[prop])) return null;
 
   return toSQL(
@@ -37,7 +37,7 @@ const junctionInsert = (table, columns, prop = table) => game => {
   );
 };
 
-const soloJunctionInsert = (table, columns, props) => game => {
+const soloJunctionInsert = (table, columns, props) => (game) => {
   const [leftToRight, rightToLeft] = props;
   if (_.every([game[leftToRight], game[rightToLeft]], _.isEmpty)) {
     return null;
