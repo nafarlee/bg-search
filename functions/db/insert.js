@@ -37,6 +37,22 @@ const junctionInsert = (table, columns, prop = table) => game => {
   );
 };
 
+const soloJunctionInsert = (table, columns, props) => game => {
+  const [leftToRight, rightToLeft] = props;
+  if (_.every([game[leftToRight], game[rightToLeft]], _.isEmpty)) {
+    return null;
+  }
+
+  return toSQL(
+    table,
+    columns,
+    _.concat(
+      game[rightToLeft].map(({ id }) => [id, game.id]),
+      game[leftToRight].map(({ id }) => [game.id, id]),
+    ),
+  );
+};
+
 const tables = {
   games(game) {
     const fields = {
