@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const _ = require('lodash');
 
-function toSQL(table, columns, chunks) {
+function toSQL(table, columns, uniques, chunks) {
   const values = _.flatten(chunks);
   const positions = _(values)
     .map((_v, i) => `$${i + 1}`)
@@ -9,10 +9,16 @@ function toSQL(table, columns, chunks) {
     .map(chunk => `(${chunk.join(', ')})`)
     .join(', ');
 
+  const joined = columns.join(', ');
+  const sets = columns
+    .map(c => `${c} = EXCLUDED.${c}`)
+    .join(', ');
+
   return [
-    `INSERT INTO ${table} (${columns.join(', ')})
-     VALUES ${positions};
-    `,
+    `INSERT INTO ${table} (${joined})
+     VALUES ${positions}
+     ON CONFLICT (${uniques.join(', ')})
+     DO UPDATE SET ${sets};`,
     values,
   ];
 }
@@ -23,6 +29,7 @@ const kvInsert = (table, columns, prop = table) => (game) => {
   return toSQL(
     table,
     columns,
+    columns.slice(0, 1),
     game[prop].map(p => [p.id, p.value]),
   );
 };
@@ -32,6 +39,7 @@ const junctionInsert = (table, columns, prop = table) => (game) => {
 
   return toSQL(
     table,
+    columns,
     columns,
     game[prop].map(({ id }) => [game.id, id]),
   );
@@ -49,6 +57,7 @@ const soloJunctionInsert = (table, columns, props) => (game) => {
 
   return toSQL(
     table,
+    columns,
     columns,
     _.concat(
       rightToLeft.map(({ id }) => [id, game.id]),
@@ -82,15 +91,17 @@ const tables = {
     const columns = _.keys(fields);
     const values = _.map(columns, c => fields[c]);
 
-    return toSQL('games', columns, [values]);
+    return toSQL('games', columns, ['id'], [values]);
   },
 
   alternate_names({ id, 'alternate-names': alternateNames }) {
     if (_.isEmpty(alternateNames)) return null;
 
+    const columns = ['id', 'alternate_name'];
     return toSQL(
       'alternate_names',
-      ['id', 'alternate_name'],
+      columns,
+      columns,
       alternateNames.map(n => [id, n]),
     );
   },
