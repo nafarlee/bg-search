@@ -167,9 +167,9 @@ const tables = {
   ),
 };
 
-function insert(game) {
+function insert(games) {
   return _(tables)
-    .map(f => f(game))
+    .map(f => f(games))
     .compact()
     .value();
 }
