@@ -3,7 +3,7 @@ const FIELDS = 'primary_name, year';
 const simple = field => (value, negate = false) => ({
   text: `SELECT ${FIELDS}
          FROM games
-         WHERE ${field} ${negate ? '!' : ''}~~* $1`,
+         WHERE ${field} ${negate ? '!' : ''}~~* {{}}`,
   values: [`%${value}%`],
 });
 
@@ -15,14 +15,14 @@ const junction = ({
          FROM games a, games_${table} ab, ${table} b
          WHERE a.id = ab.game_id
            AND ab.${field}_id = b.id
-           AND ${field} ${negate ? '!' : ''}~~* $1`,
+           AND ${field} ${negate ? '!' : ''}~~* {{}}`,
   values: [`%${value}%`],
 });
 
 const relational = field => (operator, value, negate = false) => ({
   text: `SELECT ${FIELDS}
          FROM games
-         WHERE ${negate ? 'NOT' : ''} ${field} ${operator} $1 `,
+         WHERE ${negate ? 'NOT' : ''} ${field} ${operator} {{}} `,
   values: [value],
 });
 
@@ -65,7 +65,7 @@ module.exports = {
     text: `SELECT ${FIELDS}
            FROM games g, player_recommendations pr
            WHERE g.id = pr.id
-             AND players && $1::int4range
+             AND players && {{}}::int4range
              AND ${negate ? 'NOT' : ''} recommended > (best + not_recommended)`,
     values: [toRange(operator, value)],
   }),
@@ -74,7 +74,7 @@ module.exports = {
     text: `SELECT ${FIELDS}
            FROM games g, player_recommendations pr
            WHERE g.id = pr.id
-             AND players && $1::int4range
+             AND players && {{}}::int4range
              AND ${negate ? 'NOT' : ''} best > (recommended + not_recommended)`,
     values: [toRange(operator, value)],
   }),
