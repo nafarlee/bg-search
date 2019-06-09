@@ -34,7 +34,6 @@ async function pull() {
   try {
     const games = body.items.item.map(marshall);
     for (const query of insert(games)) {
-      console.log(query);
       await client.query(...query);
     }
     await client.query('COMMIT');
