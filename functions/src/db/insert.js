@@ -73,15 +73,16 @@ const soloJunctionInsert = (table, columns, props) => (games) => {
   leftToRight = leftToRight || [];
   rightToLeft = rightToLeft || [];
 
+  const chunks = _.concat(
+    rightToLeft.map(({ id, gameID }) => [id, gameID]),
+    leftToRight.map(({ id, gameID }) => [gameID, id]),
+  );
 
   return toSQL(
     table,
     columns,
     columns,
-    _.concat(
-      rightToLeft.map(({ id, gameID }) => [id, gameID]),
-      leftToRight.map(({ id, gameID }) => [gameID, id]),
-    ),
+    _.uniqWith(chunks, _.isEqual),
   );
 };
 
