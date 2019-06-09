@@ -35,14 +35,21 @@ const kvInsert = (table, columns, prop = table) => (games) => {
   );
 };
 
-const junctionInsert = (table, columns, prop = table) => (game) => {
-  if (_.isEmpty(game[prop])) return null;
+const junctionInsert = (table, columns, prop = table) => (games) => {
+  const props = _.flatMap(
+    games,
+    g => _.map(
+      g[prop],
+      p => ({ id: p.id, gameID: g.id }),
+    ),
+  );
+  if (_.isEmpty(props)) return null;
 
   return toSQL(
     table,
     columns,
     columns,
-    game[prop].map(({ id }) => [game.id, id]),
+    props.map(({ id, gameID }) => [gameID, id]),
   );
 };
 
