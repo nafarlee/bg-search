@@ -80,31 +80,34 @@ const soloJunctionInsert = (table, columns, props) => (games) => {
 };
 
 const tables = {
-  games(game) {
-    const fields = {
-      id: game.id,
-      image: game.image,
-      thumbnail: game.thumbnail,
-      average_rating: game['average-rating'],
-      average_weight: game['average-weight'],
-      bayes_rating: game['bayes-rating'],
-      description: game.description,
-      maximum_players: game['maximum-players'],
-      maximum_playtime: game['maximum-playtime'],
-      minimum_age: game['minimum-age'],
-      minimum_players: game['minimum-players'],
-      minimum_playtime: game['minimum-playtime'],
-      primary_name: game['primary-name'],
-      rating_deviation: game['rating-deviation'],
-      rating_votes: game['rating-votes'],
-      weight_votes: game['weight-votes'],
-      year: game.year,
-    };
+  games(games) {
+    const mapped = _.map(
+      games,
+      g => ({
+        id: g.id,
+        image: g.image,
+        thumbnail: g.thumbnail,
+        average_rating: g['average-rating'],
+        average_weight: g['average-weight'],
+        bayes_rating: g['bayes-rating'],
+        description: g.description,
+        maximum_players: g['maximum-players'],
+        maximum_playtime: g['maximum-playtime'],
+        minimum_age: g['minimum-age'],
+        minimum_players: g['minimum-players'],
+        minimum_playtime: g['minimum-playtime'],
+        primary_name: g['primary-name'],
+        rating_deviation: g['rating-deviation'],
+        rating_votes: g['rating-votes'],
+        weight_votes: g['weight-votes'],
+        year: g.year,
+      }),
+    );
 
-    const columns = _.keys(fields);
-    const values = _.map(columns, c => fields[c]);
+    const columns = _.keys(mapped[0]);
+    const values = _.map(mapped, m => _.map(columns, c => m[c]));
 
-    return toSQL('games', columns, ['id'], [values]);
+    return toSQL('games', columns, ['id'], values);
   },
 
   alternate_names({ id, 'alternate-names': alternateNames }) {
