@@ -46,13 +46,7 @@ const kvInsert = (table, columns, prop = table) => (games) => {
 };
 
 const junctionInsert = (table, columns, prop = table) => (games) => {
-  const props = _.flatMap(
-    games,
-    g => _.map(
-      g[prop],
-      p => ({ id: p.id, gameID: g.id }),
-    ),
-  );
+  const props = flattenWithID(games, prop);
   if (_.isEmpty(props)) return null;
 
   return toSQL(
