@@ -23,14 +23,15 @@ function toSQL(table, columns, uniques, chunks) {
   ];
 }
 
-const kvInsert = (table, columns, prop = table) => (game) => {
-  if (_.isEmpty(game[prop])) return null;
+const kvInsert = (table, columns, prop = table) => (games) => {
+  const props = _.flatMap(games, g => g[prop]);
+  if (_.isEmpty(props)) return null;
 
   return toSQL(
     table,
     columns,
     columns.slice(0, 1),
-    game[prop].map(p => [p.id, p.value]),
+    props.map(p => [p.id, p.value]),
   );
 };
 
