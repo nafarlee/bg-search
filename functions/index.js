@@ -37,8 +37,13 @@ exports.pull = functions
     }
 
     body.items.item.forEach((item) => {
-      const native = marshall(item);
-      batch.set(db.collection('games').doc(`${native.id}`), native);
+      try {
+        const native = marshall(item);
+        batch.set(db.collection('games').doc(`${native.id}`), native);
+      } catch (err) {
+        console.error('ERROR WITH ID: ', item.$.id);
+        throw err;
+      }
     });
     return batch.commit();
   });
