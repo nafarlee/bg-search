@@ -34,9 +34,7 @@ async function pull() {
   await client.query('UPDATE globals SET count = $1 WHERE id = $2', [newCount, 1]);
   try {
     const games = body.items.item.map(marshall);
-    for (const query of insert(games)) {
-      await client.query(...query);
-    }
+    await Promise.all(insert(games).map(q => client.query(...q)));
     await client.query('COMMIT');
   } catch (err) {
     await client.query('ROLLBACK');
