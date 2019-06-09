@@ -34,7 +34,12 @@ function flattenWithID(games, prop) {
 }
 
 const kvInsert = (table, columns, prop = table) => (games) => {
-  const props = _.flatMap(games, g => g[prop]);
+  const props = _
+    .chain(games)
+    .flatMap(prop)
+    .compact()
+    .value();
+
   if (_.isEmpty(props)) return null;
 
   return toSQL(
