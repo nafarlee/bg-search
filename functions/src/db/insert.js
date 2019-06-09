@@ -23,6 +23,16 @@ function toSQL(table, columns, uniques, chunks) {
   ];
 }
 
+function flattenWithID(games, prop) {
+  return _.flatMap(
+    games,
+    g => _.map(
+      g[prop],
+      p => ({ id: p.id, gameID: g.id }),
+    ),
+  );
+}
+
 const kvInsert = (table, columns, prop = table) => (games) => {
   const props = _.flatMap(games, g => g[prop]);
   if (_.isEmpty(props)) return null;
