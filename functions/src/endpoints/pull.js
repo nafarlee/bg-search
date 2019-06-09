@@ -32,10 +32,10 @@ async function pull() {
 
   await client.query('BEGIN');
   try {
-    for (const item of body.items.item) {
-      for (const query of insert(marshall(item))) {
-        await client.query(...query);
-      }
+    const games = body.items.item.map(marshall);
+    for (const query of insert(games)) {
+      console.log(query);
+      await client.query(...query);
     }
     await client.query('COMMIT');
   } catch (err) {
