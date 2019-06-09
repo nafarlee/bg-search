@@ -31,6 +31,7 @@ async function pull() {
   }
 
   await client.query('BEGIN');
+  await client.query('UPDATE globals SET count = $1 WHERE id = $2', [newCount, 1]);
   try {
     const games = body.items.item.map(marshall);
     for (const query of insert(games)) {
