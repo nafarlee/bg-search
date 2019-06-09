@@ -29,9 +29,5 @@ const result = predicates.map((p) => {
 const appension = result.map(r => r.text).join('\nINTERSECT\n');
 const pre = `SELECT DISTINCT primary_name, year
              FROM games`;
-const post = `ORDER BY average_rating`;
-
-console.log(`${pre}
-             INTERSECT
-               (${appension})
-             ${post};`);
+const post = `ORDER BY year`;
+const query = `${pre} INTERSECT (${appension}) ${post};`
