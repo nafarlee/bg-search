@@ -3,6 +3,8 @@ CREATE TABLE globals (
   id INTEGER PRIMARY KEY DEFAULT 1,
   count INTEGER CHECK (count >= 1)
 );
+INSERT INTO globals
+VALUES (1, 1);
 
 DROP TABLE IF EXISTS games CASCADE;
 CREATE TABLE games (
