@@ -3,7 +3,7 @@ const { promisify } = require('util');
 
 const parseString = promisify(require('xml2js').parseString);
 const { Client } = require('pg');
-const _ = require('lodash');
+const { range } = require('lodash');
 
 const get = require('../get');
 const marshall = require('../marshall');
@@ -21,7 +21,7 @@ async function pull() {
   const { rows: [{ count }] } = await client.query('SELECT count FROM globals');
 
   const newCount = count + 500;
-  const IDs = _.range(count, newCount);
+  const IDs = range(count, newCount);
   const xml = await get(`${baseURL}?stats=1&type=boardgame,boardgameexpansion&id=${IDs}`);
   const body = await parseString(xml);
 
