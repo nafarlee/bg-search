@@ -38,6 +38,8 @@ function players(game) {
     result['community-recommended-players'] = {
       votes: parseInt(suggestedNumplayers.$.totalvotes, 10),
       counts: suggestedNumplayers.results.reduce((obj, current) => {
+        if (!current.result) return obj;
+
         const results = {};
         current.result.forEach((x) => {
           results[x.$.value.toLowerCase().replace(/ /g, '-')] = parseInt(x.$.numvotes, 10);
