@@ -1,19 +1,11 @@
 const transpile = require('./lib');
 const language = require('../language');
 
-function fromOperator(op) {
-  switch (op) {
-    case 'GTE': return '>=';
-    default:
-      throw new Error('No operator conversion found');
-  }
-}
-
 function toArgs(p) {
   switch (p.type) {
     case 'META': return [p.negate];
     case 'DECLARATIVE': return [p.value, p.negate];
-    case 'RELATIONAL': return [fromOperator(p.operator), p.value, p.negate];
+    case 'RELATIONAL': return [p.operator, p.value, p.negate];
     default: throw new Error('Unkown predicate type');
   }
 }
