@@ -1,5 +1,5 @@
-const transpile = require('./db/transpile');
-const language = require('./language');
+const transpile = require('./lib');
+const language = require('../language');
 
 function fromOperator(op) {
   switch (op) {
@@ -18,16 +18,18 @@ function toArgs(p) {
   }
 }
 
-const predicates = language.tryParse(
-  '-is:expansion -is:collection rating-votes>=500 art:a',
-);
-const result = predicates.map((p) => {
-  const fn = transpile[p.tag];
-  return fn(...toArgs(p));
-});
+function query(s) {
+  const predicates = language.tryParse(s);
+  const result = predicates.map((p) => {
+    const fn = transpile[p.tag];
+    return fn(...toArgs(p));
+  });
 
-const appension = result.map(r => r.text).join('\nINTERSECT\n');
-const pre = `SELECT DISTINCT primary_name, year
-             FROM games`;
-const post = `ORDER BY year`;
-const query = `${pre} INTERSECT (${appension}) ${post};`
+  const appension = result.map(r => r.text).join('\nINTERSECT\n');
+  const pre = `SELECT DISTINCT primary_name, year
+               FROM games`;
+  const post = 'ORDER BY year';
+  return `${pre} INTERSECT (${appension}) ${post};`;
+}
+
+module.exports = query;
