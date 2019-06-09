@@ -110,15 +110,22 @@ const tables = {
     return toSQL('games', columns, ['id'], values);
   },
 
-  alternate_names({ id, 'alternate-names': alternateNames }) {
-    if (_.isEmpty(alternateNames)) return null;
+  alternate_names(games) {
+    const chunks = _.flatMap(
+      games,
+      g => _.map(
+        g['alternate-names'],
+        name => [g.id, name],
+      ),
+    );
+    if (_.isEmpty(chunks)) return null;
 
     const columns = ['id', 'alternate_name'];
     return toSQL(
       'alternate_names',
       columns,
       columns,
-      alternateNames.map(n => [id, n]),
+      chunks,
     );
   },
 
