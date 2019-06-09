@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS globals CASCADE;
 CREATE TABLE globals (
   id INTEGER PRIMARY KEY DEFAULT 1,
-  count INTEGER CHECK (count >= 1),
+  count INTEGER CHECK (count >= 1)
 );
 
 DROP TABLE IF EXISTS games CASCADE;
