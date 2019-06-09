@@ -117,13 +117,14 @@ const tables = {
   },
 
   alternate_names(games) {
-    const chunks = _.flatMap(
-      games,
-      g => _.map(
+    const chunks = _
+      .chain(games)
+      .flatMap(g => _.map(
         g['alternate-names'],
         name => [g.id, name],
-      ),
-    );
+      ))
+      .uniqWith(_.isEqual)
+      .value();
     if (_.isEmpty(chunks)) return null;
 
     const columns = ['id', 'alternate_name'];
