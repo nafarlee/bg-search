@@ -38,6 +38,7 @@ const kvInsert = (table, columns, prop = table) => (games) => {
     .chain(games)
     .flatMap(prop)
     .compact()
+    .uniqWith(_.isEqual)
     .value();
 
   if (_.isEmpty(props)) return null;
