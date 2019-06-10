@@ -20,3 +20,8 @@ test("a cooperative dice game that isn't a collection with at least 500 ratings"
   const input = '-is:expansion -is:collection rating-votes>=500 mechanic:coop mechanic:dice';
   return client.query(transpile(input));
 });
+
+test('a worker placement game that is best with 2 or 3 players', () => {
+  const input = 'mechanic:worker best-players=2 or best-players=3';
+  return client.query(transpile(input));
+});
