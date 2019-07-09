@@ -1,6 +1,6 @@
 const FIELDS = 'primary_name, year';
 
-const simple = field => (value, negate = false) => ({
+const simple = field => ({ value, negate = false }) => ({
   text: `SELECT ${FIELDS}
          FROM games
          WHERE ${field} ${negate ? '!' : ''}~~* {{}}`,
@@ -10,7 +10,7 @@ const simple = field => (value, negate = false) => ({
 const junction = ({
   table,
   field,
-}) => (value, negate = false) => ({
+}) => ({ value, negate = false }) => ({
   text: `SELECT DISTINCT ${FIELDS}
          FROM games a, games_${table} ab, ${table} b
          WHERE a.id = ab.game_id
@@ -19,7 +19,7 @@ const junction = ({
   values: [`%${value}%`],
 });
 
-const relational = field => (operator, value, negate = false) => ({
+const relational = field => ({ operator, value, negate = false }) => ({
   text: `SELECT ${FIELDS}
          FROM games
          WHERE ${negate ? 'NOT' : ''} ${field} ${operator} {{}} `,
@@ -61,7 +61,7 @@ module.exports = {
   MINIMUM_PLAYTIME: relational('minimum_playtime'),
   MAXIMUM_PLAYTIME: relational('maximum_playtime'),
 
-  RECOMMENDED_PLAYERS: (operator, value, negate = false) => ({
+  RECOMMENDED_PLAYERS: ({ operator, value, negate = false }) => ({
     text: `SELECT ${FIELDS}
            FROM games g, player_recommendations pr
            WHERE g.id = pr.id
@@ -70,7 +70,7 @@ module.exports = {
     values: [toRange(operator, value)],
   }),
 
-  BEST_PLAYERS: (operator, value, negate = false) => ({
+  BEST_PLAYERS: ({ operator, value, negate = false }) => ({
     text: `SELECT ${FIELDS}
            FROM games g, player_recommendations pr
            WHERE g.id = pr.id
@@ -79,7 +79,7 @@ module.exports = {
     values: [toRange(operator, value)],
   }),
 
-  EXPANSION: (negate = false) => ({
+  EXPANSION: ({ negate = false }) => ({
     text: `SELECT ${FIELDS}
            FROM games
            LEFT JOIN expansions
@@ -88,7 +88,7 @@ module.exports = {
     values: null,
   }),
 
-  COLLECTION: (negate = false) => ({
+  COLLECTION: ({ negate = false }) => ({
     text: `SELECT ${FIELDS}
            FROM games
            LEFT JOIN collections
@@ -97,7 +97,7 @@ module.exports = {
     values: null,
   }),
 
-  REIMPLEMENTATION: (negate = false) => ({
+  REIMPLEMENTATION: ({ negate = false }) => ({
     text: `SELECT ${FIELDS}
            FROM games
            LEFT JOIN reimplementations
