@@ -1,4 +1,4 @@
-const transpile = require('./lib');
+const lib = require('./lib');
 const language = require('../language');
 
 function toSQL(predicates, intersect = true) {
@@ -11,7 +11,7 @@ function toSQL(predicates, intersect = true) {
         values: acc.values.concat(values || []),
       };
     }
-    const { text, values } = transpile[cur.tag](cur);
+    const { text, values } = lib[cur.tag](cur);
     return {
       text: (acc.text.length === 0)
         ? text
@@ -21,7 +21,7 @@ function toSQL(predicates, intersect = true) {
   }, { text: '', values: [] });
 }
 
-function query(s) {
+module.exports = function transpile(s) {
   const predicates = language.tryParse(s);
   const { text, values } = toSQL(predicates);
 
@@ -29,7 +29,5 @@ function query(s) {
   return {
     text: text.replace(/\{\{\}\}/g, replacer),
     values,
-  };
-}
-
-module.exports = query;
+ };
+};
