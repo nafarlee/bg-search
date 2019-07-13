@@ -24,5 +24,5 @@ module.exports = function transpile(s) {
   return {
     text: text.replace(/\{\{\}\}/g, replacer),
     values,
- };
+  };
 };
