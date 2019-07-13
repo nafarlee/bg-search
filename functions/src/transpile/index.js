@@ -7,7 +7,9 @@ function toSQL(predicates, intersect = true) {
     if (cur.type === 'OR') {
       const { text, values } = toSQL(cur.terms, false);
       return {
-        text: `${acc.text} INTERSECT (${text})`,
+        text: (acc.text.length === 0)
+          ? text
+          : `${acc.text} ${joiningTerm} ${text}`,
         values: acc.values.concat(values || []),
       };
     }
