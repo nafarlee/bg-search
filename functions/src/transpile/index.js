@@ -4,13 +4,15 @@ const language = require('../language');
 function toSQL(predicates, intersect = true) {
   const joiningTerm = intersect ? 'INTERSECT' : 'UNION';
   return predicates.reduce((acc, cur) => {
-    const { text, values } = (cur.type === 'OR')
+    const isOR = cur.type === 'OR';
+    const { text, values } = isOR
       ? toSQL(cur.terms, false)
       : lib[cur.tag](cur);
+
     return {
       text: (acc.text.length === 0)
         ? text
-        : `${acc.text} ${joiningTerm} ${text}`,
+        : `${acc.text} ${joiningTerm} ${isOR ? `(${text})` : text}`,
       values: acc.values.concat(values || []),
     };
   }, { text: '', values: [] });
