@@ -7,8 +7,9 @@ module.exports = async function search(req, res) {
   const query = req.query.query || '';
   const order = req.query.order || 'bayes_rating';
   const direction = req.query.direction || 'DESC';
+  const offset = req.query.offset || 0;
   console.log({ query, order, direction });
-  const sql = transpile(query, order, direction);
+  const sql = transpile(query, order, direction, offset);
   const client = new Client({
     user: 'postgres',
     database: 'postgres',

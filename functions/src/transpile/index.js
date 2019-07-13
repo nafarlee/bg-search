@@ -22,7 +22,7 @@ function toSQL(predicates, intersect = true) {
   }, { text: '', values: [] });
 }
 
-module.exports = function transpile(s, order, direction) {
+module.exports = function transpile(s, order, direction, offset) {
   const predicates = language.tryParse(s);
   let { text, values } = toSQL(predicates);
 
@@ -31,7 +31,9 @@ module.exports = function transpile(s, order, direction) {
           INTERSECT
           ${text}
           ORDER BY ${order} ${direction === 'DESC' ? 'DESC' : 'ASC'}
-          LIMIT 25`;
+          LIMIT 25 OFFSET {{}}`;
+
+  values = [...values, offset];
 
   const replacer = (x => () => `$${x++}`)(1);
   return {
