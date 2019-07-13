@@ -30,7 +30,7 @@ module.exports = function transpile(s, order, direction) {
           FROM games
           INTERSECT
           ${text}
-          ORDER BY ${order} ${direction}
+          ORDER BY ${order} ${direction === 'DESC' ? 'DESC' : 'ASC'}
           LIMIT 25`;
 
   const replacer = (x => () => `$${x++}`)(1);
