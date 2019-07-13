@@ -9,10 +9,14 @@ function toSQL(predicates, intersect = true) {
       ? toSQL(cur.terms, false)
       : lib[cur.tag](cur);
 
+    let newText = acc.text.length === 0
+      ? text
+      : `${acc.text} ${joiningTerm} ${text}`;
+
+    newText = isOR ? `(${newText})` : newText;
+
     return {
-      text: (acc.text.length === 0)
-        ? text
-        : `${acc.text} ${joiningTerm} ${isOR ? `(${text})` : text}`,
+      text: newText,
       values: acc.values.concat(values || []),
     };
   }, { text: '', values: [] });
