@@ -22,9 +22,16 @@ function toSQL(predicates, intersect = true) {
   }, { text: '', values: [] });
 }
 
-module.exports = function transpile(s) {
+module.exports = function transpile(s, order, direction) {
   const predicates = language.tryParse(s);
-  const { text, values } = toSQL(predicates);
+  let { text, values } = toSQL(predicates);
+
+  text = `SELECT primary_name, year
+          FROM games
+          INTERSECT
+          ${text}
+          ORDER BY ${order} ${direction}
+          LIMIT 25`;
 
   const replacer = (x => () => `$${x++}`)(1);
   return {
