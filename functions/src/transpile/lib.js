@@ -12,6 +12,7 @@ const FIELDS = [
   'maximum_players',
   'minimum_playtime',
   'maximum_playtime',
+  'description',
 ];
 const CONCATENATED_FIELDS = FIELDS.join(', ');
 
