@@ -1,7 +1,22 @@
-const FIELDS = 'primary_name, year';
+const FIELDS = [
+  'primary_name',
+  'rating_votes',
+  'average_rating',
+  'bayes_rating',
+  'rating_deviation',
+  'average_weight',
+  'weight_votes',
+  'year',
+  'minimum_age',
+  'minimum_players',
+  'maximum_players',
+  'minimum_playtime',
+  'maximum_playtime',
+];
+const CONCATENATED_FIELDS = FIELDS.join(', ');
 
 const simple = field => ({ value, negate = false }) => ({
-  text: `SELECT ${FIELDS}
+  text: `SELECT ${CONCATENATED_FIELDS}
          FROM games
          WHERE ${field} ${negate ? '!' : ''}~~* {{}}`,
   values: [`%${value}%`],
@@ -11,7 +26,7 @@ const junction = ({
   table,
   field,
 }) => ({ value, negate = false }) => ({
-  text: `SELECT DISTINCT ${FIELDS}
+  text: `SELECT DISTINCT ${CONCATENATED_FIELDS}
          FROM games a, games_${table} ab, ${table} b
          WHERE a.id = ab.game_id
            AND ab.${field}_id = b.id
@@ -20,7 +35,7 @@ const junction = ({
 });
 
 const relational = field => ({ operator, value, negate = false }) => ({
-  text: `SELECT ${FIELDS}
+  text: `SELECT ${CONCATENATED_FIELDS}
          FROM games
          WHERE ${negate ? 'NOT' : ''} ${field} ${operator} {{}} `,
   values: [value],
@@ -38,6 +53,8 @@ function toRange(operator, value) {
 }
 
 module.exports = {
+  FIELDS,
+
   NAME: simple('primary_name'),
   DESCRIPTION: simple('description'),
 
@@ -62,7 +79,7 @@ module.exports = {
   MAXIMUM_PLAYTIME: relational('maximum_playtime'),
 
   RECOMMENDED_PLAYERS: ({ operator, value, negate = false }) => ({
-    text: `SELECT ${FIELDS}
+    text: `SELECT ${CONCATENATED_FIELDS}
            FROM games g, player_recommendations pr
            WHERE g.id = pr.id
              AND players && {{}}::int4range
@@ -71,7 +88,7 @@ module.exports = {
   }),
 
   BEST_PLAYERS: ({ operator, value, negate = false }) => ({
-    text: `SELECT ${FIELDS}
+    text: `SELECT ${CONCATENATED_FIELDS}
            FROM games g, player_recommendations pr
            WHERE g.id = pr.id
              AND players && {{}}::int4range
@@ -80,7 +97,7 @@ module.exports = {
   }),
 
   EXPANSION: ({ negate = false }) => ({
-    text: `SELECT ${FIELDS}
+    text: `SELECT ${CONCATENATED_FIELDS}
            FROM games
            LEFT JOIN expansions
              ON id = expansion
@@ -89,7 +106,7 @@ module.exports = {
   }),
 
   COLLECTION: ({ negate = false }) => ({
-    text: `SELECT ${FIELDS}
+    text: `SELECT ${CONCATENATED_FIELDS}
            FROM games
            LEFT JOIN collections
              ON id = collection
@@ -98,7 +115,7 @@ module.exports = {
   }),
 
   REIMPLEMENTATION: ({ negate = false }) => ({
-    text: `SELECT ${FIELDS}
+    text: `SELECT ${CONCATENATED_FIELDS}
            FROM games
            LEFT JOIN reimplementations
              ON id = reimplementation
