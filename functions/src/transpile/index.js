@@ -30,7 +30,7 @@ module.exports = function transpile(s, order, direction, offset) {
   const predicates = language.tryParse(s);
   let { text, values } = toSQL(predicates);
 
-  text = `SELECT primary_name, year
+  text = `SELECT ${CONCATENATED_FIELDS}
           FROM games
           INTERSECT
           ${text}
