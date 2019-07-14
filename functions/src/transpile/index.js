@@ -1,5 +1,6 @@
 const lib = require('./lib');
 const language = require('../language');
+const { FIELDS, CONCATENATED_FIELDS } = require('../transpile/lib');
 
 function toSQL(predicates, intersect = true) {
   const joiningTerm = intersect ? 'INTERSECT' : 'UNION';
@@ -23,6 +24,9 @@ function toSQL(predicates, intersect = true) {
 }
 
 module.exports = function transpile(s, order, direction, offset) {
+  if (!FIELDS.includes(order)) throw new Error('SQL injection attempt!');
+  if (direction !== 'ASC' && direction !== 'DESC') throw new Error('SQL injection attempt!');
+
   const predicates = language.tryParse(s);
   let { text, values } = toSQL(predicates);
 
@@ -30,7 +34,7 @@ module.exports = function transpile(s, order, direction, offset) {
           FROM games
           INTERSECT
           ${text}
-          ORDER BY ${order} ${direction === 'DESC' ? 'DESC' : 'ASC'}
+          ORDER BY ${order} ${direction}
           LIMIT 25 OFFSET {{}}`;
 
   values = [...values, offset];
