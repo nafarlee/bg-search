@@ -55,6 +55,7 @@ function toRange(operator, value) {
 
 module.exports = {
   FIELDS,
+  CONCATENATED_FIELDS,
 
   NAME: simple('primary_name'),
   DESCRIPTION: simple('description'),
