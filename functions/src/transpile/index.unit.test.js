@@ -3,8 +3,12 @@ const transpile = require('./index');
 expect.extend({
   toMatchIgnoringWhitespace(received, other) {
     const regex = /\s+/g;
+    const replacement = ' ';
+    const expected = received.trim().replace(regex, replacement);
+    const actual = other.trim().replace(regex, replacement);
     return {
-      pass: received.replace(regex, '') === other.replace(regex, ''),
+      message: () => `Expected: ${expected}\nReceived: ${actual}`,
+      pass: expected === actual,
     };
   },
 });
