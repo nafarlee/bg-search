@@ -32,7 +32,7 @@ module.exports = function transpile(s, order, direction, offset) {
 
   text = `SELECT ${CONCATENATED_FIELDS}
           FROM games
-          INTERSECT
+          ${text.length === 0 ? '' : 'INTERSECT'}
           ${text}
           ORDER BY ${order} ${direction}
           LIMIT 25 OFFSET {{}}`;
