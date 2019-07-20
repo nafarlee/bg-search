@@ -1,4 +1,5 @@
 const FIELDS = [
+  'id',
   'primary_name',
   'rating_votes',
   'average_rating',
