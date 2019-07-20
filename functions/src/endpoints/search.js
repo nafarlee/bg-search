@@ -1,6 +1,7 @@
 const { Client } = require('pg');
 
 const transpile = require('../transpile');
+const views = require('../views');
 
 module.exports = async function search(req, res) {
   res.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 7}`);
@@ -17,7 +18,9 @@ module.exports = async function search(req, res) {
   try {
     await client.connect();
     const { rows } = await client.query(sql);
-    console.log(rows);
+    res
+      .status(200)
+      .send(views.search({ req, fnName: 'search', games: rows }));
   } finally {
     client.end();
   }
