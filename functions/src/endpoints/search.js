@@ -2,6 +2,7 @@ const { Client } = require('pg');
 
 const transpile = require('../transpile');
 const views = require('../views');
+const credentials = require('../../db-credentials');
 
 module.exports = async function search(req, res) {
   res.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 7}`);
@@ -11,10 +12,7 @@ module.exports = async function search(req, res) {
   const offset = req.query.offset || 0;
   console.log({ query, order, direction });
   const sql = transpile(query, order, direction, offset);
-  const client = new Client({
-    user: 'postgres',
-    database: 'postgres',
-  });
+  const client = new Client(credentials);
   try {
     await client.connect();
     const { rows } = await client.query(sql);

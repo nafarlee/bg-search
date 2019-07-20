@@ -8,14 +8,12 @@ const { range } = require('lodash');
 const get = require('../get');
 const marshall = require('../marshall');
 const insert = require('../db/insert');
+const credentials = require('../../db-credentials');
 
 const baseURL = 'https://api.geekdo.com/xmlapi2/things';
 
 async function pull() {
-  const client = new Client({
-    user: 'postgres',
-    database: 'postgres',
-  });
+  const client = new Client(credentials);
 
   await client.connect();
   const { rows: [{ count }] } = await client.query('SELECT count FROM globals');
