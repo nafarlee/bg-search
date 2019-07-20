@@ -198,11 +198,9 @@ const tables = {
   ),
 };
 
-function insert(games) {
+module.exports = function insert(games) {
   return _(tables)
     .map(f => f(games))
     .compact()
     .value();
-}
-
-module.exports = insert;
+};
