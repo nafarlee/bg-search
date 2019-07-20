@@ -13,6 +13,18 @@ expect.extend({
   },
 });
 
+test('empty input', () => {
+  const input = '';
+  const { text, values } = transpile(input, 'bayes_rating', 'DESC', 0);
+  expect(text).toMatchIgnoringWhitespace(`
+    SELECT primary_name, rating_votes, average_rating, bayes_rating, rating_deviation, average_weight, weight_votes, year, minimum_age, minimum_players, maximum_players, minimum_playtime, maximum_playtime, description
+              FROM games
+              ORDER BY bayes_rating DESC
+              LIMIT 25 OFFSET $1
+  `);
+  expect(values).toEqual([0]);
+});
+
 test("a cooperative dice game that isn't a collection with at least 500 ratings", () => {
   const input = '-is:expansion -is:collection rating-votes>=500 mechanic:coop mechanic:dice';
   const { text, values } = transpile(input, 'bayes_rating', 'DESC', 0);
