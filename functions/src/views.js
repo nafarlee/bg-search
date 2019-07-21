@@ -1,7 +1,7 @@
 function search({ req, games, fnName }) {
   if (games.length === 0) return '<!DOCTYPE html>\n<h1>No more results!</h1>';
 
-  const offset = req.query.offset || 0;
+  const offset = parseInt(req.query.offset, 10) || 0;
   const newOffset = offset + games.length;
   const originalUrl = req.originalUrl.replace('/?', `/${fnName}?`);
   const url = `${req.protocol}://${req.hostname}${originalUrl}`;
