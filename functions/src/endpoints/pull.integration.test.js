@@ -2,8 +2,8 @@ const { promisify } = require('util');
 
 const parseString = promisify(require('xml2js').parseString);
 
-const get = require('../src/get');
-const marshall = require('../src/marshall');
+const get = require('../get');
+const marshall = require('../marshall');
 const expected = require('./catan.json');
 
 const baseURL = 'https://api.geekdo.com/xmlapi2/things';
