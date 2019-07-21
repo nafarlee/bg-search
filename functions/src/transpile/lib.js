@@ -28,7 +28,7 @@ const junction = ({
   table,
   field,
 }) => ({ value, negate = false }) => ({
-  text: `SELECT DISTINCT ${CONCATENATED_FIELDS}
+  text: `SELECT DISTINCT ${CONCATENATED_FIELDS.replace('id', 'a.id')}
          FROM games a, games_${table} ab, ${table} b
          WHERE a.id = ab.game_id
            AND ab.${field}_id = b.id
