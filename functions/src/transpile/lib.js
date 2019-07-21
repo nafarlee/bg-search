@@ -82,7 +82,7 @@ module.exports = {
   MAXIMUM_PLAYTIME: relational('maximum_playtime'),
 
   RECOMMENDED_PLAYERS: ({ operator, value, negate = false }) => ({
-    text: `SELECT ${CONCATENATED_FIELDS}
+    text: `SELECT ${CONCATENATED_FIELDS.replace('id', 'a.id')}
            FROM games a, player_recommendations b
            WHERE a.id = b.id
              AND players && {{}}::int4range
@@ -91,7 +91,7 @@ module.exports = {
   }),
 
   BEST_PLAYERS: ({ operator, value, negate = false }) => ({
-    text: `SELECT ${CONCATENATED_FIELDS}
+    text: `SELECT ${CONCATENATED_FIELDS.replace('id', 'a.id')}
            FROM games a, player_recommendations b
            WHERE a.id = b.id
              AND players && {{}}::int4range
