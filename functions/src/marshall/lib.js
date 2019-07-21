@@ -102,7 +102,7 @@ function links(game) {
       }];
     },
     boardgameimplementation(record) {
-      const category = record.$.inbound ? 'reimplements' : 'reimplimented-by';
+      const category = record.$.inbound ? 'reimplements' : 'reimplemented-by';
       return [category, {
         id: parseInt(record.$.id, 10),
         value: record.$.value,

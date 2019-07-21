@@ -64,3 +64,5 @@ package-lock.json
 .terraform
 .firebase
 *.tfstate.backup
+
+/functions/db-credentials.json

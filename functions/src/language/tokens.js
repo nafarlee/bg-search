@@ -27,11 +27,11 @@ const tags = [
 
 
 const operators = [
-  'EQUAL',
-  'GT',
-  'GTE',
-  'LT',
-  'LTE',
+  '=',
+  '>',
+  '>=',
+  '<',
+  '<=',
 ].reduce(mirror, {});
 
 const meta = [
@@ -41,13 +41,7 @@ const meta = [
 ].reduce(mirror, {});
 
 module.exports = {
-  operators: {
-    '=': operators.EQUAL,
-    '>': operators.GT,
-    '>=': operators.GTE,
-    '<': operators.LT,
-    '<=': operators.LTE,
-  },
+  operators,
   tags: {
     meta: {
       expansion: meta.EXPANSION,
