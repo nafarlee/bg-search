@@ -16,16 +16,16 @@ CREATE TABLE games (
   average_weight REAL,
   bayes_rating REAL,
   description TEXT,
-  maximum_players SMALLINT CHECK (maximum_players >= 0),
-  maximum_playtime SMALLINT CHECK (maximum_playtime >= 0),
-  minimum_age SMALLINT CHECK (minimum_age >= 0),
-  minimum_players SMALLINT CHECK (minimum_players >= 0),
-  minimum_playtime SMALLINT CHECK (minimum_playtime >= 0),
+  maximum_players INTEGER CHECK (maximum_players >= 0),
+  maximum_playtime INTEGER CHECK (maximum_playtime >= 0),
+  minimum_age INTEGER CHECK (minimum_age >= 0),
+  minimum_players INTEGER CHECK (minimum_players >= 0),
+  minimum_playtime INTEGER CHECK (minimum_playtime >= 0),
   primary_name TEXT,
   rating_deviation REAL,
   rating_votes INTEGER,
   weight_votes INTEGER,
-  year SMALLINT
+  year INTEGER
 );
 
 
