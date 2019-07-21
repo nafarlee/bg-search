@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const _ = require('lodash');
 
+// toSQL :: String -> [String] -> [String] -> [[a]] -> (String, [a])
 function toSQL(table, columns, uniques, chunks) {
   const values = _.flatten(chunks);
   const positions = _(values)
