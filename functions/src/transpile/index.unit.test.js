@@ -42,11 +42,11 @@ test("a cooperative dice game that isn't a collection with at least 500 ratings"
                  ON id = collection
                WHERE item IS  NULL INTERSECT SELECT id, primary_name, rating_votes, average_rating, bayes_rating, rating_deviation, average_weight, weight_votes, year, minimum_age, minimum_players, maximum_players, minimum_playtime, maximum_playtime, description
              FROM games
-             WHERE  rating_votes >= $1  INTERSECT SELECT DISTINCT id, primary_name, rating_votes, average_rating, bayes_rating, rating_deviation, average_weight, weight_votes, year, minimum_age, minimum_players, maximum_players, minimum_playtime, maximum_playtime, description
+             WHERE  rating_votes >= $1  INTERSECT SELECT DISTINCT a.id, primary_name, rating_votes, average_rating, bayes_rating, rating_deviation, average_weight, weight_votes, year, minimum_age, minimum_players, maximum_players, minimum_playtime, maximum_playtime, description
              FROM games a, games_mechanics ab, mechanics b
              WHERE a.id = ab.game_id
                AND ab.mechanic_id = b.id
-               AND mechanic ~~* $2 INTERSECT SELECT DISTINCT id, primary_name, rating_votes, average_rating, bayes_rating, rating_deviation, average_weight, weight_votes, year, minimum_age, minimum_players, maximum_players, minimum_playtime, maximum_playtime, description
+               AND mechanic ~~* $2 INTERSECT SELECT DISTINCT a.id, primary_name, rating_votes, average_rating, bayes_rating, rating_deviation, average_weight, weight_votes, year, minimum_age, minimum_players, maximum_players, minimum_playtime, maximum_playtime, description
              FROM games a, games_mechanics ab, mechanics b
              WHERE a.id = ab.game_id
                AND ab.mechanic_id = b.id
@@ -64,17 +64,17 @@ test('a worker placement game that is best with 2 or 3 players', () => {
     SELECT id, primary_name, rating_votes, average_rating, bayes_rating, rating_deviation, average_weight, weight_votes, year, minimum_age, minimum_players, maximum_players, minimum_playtime, maximum_playtime, description
               FROM games
               INTERSECT
-              (SELECT DISTINCT id, primary_name, rating_votes, average_rating, bayes_rating, rating_deviation, average_weight, weight_votes, year, minimum_age, minimum_players, maximum_players, minimum_playtime, maximum_playtime, description
+              (SELECT DISTINCT a.id, primary_name, rating_votes, average_rating, bayes_rating, rating_deviation, average_weight, weight_votes, year, minimum_age, minimum_players, maximum_players, minimum_playtime, maximum_playtime, description
              FROM games a, games_mechanics ab, mechanics b
              WHERE a.id = ab.game_id
                AND ab.mechanic_id = b.id
-               AND mechanic ~~* $1 INTERSECT SELECT id, primary_name, rating_votes, average_rating, bayes_rating, rating_deviation, average_weight, weight_votes, year, minimum_age, minimum_players, maximum_players, minimum_playtime, maximum_playtime, description
-               FROM games g, player_recommendations pr
-               WHERE g.id = pr.id
+               AND mechanic ~~* $1 INTERSECT SELECT a.id, primary_name, rating_votes, average_rating, bayes_rating, rating_deviation, average_weight, weight_votes, year, minimum_age, minimum_players, maximum_players, minimum_playtime, maximum_playtime, description
+               FROM games a, player_recommendations b
+               WHERE a.id = b.id
                  AND players && $2::int4range
-                 AND  best > (recommended + not_recommended) UNION SELECT id, primary_name, rating_votes, average_rating, bayes_rating, rating_deviation, average_weight, weight_votes, year, minimum_age, minimum_players, maximum_players, minimum_playtime, maximum_playtime, description
-               FROM games g, player_recommendations pr
-               WHERE g.id = pr.id
+                 AND  best > (recommended + not_recommended) UNION SELECT a.id, primary_name, rating_votes, average_rating, bayes_rating, rating_deviation, average_weight, weight_votes, year, minimum_age, minimum_players, maximum_players, minimum_playtime, maximum_playtime, description
+               FROM games a, player_recommendations b
+               WHERE a.id = b.id
                  AND players && $3::int4range
                  AND  best > (recommended + not_recommended))
               ORDER BY bayes_rating DESC
