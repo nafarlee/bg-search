@@ -197,6 +197,38 @@ const tables = {
     ['game_id', 'designer_id'],
     'designers',
   ),
+
+  player_recommendations(games) {
+    const path = ['community-recommended-players', 'counts'];
+    const toRange = c => (
+      c.endsWith('+')
+        ? `(${c.slice(0, -1)},)`
+        : `[${c},${c}]`
+    );
+
+    const valid = _.filter(games, g => _.has(g, path));
+    if (_.isEmpty(valid)) return null;
+
+    const toRows = game => (
+      _.chain(game)
+        .get(path)
+        .map((votes, count) => [
+          game.id,
+          toRange(count),
+          votes.best,
+          votes.recommended,
+          votes['not-recommended'],
+        ])
+        .value()
+    );
+
+    return toSQL(
+      'player_recommendations',
+      ['id', 'players', 'best', 'recommended', 'not_recommended'],
+      ['id'],
+      _.flatMap(valid, toRows),
+    );
+  },
 };
 
 module.exports = function insert(games) {
