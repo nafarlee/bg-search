@@ -225,7 +225,7 @@ const tables = {
     return toSQL(
       'player_recommendations',
       ['id', 'players', 'best', 'recommended', 'not_recommended'],
-      ['id'],
+      ['id', 'players'],
       _.flatMap(valid, toRows),
     );
   },
