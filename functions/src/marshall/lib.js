@@ -21,7 +21,7 @@ function description(game) {
 }
 
 function year(game) {
-  return parseInt(game.yearpublished[0].$.value, 10);
+  return parseInt(game.yearpublished[0].$.value, 10) || 0;
 }
 
 function players(game) {
@@ -30,19 +30,19 @@ function players(game) {
     .find(x => x.$.name === 'suggested_numplayers');
 
   const result = {
-    'minimum-players': parseInt(game.minplayers[0].$.value, 10),
-    'maximum-players': parseInt(game.maxplayers[0].$.value, 10),
+    'minimum-players': parseInt(game.minplayers[0].$.value, 10) || 0,
+    'maximum-players': parseInt(game.maxplayers[0].$.value, 10) || 0,
   };
 
   if (suggestedNumplayers.$.totalvotes !== '0') {
     result['community-recommended-players'] = {
-      votes: parseInt(suggestedNumplayers.$.totalvotes, 10),
+      votes: parseInt(suggestedNumplayers.$.totalvotes, 10) || 0,
       counts: suggestedNumplayers.results.reduce((obj, current) => {
         if (!current.result) return obj;
 
         const results = {};
         current.result.forEach((x) => {
-          results[x.$.value.toLowerCase().replace(/ /g, '-')] = parseInt(x.$.numvotes, 10);
+          results[x.$.value.toLowerCase().replace(/ /g, '-')] = parseInt(x.$.numvotes, 10) || 0;
         });
         const count = current.$.numplayers;
         obj[count] = results;
@@ -56,14 +56,14 @@ function players(game) {
 
 function playtime(game) {
   return {
-    'minimum-playtime': parseInt(game.minplaytime[0].$.value, 10),
-    'maximum-playtime': parseInt(game.maxplaytime[0].$.value, 10),
+    'minimum-playtime': parseInt(game.minplaytime[0].$.value, 10) || 0,
+    'maximum-playtime': parseInt(game.maxplaytime[0].$.value, 10) || 0,
   };
 }
 
 function age(game) {
   return {
-    'minimum-age': parseInt(game.minage[0].$.value, 10),
+    'minimum-age': parseInt(game.minage[0].$.value, 10) || 0,
   };
 }
 
@@ -147,17 +147,17 @@ function links(game) {
 function ratings(game) {
   const getValue = property => game.statistics[0].ratings[0][property][0].$.value;
   return {
-    'rating-votes': parseInt(getValue('usersrated'), 10),
-    'average-rating': parseFloat(getValue('average')),
-    'bayes-rating': parseFloat(getValue('bayesaverage')),
-    'rating-deviation': parseFloat(getValue('stddev')),
+    'rating-votes': parseInt(getValue('usersrated'), 10) || 0,
+    'average-rating': parseFloat(getValue('average')) || 0,
+    'bayes-rating': parseFloat(getValue('bayesaverage')) || 0,
+    'rating-deviation': parseFloat(getValue('stddev')) || 0,
   };
 }
 
 function weight(game) {
   return {
-    'weight-votes': parseInt(game.statistics[0].ratings[0].numweights[0].$.value, 10),
-    'average-weight': parseFloat(game.statistics[0].ratings[0].averageweight[0].$.value),
+    'weight-votes': parseInt(game.statistics[0].ratings[0].numweights[0].$.value, 10) || 0,
+    'average-weight': parseFloat(game.statistics[0].ratings[0].averageweight[0].$.value) || 0,
   };
 }
 
