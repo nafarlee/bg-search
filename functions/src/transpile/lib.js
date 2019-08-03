@@ -1,5 +1,7 @@
 const FIELDS = [
   'id',
+  'image',
+  'thumbnail',
   'primary_name',
   'rating_votes',
   'average_rating',
