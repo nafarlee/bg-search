@@ -6,19 +6,21 @@ function toSQL(predicates, intersect = true) {
   const joiningTerm = intersect ? 'INTERSECT' : 'UNION';
   return predicates.reduce((acc, cur) => {
     const isOR = cur.type === 'OR';
-    const { text, values } = isOR
+    const result = isOR
       ? toSQL(cur.terms, false)
       : lib[cur.tag](cur);
+    let { text } = result;
 
-    let newText = acc.text.length === 0
+    text = isOR ? `(${text})` : text;
+
+    text = acc.text.length === 0
       ? text
       : `${acc.text} ${joiningTerm} ${text}`;
 
-    newText = isOR ? `(${newText})` : newText;
 
     return {
-      text: newText,
-      values: acc.values.concat(values || []),
+      text,
+      values: acc.values.concat(result.values || []),
     };
   }, { text: '', values: [] });
 }
@@ -32,8 +34,7 @@ module.exports = function transpile(s, order, direction, offset) {
 
   text = `SELECT ${CONCATENATED_FIELDS}
           FROM games
-          ${text.length === 0 ? '' : 'INTERSECT'}
-          ${text}
+          ${text.length === 0 ? '' : `INTERSECT (${text})`}
           ORDER BY ${order} ${direction}
           LIMIT 25 OFFSET {{}}`;
 
