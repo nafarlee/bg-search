@@ -25,6 +25,7 @@ async function pull() {
 
   if (!body.items.item) {
     await client.query('UPDATE globals SET count = $1 WHERE id = $2', [1, 1]);
+    console.log('SUCCESS: Mobius Strip');
     return;
   }
 
@@ -34,8 +35,10 @@ async function pull() {
     const games = body.items.item.map(marshall);
     await Promise.all(insert(games).map(q => client.query(...q)));
     await client.query('COMMIT');
+    console.log(`SUCCESS: ${count}..${newCount - 1}`);
   } catch (err) {
     await client.query('ROLLBACK');
+    console.error(`ERROR: ${count}..${newCount - 1}`);
     throw err;
   } finally {
     await client.end();
