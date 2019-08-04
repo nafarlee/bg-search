@@ -10,12 +10,9 @@ function search({ req, games, fnName }) {
     : `${url}&offset=${newOffset}`;
 
   const headings = games
-    .map(({ thumbnail, primary_name: name, id, year }) => (`
-      <section>
-        <img src="${thumbnail}" />
-        <h2><a href="https://boardgamegeek.com/boardgame/${id}">${name} (${year})</a></h2>
-      </section>
-    `))
+    .map(({ primary_name: name, id, year }) => (
+      `<h2><a href="https://boardgamegeek.com/boardgame/${id}">${name} (${year})</a></h2>`
+    ))
     .join('\n');
 
   return `
