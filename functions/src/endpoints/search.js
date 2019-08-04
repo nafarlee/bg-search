@@ -5,7 +5,7 @@ const views = require('../views');
 const credentials = require('../../db-credentials');
 
 module.exports = async function search(req, res) {
-  res.set('Cache-Control', `public, max-age=${60 * 15}`);
+  res.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 7}`);
   const query = req.query.query || '';
   const order = req.query.order || 'bayes_rating';
   const direction = req.query.direction || 'DESC';
