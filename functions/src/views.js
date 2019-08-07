@@ -1,5 +1,7 @@
+const templates = require('./templates');
+
 function search({ req, games, fnName }) {
-  if (games.length === 0) return '<!DOCTYPE html>\n<h1>No more results!</h1>';
+  if (games.length === 0) return templates.end();
 
   const offset = parseInt(req.query.offset, 10) || 0;
   const newOffset = offset + games.length;
