@@ -3,7 +3,7 @@ const language = require('../language');
 const { FIELDS, CONCATENATED_FIELDS } = require('../transpile/lib');
 
 function toSQL(predicates, intersect = true) {
-  const joiningTerm = intersect ? 'INTERSECT' : 'UNION';
+  const joiningTerm = intersect ? 'INTERSECT ALL' : 'UNION ALL';
   return predicates.reduce((acc, cur) => {
     const isOR = cur.type === 'OR';
     const result = isOR
@@ -32,9 +32,12 @@ module.exports = function transpile(s, order, direction, offset) {
   const predicates = language.tryParse(s);
   let { text, values } = toSQL(predicates);
 
-  text = `SELECT ${CONCATENATED_FIELDS}
-          FROM games
-          ${text.length === 0 ? '' : `INTERSECT (${text})`}
+  const from = (text.length === 0)
+    ? 'games'
+    : `(${text}) AS GameSubquery NATURAL INNER JOIN games`;
+
+  text = `SELECT DISTINCT ${CONCATENATED_FIELDS}
+          FROM ${from}
           ORDER BY ${order} ${direction}
           LIMIT 25 OFFSET {{}}`;
 
