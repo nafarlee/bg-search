@@ -20,3 +20,16 @@ exports.games = function games(gs) {
     .map(exports.game)
     .join('\n');
 };
+
+exports.search = function search(games, nextURL) {
+  return `
+    <!DOCTYPE html>
+    ${exports.games(games)}
+    <br>
+    <p>
+      <a href="${nextURL}">
+        Next
+      </a>
+    </p>
+  `;
+};

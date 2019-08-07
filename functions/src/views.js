@@ -11,12 +11,7 @@ function search({ req, games, fnName }) {
     ? url.replace(/offset=\d+/, `offset=${newOffset}`)
     : `${url}&offset=${newOffset}`;
 
-  return `
-    <!DOCTYPE html>
-    ${templates.games(games)}
-    <br>
-    <p><a href="${nextURL}">Next</a></p>
-  `;
+  return templates.search(games, nextURL);
 }
 
 module.exports = {
