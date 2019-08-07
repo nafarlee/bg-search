@@ -33,11 +33,11 @@ module.exports = function transpile(s, order, direction, offset) {
   let { text, values } = toSQL(predicates);
 
   const from = (text.length === 0)
-    ? 'FROM games'
-    : `FROM (${text}) as GameSubquery NATURAL INNER JOIN games`;
+    ? 'games'
+    : `(${text}) as GameSubquery NATURAL INNER JOIN games`;
 
   text = `SELECT DISTINCT ${CONCATENATED_FIELDS}
-          ${from}
+          FROM ${from}
           ORDER BY ${order} ${direction}
           LIMIT 25 OFFSET {{}}`;
 
