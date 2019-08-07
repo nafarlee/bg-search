@@ -34,7 +34,7 @@ module.exports = function transpile(s, order, direction, offset) {
 
   const from = (text.length === 0)
     ? 'games'
-    : `(${text}) as GameSubquery NATURAL INNER JOIN games`;
+    : `(${text}) AS GameSubquery NATURAL INNER JOIN games`;
 
   text = `SELECT DISTINCT ${CONCATENATED_FIELDS}
           FROM ${from}
