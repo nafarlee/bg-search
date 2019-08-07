@@ -1,6 +1,6 @@
 const templates = require('./templates');
 
-function search({ req, games, fnName }) {
+exports.search = function search({ req, games, fnName }) {
   if (games.length === 0) return templates.end();
 
   const offset = parseInt(req.query.offset, 10) || 0;
@@ -12,8 +12,4 @@ function search({ req, games, fnName }) {
     : `${url}&offset=${newOffset}`;
 
   return templates.search(games, nextURL);
-}
-
-module.exports = {
-  search,
 };
