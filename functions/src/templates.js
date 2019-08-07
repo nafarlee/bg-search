@@ -14,3 +14,9 @@ exports.game = function game({ primary_name: name, id, year }) {
     </h2>
   `;
 };
+
+exports.games = function games(gs) {
+  return gs
+    .map(exports.game)
+    .join('\n');
+};

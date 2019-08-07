@@ -11,13 +11,9 @@ function search({ req, games, fnName }) {
     ? url.replace(/offset=\d+/, `offset=${newOffset}`)
     : `${url}&offset=${newOffset}`;
 
-  const headings = games
-    .map(templates.game)
-    .join('\n');
-
   return `
     <!DOCTYPE html>
-    ${headings}
+    ${templates.games(games)}
     <br>
     <p><a href="${nextURL}">Next</a></p>
   `;
