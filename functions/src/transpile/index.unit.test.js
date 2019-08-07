@@ -6,10 +6,8 @@ expect.extend({
     const replacement = ' ';
     const expected = received.trim().replace(regex, replacement);
     const actual = other.trim().replace(regex, replacement);
-    return {
-      message: () => `Expected: ${expected}\nReceived: ${actual}`,
-      pass: expected === actual,
-    };
+    expect(expected).toEqual(actual);
+    return { pass: true };
   },
 });
 
