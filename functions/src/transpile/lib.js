@@ -18,7 +18,7 @@ const FIELDS = [
 const CONCATENATED_FIELDS = FIELDS.join(', ');
 
 const simple = field => ({ value, negate = false }) => ({
-  text: `SELECT ${CONCATENATED_FIELDS}
+  text: `SELECT id
          FROM games
          WHERE ${field} ${negate ? '!' : ''}~~* {{}}`,
   values: [`%${value}%`],
@@ -28,7 +28,7 @@ const junction = ({
   table,
   field,
 }) => ({ value, negate = false }) => ({
-  text: `SELECT ${CONCATENATED_FIELDS.replace('id', 'a.id')}
+  text: `SELECT a.id
          FROM games a, games_${table} ab, ${table} b
          WHERE a.id = ab.game_id
            AND ab.${field}_id = b.id
@@ -37,7 +37,7 @@ const junction = ({
 });
 
 const relational = field => ({ operator, value, negate = false }) => ({
-  text: `SELECT ${CONCATENATED_FIELDS}
+  text: `SELECT id
          FROM games
          WHERE ${negate ? 'NOT' : ''} ${field} ${operator} {{}} `,
   values: [value],
@@ -82,7 +82,7 @@ module.exports = {
   MAXIMUM_PLAYTIME: relational('maximum_playtime'),
 
   RECOMMENDED_PLAYERS: ({ operator, value, negate = false }) => ({
-    text: `SELECT ${CONCATENATED_FIELDS.replace('id', 'a.id')}
+    text: `SELECT a.id
            FROM games a, player_recommendations b
            WHERE a.id = b.id
              AND players && {{}}::int4range
@@ -91,7 +91,7 @@ module.exports = {
   }),
 
   BEST_PLAYERS: ({ operator, value, negate = false }) => ({
-    text: `SELECT ${CONCATENATED_FIELDS.replace('id', 'a.id')}
+    text: `SELECT a.id
            FROM games a, player_recommendations b
            WHERE a.id = b.id
              AND players && {{}}::int4range
@@ -100,7 +100,7 @@ module.exports = {
   }),
 
   EXPANSION: ({ negate = false }) => ({
-    text: `SELECT ${CONCATENATED_FIELDS}
+    text: `SELECT id
            FROM games
            LEFT JOIN expansions
              ON id = expansion
@@ -109,7 +109,7 @@ module.exports = {
   }),
 
   COLLECTION: ({ negate = false }) => ({
-    text: `SELECT ${CONCATENATED_FIELDS}
+    text: `SELECT id
            FROM games
            LEFT JOIN collections
              ON id = collection
@@ -118,7 +118,7 @@ module.exports = {
   }),
 
   REIMPLEMENTATION: ({ negate = false }) => ({
-    text: `SELECT ${CONCATENATED_FIELDS}
+    text: `SELECT id
            FROM games
            LEFT JOIN reimplementations
              ON id = reimplementation
