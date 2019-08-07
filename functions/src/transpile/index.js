@@ -32,9 +32,12 @@ module.exports = function transpile(s, order, direction, offset) {
   const predicates = language.tryParse(s);
   let { text, values } = toSQL(predicates);
 
-  text = `SELECT ${CONCATENATED_FIELDS}
-          FROM games
-          ${text.length === 0 ? '' : `INTERSECT (${text})`}
+  const from = (text.length === 0)
+    ? 'FROM games'
+    : `FROM (${text}) as GameSubquery NATURAL INNER JOIN games`;
+
+  text = `SELECT DISTINCT ${CONCATENATED_FIELDS}
+          ${from}
           ORDER BY ${order} ${direction}
           LIMIT 25 OFFSET {{}}`;
 
