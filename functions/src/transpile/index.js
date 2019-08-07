@@ -3,7 +3,7 @@ const language = require('../language');
 const { FIELDS, CONCATENATED_FIELDS } = require('../transpile/lib');
 
 function toSQL(predicates, intersect = true) {
-  const joiningTerm = intersect ? 'INTERSECT' : 'UNION';
+  const joiningTerm = intersect ? 'INTERSECT ALL' : 'UNION ALL';
   return predicates.reduce((acc, cur) => {
     const isOR = cur.type === 'OR';
     const result = isOR
