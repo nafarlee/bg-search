@@ -11,5 +11,11 @@ exports.search = function search({ req, games, fnName }) {
     ? url.replace(/offset=\d+/, `offset=${newOffset}`)
     : `${url}&offset=${newOffset}`;
 
-  return templates.search(games, nextURL);
+  return templates.search({
+    games,
+    nextURL,
+    query: req.query.query,
+    order: req.query.order,
+    direction: req.query.direction
+  });
 };
