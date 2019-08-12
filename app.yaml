@@ -1,0 +1,12 @@
+---
+runtime: nodejs10
+instance_class: B1
+handlers:
+  - url: /
+    secure: always
+    static_files: public/index.html
+    upload: public/index.html
+
+  - url: /search
+    secure: always
+    script: auto
