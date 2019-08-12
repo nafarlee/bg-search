@@ -1,5 +1,3 @@
-const functions = require('firebase-functions');
-
 const pull = require('./src/endpoints/pull');
 const search = require('./src/endpoints/search');
 
