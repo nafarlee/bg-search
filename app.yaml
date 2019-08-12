@@ -7,6 +7,10 @@ handlers:
     static_files: public/index.html
     upload: public/index.html
 
+  - url: /pubsub/push/pull
+    secure: always
+    script: auto
+
   - url: /search
     secure: always
     script: auto
