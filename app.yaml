@@ -1,4 +1,5 @@
 ---
+version: alpha
 runtime: nodejs10
 handlers:
   - url: /
