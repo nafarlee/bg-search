@@ -1,12 +1,13 @@
+const express = require('express');
+
 const pull = require('./src/endpoints/pull');
 const search = require('./src/endpoints/search');
 
-exports.pull = functions
-  .pubsub
-  .topic('pull')
-  .onPublish(pull);
+const app = express();
 
-exports.search = functions
-  .runWith({ timeoutSeconds: 540 })
-  .https
-  .onRequest(search);
+app.get('/search', search);
+app.post('/pubsub/push/pull', pull);
+
+app.listen(process.env.PORT, () => {});
+
+module.exports = app;
