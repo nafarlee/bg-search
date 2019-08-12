@@ -6,7 +6,7 @@ handlers:
     static_files: public/index.html
     upload: public/index.html
 
-  - url: /pubsub/push/pull
+  - url: /pubsub/pull
     secure: always
     script: auto
 

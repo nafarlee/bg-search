@@ -6,7 +6,7 @@ const search = require('./src/endpoints/search');
 const app = express();
 
 app.get('/search', search);
-app.post('/pubsub/push/pull', pull);
+app.post('/pubsub/pull', pull);
 
 app.listen(process.env.PORT, () => {});
 
