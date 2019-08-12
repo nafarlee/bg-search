@@ -7,13 +7,21 @@ exports.end = function end() {
   `;
 };
 
-exports.game = function game({ primary_name: name, id, year }) {
+exports.game = function game({
+  description,
+  primary_name: name,
+  id,
+  year,
+}) {
   return `
-    <h2>
-      <a href="https://boardgamegeek.com/boardgame/${id}">
-        ${name} (${year})
-      </a>
-    </h2>
+    <div>
+      <h2>
+        <a href="https://boardgamegeek.com/boardgame/${id}">
+          ${name} (${year})
+        </a>
+      </h2>
+      <p>${description.replace('/[<>"]/', '')}</p>
+    </div>
   `;
 };
 
