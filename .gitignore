@@ -65,4 +65,4 @@ package-lock.json
 .firebase
 *.tfstate.backup
 
-/functions/db-credentials.json
+/db-credentials.json
