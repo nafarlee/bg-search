@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest",
     "eslint": "eslint",
-    "start": "npm run shell"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
