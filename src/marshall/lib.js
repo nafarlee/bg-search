@@ -67,7 +67,7 @@ function age(game) {
   };
 }
 
-function links(game) {
+function links({ link = [] }) {
   const sections = {
     boardgamecategory(record) {
       return ['categories', {
@@ -134,8 +134,7 @@ function links(game) {
     },
   };
 
-  return game
-    .link
+  return link
     .reduce((accum, current) => {
       const [group, item] = sections[current.$.type](current);
       accum[group] = accum[group] || [];

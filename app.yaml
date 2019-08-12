@@ -1,0 +1,15 @@
+---
+runtime: nodejs10
+handlers:
+  - url: /
+    secure: always
+    static_files: public/index.html
+    upload: public/index.html
+
+  - url: /pubsub/pull
+    secure: always
+    script: auto
+
+  - url: /search
+    secure: always
+    script: auto

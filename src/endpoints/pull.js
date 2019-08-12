@@ -12,7 +12,7 @@ const credentials = require('../../db-credentials');
 
 const baseURL = 'https://api.geekdo.com/xmlapi2/things';
 
-async function pull() {
+async function pull(req, res) {
   const client = new Client(credentials);
 
   await client.connect();
@@ -26,7 +26,7 @@ async function pull() {
   if (!body.items.item) {
     await client.query('UPDATE globals SET count = $1 WHERE id = $2', [1, 1]);
     console.log('SUCCESS: Mobius Strip');
-    return;
+    return res.status(200).send();
   }
 
   await client.query('BEGIN');
@@ -36,10 +36,11 @@ async function pull() {
     await Promise.all(insert(games).map(q => client.query(...q)));
     await client.query('COMMIT');
     console.log(`SUCCESS: ${count}..${newCount - 1}`);
+    return res.status(200).send();
   } catch (err) {
     await client.query('ROLLBACK');
     console.error(`ERROR: ${count}..${newCount - 1}`);
-    throw err;
+    return res.status(500).send();
   } finally {
     await client.end();
   }

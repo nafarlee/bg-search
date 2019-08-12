@@ -65,7 +65,7 @@ exports.searchBox = function searchBox({
       <form
           style="display: flex; align-items: baseline;"
           method="get"
-          action="https://us-central1-bg-search.cloudfunctions.net/search">
+          action="/search">
         <input
             style="flex-grow: 1"
             spellcheck="false"
