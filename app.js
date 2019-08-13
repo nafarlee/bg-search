@@ -8,6 +8,7 @@ const app = express();
 app.get('/search', search);
 app.post('/pubsub/pull', pull);
 
-app.listen(process.env.PORT, () => {});
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {});
 
 module.exports = app;
