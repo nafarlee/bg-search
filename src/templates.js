@@ -7,13 +7,30 @@ exports.end = function end() {
   `;
 };
 
-exports.game = function game({ primary_name: name, id, year }) {
+exports.game = function game({
+  average_rating: ar,
+  rating_votes: rv,
+  average_weight: aw,
+  weight_votes: wv,
+  minimum_players: minPlay,
+  maximum_players: maxPlay,
+  minimum_playtime: minTime,
+  maximum_playtime: maxTime,
+  primary_name: name,
+  id,
+  year,
+}) {
   return `
-    <h2>
-      <a href="https://boardgamegeek.com/boardgame/${id}">
-        ${name} (${year})
-      </a>
-    </h2>
+    <div style="border-left: 2px solid black; padding-left: 1em;">
+      <h2><a href="https://boardgamegeek.com/boardgame/${id}">
+          ${name} (${year})
+        </a>
+      </h2>
+      <p>Rating: ${ar} with ${rv} votes</p>
+      <p>Weight: ${aw} with ${wv} votes</p>
+      <p>Players: ${minPlay}-${maxPlay}</p>
+      <p>Playtime: ${minTime}-${maxTime}</p>
+    </div>
   `;
 };
 
