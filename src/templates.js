@@ -37,7 +37,7 @@ exports.dropdown = function dropdown(name, configuration, selected) {
 };
 
 exports.searchBox = function searchBox({
-  query,
+  query = '',
   order,
   direction,
 }) {
