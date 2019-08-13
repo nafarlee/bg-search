@@ -20,6 +20,7 @@ exports.game = function game({
   id,
   year,
 }) {
+  const sameOrRange = (a, b) => (a === b ? a : `${a} - ${b}`);
   return `
     <div style="border-left: 2px solid black; padding-left: 1em;">
       <h2><a href="https://boardgamegeek.com/boardgame/${id}">
@@ -28,8 +29,8 @@ exports.game = function game({
       </h2>
       <p>Rating: ${ar} with ${rv} votes</p>
       <p>Weight: ${aw} with ${wv} votes</p>
-      <p>Players: ${minPlay}-${maxPlay}</p>
-      <p>Playtime: ${minTime}-${maxTime}</p>
+      <p>Players: ${sameOrRange(minPlay, maxPlay)}</p>
+      <p>Playtime: ${sameOrRange(minTime, maxTime)}</p>
     </div>
   `;
 };
