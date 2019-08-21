@@ -26,13 +26,18 @@ test('quoted term', () => {
 test('single declarative term searches', () => {
   Object.keys(tokens.tags.declarative).forEach((tag) => {
     spaces.forEach((s) => {
-      expect(language.tryParse(`${s}${tag}:catan${s}`))
-        .toEqual([{
-          negate: false,
-          type: 'DECLARATIVE',
-          value: 'catan',
-          tag: tokens.tags.declarative[tag],
-        }]);
+      expect(language.tryParse(`${s}${tag}:catan${s}`)).toEqual([{
+        negate: false,
+        type: 'DECLARATIVE',
+        value: 'catan',
+        tag: tokens.tags.declarative[tag],
+      }]);
+      expect(language.tryParse(`${s}${tag.toUpperCase()}:catan${s}`)).toEqual([{
+        negate: false,
+        type: 'DECLARATIVE',
+        value: 'catan',
+        tag: tokens.tags.declarative[tag],
+      }]);
     });
   });
 });
@@ -41,7 +46,14 @@ test('single relational term searches', () => {
   Object.keys(tokens.tags.relational).forEach((tag) => {
     Object.keys(tokens.operators).forEach((op) => {
       spaces.forEach((s) => {
-        expect(language.tryParse(`${s}${tag}${op}1994${s}`))
+        expect(language.tryParse(`${s}${tag}${op}1994${s}`)).toEqual([{
+          negate: false,
+          type: 'RELATIONAL',
+          value: '1994',
+          operator: tokens.operators[op],
+          tag: tokens.tags.relational[tag],
+        }]);
+        expect(language.tryParse(`${s}${tag.toUpperCase()}${op}1994${s}`))
           .toEqual([{
             negate: false,
             type: 'RELATIONAL',
@@ -57,12 +69,16 @@ test('single relational term searches', () => {
 test('single meta term searches', () => {
   Object.keys(tokens.tags.meta).forEach((value) => {
     spaces.forEach((s) => {
-      expect(language.tryParse(`${s}is:${value}${s}`))
-        .toEqual([{
-          type: 'META',
-          tag: tokens.tags.meta[value],
-          negate: false,
-        }]);
+      expect(language.tryParse(`${s}is:${value}${s}`)).toEqual([{
+        type: 'META',
+        tag: tokens.tags.meta[value],
+        negate: false,
+      }]);
+      expect(language.tryParse(`${s}IS:${value}${s}`)).toEqual([{
+        type: 'META',
+        tag: tokens.tags.meta[value],
+        negate: false,
+      }]);
     });
   });
 });

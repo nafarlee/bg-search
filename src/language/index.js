@@ -80,7 +80,7 @@ module.exports = PS.createLanguage({
 
   MetaTerm(r) {
     return PS.seq(
-      PS.string('is:'),
+      PS.regexp(/is:/i),
       r.MetaTag,
     ).map(([, value]) => ({
       type: 'META',
@@ -100,7 +100,7 @@ module.exports = PS.createLanguage({
       r.Value,
     ).map(([tag,, value]) => ({
       type: 'DECLARATIVE',
-      tag: tokens.tags.declarative[tag],
+      tag: tokens.tags.declarative[tag.toLowerCase()],
       value,
     }));
   },
@@ -112,7 +112,7 @@ module.exports = PS.createLanguage({
       r.SimpleValue,
     ).map(([tag, operator, value]) => ({
       type: 'RELATIONAL',
-      tag: tokens.tags.relational[tag],
+      tag: tokens.tags.relational[tag.toLowerCase()],
       operator: tokens.operators[operator],
       value,
     }));
