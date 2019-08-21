@@ -49,6 +49,8 @@ module.exports = {
 
       collection: meta.COLLECTION,
       c: meta.COLLECTION,
+
+      reimplementation: meta.REIMPLEMENTATION,
       r: meta.REIMPLEMENTATION,
     },
     declarative: {
