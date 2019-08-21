@@ -145,6 +145,7 @@
   <section class="term">
     <h2>name</h2>
     <h3>Declarative</h3>
+    <h4>Shortcuts: n</h4>
     <p>Matches a part of the games primary name</p>
     <div class="example">
       <code>name:catan</code>
@@ -155,6 +156,7 @@
   <section class="term">
     <h2>art</h2>
     <h3>Declarative</h3>
+    <h4>Shortcuts: a</h4>
     <p>Matches a part of the name of any of the game's artists</p>
     <div class="example">
       <code>art:"jakub rozalski"</code>
@@ -165,6 +167,7 @@
   <section class="term">
     <h2>category</h2>
     <h3>Declarative</h3>
+    <h4>Shortcuts: c</h4>
     <p>
       Matches a part of the name of any of the game's
       <a href="https://boardgamegeek.com/browse/boardgamecategory">categories</a>
@@ -194,6 +197,7 @@
   <section class="term">
     <h2>family</h2>
     <h3>Declarative</h3>
+    <h4>Shortcuts: f</h4>
     <p>
       Matches a part of the name of any of the game's
       <a href="https://boardgamegeek.com/browse/boardgamefamily">families</a>
@@ -207,6 +211,7 @@
   <section class="term">
     <h2>mechanic</h2>
     <h3>Declarative</h3>
+    <h4>Shortcuts: m</h4>
     <p>
       Matches a part of the name of any of the game's
       <a href="https://boardgamegeek.com/browse/boardgamemechanic">mechanics</a>
@@ -224,6 +229,7 @@
   <section class="term">
     <h2>publish</h2>
     <h3>Declarative</h3>
+    <h4>Shortcuts: p</h4>
     <p>Matches a part of the name of any of the game's publishers</p>
     <div class="example">
       <code>publish:z-man</code>
@@ -234,6 +240,7 @@
   <section class="term">
     <h2>design</h2>
     <h3>Declarative</h3>
+    <h4>Shortcuts: desi</h4>
     <p>Matches a part of the name of any of the game's designers</p>
     <div class="example">
       <code>design:uwe</code>
@@ -244,6 +251,7 @@
   <section class="term">
     <h2>rating-votes</h2>
     <h3>Relational</h3>
+    <h4>Shortcuts: rv</h4>
     <p>Compares against the number of user ratings the game has received</p>
     <div class="example">
       <code>rating-votes>=1000</code>
@@ -254,6 +262,7 @@
   <section class="term">
     <h2>average-rating</h2>
     <h3>Relational</h3>
+    <h4>Shortcuts: ar</h4>
     <p>Compares against the average user rating of a game</p>
     <div class="example">
       <code>average-rating<6.5</code>
@@ -264,6 +273,7 @@
   <section class="term">
     <h2>geek-rating</h2>
     <h3>Relational</h3>
+    <h4>Shortcuts: gr</h4>
     <p>Compares against the game's BGG GeekRating metric</p>
     <div class="example">
       <code>geek-rating>=8.0</code>
@@ -274,6 +284,7 @@
   <section class="term">
     <h2>rating-deviation</h2>
     <h3>Relational</h3>
+    <h4>Shortcuts: rd</h4>
     <p>Compares against the deviation in the game's ratings</p>
     <div class="example">
       <code>rating-deviation>=1.5</code>
@@ -284,6 +295,7 @@
   <section class="term">
     <h2>average-weight</h2>
     <h3>Relational</h3>
+    <h4>Shortcuts: aw</h4>
     <p>Compares against the game's average rated complexity</p>
     <div class="example">
       <code>average-weight>=3.7</code>
@@ -297,6 +309,7 @@
   <section class="term">
     <h2>weight-votes</h2>
     <h3>Relational</h3>
+    <h4>Shortcuts: wv</h4>
     <p>Compares against the game's number of complexity ratings</p>
     <div class="example">
       <code>weight-votes<1000</code>
@@ -341,6 +354,7 @@
   <section class="term">
     <h2>rec-players</h2>
     <h3>Relational</h3>
+    <h4>Shortcuts: rp</h4>
     <p>
       Matches against the number of players that are recommended by the BGG
       community
@@ -354,6 +368,7 @@
   <section class="term">
     <h2>best-players</h2>
     <h3>Relational</h3>
+    <h4>Shortcuts: bp</h4>
     <p>
       Matches against the number of players that are best for a game as
       determined by the BGG community
@@ -401,6 +416,7 @@
   <section class="term">
     <h2>is:expansion</h2>
     <h3>Meta</h3>
+    <h4>Shortcuts: is:e</h4>
     <p>Only matches against expansions</p>
     <div class="example">
       <code>is:expansion family:carcassonne</code>
@@ -416,6 +432,7 @@
   <section class="term">
     <h2>is:collection</h2>
     <h3>Meta</h3>
+    <h4>Shortcuts: is:c</h4>
     <p>Only matches against games which are collections of other games</p>
     <div class="example">
       <code>is:collection family:carcassonne</code>
@@ -426,6 +443,7 @@
   <section class="term">
     <h2>is:reimplementation</h2>
     <h3>Meta</h3>
+    <h4>Shortcuts: is:r</h4>
     <p>Games which are reimplementations of others</p>
     <div class="example">
       <code>-is:reimplementation -is:collection -is:expansion</code>
