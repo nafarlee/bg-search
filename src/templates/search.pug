@@ -16,7 +16,9 @@
     maximum_playtime: 'Maximum Playtime',
   };
 
+
 doctype html
+
 form(
   style="display: flex; align-items: baseline;"
   method="get"
@@ -44,15 +46,20 @@ form(
     select(name="direction")
       each text, key in { DESC: 'Descending', ASC: 'Ascending' }
         option(value=key selected= key == direction) #{text}
-each game in games
-  div(style="border-left: 2px solid black; padding-left: 1em;")
-    h2
-      a(href="https://boardgamegeek.com/boardgame/" + game.id)
-        | #{game.primary_name} (#{game.year})
-    p Rating: #{game.average_rating} with #{game.rating_votes} votes
-    p Weight: #{game.average_weight} with #{game.weight_votes} votes
-    p= 'Players: ' + (game.minimum_players === game.maximum_players ? game.minimum_players : `${game.minimum_players} - ${game.maximum_players}`)
-    p= 'Playtime: ' + (game.minimum_playtime === game.maximum_playtime ? game.minimum_playtime : `${game.minimum_playtime} - ${game.maximum_playtime}`)
-br
+
+if games.length === 0
+  h1 No more results!
+else
+  each game in games
+    div(style="border-left: 2px solid black; padding-left: 1em;")
+      h2
+        a(href="https://boardgamegeek.com/boardgame/" + game.id)
+          | #{game.primary_name} (#{game.year})
+      p Rating: #{game.average_rating} with #{game.rating_votes} votes
+      p Weight: #{game.average_weight} with #{game.weight_votes} votes
+      p= 'Players: ' + (game.minimum_players === game.maximum_players ? game.minimum_players : `${game.minimum_players} - ${game.maximum_players}`)
+      p= 'Playtime: ' + (game.minimum_playtime === game.maximum_playtime ? game.minimum_playtime : `${game.minimum_playtime} - ${game.maximum_playtime}`)
+  br
+
 p
   a(href=nextURL) Next

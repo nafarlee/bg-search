@@ -3,8 +3,6 @@ const { format } = require('url');
 const { renderFile } = require('pug');
 
 exports.search = function search({ req, games }) {
-  if (games.length === 0) return renderFile('src/templates/empty.pug');
-
   const nextURL = format({
     protocol: req.protocol,
     host: req.get('host'),
