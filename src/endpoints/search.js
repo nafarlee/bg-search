@@ -1,7 +1,8 @@
+const { format } = require('url');
+
 const { Client } = require('pg');
 
 const transpile = require('../transpile');
-const views = require('../views');
 const credentials = require('../../db-credentials');
 
 module.exports = async function search(req, res) {
@@ -10,7 +11,7 @@ module.exports = async function search(req, res) {
   const query = req.query.query || '';
   const order = req.query.order || 'bayes_rating';
   const direction = req.query.direction || 'DESC';
-  const offset = req.query.offset || 0;
+  const offset = parseInt(req.query.offset, 10) || 0;
 
   console.log({
     offset,
@@ -23,10 +24,23 @@ module.exports = async function search(req, res) {
   const client = new Client(credentials);
   try {
     await client.connect();
-    const { rows } = await client.query(sql);
-    return res
-      .status(200)
-      .send(views.search({ req, games: rows }));
+    const { rows: games } = await client.query(sql);
+    const nextURL = format({
+      protocol: req.protocol,
+      host: req.get('host'),
+      pathname: req.path,
+      query: {
+        ...req.query,
+        offset: offset + games.length,
+      },
+    });
+    return res.render('search', {
+      games,
+      nextURL,
+      query,
+      order,
+      direction,
+    });
   } finally {
     client.end();
   }
