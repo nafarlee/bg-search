@@ -1,0 +1,58 @@
+- 
+  const orders = {
+    id: 'ID',
+    primary_name: 'Name',
+    rating_votes: 'Number of Ratings',
+    average_rating: 'Average Rating',
+    bayes_rating: 'Geek Rating',
+    rating_deviation: 'Rating Deviation',
+    average_weight: 'Weight',
+    weight_votes: 'Number of Weight Ratings',
+    year: 'Release Year',
+    age: 'Minimum Age',
+    minimum_players: 'Minimum Players',
+    maximum_players: 'Maximum Players',
+    minimum_playtime: 'Minimum Playtime',
+    maximum_playtime: 'Maximum Playtime',
+  };
+
+doctype html
+form(
+  style="display: flex; align-items: baseline;"
+  method="get"
+  action="/search"
+)
+  input(
+    style="flex-grow: 1"
+    spellcheck="false"
+    autocomplete="off"
+    autocapitalize="off"
+    autocorrect="off"
+    class="search"
+    value=query
+    type="search"
+    mozactionhint="search"
+    name="query"
+  )
+  .sort(style="margin: 1ex;")
+    label(for="order") Sort
+    select(name="order")
+      each text, key in orders
+        option(value=key selected= key == order) #{text}
+  .direction
+    label(for="direction") Direction
+    select(name="direction")
+      each text, key in { DESC: 'Descending', ASC: 'Ascending' }
+        option(value=key selected= key == direction) #{text}
+each game in games
+  div(style="border-left: 2px solid black; padding-left: 1em;")
+    h2
+      a(href="https://boardgamegeek.com/boardgame/" + game.id)
+        | #{game.primary_name} (#{game.year})
+    p Rating: #{game.average_rating} with #{game.rating_votes} votes
+    p Weight: #{game.average_weight} with #{game.weight_votes} votes
+    p Players: #{game.minimum_players} - #{game.maximum_players}
+    p Playtime: #{game.minimum_playtime} - #{game.maximum_playtime}
+br
+p
+  a(href=nextURL) Next

@@ -1,7 +1,5 @@
 const { renderFile } = require('pug');
 
-const templates = require('./templates');
-
 exports.search = function search({ req, games, fnName }) {
   if (games.length === 0) return renderFile('templates/empty.pug');
 
@@ -13,7 +11,7 @@ exports.search = function search({ req, games, fnName }) {
     ? url.replace(/offset=\d+/, `offset=${newOffset}`)
     : `${url}&offset=${newOffset}`;
 
-  return templates.search({
+  return renderFile('templates/search.pug', {
     games,
     nextURL,
     query: req.query.query,
