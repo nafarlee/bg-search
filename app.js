@@ -4,6 +4,7 @@ const pull = require('./src/endpoints/pull');
 const search = require('./src/endpoints/search');
 
 const app = express();
+app.set('view engine', 'pug');
 
 app.get('/search', search);
 app.post('/pubsub/pull', pull);
