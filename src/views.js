@@ -1,15 +1,19 @@
+const { format } = require('url');
+
 const { renderFile } = require('pug');
 
 exports.search = function search({ req, games, fnName }) {
   if (games.length === 0) return renderFile('src/templates/empty.pug');
 
-  const offset = parseInt(req.query.offset, 10) || 0;
-  const newOffset = offset + games.length;
-  const originalUrl = req.originalUrl.replace('/?', `/${fnName}?`);
-  const url = `${req.protocol}://${req.hostname}${originalUrl}`;
-  const nextURL = url.includes('offset=')
-    ? url.replace(/offset=\d+/, `offset=${newOffset}`)
-    : `${url}&offset=${newOffset}`;
+  const nextURL = format({
+    protocol: req.protocol,
+    host: req.get('host'),
+    pathname: req.path,
+    query: {
+      offset: parseInt(req.query.offset, 10) || 0 + games.length,
+      ...req.query,
+    },
+  });
 
   return renderFile('src/templates/search.pug', {
     games,
