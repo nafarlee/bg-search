@@ -51,8 +51,8 @@ each game in games
         | #{game.primary_name} (#{game.year})
     p Rating: #{game.average_rating} with #{game.rating_votes} votes
     p Weight: #{game.average_weight} with #{game.weight_votes} votes
-    p Players: #{game.minimum_players} - #{game.maximum_players}
-    p Playtime: #{game.minimum_playtime} - #{game.maximum_playtime}
+    p= 'Players: ' + (game.minimum_players === game.maximum_players ? game.minimum_players : `${game.minimum_players} - ${game.maximum_players}`)
+    p= 'Playtime: ' + (game.minimum_playtime === game.maximum_playtime ? game.minimum_playtime : `${game.minimum_playtime} - ${game.maximum_playtime}`)
 br
 p
   a(href=nextURL) Next
