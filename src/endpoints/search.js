@@ -18,7 +18,7 @@ module.exports = async function search(req, res) {
     const { rows } = await client.query(sql);
     return res
       .status(200)
-      .send(views.search({ req, fnName: 'search', games: rows }));
+      .send(views.search({ req, games: rows }));
   } finally {
     client.end();
   }
