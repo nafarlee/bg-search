@@ -10,8 +10,8 @@ exports.search = function search({ req, games }) {
     host: req.get('host'),
     pathname: req.path,
     query: {
-      offset: parseInt(req.query.offset, 10) || 0 + games.length,
       ...req.query,
+      offset: (parseInt(req.query.offset, 10) || 0) + games.length,
     },
   });
 
