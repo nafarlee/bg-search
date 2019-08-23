@@ -100,10 +100,10 @@ test('single negative declarative term searches', () => {
 test('multiple declarative term searches', () => {
   spaces.forEach((s) => {
     const query = Object.keys(tokens.tags.declarative)
-      .map(tag => `${s}${tag}:catan${s}`)
+      .map((tag) => `${s}${tag}:catan${s}`)
       .join(' ');
     const actual = language.tryParse(query);
-    const expected = Object.keys(tokens.tags.declarative).map(tag => ({
+    const expected = Object.keys(tokens.tags.declarative).map((tag) => ({
       negate: false,
       type: 'DECLARATIVE',
       value: 'catan',

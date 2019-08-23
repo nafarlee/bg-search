@@ -17,7 +17,7 @@ const FIELDS = [
 ];
 const CONCATENATED_FIELDS = FIELDS.join(', ');
 
-const simple = field => ({ value, negate = false }) => ({
+const simple = (field) => ({ value, negate = false }) => ({
   text: `SELECT id
          FROM games
          WHERE ${field} ${negate ? '!' : ''}~~* {{}}`,
@@ -36,7 +36,7 @@ const junction = ({
   values: [`%${value}%`],
 });
 
-const relational = field => ({ operator, value, negate = false }) => ({
+const relational = (field) => ({ operator, value, negate = false }) => ({
   text: `SELECT id
          FROM games
          WHERE ${negate ? 'NOT' : ''} ${field} ${operator} {{}} `,

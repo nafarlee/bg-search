@@ -8,10 +8,10 @@ function get(url) {
         return;
       }
       const body = [];
-      res.on('data', chunk => body.push(chunk));
+      res.on('data', (chunk) => body.push(chunk));
       res.on('end', () => resolve(Buffer.concat(body).toString()));
     })
-      .on('error', err => reject(err));
+      .on('error', (err) => reject(err));
   });
 }
 

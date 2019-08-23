@@ -7,12 +7,12 @@ function toSQL(table, columns, uniques, chunks) {
   const positions = _(values)
     .map((_v, i) => `$${i + 1}`)
     .chunk(columns.length)
-    .map(chunk => `(${chunk.join(', ')})`)
+    .map((chunk) => `(${chunk.join(', ')})`)
     .join(', ');
 
   const joined = columns.join(', ');
   const sets = columns
-    .map(c => `${c} = EXCLUDED.${c}`)
+    .map((c) => `${c} = EXCLUDED.${c}`)
     .join(', ');
 
   return [
@@ -27,9 +27,9 @@ function toSQL(table, columns, uniques, chunks) {
 function flattenWithID(games, prop) {
   return _.flatMap(
     games,
-    g => _.map(
+    (g) => _.map(
       g[prop],
-      p => ({ id: p.id, gameID: g.id }),
+      (p) => ({ id: p.id, gameID: g.id }),
     ),
   );
 }
@@ -48,7 +48,7 @@ const kvInsert = (table, columns, prop = table) => (games) => {
     table,
     columns,
     columns.slice(0, 1),
-    props.map(p => [p.id, p.value]),
+    props.map((p) => [p.id, p.value]),
   );
 };
 
@@ -91,7 +91,7 @@ const tables = {
   games(games) {
     const mapped = _.map(
       games,
-      g => ({
+      (g) => ({
         id: g.id,
         image: g.image,
         thumbnail: g.thumbnail,
@@ -113,7 +113,7 @@ const tables = {
     );
 
     const columns = _.keys(mapped[0]);
-    const values = _.map(mapped, m => _.map(columns, c => m[c]));
+    const values = _.map(mapped, (m) => _.map(columns, (c) => m[c]));
 
     return toSQL('games', columns, ['id'], values);
   },
@@ -121,9 +121,9 @@ const tables = {
   alternate_names(games) {
     const chunks = _
       .chain(games)
-      .flatMap(g => _.map(
+      .flatMap((g) => _.map(
         g['alternate-names'],
-        name => [g.id, name],
+        (name) => [g.id, name],
       ))
       .uniqWith(_.isEqual)
       .value();
@@ -200,16 +200,16 @@ const tables = {
 
   player_recommendations(games) {
     const path = ['community-recommended-players', 'counts'];
-    const toRange = c => (
+    const toRange = (c) => (
       c.endsWith('+')
         ? `(${c.slice(0, -1)},)`
         : `[${c},${c}]`
     );
 
-    const valid = _.filter(games, g => _.has(g, path));
+    const valid = _.filter(games, (g) => _.has(g, path));
     if (_.isEmpty(valid)) return null;
 
-    const toRows = game => (
+    const toRows = (game) => (
       _.chain(game)
         .get(path)
         .map((votes, count) => [
@@ -233,7 +233,7 @@ const tables = {
 
 module.exports = function insert(games) {
   return _(tables)
-    .map(f => f(games))
+    .map((f) => f(games))
     .compact()
     .value();
 };

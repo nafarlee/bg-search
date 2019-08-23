@@ -25,7 +25,7 @@ test('Catan marshalled output matches', async () => {
 
   const actual = await get(`${baseURL}?id=13&stats=1&type=boardgame,boardgameexpansion`)
     .then(parseString)
-    .then(body => marshall(body.items.item[0]));
+    .then((body) => marshall(body.items.item[0]));
 
   for (const field of stableFields) { // eslint-disable-line
     expect(actual[field]).toEqual(expected[field]);

@@ -33,7 +33,7 @@ async function pull(req, res) {
   await client.query('UPDATE globals SET count = $1 WHERE id = $2', [newCount, 1]);
   try {
     const games = body.items.item.map(marshall);
-    await Promise.all(insert(games).map(q => client.query(...q)));
+    await Promise.all(insert(games).map((q) => client.query(...q)));
     await client.query('COMMIT');
     console.log(`SUCCESS: ${count}..${newCount - 1}`);
     return res.status(200).send();

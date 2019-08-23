@@ -17,7 +17,7 @@ module.exports = PS.createLanguage({
       PS.seq(r.Expression, PS.whitespace, r.ExpressionList)
         .map(([exp,, exps]) => [exp, ...exps]),
       r.Expression
-        .map(x => [x]),
+        .map((x) => [x]),
     );
   },
 

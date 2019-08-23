@@ -8,11 +8,11 @@ function name(game) {
   const [
     primaries,
     alternates,
-  ] = partition(game.name, record => record.$.type === 'primary');
+  ] = partition(game.name, (record) => record.$.type === 'primary');
 
   return {
     'primary-name': primaries[0].$.value,
-    'alternate-names': alternates.map(x => x.$.value),
+    'alternate-names': alternates.map((x) => x.$.value),
   };
 }
 
@@ -27,7 +27,7 @@ function year(game) {
 function players(game) {
   const suggestedNumplayers = game
     .poll
-    .find(x => x.$.name === 'suggested_numplayers');
+    .find((x) => x.$.name === 'suggested_numplayers');
 
   const result = {
     'minimum-players': parseInt(game.minplayers[0].$.value, 10) || 0,
@@ -144,7 +144,7 @@ function links({ link = [] }) {
 }
 
 function ratings(game) {
-  const getValue = property => game.statistics[0].ratings[0][property][0].$.value;
+  const getValue = (property) => game.statistics[0].ratings[0][property][0].$.value;
   return {
     'rating-votes': parseInt(getValue('usersrated'), 10) || 0,
     'average-rating': parseFloat(getValue('average')) || 0,

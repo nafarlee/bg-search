@@ -43,7 +43,7 @@ module.exports = function transpile(s, order, direction, offset) {
 
   values = [...values, offset];
 
-  const replacer = (x => () => `$${x++}`)(1);
+  const replacer = ((x) => () => `$${x++}`)(1);
   return {
     text: text.replace(/\{\{\}\}/g, replacer),
     values,
