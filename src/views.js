@@ -13,7 +13,7 @@ exports.search = function search({ req, games }) {
     },
   });
 
-  return renderFile('src/templates/search.pug', {
+  return renderFile('views/search.pug', {
     games,
     nextURL,
     query: req.query.query,
