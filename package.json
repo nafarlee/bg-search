@@ -5,6 +5,7 @@
   "scripts": {
     "test": "jest",
     "eslint": "eslint",
+    "deploy": "gcloud app deploy -v alpha",
     "start": "node app.js"
   },
   "repository": {
