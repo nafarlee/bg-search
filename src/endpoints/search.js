@@ -6,11 +6,19 @@ const credentials = require('../../db-credentials');
 
 module.exports = async function search(req, res) {
   res.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 7}`);
+
   const query = req.query.query || '';
   const order = req.query.order || 'bayes_rating';
   const direction = req.query.direction || 'DESC';
   const offset = req.query.offset || 0;
-  console.log({ query, order, direction });
+
+  console.log({
+    offset,
+    query,
+    order,
+    direction,
+  });
+
   const sql = transpile(query, order, direction, offset);
   const client = new Client(credentials);
   try {
