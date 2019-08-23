@@ -61,5 +61,6 @@ else
       p= 'Playtime: ' + (game.minimum_playtime === game.maximum_playtime ? game.minimum_playtime : `${game.minimum_playtime} - ${game.maximum_playtime}`)
   br
 
-p
-  a(href=nextURL) Next
+if games.length === 25
+  p
+    a(href=nextURL) Next
