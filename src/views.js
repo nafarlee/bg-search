@@ -16,6 +16,6 @@ exports.search = function search({ req, games, fnName }) {
     nextURL,
     query: req.query.query,
     order: req.query.order,
-    direction: req.query.direction
+    direction: req.query.direction,
   });
 };
