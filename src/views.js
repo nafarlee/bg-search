@@ -1,7 +1,7 @@
 const { renderFile } = require('pug');
 
 exports.search = function search({ req, games, fnName }) {
-  if (games.length === 0) return renderFile('templates/empty.pug');
+  if (games.length === 0) return renderFile('src/templates/empty.pug');
 
   const offset = parseInt(req.query.offset, 10) || 0;
   const newOffset = offset + games.length;
@@ -11,7 +11,7 @@ exports.search = function search({ req, games, fnName }) {
     ? url.replace(/offset=\d+/, `offset=${newOffset}`)
     : `${url}&offset=${newOffset}`;
 
-  return renderFile('templates/search.pug', {
+  return renderFile('src/templates/search.pug', {
     games,
     nextURL,
     query: req.query.query,
