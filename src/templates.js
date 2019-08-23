@@ -1,12 +1,5 @@
 const { map } = require('lodash');
 
-exports.end = function end() {
-  return `
-    <!DOCTYPE html>
-    <h1>No more results!</h1>
-  `;
-};
-
 exports.game = function game({
   average_rating: ar,
   rating_votes: rv,

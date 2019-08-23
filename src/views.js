@@ -1,7 +1,9 @@
+const { renderFile } = require('pug');
+
 const templates = require('./templates');
 
 exports.search = function search({ req, games, fnName }) {
-  if (games.length === 0) return templates.end();
+  if (games.length === 0) return renderFile('templates/empty.pug');
 
   const offset = parseInt(req.query.offset, 10) || 0;
   const newOffset = offset + games.length;
