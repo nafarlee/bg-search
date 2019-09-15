@@ -6,18 +6,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+
       - uses: actions/setup-node@v1
         with:
           node-version: 10.16.3
-      - env:
-          PGDATABASE: ${{ secrets.PGDATABASE }}
-          PGHOST: ${{ secrets.PGHOST }}
-          PGPASSWORD: ${{ secrets.PGPASSWORD }}
-          PGUSER: ${{ secrets.PGUSER }}
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm t
+
+      - name: Install gcloud
         run: |
-          npm ci
-          npm t
           echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" \
             | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
           echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" \
@@ -25,9 +26,14 @@ jobs:
           sudo apt update
           sudo apt install -y google-cloud-sdk
 
-          echo "$GOOGLE_CREDENTIALS" > credentials.json
-          gcloud auth activate-service-account --key-file=credentials.json
-
+      - name: Create db-credentials.json
+        env:
+          PGDATABASE: ${{ secrets.PGDATABASE }}
+          PGHOST: ${{ secrets.PGHOST }}
+          PGPASSWORD: ${{ secrets.PGPASSWORD }}
+          PGUSER: ${{ secrets.PGUSER }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        run: |
           cat << EOF > db-credentials.json
           {
             "database": "$PGDATABASE",
@@ -36,4 +42,11 @@ jobs:
             "user": "$PGUSER"
           }
           EOF
+
+      - name: Create credentials.json
+        run: echo "$GOOGLE_CREDENTIALS" > credentials.json
+
+      - name: Deploy
+        run: |
+          gcloud auth activate-service-account --key-file=credentials.json
           npm run deploy
