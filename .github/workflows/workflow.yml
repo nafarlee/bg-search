@@ -25,6 +25,6 @@ jobs:
             "user": "$PGUSER"
           }
           EOF
-      - uses: actions/gcloud
+      - uses: actions/gcloud@master
         with:
           args: app deploy -q -v alpha
