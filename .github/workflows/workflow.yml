@@ -43,10 +43,11 @@ jobs:
           }
           EOF
 
-      - name: Create credentials.json
-        run: echo "$GOOGLE_CREDENTIALS" > credentials.json
+      - name: Create google-credentials.json
+        run: echo "$GOOGLE_CREDENTIALS" > google-credentials.json
 
       - name: Deploy
         run: |
-          gcloud auth activate-service-account --key-file=credentials.json
+          gcloud auth activate-service-account \
+            --key-file=google-credentials.json
           npm run deploy
