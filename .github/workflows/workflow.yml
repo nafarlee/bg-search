@@ -36,4 +36,4 @@ jobs:
             "user": "$PGUSER"
           }
           EOF
-          npm run deploy -- --project bg-search
+          npm run deploy

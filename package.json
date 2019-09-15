@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest",
     "eslint": "eslint",
-    "deploy": "gcloud app deploy -q -v alpha",
+    "deploy": "gcloud app deploy -q -v alpha --project bg-search",
     "start": "node app.js"
   },
   "repository": {
