@@ -25,6 +25,10 @@ jobs:
             "user": "$PGUSER"
           }
           EOF
-      - uses: actions/gcloud@master
-        with:
-          args: app deploy -q -v alpha
+          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" \
+            | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" \
+            | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+          sudo apt update
+          sudo apt install -y google-cloud-sdk
+          npm run deploy
