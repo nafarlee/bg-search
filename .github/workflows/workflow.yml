@@ -6,17 +6,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: docker://node:10.16.3-alpine
-        run: |
-          npm ci
-          npm t
-      - uses: docker://google/cloud-sdk:262.0.0-alpine
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.16.3
         env:
           PGDATABASE: ${{ secrets.PGDATABASE }}
           PGHOST: ${{ secrets.PGHOST }}
           PGPASSWORD: ${{ secrets.PGPASSWORD }}
           PGUSER: ${{ secrets.PGUSER }}
         run: |
+          npm ci
+          npm t
           cat << EOF > db-credentials.json
           {
             "database": "$PGDATABASE",
@@ -25,4 +25,6 @@ jobs:
             "user": "$PGUSER"
           }
           EOF
-          gcloud app deploy -q -v alpha
+      - uses: actions/gcloud
+        with:
+          args: app deploy -q -v alpha
