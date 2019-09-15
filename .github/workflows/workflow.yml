@@ -15,6 +15,7 @@ jobs:
           PGPASSWORD: ${{ secrets.PGPASSWORD }}
           PGUSER: ${{ secrets.PGUSER }}
         run: |
+          ls -R
           npm ci
           npm t
           cat << EOF > db-credentials.json
