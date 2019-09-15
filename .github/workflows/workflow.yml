@@ -11,19 +11,15 @@ jobs:
         with:
           node-version: 10.16.3
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
 
-      - name: Test
-        run: npm t
+      - run: npm t
 
-      - name: Create db-credentials.json
-        env:
+      - env:
           DATABASE_CREDENTIALS: ${{ secrets.DATABASE_CREDENTIALS }}
         run: echo "$DATABASE_CREDENTIALS" | base64 -d > db-credentials.json
 
-      - name: Deploy
-        uses: exelban/gcloud@v1.0.0
+      - uses: exelban/gcloud@v1.0.0
         env:
           PROJECT_ID: bg-search
           APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
