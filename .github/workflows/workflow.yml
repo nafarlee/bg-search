@@ -28,19 +28,8 @@ jobs:
 
       - name: Create db-credentials.json
         env:
-          PGDATABASE: ${{ secrets.PGDATABASE }}
-          PGHOST: ${{ secrets.PGHOST }}
-          PGPASSWORD: ${{ secrets.PGPASSWORD }}
-          PGUSER: ${{ secrets.PGUSER }}
-        run: |
-          cat << EOF > db-credentials.json
-          {
-            "database": "$PGDATABASE",
-            "host": "$PGHOST",
-            "password": "$PGPASSWORD",
-            "user": "$PGUSER"
-          }
-          EOF
+          DATABASE_CREDENTIALS: ${{ secrets.DATABASE_CREDENTIALS }}
+        run: echo "$DATABASE_CREDENTIALS" | base64 -d > db-credentials.json
 
       - name: Create google-credentials.json
         run: echo "$GOOGLE_CREDENTIALS" > google-credentials.json
