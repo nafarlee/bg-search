@@ -14,10 +14,20 @@ jobs:
           PGHOST: ${{ secrets.PGHOST }}
           PGPASSWORD: ${{ secrets.PGPASSWORD }}
           PGUSER: ${{ secrets.PGUSER }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
         run: |
-          ls -R
           npm ci
           npm t
+          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" \
+            | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" \
+            | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+          sudo apt update
+          sudo apt install -y google-cloud-sdk
+
+          echo "$GOOGLE_CREDENTIALS" > credentials.json
+          gcloud auth activate-service-account --key-file=credentials.json
+
           cat << EOF > db-credentials.json
           {
             "database": "$PGDATABASE",
@@ -26,10 +36,4 @@ jobs:
             "user": "$PGUSER"
           }
           EOF
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" \
-            | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" \
-            | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-          sudo apt update
-          sudo apt install -y google-cloud-sdk
           npm run deploy
