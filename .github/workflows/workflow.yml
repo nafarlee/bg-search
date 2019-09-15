@@ -17,28 +17,15 @@ jobs:
       - name: Test
         run: npm t
 
-      - name: Install gcloud
-        run: |
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" \
-            | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" \
-            | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-          sudo apt update
-          sudo apt install -y google-cloud-sdk
-
       - name: Create db-credentials.json
         env:
           DATABASE_CREDENTIALS: ${{ secrets.DATABASE_CREDENTIALS }}
         run: echo "$DATABASE_CREDENTIALS" | base64 -d > db-credentials.json
 
-      - name: Create google-credentials.json
-        run: echo "$GOOGLE_CREDENTIALS" > google-credentials.json
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-
       - name: Deploy
-        run: |
-          ls
-          gcloud auth activate-service-account \
-            --key-file=google-credentials.json
-          npm run deploy
+        uses: exelban/gcloud@v1.0.0
+        env:
+          PROJECT_ID: bg-search
+          APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        with:
+          args: app deploy -q -v alpha
