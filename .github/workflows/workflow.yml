@@ -32,7 +32,6 @@ jobs:
           PGHOST: ${{ secrets.PGHOST }}
           PGPASSWORD: ${{ secrets.PGPASSWORD }}
           PGUSER: ${{ secrets.PGUSER }}
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
         run: |
           cat << EOF > db-credentials.json
           {
@@ -45,6 +44,8 @@ jobs:
 
       - name: Create google-credentials.json
         run: echo "$GOOGLE_CREDENTIALS" > google-credentials.json
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
       - name: Deploy
         run: |
