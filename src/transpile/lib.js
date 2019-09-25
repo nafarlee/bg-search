@@ -32,7 +32,8 @@ const junction = ({
          FROM games a, games_${table} ab, ${table} b
          WHERE a.id = ab.game_id
            AND ab.${field}_id = b.id
-           AND ${field} ${negate ? '!' : ''}~~* {{}}`,
+         GROUP BY a.id
+         HAVING BOOL_OR(${field} ~~* {{}}) != ${negate}`,
   values: [`%${value}%`],
 });
 
