@@ -78,13 +78,15 @@ test("a cooperative dice game that isn't a collection with at least 500 ratings"
           FROM games a, games_mechanics ab, mechanics b
           WHERE a.id = ab.game_id
             AND ab.mechanic_id = b.id
-            AND mechanic ~~* $2
+          GROUP BY a.id
+          HAVING BOOL_OR(mechanic ~~* $2) != false
         INTERSECT ALL
           SELECT a.id
           FROM games a, games_mechanics ab, mechanics b
           WHERE a.id = ab.game_id
             AND ab.mechanic_id = b.id
-            AND mechanic ~~* $3) AS GameSubquery
+          GROUP BY a.id
+          HAVING BOOL_OR(mechanic ~~* $3) != false) AS GameSubquery
     NATURAL INNER JOIN games
     ORDER BY bayes_rating DESC
     LIMIT 25 OFFSET $4
@@ -116,7 +118,8 @@ test('a worker placement game that is best with 2 or 3 players', () => {
           FROM games a, games_mechanics ab, mechanics b
           WHERE a.id = ab.game_id
             AND ab.mechanic_id = b.id
-            AND mechanic ~~* $1
+          GROUP BY a.id
+          HAVING BOOL_OR(mechanic ~~* $1) != false
           INTERSECT ALL (SELECT a.id
                          FROM games a, player_recommendations b
                          WHERE a.id = b.id
