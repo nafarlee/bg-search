@@ -15,13 +15,15 @@ jobs:
 
       - run: npm t
 
-      - env:
+      - run: echo "$DATABASE_CREDENTIALS" | base64 -d > db-credentials.json
+        if: github.ref == 'refs/heads/master'
+        env:
           DATABASE_CREDENTIALS: ${{ secrets.DATABASE_CREDENTIALS }}
-        run: echo "$DATABASE_CREDENTIALS" | base64 -d > db-credentials.json
 
       - uses: exelban/gcloud@v1.0.0
+        with:
+          args: app deploy -q -v alpha
+        if: github.ref == 'refs/heads/master'
         env:
           PROJECT_ID: bg-search
           APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-        with:
-          args: app deploy -q -v alpha
