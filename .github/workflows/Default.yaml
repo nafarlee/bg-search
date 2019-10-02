@@ -1,4 +1,5 @@
 ---
+name: Default
 on: [push]
 jobs:
   build:
