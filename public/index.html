@@ -380,6 +380,25 @@
   </section>
 
   <section class="term">
+    <h2>quorum-players</h2>
+    <h3>Relational</h3>
+    <h4>Shortcuts: qp</h4>
+    <p>
+      Matches against any games that play well at a particular player count
+      according to feedback given by a quorum (currently 75%) of the players of
+      said game. This quorum includes both <strong>best</strong> and
+      <strong>recommended</strong> player ratings.
+    </p>
+    <div class="example">
+      <code>quorum-players=3</code>
+      <p>
+        Matches any game that plays well with 3 people as rated by at least 3
+        out of 4 players.
+      </p>
+    </div>
+  </section>
+
+  <section class="term">
     <h2>max-players</h2>
     <h3>Relational</h3>
     <p>Matches against the maximum number of players supported by a game</p>
