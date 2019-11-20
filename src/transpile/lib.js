@@ -100,6 +100,15 @@ module.exports = {
     values: [toRange(operator, value)],
   }),
 
+  QUORUM_PLAYERS: ({ operator, value, negate = false }) => ({
+    text: `SELECT a.id
+           FROM games a, player_recommendations b
+           WHERE a.id = b.id
+             AND players && {{}}::int4range
+             AND ${negate ? 'NOT' : ''} (best + recommended) >= (not_recommended * 3)`,
+    values: [toRange(operator, value)],
+  }),
+
   EXPANSION: ({ negate = false }) => ({
     text: `SELECT id
            FROM games

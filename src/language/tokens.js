@@ -21,6 +21,7 @@ const tags = [
   'RECOMMENDED_PLAYERS',
   'BEST_PLAYERS',
   'MAXIMUM_PLAYERS',
+  'QUORUM_PLAYERS',
   'MINIMUM_PLAYTIME',
   'MAXIMUM_PLAYTIME',
 ].reduce(mirror, {});
@@ -104,6 +105,9 @@ module.exports = {
 
       'best-players': tags.BEST_PLAYERS,
       bp: tags.BEST_PLAYERS,
+
+      'quorum-players': tags.QUORUM_PLAYERS,
+      qp: tags.QUORUM_PLAYERS,
 
       'min-players': tags.MINIMUM_PLAYERS,
       'max-players': tags.MAXIMUM_PLAYERS,
