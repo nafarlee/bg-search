@@ -110,9 +110,16 @@ module.exports = {
       qp: tags.QUORUM_PLAYERS,
 
       'min-players': tags.MINIMUM_PLAYERS,
+      mnpr: tags.MINIMUM_PLAYERS,
+
       'max-players': tags.MAXIMUM_PLAYERS,
+      mxpr: tags.MAXIMUM_PLAYERS,
+
       'min-playtime': tags.MINIMUM_PLAYTIME,
+      mnpt: tags.MINIMUM_PLAYTIME,
+
       'max-playtime': tags.MAXIMUM_PLAYTIME,
+      mxpt: tags.MAXIMUM_PLAYTIME,
     },
   },
 };
