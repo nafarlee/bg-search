@@ -1,0 +1,68 @@
+body {
+  font-size: 30px;
+  font-family: "Helvetica", "Arial", sans-serif;
+  line-height: 1.5em;
+
+  margin: 0 auto;
+  padding: 1em 2em;
+  max-width: 50em;
+  
+  color: #bbb;
+  background-color: #333;
+}
+
+h1 {
+  text-align: center;
+}
+
+h1, h2, h3 {
+  color: #ddd;
+}
+
+a {
+  color: #a46;
+}
+
+code {
+  background-color: #444;
+  color: #f9b;
+  padding: 0.1em 0.2em;
+}
+
+label {
+  font-size: 0.5em;
+}
+
+body > h2 {
+  margin-top: 4em;
+}
+
+.snippet {
+  border-left: 0.1em solid #f9b;
+  padding-left: 1em;
+}
+
+.term {
+  border: 0.1em solid #eee;
+  padding-left: 1em;
+  margin-top: 1em;
+}
+
+.search {
+  margin: 6em 0;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 0.3em;
+  margin: 0.5em 0;
+  font-size: 1.75em;
+}
+
+.sort-options {
+  text-align: center;
+}
+
+.sort-options > * {
+  font-size: 1em;
+}

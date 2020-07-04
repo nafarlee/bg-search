@@ -6,6 +6,11 @@ handlers:
     static_files: public/index.html
     upload: public/index.html
 
+  - url: /style.css
+    secure: always
+    static_files: public/style.css
+    upload: public/style.css
+
   - url: /pubsub/pull
     secure: always
     script: auto

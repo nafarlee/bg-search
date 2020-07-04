@@ -1,472 +1,343 @@
 <!DOCTYPE html>
 <head>
-  <style>
-    section.search {
-      text-align: center;
-      font-family: sans-serif;
-    }
-    form {
-      display: grid;
-      grid-gap: 10px;
-      grid-template-rows: repeat(4, 1fr);
-      grid-template-columns: repeat(4, 1fr);
-    }
-    .search {
-      place-self: stretch stretch;
-      grid-area: 2 / 2 / 2 / 4;
-    }
-    .sort {
-      grid-area: 3 / 2 / 3 / 3;
-      place-self: stretch end;
-    }
-    .direction {
-      grid-area: 3 / 3 / 3 / 4;
-      place-self: stretch start;
-    }
-    .syntax {
-      color: #444;
-      font-family: sans-serif;
-      line-height: 1.5;
-      margin: 0 auto;
-      padding: 1ex 1em;
-      max-width: 50em;
-    }
-    .term {
-      margin: 1ex 1em;
-      border: 2px solid #444;
-      padding: 1ex 1em;
-    }
-    code {
-      background-color: #eee;
-      padding: 1ex;
-    }
-    .example {
-      border-left: 3px solid #444;
-      padding-left: 1em;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<section class="search">
-  <h1>BG Search</h1>
-  <form
-      method="get"
-      action="/search">
-    <input
-        spellcheck="false"
-        autocomplete="off"
-        autocapitalize="off"
-        autocorrect="off"
-        class="search"
-        placeholder="name:catan"
-        type="search"
-        mozactionhint="search"
-        name="query">
-    </input>
-    <div class="sort">
-      <label for="order">Sort</label>
-      <select name="order">
-        <option value="id">ID
-        <option value="primary_name">Name
-        <option value="rating_votes">Number of Ratings
-        <option value="average_rating">Average Rating
-        <option value="bayes_rating" selected>Geek Rating
-        <option value="rating_deviation">Rating Deviation
-        <option value="average_weight">Weight
-        <option value="weight_votes">Number of Weight Ratings
-        <option value="year">Release Year
-        <option value="age">Minimum Age
-        <option value="minimum_players">Minimum Players
-        <option value="maximum_players">Maximum Players
-        <option value="minimum_playtime">Minimum Playtime
-        <option value="maximum_playtime">Maximum Playtime
-      </select>
-    </div>
-    <div class="direction">
-      <label for="direction">Direction</label>
-      <select name="direction">
-        <option value="DESC" selected>Descending
-        <option value="ASC">Ascending
-      </select>
-    </div>
-  </form>
-</section>
+<body>
 
-<section class="syntax">
-  <h1>Language</h1>
+  <div class="search">
+    <h1>Board Game Search</h1>
+    <form method="get" action="/search">
+      <input
+          class="search-bar"
+          spellcheck="false"
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          placeholder="name:catan"
+          type="search"
+          mozactionhint="search"
+          name="query"></input>
+      <div class="sort-options">
+        <label for="order">Sort</label>
+        <select name="order">
+          <option value="id">ID</option>
+          <option value="primary_name">Name</option>
+          <option value="rating_votes">Number of Ratings</option>
+          <option value="average_rating">Average Rating</option>
+          <option value="bayes_rating" selected>Geek Rating</option>
+          <option value="rating_deviation">Rating Deviation</option>
+          <option value="average_weight">Weight</option>
+          <option value="weight_votes">Number of Weight Ratings</option>
+          <option value="year">Release Year</option>
+          <option value="age">Minimum Age</option>
+          <option value="minimum_players">Minimum Players</option>
+          <option value="maximum_players">Maximum Players</option>
+          <option value="minimum_playtime">Minimum Playtime</option>
+          <option value="maximum_playtime">Maximum Playtime</option>
+        </select>
+        <label for="direction">Direction</label>
+        <select name="direction">
+          <option value="DESC" selected>Descending</option>
+          <option value="ASC">Ascending</option>
+        </select>
+      </div>
+    </form>
+  </div>
 
-  <p>
-    A valid query in this language is comprised of any number of terms, combined
-    or modified in certain ways. All terms may be:
-  </p>
+
+  <h2>Language</h2>
+
+  <p>A valid query in this language is comprised of any number of terms, combined or modified in certain ways. All
+     terms may be:</p>
 
   <ul>
-    <li>Separated by spaces for an <strong>AND</strong> relationship
-    <li>Separated by the word "or" for an <strong>OR</strong> relationship
-    <li>Grouped together by surrounding one or more with parentheses. This is
-        useful in conjunction with the "or" separator.
-    <li>Prefixed with a minus (-) to <strong>NEGATE</strong> the terms results
+    <li>Separated by spaces for an <strong>AND</strong> relationship</li>
+    <li>Separated by the word "or" for an <strong>OR</strong> relationship</li>
+    <li>Grouped together by surrounding one or more with parentheses. This is useful in conjunction with the "or"
+        separator.</li>
+    <li>Prefixed with a minus (-) to <strong>NEGATE</strong> the terms results</li>
   </ul>
 
-  <div>
+  <div class="snippet">
     <code>-is:expansion (mechanic:"Dice Rolling" best-players=2) or (category:economic best-players=4)</code>
-    <p>
-      For example, the above query would match any games, which are
-      <strong>not expansions</strong>, and are
-      <strong>either dice rolling</strong> games that play
-      <strong>best with 2 players</strong>, <strong>or</strong> are
-      <strong>economic games</strong> that play
-      <strong>best with 4 players</strong>
-    </p>
+    <p>For example, the above query would match any games, which are <strong>not expansions</strong>, and are
+      <strong>either dice rolling</strong> games that play <strong>best with 2 players</strong>, <strong>or</strong>
+      are <strong>economic games</strong> that play <strong>best with 4 players</strong></p>
   </div>
 
   <p>There are also some behaviours that are specific to the type of the term:</p>
 
   <ul>
-    <li><strong>Declarative</strong> terms are always separated by a colon (:), and
-        may use quotes to specify values that contain spaces.
-        Eg. <code>name:"Race for the Galaxy"</code>
-    <li><strong>Relational</strong> terms usually work with comparing numbers,
-        and may be separated by
-        <strong>=</strong>,
-        <strong>></strong>,
-        <strong><</strong>,
-        <strong>>=</strong>, or
-        <strong><=</strong>
-        to specify relationships.
-        Eg. <code>average-rating>=7.5</code>
-    <li><strong>Meta</strong> terms always start with <strong>is</strong>, are
-        always separated by a <strong>colon (:)</strong>, but otherwise are only
-        allowed to have specific values.
-        Eg. <code>is:expansion</code>
+    <li>Most terms are separated by a colon (:), and can use quotes to specify values that contain spaces.  Eg.
+        <code>name:"Race for the Galaxy"</code></li>
+    <li>Terms that work with numbers can use <strong>=, &gt;, &lt;, &gt;=, or &lt;=</strong> to specify relationships.
+        Eg. <code>average-rating&gt;=7.5</code>
+    <li>Some terms always start with <strong>is</strong>, and are always separated by a <strong>colon (:)</strong>, but
+        otherwise are only allowed to have specific values.  Eg. <code>is:expansion</code>
   </ul>
 
-  <h1>Term Reference</h1>
 
-  <section class="term">
+  <h2>Term Reference</h2>
+
+  <div class="term">
     <h2>name</h2>
-    <h3>Declarative</h3>
-    <h4>Shortcuts: n</h4>
+    <p>Shortcuts: n</p>
     <p>Matches a part of the games primary name</p>
-    <div class="example">
+    <div class="snippet">
       <code>name:catan</code>
       <p>Games with <strong>Catan</strong> in the name</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>art</h2>
-    <h3>Declarative</h3>
-    <h4>Shortcuts: a</h4>
+    <p>Shortcuts: a</p>
     <p>Matches a part of the name of any of the game's artists</p>
-    <div class="example">
+    <div class="snippet">
       <code>art:"jakub rozalski"</code>
       <p>Games where Jakub Rozalski supplied artwork</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>category</h2>
-    <h3>Declarative</h3>
-    <h4>Shortcuts: c</h4>
-    <p>
-      Matches a part of the name of any of the game's
-      <a href="https://boardgamegeek.com/browse/boardgamecategory">categories</a>
-    </p>
-    <div class="example">
+    <p>Shortcuts: c</p>
+    <p>Matches a part of the name of any of the game's <a href="https://boardgamegeek.com/browse/boardgamecategory">
+       categories</a> </p>
+    <div class="snippet">
       <code>category:act</code>
-      <p>Matches any game in the
-        <strong>Abstract Strategy</strong>,
-        <strong>Industry / Manufacturing</strong>,
-        or <strong>Action / Dexterity</strong> categories
+      <p>Matches any game in the <strong>Abstract Strategy</strong>, <strong>Industry / Manufacturing</strong>, or
+        <strong>Action / Dexterity</strong> categories</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>desc</h2>
-    <h3>Declarative</h3>
     <p>Matches part of the game's description</p>
-    <div class="example">
+    <div class="snippet">
       <code>desc:flip</code>
-      <p>
-        Matches any game that includes the word <strong>flip</strong> in it's
-        description
-      </p>
+      <p>Matches any game that includes the word <strong>flip</strong> in it's description</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>family</h2>
-    <h3>Declarative</h3>
-    <h4>Shortcuts: f</h4>
-    <p>
-      Matches a part of the name of any of the game's
-      <a href="https://boardgamegeek.com/browse/boardgamefamily">families</a>
-    </p>
-    <div class="example">
+    <p>Shortcuts: f</p>
+    <p>Matches a part of the name of any of the game's <a href="https://boardgamegeek.com/browse/boardgamefamily">
+       families</a></p>
+    <div class="snippet">
       <code>family:dominion</code>
-      <p>Matches any game in the <strong>Dominion</strong> family
+      <p>Matches any game in the <strong>Dominion</strong> family</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>mechanic</h2>
-    <h3>Declarative</h3>
-    <h4>Shortcuts: m</h4>
-    <p>
-      Matches a part of the name of any of the game's
-      <a href="https://boardgamegeek.com/browse/boardgamemechanic">mechanics</a>
-    </p>
-    <div class="example">
+    <p>Shortcuts: m</p>
+    <p>Matches a part of the name of any of the game's <a href="https://boardgamegeek.com/browse/boardgamemechanic">
+       mechanics</a></p>
+    <div class="snippet">
       <code>mechanic:building</code>
-      <p>Matches any game with
-        <strong>Pattern Building</strong>,
-        <strong>Route/Network Building</strong>,
-        or <strong>Deck / Pool Building</strong>
-        mechanics
+      <p>Matches any game with <strong>Pattern Building</strong>, <strong>Route/Network Building</strong>, or
+         <strong>Deck / Pool Building</strong> mechanics</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>publish</h2>
-    <h3>Declarative</h3>
-    <h4>Shortcuts: p</h4>
+    <p>Shortcuts: p</p>
     <p>Matches a part of the name of any of the game's publishers</p>
-    <div class="example">
+    <div class="snippet">
       <code>publish:z-man</code>
-      <p>Matches any game published by <strong>Z-Man Games</strong>
+      <p>Matches any game published by <strong>Z-Man Games</strong></p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>design</h2>
-    <h3>Declarative</h3>
-    <h4>Shortcuts: desi</h4>
+    <p>Shortcuts: desi</p>
     <p>Matches a part of the name of any of the game's designers</p>
-    <div class="example">
+    <div class="snippet">
       <code>design:uwe</code>
-      <p>Matches any game designed by someone named <strong>Uwe</strong>
+      <p>Matches any game designed by someone named <strong>Uwe</strong></p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>rating-votes</h2>
-    <h3>Relational</h3>
-    <h4>Shortcuts: rv</h4>
+    <p>Shortcuts: rv</p>
     <p>Compares against the number of user ratings the game has received</p>
-    <div class="example">
-      <code>rating-votes>=1000</code>
-      <p>Matches any game with at least <strong>1000</strong> user ratings
+    <div class="snippet">
+      <code>rating-votes&gt;=1000</code>
+      <p>Matches any game with at least <strong>1000</strong> user ratings</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>average-rating</h2>
-    <h3>Relational</h3>
-    <h4>Shortcuts: ar</h4>
+    <p>Shortcuts: ar</p>
     <p>Compares against the average user rating of a game</p>
-    <div class="example">
-      <code>average-rating<6.5</code>
-      <p>Matches any game with an average rating below <strong>6.5</strong>
+    <div class="snippet">
+      <code>average-rating&lt;6.5</code>
+      <p>Matches any game with an average rating below <strong>6.5</strong></p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>geek-rating</h2>
-    <h3>Relational</h3>
-    <h4>Shortcuts: gr</h4>
+    <p>Shortcuts: gr</p>
     <p>Compares against the game's BGG GeekRating metric</p>
-    <div class="example">
-      <code>geek-rating>=8.0</code>
-      <p>Matches any game with a GeekRating of at least <strong>8.0</strong>
+    <div class="snippet">
+      <code>geek-rating&gt;=8.0</code>
+      <p>Matches any game with a GeekRating of at least <strong>8.0</strong></p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>rating-deviation</h2>
-    <h3>Relational</h3>
-    <h4>Shortcuts: rd</h4>
+    <p>Shortcuts: rd</p>
     <p>Compares against the deviation in the game's ratings</p>
-    <div class="example">
-      <code>rating-deviation>=1.5</code>
+    <div class="snippet">
+      <code>rating-deviation&gt;=1.5</code>
       <p>Matches against very divisive games</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>average-weight</h2>
-    <h3>Relational</h3>
-    <h4>Shortcuts: aw</h4>
+    <p>Shortcuts: aw</p>
     <p>Compares against the game's average rated complexity</p>
-    <div class="example">
-      <code>average-weight>=3.7</code>
-      <p>
-        Matches against games with an average weight of at least
-        <strong>3.7</strong>
-      </p>
+    <div class="snippet">
+      <code>average-weight&gt;=3.7</code>
+      <p>Matches against games with an average weight of at least <strong>3.7</strong></p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>weight-votes</h2>
-    <h3>Relational</h3>
-    <h4>Shortcuts: wv</h4>
+    <p>Shortcuts: wv</p>
     <p>Compares against the game's number of complexity ratings</p>
-    <div class="example">
+    <div class="snippet">
       <code>weight-votes<1000</code>
       <p>Matches games that have less than <strong>1000</strong> weight votes</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>year</h2>
-    <h3>Relational</h3>
     <p>Compares against the year a game was released</p>
-    <div class="example">
+    <div class="snippet">
       <code>year=2018 family:"roll-and-write"</code>
       <p>All the new Roll-and-Write games</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>age</h2>
-    <h3>Relational</h3>
     <p>Matches against the game's minimum recommended player age</p>
-    <div class="example">
+    <div class="snippet">
       <code>age<=12</code>
       <p>Matches any game that would be suitable for pre-teens</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>min-players</h2>
-    <h3>Relational</h3>
     <p>Matches against the minimum number of required players</p>
-    <div class="example">
-      <code>min-players>=3</code>
-      <p>
-        Matches any game that is playable with at least
-        <strong>3</strong>
-        players
-      </p>
+    <div class="snippet">
+      <code>min-players&gt;=3</code>
+      <p>Matches any game that is playable with at least <strong>3</strong> players</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>rec-players</h2>
-    <h3>Relational</h3>
-    <h4>Shortcuts: rp</h4>
-    <p>
-      Matches against the number of players that are recommended by the BGG
-      community
-    </p>
-    <div class="example">
+    <p>Shortcuts: rp</p>
+    <p>Matches against the number of players that are recommended by the BGG community</p>
+    <div class="snippet">
       <code>rec-players=3</code>
       <p>Matches any game that plays well with <strong>3</strong> players</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>best-players</h2>
-    <h3>Relational</h3>
-    <h4>Shortcuts: bp</h4>
-    <p>
-      Matches against the number of players that are best for a game as
-      determined by the BGG community
-    </p>
-    <div class="example">
+    <p>Shortcuts: bp</p>
+    <p>Matches against the number of players that are best for a game as determined by the BGG community</p>
+    <div class="snippet">
       <code>best-players=3</code>
       <p>Matches any game that plays best with <strong>3</strong> players</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>quorum-players</h2>
-    <h3>Relational</h3>
-    <h4>Shortcuts: qp</h4>
-    <p>
-      Matches against any games that play well at a particular player count
-      according to feedback given by a quorum (currently 80%) of the players of
-      said game. This quorum includes both <strong>best</strong> and
-      <strong>recommended</strong> player ratings.
-    </p>
-    <div class="example">
+    <p>Shortcuts: qp</p>
+    <p>Matches against any games that play well at a particular player count according to feedback given by a quorum (currently 80%) of the players of said game. This quorum includes both <strong>best</strong> and <strong>recommended</strong> player ratings.</p>
+    <div class="snippet">
       <code>quorum-players=3</code>
-      <p>
-        Matches any game that plays well with 3 people as rated by at least 4
-        out of 5 players.
-      </p>
+      <p>Matches any game that plays well with 3 people as rated by at least 4 out of 5 players.</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>max-players</h2>
-    <h3>Relational</h3>
     <p>Matches against the maximum number of players supported by a game</p>
-    <div class="example">
+    <div class="snippet">
       <code>min-players=2 max-players=5</code>
-      <p>
-        Matches any game that plays exactly
-        <strong>2</strong> to <strong>5</strong>
-        players
-      </p>
+      <p>Matches any game that plays exactly <strong>2</strong> to <strong>5</strong> players</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>min-playtime</h2>
-    <h3>Relational</h3>
     <p>Matches against the minimum number of minutes needed to play a game</p>
-    <div class="example">
-      <code>min-playtime>=480</code>
+    <div class="snippet">
+      <code>min-playtime&gt;=480</code>
       <p>Matches <strong>Twilight Imperium</strong></p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>max-playtime</h2>
-    <h3>Relational</h3>
     <p>Matches against the maximum number of minutes needed to play a game</p>
-    <div class="example">
+    <div class="snippet">
       <code>max-playtime<=30</code>
       <p>Matches any game you can definitely complete in a half-hour</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>is:expansion</h2>
-    <h3>Meta</h3>
-    <h4>Shortcuts: is:e</h4>
+    <p>Shortcuts: is:e</p>
     <p>Only matches against expansions</p>
-    <div class="example">
+    <div class="snippet">
       <code>is:expansion family:carcassonne</code>
       <p>Expansions for Carcassonne</p>
     </div>
-
-    <div class="example">
+    <div class="snippet">
       <code>-is:expansion</code>
       <p>Only standalone games</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>is:collection</h2>
-    <h3>Meta</h3>
-    <h4>Shortcuts: is:c</h4>
+    <p>Shortcuts: is:c</p>
     <p>Only matches against games which are collections of other games</p>
-    <div class="example">
+    <div class="snippet">
       <code>is:collection family:carcassonne</code>
       <p>Show any game that collects other games in the Carcassonne family</p>
     </div>
-  </section>
+  </div>
 
-  <section class="term">
+  <div class="term">
     <h2>is:reimplementation</h2>
-    <h3>Meta</h3>
-    <h4>Shortcuts: is:r</h4>
+    <p>Shortcuts: is:r</p>
     <p>Games which are reimplementations of others</p>
-    <div class="example">
+    <div class="snippet">
       <code>-is:reimplementation -is:collection -is:expansion</code>
       <p>Only show standalone games which are the original version</p>
     </div>
-  </section>
-</section>
+  </div>
+</body>
