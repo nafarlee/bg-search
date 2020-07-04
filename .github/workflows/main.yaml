@@ -26,6 +26,7 @@ jobs:
         uses: GoogleCloudPlatform/github-actions@0.1.2
         with:
           version: '299.0.0'
+          project_id: bg-search
           service_account_key: ${{ secrets.GOOGLE_CREDENTIALS }}
 
       - if: github.ref == 'refs/heads/master'
