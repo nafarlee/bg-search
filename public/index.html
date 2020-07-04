@@ -63,6 +63,8 @@
     <p>For example, the above query would match any games, which are <strong>not expansions</strong>, and are
       <strong>either dice rolling</strong> games that play <strong>best with 2 players</strong>, <strong>or</strong>
       are <strong>economic games</strong> that play <strong>best with 4 players</strong></p>
+    <p>Most terms have shortcuts, so if you like saving time, the above query could also be written as follows:</p>
+    <code>-is:e (m:"Dice Rolling" bp=2) or (c:economic bp=4)</code>
   </div>
 
   <p>There are also some behaviours that are specific to the type of the term:</p>
