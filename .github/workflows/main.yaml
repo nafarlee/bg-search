@@ -1,0 +1,32 @@
+---
+name: Main
+
+'on': push
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+
+      - uses: actions/setup-node@v1.4.2
+        with:
+          node-version: 10.21.0
+
+      - run: npm ci
+
+      - run: npm t
+
+      - if: github.ref == 'refs/heads/master'
+        run: echo "$DATABASE_CREDENTIALS" | base64 -d > db-credentials.json
+        env:
+          DATABASE_CREDENTIALS: ${{ secrets.DATABASE_CREDENTIALS }}
+
+      - if: github.ref == 'refs/heads/master'
+        uses: GoogleCloudPlatform/github-actions@0.1.2
+        with:
+          version: '299.0.0'
+          service_account_key: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      - if: github.ref == 'refs/heads/master'
+        run: gcloud app deploy -q -v alpha
