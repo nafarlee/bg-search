@@ -1,10 +1,12 @@
 DROP TABLE IF EXISTS globals CASCADE;
 CREATE TABLE globals (
   id INTEGER PRIMARY KEY DEFAULT 1,
-  count INTEGER CHECK (count >= 1)
+  count INTEGER CHECK (count >= 1),
+  play_id INTEGER CHECK (count >= 1),
+  play_page INTEGER CHECK (count >= 1)
 );
 INSERT INTO globals
-VALUES (1, 1);
+VALUES (1, 1, 1, 1);
 
 DROP TABLE IF EXISTS games CASCADE;
 CREATE TABLE games (
@@ -26,6 +28,14 @@ CREATE TABLE games (
   rating_votes INTEGER,
   weight_votes INTEGER,
   year INTEGER
+);
+
+DROP TABLE IF EXISTS plays CASCADE;
+CREATE TABLE plays (
+  id INTEGER PRIMARY KEY,
+  game_id INTEGER REFERENCES games ON DELETE CASCADE,
+  length INTEGER CHECK (lenth > 0) NOT NULL,
+  players INTEGER CHECK (players > 0)
 );
 
 
