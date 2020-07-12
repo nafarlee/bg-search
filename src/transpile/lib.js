@@ -110,9 +110,9 @@ module.exports = {
   }),
 
   MEDIAN_PLAYTIME: ({ operator, value, negate = false }) => ({
-    text: `SELECT game_id
+    text: `SELECT game_id as id
            FROM plays
-           GROUP BY game_id
+           GROUP BY id
            HAVING ${negate ? 'NOT' : ''} percentile_cont(0.5)
              WITHIN GROUP (ORDER BY length)
              ${operator} {{}}`,
