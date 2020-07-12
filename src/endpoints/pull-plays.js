@@ -41,15 +41,18 @@ async function pullPlays(_req, res) {
     } = await client.query('SELECT id FROM games ORDER BY id DESC LIMIT 1');
     if (playID === lastGame) {
       await client.query('UPDATE globals SET play_id = 1, play_page = 1 WHERE id = 1');
+      await client.end();
       return res.status(200).send();
     }
     await client.query('UPDATE globals SET play_id=$1, play_page=1 WHERE id=1', [playID + 1]);
+    await client.end();
     return res.status(200).send();
   }
 
   const nonZeroPlays = plays.filter(([,, length]) => length > 0);
   if (nonZeroPlays.length === 0) {
     await client.query('UPDATE globals SET play_page = $1 WHERE id = 1', [playPage + 1]);
+    await client.end();
     return res.status(200).send();
   }
 
