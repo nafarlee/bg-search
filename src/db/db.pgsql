@@ -34,7 +34,7 @@ DROP TABLE IF EXISTS plays CASCADE;
 CREATE TABLE plays (
   id INTEGER PRIMARY KEY,
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
-  length INTEGER CHECK (lenth > 0) NOT NULL,
+  length INTEGER CHECK (length > 0) NOT NULL,
   players INTEGER CHECK (players > 0)
 );
 
