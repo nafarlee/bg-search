@@ -38,8 +38,9 @@ async function pull(req, res) {
     console.log(`SUCCESS: ${count}..${newCount - 1}`);
     return res.status(200).send();
   } catch (err) {
-    await client.query('ROLLBACK');
+    console.error(err);
     console.error(`ERROR: ${count}..${newCount - 1}`);
+    await client.query('ROLLBACK');
     return res.status(500).send();
   } finally {
     await client.end();

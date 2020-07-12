@@ -58,6 +58,8 @@ async function pullPlays(_req, res) {
     await client.query('COMMIT');
     return res.status(200).send();
   } catch (err) {
+    console.error(err);
+    console.error(`ERROR: id:${playID} page:${playPage}`);
     await client.query('ROLLBACK');
     return res.status(500).send();
   } finally {
