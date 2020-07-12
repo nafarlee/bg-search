@@ -27,7 +27,7 @@ async function getPlay(id, page) {
     ]);
 }
 
-async function pullPlays(req, res) {
+async function pullPlays(_req, res) {
   const client = new Client(credentials);
 
   await client.connect();
