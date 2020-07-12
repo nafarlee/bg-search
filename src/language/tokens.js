@@ -24,6 +24,7 @@ const tags = [
   'QUORUM_PLAYERS',
   'MINIMUM_PLAYTIME',
   'MAXIMUM_PLAYTIME',
+  'MEDIAN_PLAYTIME',
 ].reduce(mirror, {});
 
 
@@ -120,6 +121,9 @@ module.exports = {
 
       'max-playtime': tags.MAXIMUM_PLAYTIME,
       mxpt: tags.MAXIMUM_PLAYTIME,
+
+      'median-playtime': tags.MEDIAN_PLAYTIME,
+      mdpt: tags.MEDIAN_PLAYTIME,
     },
   },
 };

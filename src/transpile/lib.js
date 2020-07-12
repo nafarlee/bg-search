@@ -109,6 +109,16 @@ module.exports = {
     values: [toRange(operator, value)],
   }),
 
+  MEDIAN_PLAYTIME: ({ operator, value, negate = false }) => ({
+    text: `SELECT game_id
+           FROM plays
+           GROUP BY game_id
+           HAVING ${negate ? 'NOT' : ''} percentile_cont(0.5)
+             WITHIN GROUP (ORDER BY length)
+             ${operator} {{}}`,
+    values: [value],
+  }),
+
   EXPANSION: ({ negate = false }) => ({
     text: `SELECT id
            FROM games
