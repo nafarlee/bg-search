@@ -7,7 +7,7 @@ const { range } = require('lodash');
 
 const get = require('../get');
 const marshall = require('../marshall');
-const insert = require('../db/insert');
+const { insert } = require('../db/insert');
 const credentials = require('../../db-credentials');
 
 const baseURL = 'https://api.geekdo.com/xmlapi2/things';
