@@ -51,10 +51,10 @@ async function pullPlays(_req, res) {
     return res.status(200).send();
   }
 
-  await client.query('BEGIN');
-  await client.query('UPDATE globals SET play_page = $1 WHERE id = 1', [playPage + 1]);
-  await client.query(...toSQL('plays', ['id', 'game_id', 'length', 'players'], ['id'], plays));
   try {
+    await client.query('BEGIN');
+    await client.query('UPDATE globals SET play_page = $1 WHERE id = 1', [playPage + 1]);
+    await client.query(...toSQL('plays', ['id', 'game_id', 'length', 'players'], ['id'], plays));
     await client.query('COMMIT');
     return res.status(200).send();
   } catch (err) {
