@@ -1,4 +1,11 @@
 doctype html
 
-if game.primary_name
-  h1 #{game.primary_name}
+h1 #{game.primary_name}
+a(href='https://boardgamegeek.com/boardgame/' + game.id) BGG
+
+if game.image
+  a(href=game.image) Image
+
+ul
+  each value, field in game
+    li #{field}: #{value}
