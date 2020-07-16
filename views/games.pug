@@ -1,11 +1,13 @@
 doctype html
 
 h1 #{game.primary_name}
-a(href='https://boardgamegeek.com/boardgame/' + game.id) BGG
+p
+  a(href='https://boardgamegeek.com/boardgame/' + game.id) BGG
 
 if game.image
-  a(href=game.image) Image
+  p
+    a(href=game.image) Image
 
 ul
   each value, field in game
-    li #{field}: #{value}
+    li <em>#{field}</em>: #{value}
