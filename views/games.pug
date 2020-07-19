@@ -1,13 +1,34 @@
 doctype html
 
-h1 #{game.primary_name}
-p
+h1 #{game.primary_name} (#{game.year})
+h2
   a(href='https://boardgamegeek.com/boardgame/' + game.id) BGG
 
-if game.image
-  p
-    a(href=game.image) Image
+h2
+  a(href=game.image) Image
 
+h3 Rating
 ul
-  each value, field in game
-    li <strong>#{field}</strong>: #{value}
+  li Votes: #{game.rating_votes}
+  li Average: #{game.average_rating}
+  li Bayes: #{game.bayes_rating}
+  li Deviation: #{game.rating_deviation}
+
+h3 Playtime
+ul
+  li Minimum: #{game.minimum_playtime}
+  li Maximum: #{game.maximum_playtime}
+
+h3 Players
+ul
+  li Minimum: #{game.minimum_players}
+  li Maximum: #{game.maximum_players}
+
+h3 Weight
+ul
+  li Votes: #{game.weight_votes}
+  li Average: #{game.average_weight}
+
+h3 Description
+each paragraph in game.description.split('&#10;&#10;')
+  p #{paragraph}
