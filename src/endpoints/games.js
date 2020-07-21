@@ -7,6 +7,7 @@ module.exports = async function search(req, res) {
   const { id } = req.params;
   const client = new Client(credentials);
   const sql = `SELECT
+                 ARRAY_AGG(mechanic) AS mechanics,
                  games.id,
                  image,
                  average_rating,
@@ -24,6 +25,8 @@ module.exports = async function search(req, res) {
                  weight_votes,
                  year
                FROM games
+               INNER JOIN games_mechanics ON games.id = game_id
+               INNER JOIN mechanics ON mechanic_id = mechanics.id
                WHERE games.id = $1
                GROUP BY games.id`;
   try {
