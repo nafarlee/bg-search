@@ -7,7 +7,7 @@ module.exports = async function search(req, res) {
   const { id } = req.params;
   const client = new Client(credentials);
   const sql = `SELECT
-                 id,
+                 games.id,
                  image,
                  average_rating,
                  average_weight,
@@ -24,8 +24,8 @@ module.exports = async function search(req, res) {
                  weight_votes,
                  year
                FROM games
-               WHERE id = $1
-               GROUP BY id`;
+               WHERE games.id = $1
+               GROUP BY games.id`;
   try {
     await client.connect();
     const { rows: games } = await client.query(sql, [id]);
