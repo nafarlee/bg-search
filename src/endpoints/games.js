@@ -25,7 +25,7 @@ module.exports = async function search(req, res) {
                  weight_votes,
                  year
                FROM games
-               INNER JOIN games_mechanics ON games.id = game_id
+               INNER JOIN games_mechanics ON games.id = games_mechanics.game_id
                INNER JOIN mechanics ON mechanic_id = mechanics.id
                WHERE games.id = $1
                GROUP BY games.id`;
