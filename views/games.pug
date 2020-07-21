@@ -33,6 +33,11 @@ h3 Description
 each paragraph in game.description.split('&#10;&#10;')
   p !{paragraph}
 
+h3 Categories
+ul
+  each category in game.categories
+    li= category
+
 h3 Mechanics
 ul
   each mechanic in game.mechanics

@@ -11,6 +11,10 @@ module.exports = async function search(req, res) {
                    FROM mechanics
                    INNER JOIN games_mechanics ON id = mechanic_id
                    WHERE game_id = $1) AS mechanics,
+                 (SELECT ARRAY_AGG(category)
+                   FROM categories
+                   INNER JOIN games_categories ON id = category_id
+                   WHERE game_id = $1) AS categories,
                  games.id,
                  image,
                  average_rating,
