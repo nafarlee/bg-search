@@ -23,6 +23,10 @@ module.exports = async function search(req, res) {
                    FROM publishers
                    INNER JOIN games_publishers ON id = publisher_id
                    WHERE game_id = $1) AS publishers,
+                 (SELECT ARRAY_AGG(artist)
+                   FROM artists
+                   INNER JOIN games_artists ON id = artist_id
+                   WHERE game_id = $1) AS artists,
                  (SELECT ARRAY_AGG(alternate_name)
                    FROM alternate_names
                    WHERE id = $1) AS alternate_names,
