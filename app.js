@@ -10,6 +10,7 @@ const app = express();
 app.set('view engine', 'pug');
 app.locals = { ...app.locals, ...locals };
 
+app.use(express.static('public'));
 app.get('/search', search);
 app.post('/pubsub/pull', pull);
 app.post('/pubsub/pull-plays', pullPlays);
