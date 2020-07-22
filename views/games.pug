@@ -1,91 +1,97 @@
 doctype html
 
-h1 #{game.primary_name} (#{game.year})
-h2
-  a(href='https://boardgamegeek.com/boardgame/' + game.id) BGG
+html
+  head
+   link(rel="stylesheet", type="text/css", href="/style.css")
 
-h2
-  a(href=game.image) Image
+  body
+    h1 #{game.primary_name} (#{game.year})
 
-details
-  summary Rating
-  ul
-    li Votes: #{game.rating_votes}
-    li Average: #{game.average_rating}
-    li Bayes: #{game.bayes_rating}
-    li Deviation: #{game.rating_deviation}
+    h2
+      a(href='https://boardgamegeek.com/boardgame/' + game.id) BGG
 
-details
-  summary Playtime
-  ul
-    li Minimum: #{game.minimum_playtime}
-    li Maximum: #{game.maximum_playtime}
+    h2
+      a(href=game.image) Image
 
-details
-  summary Players
-  ul
-    li Minimum: #{game.minimum_players}
-    li Maximum: #{game.maximum_players}
+    details
+      summary Rating
+      ul
+        li Votes: #{game.rating_votes}
+        li Average: #{game.average_rating}
+        li Bayes: #{game.bayes_rating}
+        li Deviation: #{game.rating_deviation}
 
-details
-  summary Weight
-  ul
-    li Votes: #{game.weight_votes}
-    li Average: #{game.average_weight}
+    details
+      summary Playtime
+      ul
+        li Minimum: #{game.minimum_playtime}
+        li Maximum: #{game.maximum_playtime}
 
-details
-  summary Description
-  each paragraph in game.description.split('&#10;&#10;')
-    p !{paragraph}
+    details
+      summary Players
+      ul
+        li Minimum: #{game.minimum_players}
+        li Maximum: #{game.maximum_players}
 
-details
-  summary Categories
-  ul
-    each category in game.categories
-      li= category
+    details
+      summary Weight
+      ul
+        li Votes: #{game.weight_votes}
+        li Average: #{game.average_weight}
 
-details
-  summary Mechanics
-  ul
-    each mechanic in game.mechanics
-      li= mechanic
+    details
+      summary Description
+      each paragraph in game.description.split('&#10;&#10;')
+        p !{paragraph}
 
-details
-  summary Families
-  ul
-    each family in game.families
-      li= family
+    details
+      summary Categories
+      ul
+        each category in game.categories
+          li= category
 
-details
-  summary Designers
-  ul
-    each designer in game.designers
-      li= designer
+    details
+      summary Mechanics
+      ul
+        each mechanic in game.mechanics
+          li= mechanic
 
-details
-  summary Publishers
-  ul
-    each publisher in game.publishers
-      li= publisher
+    details
+      summary Families
+      ul
+        each family in game.families
+          li= family
 
-details
-  summary Artists
-  ul
-    each artist in game.artists
-      li= artist
+    details
+      summary Designers
+      ul
+        each designer in game.designers
+          li= designer
 
-details
-  summary Alternate Names
-  ul
-    each alternate_name in game.alternate_names
-      li= alternate_name
+    details
+      summary Publishers
+      ul
+        each publisher in game.publishers
+          li= publisher
 
-details
-  summary Player Recommendations
-  ul
-    each pr in game.player_recommendations
-      li #{rangeToText(pr.players)}
-        ul
-          li Best: #{pr.best}
-          li Recommended: #{pr.recommended}
-          li Not Recommended: #{pr.not_recommended}
+    details
+      summary Artists
+      ul
+        each artist in game.artists
+          li= artist
+
+    details
+      summary Alternate Names
+      ul
+        each alternate_name in game.alternate_names
+          li= alternate_name
+
+    details
+      summary Player Recommendations
+      ul
+        each pr in game.player_recommendations
+          li #{rangeToText(pr.players)}
+            ul
+              li Best: #{pr.best}
+              li Recommended: #{pr.recommended}
+              li Not Recommended: #{pr.not_recommended}
