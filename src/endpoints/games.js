@@ -26,6 +26,9 @@ module.exports = async function search(req, res) {
                  (SELECT ARRAY_AGG(alternate_name)
                    FROM alternate_names
                    WHERE id = $1) AS alternate_names,
+                 (SELECT JSON_AGG(player_recommendations)
+                   FROM player_recommendations
+                   WHERE id = $1) AS player_recommendations,
                  games.id,
                  image,
                  average_rating,

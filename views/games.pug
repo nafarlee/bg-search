@@ -57,3 +57,12 @@ h3 Alternate Names
 ul
   each alternate_name in game.alternate_names
     li= alternate_name
+
+h3 Player Recommendations
+ul
+  each pr in game.player_recommendations
+    li #{rangeToText(pr.players)}
+      ul
+        li Best: #{pr.best}
+        li Recommended: #{pr.recommended}
+        li Not Recommended: #{pr.not_recommended}
