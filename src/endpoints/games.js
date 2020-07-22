@@ -19,6 +19,10 @@ module.exports = async function search(req, res) {
                    FROM families
                    INNER JOIN games_families ON id = family_id
                    WHERE game_id = $1) AS families,
+                 (SELECT ARRAY_AGG(publisher)
+                   FROM publishers
+                   INNER JOIN games_publishers ON id = publisher_id
+                   WHERE game_id = $1) AS publishers,
                  games.id,
                  image,
                  average_rating,
