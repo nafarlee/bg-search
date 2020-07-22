@@ -16,47 +16,46 @@
     maximum_playtime: 'Maximum Playtime',
   };
 
-
 doctype html
 
-form(
-  style="display: flex; align-items: baseline;"
-  method="get"
-  action="/search"
-)
-  input(
-    style="flex-grow: 1"
-    spellcheck="false"
-    autocomplete="off"
-    autocapitalize="off"
-    autocorrect="off"
-    class="search"
-    value=query
-    type="search"
-    mozactionhint="search"
-    name="query"
-  )
-  .sort(style="margin: 1ex;")
-    label(for="order") Sort
-    select(name="order")
-      each text, key in orders
-        option(value=key selected= key == order) #{text}
-  .direction
-    label(for="direction") Direction
-    select(name="direction")
-      each text, key in { DESC: 'Descending', ASC: 'Ascending' }
-        option(value=key selected= key == direction) #{text}
+html
+  head
+    link(rel='stylesheet' type='text/css' href='/style.css')
 
-if games.length === 0
-  h1 No more results!
-else
-  each game in games
-    div(style="border-left: 2px solid black; padding-left: 1em;")
-      h2
-        a(href="/games/" + game.id)
-          | #{game.primary_name} (#{game.year})
-  br
+  body
+    form(style="display: flex; align-items: baseline;" method="get" action="/search")
+      input(
+        style="flex-grow: 1"
+        spellcheck="false"
+        autocomplete="off"
+        autocapitalize="off"
+        autocorrect="off"
+        class="search"
+        value=query
+        type="search"
+        mozactionhint="search"
+        name="query"
+      )
+      .sort(style="margin: 1ex;")
+        label(for="order") Sort
+        select(name="order")
+          each text, key in orders
+            option(value=key selected= key == order) #{text}
+      .direction
+        label(for="direction") Direction
+        select(name="direction")
+          each text, key in { DESC: 'Descending', ASC: 'Ascending' }
+            option(value=key selected= key == direction) #{text}
 
-if games.length === 25
-  p
-    a(href=nextURL) Next
+    if games.length === 0
+      h1 No more results!
+    else
+      each game in games
+        div(style="border-left: 2px solid black; padding-left: 1em;")
+          h2
+            a(href="/games/" + game.id) #{game.primary_name} (#{game.year})
+      br
+
+    if games.length === 25
+      p
+        a(href=nextURL) Next
