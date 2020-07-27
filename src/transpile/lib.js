@@ -105,7 +105,7 @@ module.exports = {
            FROM games a, player_recommendations b
            WHERE a.id = b.id
              AND players && {{}}::int4range
-             AND ${negate ? 'NOT' : ''} (best + recommended) >= (not_recommended * 4)`,
+             AND ${negate ? 'NOT' : ''} (best + recommended) >= (not_recommended / 3 * 7)`,
     values: [toRange(operator, value)],
   }),
 
