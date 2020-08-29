@@ -39,59 +39,68 @@ html
         li Votes: #{game.weight_votes}
         li Average: #{game.average_weight}
 
-    details
-      summary Description
-      each paragraph in game.description.split('&#10;&#10;')
-        p !{paragraph}
+    if game.description
+      details
+        summary Description
+        each paragraph in game.description.split('&#10;&#10;')
+          p !{paragraph}
 
-    details
-      summary Categories
-      ul
-        each category in game.categories
-          li= category
+    if game.categories
+      details
+        summary Categories
+        ul
+          each category in game.categories
+            li= category
 
-    details
-      summary Mechanics
-      ul
-        each mechanic in game.mechanics
-          li= mechanic
+    if game.mechanics
+      details
+        summary Mechanics
+        ul
+          each mechanic in game.mechanics
+            li= mechanic
 
-    details
-      summary Families
-      ul
-        each family in game.families
-          li= family
+    if game.families
+      details
+        summary Families
+        ul
+          each family in game.families
+            li= family
 
-    details
-      summary Designers
-      ul
-        each designer in game.designers
-          li= designer
+    if game.designers
+      details
+        summary Designers
+        ul
+          each designer in game.designers
+            li= designer
 
-    details
-      summary Publishers
-      ul
-        each publisher in game.publishers
-          li= publisher
+    if game.publishers
+      details
+        summary Publishers
+        ul
+          each publisher in game.publishers
+            li= publisher
 
-    details
-      summary Artists
-      ul
-        each artist in game.artists
-          li= artist
+    if game.artists
+      details
+        summary Artists
+        ul
+          each artist in game.artists
+            li= artist
 
-    details
-      summary Alternate Names
-      ul
-        each alternate_name in game.alternate_names
-          li= alternate_name
+    if game.alternate_names
+      details
+        summary Alternate Names
+        ul
+          each alternate_name in game.alternate_names
+            li= alternate_name
 
-    details
-      summary Player Recommendations
-      ul
-        each pr in game.player_recommendations
-          li #{rangeToText(pr.players)}
-            ul
-              li Best: #{pr.best}
-              li Recommended: #{pr.recommended}
-              li Not Recommended: #{pr.not_recommended}
+    if game.player_recommendations
+      details
+        summary Player Recommendations
+        ul
+          each pr in game.player_recommendations
+            li #{rangeToText(pr.players)}
+              ul
+                li Best: #{pr.best}
+                li Recommended: #{pr.recommended}
+                li Not Recommended: #{pr.not_recommended}
