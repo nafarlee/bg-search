@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <head>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
-    integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
-    crossorigin="anonymous"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css"><Paste>
   <link
     rel="stylesheet"
     href="style.css"/>
@@ -13,9 +11,8 @@
   <h1>Board Game Search</h1>
   <form method="get" action="/search">
     <div class="row">
-      <div class="twelve columns">
+      <div class="column">
         <input
-          class="u-full-width"
           spellcheck="false"
           autocomplete="off"
           autocapitalize="off"
@@ -28,9 +25,9 @@
     </div>
 
     <div class="row">
-      <div class="one-half column">
+      <div class="column">
         <label for="order">Sort</label>
-        <select class="u-full-width" name="order">
+        <select name="order">
           <option value="id">ID</option>
           <option value="primary_name">Name</option>
           <option value="rating_votes">Number of Ratings</option>
@@ -47,9 +44,9 @@
           <option value="maximum_playtime">Maximum Playtime</option>
         </select>
       </div>
-      <div class="one-half column">
+      <div class="column">
         <label for="direction">Direction</label>
-        <select class="u-full-width" name="direction">
+        <select name="direction">
           <option value="DESC" selected>Descending</option>
           <option value="ASC">Ascending</option>
         </select>
@@ -57,7 +54,7 @@
     </div>
 
     <div class="row">
-      <input class="twelve columns button-primary" type="submit" value="Search">
+      <input class="column" type="submit" value="Search">
     </div>
   </form>
 
@@ -98,7 +95,7 @@
 
   <h2>Term Reference</h2>
 
-  <table class="u-full-width">
+  <table>
     <thead>
       <tr>
         <th>Term</th>
