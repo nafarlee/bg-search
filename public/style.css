@@ -4,8 +4,8 @@ body {
 }
 
 input[type="search"], select, code {
-  background-color: #555;
-  color: #fff;
+  background-color: #444;
+  color: #ddd;
 }
 
 h1 {
