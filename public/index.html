@@ -4,11 +4,10 @@
 </head>
 <body>
 
-  <div class="search">
+  <div>
     <h1>Board Game Search</h1>
     <form method="get" action="/search">
       <input
-          class="search-bar"
           spellcheck="false"
           autocomplete="off"
           autocapitalize="off"
@@ -17,7 +16,7 @@
           type="search"
           mozactionhint="search"
           name="query"></input>
-      <div class="sort-options">
+      <div>
         <label for="order">Sort</label>
         <select name="order">
           <option value="id">ID</option>
@@ -58,7 +57,7 @@
     <li>Prefixed with a minus (-) to <strong>NEGATE</strong> the terms results</li>
   </ul>
 
-  <div class="snippet">
+  <div>
     <code>-is:expansion (mechanic:"Dice Rolling" best-players=2) or (category:economic best-players=4)</code>
     <p>For example, the above query would match any games, which are <strong>not expansions</strong>, and are
       <strong>either dice rolling</strong> games that play <strong>best with 2 players</strong>, <strong>or</strong>
@@ -81,278 +80,278 @@
 
   <h2>Term Reference</h2>
 
-  <div class="term">
+  <div>
     <h2>name</h2>
     <p>Shortcuts: n</p>
     <p>Matches a part of the games primary name</p>
-    <div class="snippet">
+    <div>
       <code>name:catan</code>
       <p>Games with <strong>Catan</strong> in the name</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>art</h2>
     <p>Shortcuts: a</p>
     <p>Matches a part of the name of any of the game's artists</p>
-    <div class="snippet">
+    <div>
       <code>art:"jakub rozalski"</code>
       <p>Games where Jakub Rozalski supplied artwork</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>category</h2>
     <p>Shortcuts: c</p>
     <p>Matches a part of the name of any of the game's <a href="https://boardgamegeek.com/browse/boardgamecategory">
        categories</a> </p>
-    <div class="snippet">
+    <div>
       <code>category:act</code>
       <p>Matches any game in the <strong>Abstract Strategy</strong>, <strong>Industry / Manufacturing</strong>, or
         <strong>Action / Dexterity</strong> categories</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>desc</h2>
     <p>Matches part of the game's description</p>
-    <div class="snippet">
+    <div>
       <code>desc:flip</code>
       <p>Matches any game that includes the word <strong>flip</strong> in it's description</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>family</h2>
     <p>Shortcuts: f</p>
     <p>Matches a part of the name of any of the game's <a href="https://boardgamegeek.com/browse/boardgamefamily">
        families</a></p>
-    <div class="snippet">
+    <div>
       <code>family:dominion</code>
       <p>Matches any game in the <strong>Dominion</strong> family</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>mechanic</h2>
     <p>Shortcuts: m</p>
     <p>Matches a part of the name of any of the game's <a href="https://boardgamegeek.com/browse/boardgamemechanic">
        mechanics</a></p>
-    <div class="snippet">
+    <div>
       <code>mechanic:building</code>
       <p>Matches any game with <strong>Pattern Building</strong>, <strong>Route/Network Building</strong>, or
          <strong>Deck / Pool Building</strong> mechanics</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>publish</h2>
     <p>Shortcuts: p</p>
     <p>Matches a part of the name of any of the game's publishers</p>
-    <div class="snippet">
+    <div>
       <code>publish:z-man</code>
       <p>Matches any game published by <strong>Z-Man Games</strong></p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>design</h2>
     <p>Shortcuts: desi</p>
     <p>Matches a part of the name of any of the game's designers</p>
-    <div class="snippet">
+    <div>
       <code>design:uwe</code>
       <p>Matches any game designed by someone named <strong>Uwe</strong></p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>rating-votes</h2>
     <p>Shortcuts: rv</p>
     <p>Compares against the number of user ratings the game has received</p>
-    <div class="snippet">
+    <div>
       <code>rating-votes&gt;=1000</code>
       <p>Matches any game with at least <strong>1000</strong> user ratings</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>average-rating</h2>
     <p>Shortcuts: ar</p>
     <p>Compares against the average user rating of a game</p>
-    <div class="snippet">
+    <div>
       <code>average-rating&lt;6.5</code>
       <p>Matches any game with an average rating below <strong>6.5</strong></p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>geek-rating</h2>
     <p>Shortcuts: gr</p>
     <p>Compares against the game's BGG GeekRating metric</p>
-    <div class="snippet">
+    <div>
       <code>geek-rating&gt;=8.0</code>
       <p>Matches any game with a GeekRating of at least <strong>8.0</strong></p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>rating-deviation</h2>
     <p>Shortcuts: rd</p>
     <p>Compares against the deviation in the game's ratings</p>
-    <div class="snippet">
+    <div>
       <code>rating-deviation&gt;=1.5</code>
       <p>Matches against very divisive games</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>average-weight</h2>
     <p>Shortcuts: aw</p>
     <p>Compares against the game's average rated complexity</p>
-    <div class="snippet">
+    <div>
       <code>average-weight&gt;=3.7</code>
       <p>Matches against games with an average weight of at least <strong>3.7</strong></p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>weight-votes</h2>
     <p>Shortcuts: wv</p>
     <p>Compares against the game's number of complexity ratings</p>
-    <div class="snippet">
+    <div>
       <code>weight-votes<1000</code>
       <p>Matches games that have less than <strong>1000</strong> weight votes</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>year</h2>
     <p>Compares against the year a game was released</p>
-    <div class="snippet">
+    <div>
       <code>year=2018 family:"roll-and-write"</code>
       <p>All the new Roll-and-Write games</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>age</h2>
     <p>Matches against the game's minimum recommended player age</p>
-    <div class="snippet">
+    <div>
       <code>age<=12</code>
       <p>Matches any game that would be suitable for pre-teens</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>rec-players</h2>
     <p>Shortcuts: rp</p>
     <p>Matches against the number of players that are recommended by the BGG community</p>
-    <div class="snippet">
+    <div>
       <code>rec-players=3</code>
       <p>Matches any game that plays well with <strong>3</strong> players</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>best-players</h2>
     <p>Shortcuts: bp</p>
     <p>Matches against the number of players that are best for a game as determined by the BGG community</p>
-    <div class="snippet">
+    <div>
       <code>best-players=3</code>
       <p>Matches any game that plays best with <strong>3</strong> players</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>quorum-players</h2>
     <p>Shortcuts: qp</p>
     <p>Matches against any games that play well at a particular player count according to feedback given by a quorum (currently 70%) of the players of said game. This quorum includes both <strong>best</strong> and <strong>recommended</strong> player ratings.</p>
-    <div class="snippet">
+    <div>
       <code>quorum-players=3</code>
       <p>Matches any game that plays well with 3 people as rated by at least 4 out of 5 players.</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>min-players</h2>
     <p>Shortcuts: mnpr</p>
     <p>Matches against the minimum number of required players</p>
-    <div class="snippet">
+    <div>
       <code>min-players&gt;=3</code>
       <p>Matches any game that is playable with at least <strong>3</strong> players</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>max-players</h2>
     <p>Shortcuts: mxpr</p>
     <p>Matches against the maximum number of players supported by a game</p>
-    <div class="snippet">
+    <div>
       <code>min-players=2 max-players=5</code>
       <p>Matches any game that plays exactly <strong>2</strong> to <strong>5</strong> players</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>min-playtime</h2>
     <p>Shortcuts: mnpt</p>
     <p>Matches against the minimum number of minutes needed to play a game</p>
-    <div class="snippet">
+    <div>
       <code>min-playtime&gt;=480</code>
       <p>Matches <strong>Twilight Imperium</strong></p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>max-playtime</h2>
     <p>Shortcuts: mxpt</p>
     <p>Matches against the maximum number of minutes needed to play a game</p>
-    <div class="snippet">
+    <div>
       <code>max-playtime<=30</code>
       <p>Matches any game you can definitely complete in a half-hour</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>median-playtime</h2>
     <p>Shortcuts: mdpt</p>
     <p>Matches against the median number of minutes required to play a game, as sourced by BGG user
        play data</p>
-    <div class="snippet">
+    <div>
       <code>median-playtime&lt;=60</code>
       <p>Matches against any game that typically plays in an hour or less</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>is:expansion</h2>
     <p>Shortcuts: is:e</p>
     <p>Only matches against expansions</p>
-    <div class="snippet">
+    <div>
       <code>is:expansion family:carcassonne</code>
       <p>Expansions for Carcassonne</p>
     </div>
-    <div class="snippet">
+    <div>
       <code>-is:expansion</code>
       <p>Only standalone games</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>is:collection</h2>
     <p>Shortcuts: is:c</p>
     <p>Only matches against games which are collections of other games</p>
-    <div class="snippet">
+    <div>
       <code>is:collection family:carcassonne</code>
       <p>Show any game that collects other games in the Carcassonne family</p>
     </div>
   </div>
 
-  <div class="term">
+  <div>
     <h2>is:reimplementation</h2>
     <p>Shortcuts: is:r</p>
     <p>Games which are reimplementations of others</p>
-    <div class="snippet">
+    <div>
       <code>-is:reimplementation -is:collection -is:expansion</code>
       <p>Only show standalone games which are the original version</p>
     </div>
