@@ -7,9 +7,9 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v1.4.2
+      - uses: actions/setup-node@v1
         with:
           node-version: 10.21.0
 
@@ -23,7 +23,7 @@ jobs:
           DATABASE_CREDENTIALS: ${{ secrets.DATABASE_CREDENTIALS }}
 
       - if: github.ref == 'refs/heads/master'
-        uses: GoogleCloudPlatform/github-actions@master
+        uses: google-github-actions/setup-gcloud@master
         with:
           project_id: bg-search
           service_account_key: ${{ secrets.GOOGLE_CREDENTIALS }}
