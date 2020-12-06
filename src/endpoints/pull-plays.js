@@ -11,7 +11,7 @@ const credentials = require('../../db-credentials');
 
 async function getPlay(id, page) {
   const baseURL = 'https://www.boardgamegeek.com/xmlapi2/plays';
-  const xml = await get(`${baseURL}?type=thing&id=${id}&page=${page}`);
+  const xml = await get(`${baseURL}?type=thing&subtype=boardgame&id=${id}&page=${page}`);
   const body = await parseString(xml);
   const plays = body.plays.play;
 
