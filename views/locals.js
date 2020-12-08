@@ -6,3 +6,5 @@ exports.rangeToText = (text) => {
   return text;
   throw new Error('Could not parse player recommendation range');
 };
+
+exports.percentageOf = (num, denom, decimals = 1) => `${(num / denom * 100).toFixed(decimals)}%`;
