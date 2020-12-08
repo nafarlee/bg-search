@@ -8,3 +8,14 @@ exports.rangeToText = (text) => {
 };
 
 exports.percentageOf = (num, denom, decimals = 1) => `${(num / denom * 100).toFixed(decimals)}%`;
+
+exports.sortByProperty = (objects, field) => {
+  objects.sort((a, b) => {
+    const af = a[field];
+    const bf = b[field];
+    if (af < bf) return -1;
+    if (af > bf) return 1;
+    return 0;
+  });
+  return objects;
+};
