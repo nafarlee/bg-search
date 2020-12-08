@@ -31,6 +31,10 @@ html
         li Minimum: #{game.minimum_playtime}
         if game.median_playtime
           li Median: #{game.median_playtime}
+        if game.median_playtimes_by_players
+          ul
+            each median, players in game.median_playtimes_by_players
+              li #{players}: #{median}
         li Maximum: #{game.maximum_playtime}
 
     details
