@@ -7,6 +7,11 @@ module.exports = async function search(req, res) {
   const { id } = req.params;
   const client = new Client(credentials);
   const sql = `SELECT
+                 (SELECT JSON_OBJECT_AGG(players, medians)
+                   FROM (SELECT players, PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY length) AS medians
+                          FROM plays
+                          WHERE game_id = $1 AND players IS NOT NULL
+                          GROUP BY players) AS sub) as median_times_by_players,
                  (SELECT ARRAY_AGG(mechanic)
                    FROM mechanics
                    INNER JOIN games_mechanics ON id = mechanic_id
