@@ -29,6 +29,8 @@ html
       summary Playtime
       ul
         li Minimum: #{game.minimum_playtime}
+        if game.median_playtime
+          li Median: #{game.median_playtime}
         li Maximum: #{game.maximum_playtime}
 
     details
