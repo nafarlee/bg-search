@@ -9,21 +9,19 @@ const get = require('../get');
 const { toSQL } = require('../db/insert');
 const credentials = require('../../db-credentials');
 
-async function getPlay(id, page) {
+const packPlay = (gameID) => (play) => [
+  play.$.id,
+  gameID,
+  play.$.length,
+  _.get(play, 'players[0].player.length', null),
+];
+
+async function getPlays(id, page) {
   const baseURL = 'https://www.boardgamegeek.com/xmlapi2/plays';
   const xml = await get(`${baseURL}?type=thing&subtype=boardgame&id=${id}&page=${page}`);
   const body = await parseString(xml);
-  const plays = body.plays.play;
-
-  if (!plays) return [];
-
-  return plays
-    .map((p) => [
-      p.$.id,
-      id,
-      p.$.length,
-      _.get(p, 'players[0].player.length', null),
-    ]);
+  const plays = body.plays.play || [];
+  return plays.map(packPlay(id));
 }
 
 async function pullPlays(_req, res) {
