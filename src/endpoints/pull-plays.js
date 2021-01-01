@@ -50,6 +50,12 @@ const success = {
     await client.end();
     return res.status(200).send();
   },
+
+  async skipPage({ res, client, playPage }) {
+    await client.query('UPDATE globals SET play_page = $1 WHERE id = 1', [playPage + 1]);
+    await client.end();
+    return res.status(200).send();
+  },
 };
 
 async function pullPlays(_req, res) {
@@ -64,11 +70,7 @@ async function pullPlays(_req, res) {
   if (_.isEmpty(plays) && playID !== lastGameID) return success.nextGame({ res, client, playID });
 
   const nonZeroPlays = plays.filter(([,, length]) => length > 0);
-  if (nonZeroPlays.length === 0) {
-    await client.query('UPDATE globals SET play_page = $1 WHERE id = 1', [playPage + 1]);
-    await client.end();
-    return res.status(200).send();
-  }
+  if (_.isEmpty(nonZeroPlays)) return success.skipPage({ res, client, playPage });
 
   try {
     await client.query('BEGIN');
