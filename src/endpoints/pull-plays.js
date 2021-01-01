@@ -24,15 +24,20 @@ async function getPlays(id, page) {
   return plays.map(packPlay(id));
 }
 
-async function pullPlays(_req, res) {
-  const client = new Client(credentials);
-
-  await client.connect();
+async function getCheckpoint(client) {
   const {
     rows: [{ play_id: playID, play_page: playPage }],
   } = await client.query('SELECT play_id, play_page FROM globals');
+  return [playID, playPage];
+}
 
-  const plays = await getPlay(playID, playPage);
+async function pullPlays(_req, res) {
+  const client = new Client(credentials);
+  await client.connect();
+
+  const [playID, playPage] = await getCheckpoint(client);
+  const plays = await getPlays(playID, playPage);
+
   if (plays.length === 0) {
     const {
       rows: [{ id: lastGame }],
