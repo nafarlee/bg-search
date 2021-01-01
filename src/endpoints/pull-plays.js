@@ -31,6 +31,13 @@ async function getCheckpoint(client) {
   return [playID, playPage];
 }
 
+async function getLastGameID(client) {
+  const {
+    rows: [{ id }],
+  } = await client.query('SELECT id FROM games ORDER BY id DESC LIMIT 1');
+  return id;
+}
+
 async function pullPlays(_req, res) {
   const client = new Client(credentials);
   await client.connect();
@@ -39,10 +46,7 @@ async function pullPlays(_req, res) {
   const plays = await getPlays(playID, playPage);
 
   if (plays.length === 0) {
-    const {
-      rows: [{ id: lastGame }],
-    } = await client.query('SELECT id FROM games ORDER BY id DESC LIMIT 1');
-    if (playID === lastGame) {
+    if (playID === await getLastGameID(client)) {
       await client.query('UPDATE globals SET play_id = 1, play_page = 1 WHERE id = 1');
       await client.end();
       return res.status(200).send();
