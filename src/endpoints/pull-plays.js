@@ -44,13 +44,15 @@ async function pullPlays(_req, res) {
 
   const [playID, playPage] = await getCheckpoint(client);
   const plays = await getPlays(playID, playPage);
+  const lastGameID = await getLastGameID(client);
 
-  if (plays.length === 0) {
-    if (playID === await getLastGameID(client)) {
-      await client.query('UPDATE globals SET play_id = 1, play_page = 1 WHERE id = 1');
-      await client.end();
-      return res.status(200).send();
-    }
+  if (_.isEmpty(plays) && playID === lastGameID) {
+    await client.query('UPDATE globals SET play_id = 1, play_page = 1 WHERE id = 1');
+    await client.end();
+    return res.status(200).send();
+  }
+
+  if (_.isEmpty(plays) && playID !== lastGameID) {
     await client.query('UPDATE globals SET play_id=$1, play_page=1 WHERE id=1', [playID + 1]);
     await client.end();
     return res.status(200).send();
