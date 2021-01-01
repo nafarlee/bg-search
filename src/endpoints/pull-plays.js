@@ -44,6 +44,12 @@ const success = {
     await client.end();
     return res.status(200).send();
   },
+
+  async nextGame({ res, client, playID }) {
+    await client.query('UPDATE globals SET play_id=$1, play_page=1 WHERE id=1', [playID + 1]);
+    await client.end();
+    return res.status(200).send();
+  },
 };
 
 async function pullPlays(_req, res) {
@@ -55,12 +61,7 @@ async function pullPlays(_req, res) {
   const lastGameID = await getLastGameID(client);
 
   if (_.isEmpty(plays) && playID === lastGameID) return success.reset({ res, client });
-
-  if (_.isEmpty(plays) && playID !== lastGameID) {
-    await client.query('UPDATE globals SET play_id=$1, play_page=1 WHERE id=1', [playID + 1]);
-    await client.end();
-    return res.status(200).send();
-  }
+  if (_.isEmpty(plays) && playID !== lastGameID) return success.nextGame({ res, client, playID });
 
   const nonZeroPlays = plays.filter(([,, length]) => length > 0);
   if (nonZeroPlays.length === 0) {
