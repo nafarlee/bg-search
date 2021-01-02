@@ -10,12 +10,14 @@ const throttle = require('../throttle');
 const { toSQL } = require('../db/insert');
 const credentials = require('../../db-credentials');
 
+
 const packPlay = (gameID) => (play) => [
   play.$.id,
   gameID,
   play.$.length,
   _.get(play, 'players[0].player.length', null),
 ];
+
 
 async function getPlays(id, page) {
   const baseURL = 'https://www.boardgamegeek.com/xmlapi2/plays';
@@ -25,6 +27,7 @@ async function getPlays(id, page) {
   return plays.map(packPlay(id));
 }
 
+
 async function getCheckpoint(client) {
   const {
     rows: [{ play_id: playID, play_page: playPage }],
@@ -32,12 +35,14 @@ async function getCheckpoint(client) {
   return [playID, playPage];
 }
 
+
 async function getLastGameID(client) {
   const {
     rows: [{ id }],
   } = await client.query('SELECT id FROM games ORDER BY id DESC LIMIT 1');
   return id;
 }
+
 
 async function saveCheckpoint({
   res,
@@ -49,6 +54,7 @@ async function saveCheckpoint({
   await client.end();
   return res.status(200).send();
 }
+
 
 async function savePage({
   res,
@@ -77,6 +83,7 @@ async function savePage({
     await client.end();
   }
 }
+
 
 module.exports = async function pullPlays(_req, res) {
   const start = Date.now();
