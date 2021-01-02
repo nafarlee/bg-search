@@ -6,6 +6,7 @@ const { Client } = require('pg');
 const _ = require('lodash');
 
 const get = require('../get');
+const throttle = require('../throttle');
 const { toSQL } = require('../db/insert');
 const credentials = require('../../db-credentials');
 
@@ -38,20 +39,13 @@ async function getLastGameID(client) {
   return id;
 }
 
-async function reset({ res, client }) {
-  await client.query('UPDATE globals SET play_id = 1, play_page = 1 WHERE id = 1');
-  await client.end();
-  return res.status(200).send();
-}
-
-async function nextGame({ res, client, playID }) {
-  await client.query('UPDATE globals SET play_id=$1, play_page=1 WHERE id=1', [playID + 1]);
-  await client.end();
-  return res.status(200).send();
-}
-
-async function skipPage({ res, client, playPage }) {
-  await client.query('UPDATE globals SET play_page = $1 WHERE id = 1', [playPage + 1]);
+async function saveCheckpoint({
+  res,
+  client,
+  playID,
+  playPage,
+}) {
+  await client.query('UPDATE globals SET play_id=$1, play_page=$2 WHERE id=1', [playID, playPage]);
   await client.end();
   return res.status(200).send();
 }
@@ -85,24 +79,42 @@ async function savePage({
 }
 
 module.exports = async function pullPlays(_req, res) {
+  const start = Date.now();
+  const timeout = 50 * 1000;
+
   const client = new Client(credentials);
   await client.connect();
-
-  const [playID, playPage] = await getCheckpoint(client);
-  const plays = await getPlays(playID, playPage);
   const lastGameID = await getLastGameID(client);
+  const getPlaysSlowly = throttle(getPlays, 5 * 1000);
+  let [playID, playPage] = await getCheckpoint(client);
 
-  if (_.isEmpty(plays) && playID === lastGameID) return reset({ res, client });
-  if (_.isEmpty(plays) && playID !== lastGameID) return nextGame({ res, client, playID });
+  while (start + timeout > Date.now()) {
+    const plays = await getPlaysSlowly(playID, playPage); // eslint-disable-line no-await-in-loop
+    const nonZeroPlays = plays.filter(([,, length]) => length > 0);
 
-  const nonZeroPlays = plays.filter(([,, length]) => length > 0);
-  if (_.isEmpty(nonZeroPlays)) return skipPage({ res, client, playPage });
+    if (_.isEmpty(plays) && playID === lastGameID) {
+      playID = 1;
+      playPage = 1;
+    } else if (_.isEmpty(plays) && playID !== lastGameID) {
+      playID += 1;
+      playPage = 1;
+    } else if (_.isEmpty(nonZeroPlays)) {
+      playPage += 1;
+    } else {
+      return savePage({
+        res,
+        client,
+        playPage,
+        playID,
+        nonZeroPlays,
+      });
+    }
+  }
 
-  return savePage({
+  return saveCheckpoint({
     res,
     client,
     playPage,
     playID,
-    nonZeroPlays,
   });
 };
