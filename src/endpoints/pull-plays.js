@@ -89,10 +89,12 @@ module.exports = async function pullPlays(_req, res) {
   const start = Date.now();
   const timeout = 50 * 1000;
 
+  const getPlaysSlowly = throttle(getPlays, 5 * 1000);
+
   const client = new Client(credentials);
   await client.connect();
+
   const lastGameID = await getLastGameID(client);
-  const getPlaysSlowly = throttle(getPlays, 5 * 1000);
   let [playID, playPage] = await getCheckpoint(client);
 
   while (start + timeout > Date.now()) {
