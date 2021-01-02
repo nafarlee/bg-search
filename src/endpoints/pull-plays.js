@@ -38,25 +38,23 @@ async function getLastGameID(client) {
   return id;
 }
 
-const success = {
-  async reset({ res, client }) {
-    await client.query('UPDATE globals SET play_id = 1, play_page = 1 WHERE id = 1');
-    await client.end();
-    return res.status(200).send();
-  },
+async function reset({ res, client }) {
+  await client.query('UPDATE globals SET play_id = 1, play_page = 1 WHERE id = 1');
+  await client.end();
+  return res.status(200).send();
+}
 
-  async nextGame({ res, client, playID }) {
-    await client.query('UPDATE globals SET play_id=$1, play_page=1 WHERE id=1', [playID + 1]);
-    await client.end();
-    return res.status(200).send();
-  },
+async function nextGame({ res, client, playID }) {
+  await client.query('UPDATE globals SET play_id=$1, play_page=1 WHERE id=1', [playID + 1]);
+  await client.end();
+  return res.status(200).send();
+}
 
-  async skipPage({ res, client, playPage }) {
-    await client.query('UPDATE globals SET play_page = $1 WHERE id = 1', [playPage + 1]);
-    await client.end();
-    return res.status(200).send();
-  },
-};
+async function skipPage({ res, client, playPage }) {
+  await client.query('UPDATE globals SET play_page = $1 WHERE id = 1', [playPage + 1]);
+  await client.end();
+  return res.status(200).send();
+}
 
 module.exports = async function pullPlays(_req, res) {
   const client = new Client(credentials);
@@ -66,11 +64,11 @@ module.exports = async function pullPlays(_req, res) {
   const plays = await getPlays(playID, playPage);
   const lastGameID = await getLastGameID(client);
 
-  if (_.isEmpty(plays) && playID === lastGameID) return success.reset({ res, client });
-  if (_.isEmpty(plays) && playID !== lastGameID) return success.nextGame({ res, client, playID });
+  if (_.isEmpty(plays) && playID === lastGameID) return reset({ res, client });
+  if (_.isEmpty(plays) && playID !== lastGameID) return nextGame({ res, client, playID });
 
   const nonZeroPlays = plays.filter(([,, length]) => length > 0);
-  if (_.isEmpty(nonZeroPlays)) return success.skipPage({ res, client, playPage });
+  if (_.isEmpty(nonZeroPlays)) return skipPage({ res, client, playPage });
 
   try {
     await client.query('BEGIN');
