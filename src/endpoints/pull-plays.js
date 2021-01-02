@@ -56,20 +56,13 @@ async function skipPage({ res, client, playPage }) {
   return res.status(200).send();
 }
 
-module.exports = async function pullPlays(_req, res) {
-  const client = new Client(credentials);
-  await client.connect();
-
-  const [playID, playPage] = await getCheckpoint(client);
-  const plays = await getPlays(playID, playPage);
-  const lastGameID = await getLastGameID(client);
-
-  if (_.isEmpty(plays) && playID === lastGameID) return reset({ res, client });
-  if (_.isEmpty(plays) && playID !== lastGameID) return nextGame({ res, client, playID });
-
-  const nonZeroPlays = plays.filter(([,, length]) => length > 0);
-  if (_.isEmpty(nonZeroPlays)) return skipPage({ res, client, playPage });
-
+async function savePage({
+  res,
+  client,
+  playPage,
+  nonZeroPlays,
+  playID,
+}) {
   try {
     await client.query('BEGIN');
     await client.query('UPDATE globals SET play_page = $1 WHERE id = 1', [playPage + 1]);
@@ -89,4 +82,27 @@ module.exports = async function pullPlays(_req, res) {
   } finally {
     await client.end();
   }
+}
+
+module.exports = async function pullPlays(_req, res) {
+  const client = new Client(credentials);
+  await client.connect();
+
+  const [playID, playPage] = await getCheckpoint(client);
+  const plays = await getPlays(playID, playPage);
+  const lastGameID = await getLastGameID(client);
+
+  if (_.isEmpty(plays) && playID === lastGameID) return reset({ res, client });
+  if (_.isEmpty(plays) && playID !== lastGameID) return nextGame({ res, client, playID });
+
+  const nonZeroPlays = plays.filter(([,, length]) => length > 0);
+  if (_.isEmpty(nonZeroPlays)) return skipPage({ res, client, playPage });
+
+  return savePage({
+    res,
+    client,
+    playPage,
+    playID,
+    nonZeroPlays,
+  });
 };
