@@ -58,7 +58,7 @@ const success = {
   },
 };
 
-async function pullPlays(_req, res) {
+module.exports = async function pullPlays(_req, res) {
   const client = new Client(credentials);
   await client.connect();
 
@@ -91,6 +91,4 @@ async function pullPlays(_req, res) {
   } finally {
     await client.end();
   }
-}
-
-module.exports = pullPlays;
+};
