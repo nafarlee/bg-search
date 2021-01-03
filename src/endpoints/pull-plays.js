@@ -96,7 +96,7 @@ module.exports = async function pullPlays(_req, res) {
 
   const lastGameID = await getLastGameID(client);
   let [playID, playPage] = await getCheckpoint(client);
-  console.log({ type: 'start', game_id: playID, play_page_id: playPage });
+  console.log(JSON.stringify({ type: 'start', game_id: playID, play_page_id: playPage }, null, 2));
 
   while (start + timeout > Date.now()) {
     const plays = await getPlaysSlowly(playID, playPage); // eslint-disable-line no-await-in-loop
