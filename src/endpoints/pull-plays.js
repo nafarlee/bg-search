@@ -96,8 +96,6 @@ module.exports = async function pullPlays(_req, res) {
 
   const lastGameID = await getLastGameID(client);
   let [playID, playPage] = await getCheckpoint(client);
-  console.log(JSON.stringify({ type: 'start', game_id: playID, play_page_id: playPage }));
-
   while (start + timeout > Date.now()) {
     const plays = await getPlaysSlowly(playID, playPage); // eslint-disable-line no-await-in-loop
     const nonZeroPlays = plays.filter(([,, length]) => length > 0);
