@@ -65,7 +65,7 @@ async function savePage({
 }) {
   try {
     await client.query('BEGIN');
-    await client.query('UPDATE globals SET play_page = $1 WHERE id = 1', [playPage + 1]);
+    await client.query('UPDATE globals SET play_id=$1, play_page=$2 WHERE id=1', [playID, playPage + 1]);
     await client.query(...toSQL(
       'plays',
       ['id', 'game_id', 'length', 'players'],
