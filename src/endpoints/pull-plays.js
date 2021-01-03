@@ -111,6 +111,7 @@ module.exports = async function pullPlays(_req, res) {
     } else if (_.isEmpty(nonZeroPlays)) {
       playPage += 1;
     } else {
+      console.log(JSON.stringify({ type: 'save_plays', game_id: playID, play_page_id: playPage }));
       return savePage({
         res,
         client,
@@ -121,6 +122,7 @@ module.exports = async function pullPlays(_req, res) {
     }
   }
 
+  console.log(JSON.stringify({ type: 'pause', game_id: playID, play_page_id: playPage }));
   return saveCheckpoint({
     res,
     client,
