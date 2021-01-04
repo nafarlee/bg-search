@@ -15,6 +15,9 @@ module.exports = async function search(req, res) {
                  (SELECT PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY length)
                    FROM plays
                    WHERE game_id = $1) AS median_playtime,
+                 (SELECT COUNT(*)
+                   FROM plays
+                   WHERE game_id = $1) AS recorded_play_count,
                  (SELECT ARRAY_AGG(mechanic)
                    FROM mechanics
                    INNER JOIN games_mechanics ON id = mechanic_id

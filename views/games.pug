@@ -32,6 +32,8 @@ html
         li Maximum: #{game.maximum_playtime}
         if game.median_playtime
           li Median: #{game.median_playtime}
+        if game.recorded_play_count
+          li Number of Considered Plays: #{game.recorded_play_count}
         if game.median_playtimes_by_players
           ul
             each median, players in game.median_playtimes_by_players
