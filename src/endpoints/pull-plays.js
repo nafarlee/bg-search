@@ -50,6 +50,7 @@ async function saveCheckpoint({
   playID,
   playPage,
 }) {
+  console.log(JSON.stringify({ type: 'pause', 'game-id': playID, 'play-page-id': playPage }));
   await client.query('UPDATE globals SET play_id=$1, play_page=$2 WHERE id=1', [playID, playPage]);
   await client.end();
   return res.status(200).send();
@@ -63,6 +64,7 @@ async function savePage({
   nonZeroPlays,
   playID,
 }) {
+  console.log(JSON.stringify({ type: 'save-plays', 'game-id': playID, 'play-page-id': playPage }));
   try {
     await client.query('BEGIN');
     await client.query('UPDATE globals SET play_id=$1, play_page=$2 WHERE id=1', [playID, playPage + 1]);
@@ -109,11 +111,6 @@ module.exports = async function pullPlays(_req, res) {
     } else if (_.isEmpty(nonZeroPlays)) {
       playPage += 1;
     } else {
-      console.log(JSON.stringify({
-        type: 'save-plays',
-        'game-id': playID,
-        'play-page-id': playPage,
-      }));
       return savePage({
         res,
         client,
@@ -124,7 +121,6 @@ module.exports = async function pullPlays(_req, res) {
     }
   }
 
-  console.log(JSON.stringify({ type: 'pause', 'game-id': playID, 'play-page-id': playPage }));
   return saveCheckpoint({
     res,
     client,
