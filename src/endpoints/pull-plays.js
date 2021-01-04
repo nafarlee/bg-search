@@ -108,7 +108,7 @@ module.exports = async function pullPlays(_req, res) {
       playID += 1;
       playPage = 1;
     } else if (_.isEmpty(nonZeroPlays)) {
-      log('next-page', playID, playPage);
+      log('skip-page', playID, playPage);
       playPage += 1;
     } else {
       try {
