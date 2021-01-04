@@ -87,7 +87,7 @@ async function savePage({
 
 module.exports = async function pullPlays(_req, res) {
   const start = Date.now();
-  const timeout = 50 * 1000;
+  const timeout = 9 * 60 * 1000;
 
   const getPlaysSlowly = throttle(getPlays, 5 * 1000);
 
