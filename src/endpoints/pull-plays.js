@@ -19,6 +19,11 @@ const packPlay = (gameID) => (play) => [
 ];
 
 
+function log(type, gameID, playPageID) {
+  console.log(JSON.stringify({ type, 'game-id': gameID, 'play-page-id': playPageID }));
+}
+
+
 async function getPlays(id, page) {
   const baseURL = 'https://www.boardgamegeek.com/xmlapi2/plays';
   const xml = await get(`${baseURL}?type=thing&subtype=boardgame&id=${id}&page=${page}`);
@@ -50,7 +55,6 @@ async function saveCheckpoint({
   playID,
   playPage,
 }) {
-  console.log(JSON.stringify({ type: 'pause', 'game-id': playID, 'play-page-id': playPage }));
   await client.query('UPDATE globals SET play_id=$1, play_page=$2 WHERE id=1', [playID, playPage]);
   await client.end();
   return res.status(200).send();
@@ -63,7 +67,6 @@ async function savePage({
   nonZeroPlays,
   playID,
 }) {
-  console.log(JSON.stringify({ type: 'save-plays', 'game-id': playID, 'play-page-id': playPage }));
   try {
     await client.query('BEGIN');
     await client.query('UPDATE globals SET play_id=$1, play_page=$2 WHERE id=1', [playID, playPage + 1]);
@@ -97,12 +100,15 @@ module.exports = async function pullPlays(_req, res) {
     const nonZeroPlays = plays.filter(([,, length]) => length > 0);
 
     if (_.isEmpty(plays) && playID === lastGameID) {
+      log('mobius', playID, playPage);
       playID = 1;
       playPage = 1;
     } else if (_.isEmpty(plays) && playID !== lastGameID) {
+      log('next-game', playID, playPage);
       playID += 1;
       playPage = 1;
     } else if (_.isEmpty(nonZeroPlays)) {
+      log('next-page', playID, playPage);
       playPage += 1;
     } else {
       try {
@@ -112,16 +118,18 @@ module.exports = async function pullPlays(_req, res) {
           playID,
           nonZeroPlays,
         });
+        log('save-plays', playID, playPage);
         playPage += 1;
       } catch (err) {
         console.error(err);
-        console.error(`ERROR: id:${playID} page:${playPage}`);
+        log('save-plays-error', playID, playPage);
         await client.end(); // eslint-disable-line no-await-in-loop
         return res.status(500).send();
       }
     }
   }
 
+  log('pause', playID, playPage);
   return saveCheckpoint({
     res,
     client,
