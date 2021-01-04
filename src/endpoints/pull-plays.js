@@ -58,7 +58,6 @@ async function saveCheckpoint({
 
 
 async function savePage({
-  res,
   client,
   playPage,
   nonZeroPlays,
@@ -75,14 +74,9 @@ async function savePage({
       nonZeroPlays,
     ));
     await client.query('COMMIT');
-    return res.status(200).send();
   } catch (err) {
-    console.error(err);
-    console.error(`ERROR: id:${playID} page:${playPage}`);
     await client.query('ROLLBACK');
-    return res.status(500).send();
-  } finally {
-    await client.end();
+    throw err;
   }
 }
 
@@ -111,13 +105,20 @@ module.exports = async function pullPlays(_req, res) {
     } else if (_.isEmpty(nonZeroPlays)) {
       playPage += 1;
     } else {
-      return savePage({
-        res,
-        client,
-        playPage,
-        playID,
-        nonZeroPlays,
-      });
+      try {
+        await savePage({ // eslint-disable-line no-await-in-loop
+          client,
+          playPage,
+          playID,
+          nonZeroPlays,
+        });
+        playPage += 1;
+      } catch (err) {
+        console.error(err);
+        console.error(`ERROR: id:${playID} page:${playPage}`);
+        await client.end(); // eslint-disable-line no-await-in-loop
+        return res.status(500).send();
+      }
     }
   }
 
