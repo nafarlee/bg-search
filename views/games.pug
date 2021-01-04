@@ -37,7 +37,7 @@ html
             if game.recorded_play_count
               li Number of Considered Plays: #{game.recorded_play_count}
             each median, players in game.median_playtimes_by_players
-              li #{players}: #{median}
+              li Median for #{players} player(s): #{median}
 
     details
       summary Players
