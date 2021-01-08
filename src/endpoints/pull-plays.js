@@ -84,6 +84,11 @@ async function savePage({
 }
 
 
+async function isExistingGame(client, gameID) {
+  return (await client.query('SELECT 1 FROM games WHERE id=$1 LIMIT 1', [gameID])).rowCount === 1;
+}
+
+
 module.exports = async function pullPlays(_req, res) {
   const start = Date.now();
   const timeout = 9 * 60 * 1000;
@@ -97,6 +102,12 @@ module.exports = async function pullPlays(_req, res) {
   let [playID, playPage] = await getCheckpoint(client);
 
   while (start + timeout > Date.now()) {
+    if (!await isExistingGame(client, playID)) { // eslint-disable-line no-await-in-loop
+      log('ignore-non-game', playID, playPage);
+      playID += 1;
+      playPage = 1;
+      continue;
+    }
     const plays = await getPlaysSlowly(playID, playPage); // eslint-disable-line no-await-in-loop
     const nonZeroPlays = plays.filter(([,, length]) => length > 0);
     if (_.isEmpty(plays) && playID === lastGameID) {
