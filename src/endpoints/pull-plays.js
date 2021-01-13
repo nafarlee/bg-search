@@ -77,8 +77,12 @@ const savePage = async ({
       nonZeroPlays,
     ));
     await client.query('COMMIT');
+    log('save-plays', playID, playPage);
+    return [playID, playPage + 1];
   } catch (err) {
     await client.query('ROLLBACK');
+    console.error(err);
+    log('save-plays-error', playID, playPage);
     throw err;
   }
 };
@@ -151,17 +155,13 @@ module.exports = async (_req, res) => {
     }
 
     try {
-      await savePage({ // eslint-disable-line no-await-in-loop
+      [playID, playPage] = await savePage({ // eslint-disable-line no-await-in-loop
         client,
         playPage,
         playID,
         nonZeroPlays,
       });
-      log('save-plays', playID, playPage);
-      playPage += 1;
     } catch (err) {
-      console.error(err);
-      log('save-plays-error', playID, playPage);
       await client.end(); // eslint-disable-line no-await-in-loop
       return res.status(500).send();
     }
