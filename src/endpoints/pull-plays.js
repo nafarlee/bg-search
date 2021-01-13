@@ -110,14 +110,16 @@ module.exports = async function pullPlays(_req, res) {
     }
 
     const plays = await getPlaysSlowly(playID, playPage); // eslint-disable-line no-await-in-loop
-    if (_.isEmpty(plays) && playID === lastGameID) {
+    const areNoPlays = _.isEmpty(plays);
+    const isLastGame = playID === lastGameID;
+    if (areNoPlays && isLastGame) {
       log('mobius', playID, playPage);
       playID = 1;
       playPage = 1;
       continue;
     }
 
-    if (_.isEmpty(plays) && playID !== lastGameID) {
+    if (areNoPlays && !isLastGame) {
       log('next-game', playID, playPage);
       playID += 1;
       playPage = 1;
