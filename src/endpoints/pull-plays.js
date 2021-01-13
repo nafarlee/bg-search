@@ -19,54 +19,54 @@ const packPlay = (gameID) => (play) => [
 ];
 
 
-function log(type, gameID, playPageID) {
+const log = (type, gameID, playPageID) => {
   console.log(JSON.stringify({ type, 'game-id': gameID, 'play-page-id': playPageID }));
-}
+};
 
 
-async function getPlays(id, page) {
+const getPlays = async (id, page) => {
   const baseURL = 'https://www.boardgamegeek.com/xmlapi2/plays';
   const xml = await get(`${baseURL}?type=thing&subtype=boardgame&id=${id}&page=${page}`);
   const body = await parseString(xml);
   const plays = body.plays.play || [];
   return plays.map(packPlay(id));
-}
+};
 
 
-async function getCheckpoint(client) {
+const getCheckpoint = async (client) => {
   const {
     rows: [{ play_id: playID, play_page: playPage }],
   } = await client.query('SELECT play_id, play_page FROM globals');
   return [playID, playPage];
-}
+};
 
 
-async function getLastGameID(client) {
+const getLastGameID = async (client) => {
   const {
     rows: [{ id }],
   } = await client.query('SELECT id FROM games ORDER BY id DESC LIMIT 1');
   return id;
-}
+};
 
 
-async function saveCheckpoint({
+const saveCheckpoint = async ({
   res,
   client,
   playID,
   playPage,
-}) {
+}) => {
   await client.query('UPDATE globals SET play_id=$1, play_page=$2 WHERE id=1', [playID, playPage]);
   await client.end();
   return res.status(200).send();
-}
+};
 
 
-async function savePage({
+const savePage = async ({
   client,
   playPage,
   nonZeroPlays,
   playID,
-}) {
+}) => {
   try {
     await client.query('BEGIN');
     await client.query('UPDATE globals SET play_id=$1, play_page=$2 WHERE id=1', [playID, playPage + 1]);
@@ -81,15 +81,15 @@ async function savePage({
     await client.query('ROLLBACK');
     throw err;
   }
-}
+};
 
 
-async function isExistingGame(client, gameID) {
-  return (await client.query('SELECT 1 FROM games WHERE id=$1 LIMIT 1', [gameID])).rowCount === 1;
-}
+const isExistingGame = async (client, gameID) => (
+  (await client.query('SELECT 1 FROM games WHERE id=$1 LIMIT 1', [gameID])).rowCount === 1
+);
 
 
-module.exports = async function pullPlays(_req, res) {
+module.exports = async (_req, res) => {
   const start = Date.now();
   const timeout = 9 * 60 * 1000;
 
