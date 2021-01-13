@@ -108,35 +108,43 @@ module.exports = async function pullPlays(_req, res) {
       playPage = 1;
       continue;
     }
+
     const plays = await getPlaysSlowly(playID, playPage); // eslint-disable-line no-await-in-loop
-    const nonZeroPlays = plays.filter(([,, length]) => length > 0);
     if (_.isEmpty(plays) && playID === lastGameID) {
       log('mobius', playID, playPage);
       playID = 1;
       playPage = 1;
-    } else if (_.isEmpty(plays) && playID !== lastGameID) {
+      continue;
+    }
+
+    if (_.isEmpty(plays) && playID !== lastGameID) {
       log('next-game', playID, playPage);
       playID += 1;
       playPage = 1;
-    } else if (_.isEmpty(nonZeroPlays)) {
+      continue;
+    }
+
+    const nonZeroPlays = plays.filter(([,, length]) => length > 0);
+    if (_.isEmpty(nonZeroPlays)) {
       log('skip-page', playID, playPage);
       playPage += 1;
-    } else {
-      try {
-        await savePage({ // eslint-disable-line no-await-in-loop
-          client,
-          playPage,
-          playID,
-          nonZeroPlays,
-        });
-        log('save-plays', playID, playPage);
-        playPage += 1;
-      } catch (err) {
-        console.error(err);
-        log('save-plays-error', playID, playPage);
-        await client.end(); // eslint-disable-line no-await-in-loop
-        return res.status(500).send();
-      }
+      continue;
+    }
+
+    try {
+      await savePage({ // eslint-disable-line no-await-in-loop
+        client,
+        playPage,
+        playID,
+        nonZeroPlays,
+      });
+      log('save-plays', playID, playPage);
+      playPage += 1;
+    } catch (err) {
+      console.error(err);
+      log('save-plays-error', playID, playPage);
+      await client.end(); // eslint-disable-line no-await-in-loop
+      return res.status(500).send();
     }
   }
 
