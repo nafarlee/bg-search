@@ -57,6 +57,7 @@ const saveCheckpoint = async ({
 }) => {
   await client.query('UPDATE globals SET play_id=$1, play_page=$2 WHERE id=1', [playID, playPage]);
   await client.end();
+  log('pause', playID, playPage);
   return res.status(200).send();
 };
 
@@ -167,7 +168,6 @@ module.exports = async (_req, res) => {
     }
   }
 
-  log('pause', playID, playPage);
   return saveCheckpoint({
     res,
     client,
