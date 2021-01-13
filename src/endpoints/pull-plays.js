@@ -89,6 +89,30 @@ const isExistingGame = async (client, gameID) => (
 );
 
 
+const ignoreNonGame = (ID, page) => {
+  log('ignore-non-game', ID, page);
+  return [ID + 1, 1];
+};
+
+
+const mobius = (ID, page) => {
+  log('mobius', ID, page);
+  return [1, 1];
+};
+
+
+const nextGame = (ID, page) => {
+  log('next-game', ID, page);
+  return [ID + 1, 1];
+};
+
+
+const skipPage = (ID, page) => {
+  log('skip-page', ID, page);
+  return [ID, page + 1];
+};
+
+
 module.exports = async (_req, res) => {
   const start = Date.now();
   const timeout = 9 * 60 * 1000;
@@ -103,9 +127,7 @@ module.exports = async (_req, res) => {
 
   while (start + timeout > Date.now()) {
     if (!await isExistingGame(client, playID)) { // eslint-disable-line no-await-in-loop
-      log('ignore-non-game', playID, playPage);
-      playID += 1;
-      playPage = 1;
+      [playID, playPage] = ignoreNonGame(playID, playPage);
       continue;
     }
 
@@ -113,23 +135,18 @@ module.exports = async (_req, res) => {
     const areNoPlays = _.isEmpty(plays);
     const isLastGame = playID === lastGameID;
     if (areNoPlays && isLastGame) {
-      log('mobius', playID, playPage);
-      playID = 1;
-      playPage = 1;
+      [playID, playPage] = mobius(playID, playPage);
       continue;
     }
 
     if (areNoPlays && !isLastGame) {
-      log('next-game', playID, playPage);
-      playID += 1;
-      playPage = 1;
+      [playID, playPage] = nextGame(playID, playPage);
       continue;
     }
 
     const nonZeroPlays = plays.filter(([,, length]) => length > 0);
     if (_.isEmpty(nonZeroPlays)) {
-      log('skip-page', playID, playPage);
-      playPage += 1;
+      [playID, playPage] = skipPage(playID, playPage);
       continue;
     }
 
