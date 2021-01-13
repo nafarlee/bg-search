@@ -24,13 +24,13 @@ const log = (type, gameID, playPageID) => {
 };
 
 
-const getPlays = async (id, page) => {
+const getPlays = throttle(async (id, page) => {
   const baseURL = 'https://www.boardgamegeek.com/xmlapi2/plays';
   const xml = await get(`${baseURL}?type=thing&subtype=boardgame&id=${id}&page=${page}`);
   const body = await parseString(xml);
   const plays = body.plays.play || [];
   return plays.map(packPlay(id));
-};
+}, 5 * 1000);
 
 
 const getCheckpoint = async (client) => {
@@ -122,8 +122,6 @@ module.exports = async (_req, res) => {
   const start = Date.now();
   const timeout = 9 * 60 * 1000;
 
-  const getPlaysSlowly = throttle(getPlays, 5 * 1000);
-
   const client = new Client(credentials);
   await client.connect();
 
@@ -136,7 +134,7 @@ module.exports = async (_req, res) => {
       continue;
     }
 
-    const plays = await getPlaysSlowly(playID, playPage); // eslint-disable-line no-await-in-loop
+    const plays = await getPlays(playID, playPage); // eslint-disable-line no-await-in-loop
     const areNoPlays = _.isEmpty(plays);
     const isLastGame = playID === lastGameID;
     if (areNoPlays && isLastGame) {
