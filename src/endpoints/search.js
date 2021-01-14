@@ -20,7 +20,12 @@ module.exports = async function search(req, res) {
     direction,
   });
 
-  const sql = transpile(query, order, direction, offset);
+  let sql;
+  try {
+    sql = transpile(query, order, direction, offset);
+  } catch (err) {
+    return res.status(400).send(err);
+  }
   const client = new Client(credentials);
   try {
     await client.connect();
