@@ -17,6 +17,12 @@ html
     h2
       a(href=game.image) Image
 
+    if game.description
+      details
+        summary Description
+        each paragraph in game.description.split('&#10;&#10;')
+          p !{paragraph}
+
     details
       summary Rating
       ul
@@ -50,12 +56,6 @@ html
       ul
         li Votes: #{game.weight_votes}
         li Average: #{game.average_weight}
-
-    if game.description
-      details
-        summary Description
-        each paragraph in game.description.split('&#10;&#10;')
-          p !{paragraph}
 
     if game.categories
       details
