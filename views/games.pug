@@ -51,6 +51,18 @@ html
         li Minimum: #{game.minimum_players}
         li Maximum: #{game.maximum_players}
 
+    if game.player_recommendations
+      details
+        summary Player Recommendations
+        ul
+          each pr in sortByProperty(game.player_recommendations, 'players')
+            - const total = pr.best + pr.recommended + pr.not_recommended
+            li #{rangeToText(pr.players)}
+              ul
+                li Best: #{percentageOf(pr.best, total)} (#{pr.best})
+                li Recommended: #{percentageOf(pr.recommended, total)} (#{pr.recommended})
+                li Not Recommended: #{percentageOf(pr.not_recommended, total)} (#{pr.not_recommended})
+
     details
       summary Weight
       ul
@@ -105,15 +117,3 @@ html
         ul
           each alternate_name in game.alternate_names
             li= alternate_name
-
-    if game.player_recommendations
-      details
-        summary Player Recommendations
-        ul
-          each pr in sortByProperty(game.player_recommendations, 'players')
-            - const total = pr.best + pr.recommended + pr.not_recommended
-            li #{rangeToText(pr.players)}
-              ul
-                li Best: #{percentageOf(pr.best, total)} (#{pr.best})
-                li Recommended: #{percentageOf(pr.recommended, total)} (#{pr.recommended})
-                li Not Recommended: #{percentageOf(pr.not_recommended, total)} (#{pr.not_recommended})
