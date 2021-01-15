@@ -4,6 +4,7 @@ const { Client } = require('pg');
 
 const transpile = require('../transpile');
 const credentials = require('../../db-credentials');
+const T = require('../T');
 
 module.exports = async function search(req, res) {
   res.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 7}`);
@@ -20,33 +21,36 @@ module.exports = async function search(req, res) {
     direction,
   });
 
-  let sql;
-  try {
-    sql = transpile(query, order, direction, offset);
-  } catch (err) {
-    return res.status(400).send(err);
-  }
+  const [transpilationError, sql] = T(() => transpile(query, order, direction, offset));
+  if (transpilationError) return res.status(400).send(transpilationError);
+
   const client = new Client(credentials);
-  try {
-    await client.connect();
-    const { rows: games } = await client.query(sql);
-    const nextURL = format({
-      protocol: req.protocol,
-      host: req.get('host'),
-      pathname: req.path,
-      query: {
-        ...req.query,
-        offset: offset + games.length,
-      },
-    });
-    return res.render('search', {
-      games,
-      nextURL,
-      query,
-      order,
-      direction,
-    });
-  } finally {
+  const [connectionError] = await T(client.connect());
+  if (connectionError) {
     client.end();
+    return res.status(500).send(connectionError);
   }
+
+  const [queryError, queryResults] = await T(client.query(sql));
+  client.end();
+  if (queryError) return res.status(500).send(queryError);
+  const { rows: games } = queryResults;
+
+  const nextURL = format({
+    protocol: req.protocol,
+    host: req.get('host'),
+    pathname: req.path,
+    query: {
+      ...req.query,
+      offset: offset + games.length,
+    },
+  });
+
+  return res.render('search', {
+    games,
+    nextURL,
+    query,
+    order,
+    direction,
+  });
 };
