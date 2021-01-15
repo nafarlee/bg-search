@@ -1,6 +1,7 @@
 const { Client } = require('pg');
 
 const credentials = require('../../db-credentials');
+const T = require('../T');
 
 module.exports = async function search(req, res) {
   res.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 7}`);
@@ -67,13 +68,19 @@ module.exports = async function search(req, res) {
                FROM games
                WHERE games.id = $1
                GROUP BY games.id`;
-  try {
-    await client.connect();
-    const { rows: games } = await client.query(sql, [id]);
-    if (games.length === 0) return res.send('No game with that ID!');
-    const [game] = games;
-    return res.render('games', { game });
-  } finally {
+  const [connectionError] = await T(client.connect());
+  if (connectionError) {
     client.end();
+    return res.status(500).send(connectionError);
   }
+
+  const [queryError, queryResult] = await T(client.query(sql, [id]));
+  client.end();
+  if (queryError) return res.status(500).send(queryError);
+  const { rows: games } = queryResult;
+
+  if (games.length === 0) return res.send('No game with that ID!');
+
+  const [game] = games;
+  return res.render('games', { game });
 };
