@@ -13,5 +13,5 @@ module.exports = (risk) => {
       .catch((error) => [error, null]);
   }
 
-  throw new Error('Unsupported type passed to "try"');
+  throw new Error('Unsupported type passed to "T"');
 };
