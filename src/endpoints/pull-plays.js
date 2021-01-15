@@ -9,6 +9,7 @@ const get = require('../get');
 const throttle = require('../throttle');
 const { toSQL } = require('../db/insert');
 const credentials = require('../../db-credentials');
+const T = require('../T');
 
 
 const packPlay = (gameID) => (play) => [
@@ -153,17 +154,17 @@ module.exports = async (_req, res) => {
       continue;
     }
 
-    try {
-      [playID, playPage] = await savePage({ // eslint-disable-line no-await-in-loop
-        client,
-        playPage,
-        playID,
-        nonZeroPlays,
-      });
-    } catch (err) {
+    const [saveError, saveResult] = await T(savePage({ // eslint-disable-line no-await-in-loop
+      client,
+      playPage,
+      playID,
+      nonZeroPlays,
+    }));
+    if (saveError) {
       await client.end(); // eslint-disable-line no-await-in-loop
-      return res.status(500).send();
+      return res.status(500).send(saveError);
     }
+    [playID, playPage] = saveResult;
   }
 
   return saveCheckpoint({
