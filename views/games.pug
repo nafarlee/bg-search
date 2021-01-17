@@ -1,3 +1,10 @@
+mixin details-list(heading, list)
+  details
+    summary= heading
+    ul
+      each item in list
+        li= item
+
 doctype html
 
 html
@@ -65,50 +72,22 @@ html
         li Average: #{game.average_weight}
 
     if game.categories
-      details
-        summary Categories
-        ul
-          each category in game.categories
-            li= category
+      +details-list('Categories', game.categories)
 
     if game.mechanics
-      details
-        summary Mechanics
-        ul
-          each mechanic in game.mechanics
-            li= mechanic
+      +details-list('Mechanics', game.mechanics)
 
     if game.families
-      details
-        summary Families
-        ul
-          each family in game.families
-            li= family
+      +details-list('Families', game.families)
 
     if game.designers
-      details
-        summary Designers
-        ul
-          each designer in game.designers
-            li= designer
+      +details-list('Designers', game.designers)
 
     if game.publishers
-      details
-        summary Publishers
-        ul
-          each publisher in game.publishers
-            li= publisher
+      +details-list('Publishers', game.publishers)
 
     if game.artists
-      details
-        summary Artists
-        ul
-          each artist in game.artists
-            li= artist
+      +details-list('Artists', game.artists)
 
     if game.alternate_names
-      details
-        summary Alternate Names
-        ul
-          each alternate_name in game.alternate_names
-            li= alternate_name
+      +details-list('Alternate Names', game.alternate_names)
