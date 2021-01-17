@@ -27,7 +27,7 @@ module.exports = async function search(req, res) {
     const code = 422;
     const message = 'Your search has an error! Hopefully the hint below will help find it.';
     const padding = ' '.repeat(_.get(transpilationError, 'result.index.offset'));
-    const annotation = `${padding}^ The error should start here`;
+    const annotation = `${padding}^ This is the first "bad" character`;
     const block = `${query}\n${annotation}`;
     return res
       .status(code)
