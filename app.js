@@ -1,9 +1,9 @@
 const express = require('express');
 
-const pull = require('./src/endpoints/pull');
-const search = require('./src/endpoints/search');
-const pullPlays = require('./src/endpoints/pull-plays');
-const games = require('./src/endpoints/games');
+const pull = require('./src/routes/pull');
+const search = require('./src/routes/search');
+const pullPlays = require('./src/routes/pull-plays');
+const games = require('./src/routes/games');
 const locals = require('./views/locals');
 
 const app = express();
