@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 const { promisify } = require('util');
 
 const parseString = promisify(require('xml2js').parseString);

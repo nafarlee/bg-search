@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 const _ = require('lodash');
 
 // toSQL :: String -> [String] -> [String] -> [[a]] -> (String, [a])
