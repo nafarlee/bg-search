@@ -11,3 +11,7 @@ input[type="search"], select, code {
 h1 {
   text-align: center;
 }
+
+.center {
+  text-align: center;
+}
