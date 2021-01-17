@@ -1,6 +1,6 @@
 const lib = require('./lib');
 const language = require('../language');
-const { FIELDS, CONCATENATED_FIELDS } = require('../transpile/lib');
+const { FIELDS, CONCATENATED_FIELDS } = require('./lib');
 
 function toSQL(predicates, intersect = true) {
   const joiningTerm = intersect ? 'INTERSECT ALL' : 'UNION ALL';
@@ -16,7 +16,6 @@ function toSQL(predicates, intersect = true) {
     text = acc.text.length === 0
       ? text
       : `${acc.text} ${joiningTerm} ${text}`;
-
 
     return {
       text,

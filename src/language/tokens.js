@@ -27,7 +27,6 @@ const tags = [
   'MEDIAN_PLAYTIME',
 ].reduce(mirror, {});
 
-
 const operators = [
   '=',
   '>',
