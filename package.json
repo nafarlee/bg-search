@@ -24,7 +24,7 @@
   "dependencies": {
     "express": "4.17.1",
     "lodash": "^4.17.20",
-    "parsimmon": "1.13.0",
+    "parsimmon": "^1.16.0",
     "pg": "7.12.1",
     "pug": "2.0.4",
     "xml2js": "0.4.19"
