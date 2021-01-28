@@ -65,3 +65,6 @@ typings/
 *.tfstate.backup
 
 /db-credentials.json
+
+/out/
+.shadow-cljs
