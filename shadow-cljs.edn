@@ -1,0 +1,6 @@
+{:source-paths ["src"]
+ :builds
+ {:app
+  {:target :node-script
+   :main core/main
+   :output-to "out/app.js"}}}
