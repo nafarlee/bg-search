@@ -1,6 +1,6 @@
-const https = require('https');
+import https from 'https';
 
-function get(url) {
+export default function get(url) {
   return new Promise((resolve, reject) => {
     https.get(url, (res) => {
       if (res.statusCode < 200 || res.statusCode >= 300) {
@@ -14,5 +14,3 @@ function get(url) {
       .on('error', (err) => reject(err));
   });
 }
-
-module.exports = get;
