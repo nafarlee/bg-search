@@ -1,13 +1,13 @@
-const { format } = require('url');
+import { format } from 'url';
 
-const { Client } = require('pg');
-const _ = require('lodash');
+import { Client } from 'pg';
+import _ from 'lodash';
 
-const transpile = require('../transpile');
-const credentials = require('../../db-credentials');
-const T = require('../T');
+import transpile from '../transpile';
+import credentials from '../../db-credentials.json';
+import T from '../T';
 
-module.exports = async function search(req, res) {
+export default async function search(req, res) {
   res.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 7}`);
 
   const query = req.query.query || '';
@@ -63,4 +63,4 @@ module.exports = async function search(req, res) {
     order,
     direction,
   });
-};
+}
