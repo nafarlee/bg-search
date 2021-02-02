@@ -1,14 +1,16 @@
-const { promisify } = require('util');
+import { promisify } from 'util';
 
-const parseString = promisify(require('xml2js').parseString);
-const { Client } = require('pg');
-const _ = require('lodash');
+import xml2js from 'xml2js';
+import { Client } from 'pg';
+import _ from 'lodash';
 
-const get = require('../get');
-const throttle = require('../throttle');
-const { toSQL } = require('../db/insert');
-const credentials = require('../../db-credentials');
-const T = require('../T');
+import get from '../get';
+import throttle from '../throttle';
+import { toSQL } from '../db/insert';
+import credentials from '../../db-credentials.json';
+import T from '../T';
+
+const parseString = promisify(xml2js.parseString);
 
 const packPlay = (gameID) => (play) => [
   play.$.id,
@@ -105,7 +107,7 @@ const skipPage = (ID, page) => {
   return [ID, page + 1];
 };
 
-module.exports = async (_req, res) => {
+export default async (_req, res) => {
   const start = Date.now();
   const timeout = 9 * 60 * 1000;
 
