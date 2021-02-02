@@ -5,7 +5,7 @@ import { range } from 'lodash';
 import xml2js from 'xml2js';
 
 import get from '../get';
-import marshall from '../marshall';
+import marshall from '../marshall/index';
 import { insert } from '../db/insert';
 import credentials from '../../db-credentials.json';
 
