@@ -3,7 +3,7 @@ import { format } from 'url';
 import { Client } from 'pg';
 import _ from 'lodash';
 
-import transpile from '../transpile';
+import transpile from '../transpile/index';
 import T from '../T';
 
 export default (credentials) => async (req, res) => {
