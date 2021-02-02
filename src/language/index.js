@@ -1,8 +1,8 @@
-const PS = require('parsimmon');
+import PS from 'parsimmon';
 
-const tokens = require('./tokens');
+import tokens from './tokens';
 
-module.exports = PS.createLanguage({
+export default PS.createLanguage({
   Language(r) {
     return PS.alt(
       PS.seq(PS.optWhitespace, r.ExpressionList, PS.optWhitespace, PS.end)

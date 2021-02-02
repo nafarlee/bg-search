@@ -1,4 +1,4 @@
-module.exports = (risk) => {
+export default (risk) => {
   if (risk instanceof Function) {
     try {
       return [null, risk()];

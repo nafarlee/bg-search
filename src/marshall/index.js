@@ -1,6 +1,6 @@
 import { get } from 'lodash';
 
-const {
+import {
   age,
   description,
   id,
@@ -11,9 +11,9 @@ const {
   ratings,
   weight,
   year,
-} = require('./lib');
+} from './lib';
 
-function marshall(game) {
+export default function marshall(game) {
   return {
     'api-version': 3,
     id: id(game),
@@ -31,5 +31,3 @@ function marshall(game) {
     'last-updated': (new Date()).toString(),
   };
 }
-
-module.exports = marshall;
