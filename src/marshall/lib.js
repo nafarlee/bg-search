@@ -1,4 +1,4 @@
-const { partition } = require('lodash');
+import { partition } from 'lodash';
 
 function id(game) {
   return parseInt(game.$.id, 10);

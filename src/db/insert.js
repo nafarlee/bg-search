@@ -1,4 +1,4 @@
-const _ = require('lodash');
+import _ from 'lodash';
 
 // toSQL :: String -> [String] -> [String] -> [[a]] -> (String, [a])
 function toSQL(table, columns, uniques, chunks) {
