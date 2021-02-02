@@ -3,4 +3,4 @@
  {:app
   {:target :node-script
    :main core/main
-   :output-to "out/app.js"}}}
+   :output-to "app.shadow.js"}}}
