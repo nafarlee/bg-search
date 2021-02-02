@@ -1,5 +1,5 @@
 const lib = require('./lib');
-const language = require('../language');
+const language = require('../language/index');
 const { FIELDS, CONCATENATED_FIELDS } = require('./lib');
 
 function toSQL(predicates, intersect = true) {
