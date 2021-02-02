@@ -1,9 +1,8 @@
 import { Client } from 'pg';
 
-import credentials from '../db-credentials.json';
 import T from '../T';
 
-export default async function search(req, res) {
+export default (credentials) => async (req, res) => {
   res.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 7}`);
   const { id } = req.params;
   const client = new Client(credentials);
@@ -83,4 +82,4 @@ export default async function search(req, res) {
 
   const [game] = games;
   return res.render('games', { game });
-}
+};

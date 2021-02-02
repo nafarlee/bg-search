@@ -4,10 +4,9 @@ import { Client } from 'pg';
 import _ from 'lodash';
 
 import transpile from '../transpile';
-import credentials from '../db-credentials.json';
 import T from '../T';
 
-export default async function search(req, res) {
+export default (credentials) => async (req, res) => {
   res.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 7}`);
 
   const query = req.query.query || '';
@@ -63,4 +62,4 @@ export default async function search(req, res) {
     order,
     direction,
   });
-}
+};
