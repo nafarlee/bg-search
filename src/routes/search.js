@@ -4,7 +4,7 @@ import { Client } from 'pg';
 import _ from 'lodash';
 
 import transpile from '../transpile';
-import credentials from '../../db-credentials.json';
+import credentials from '../db-credentials.json';
 import T from '../T';
 
 export default async function search(req, res) {

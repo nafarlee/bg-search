@@ -7,7 +7,7 @@ import xml2js from 'xml2js';
 import get from '../get';
 import marshall from '../marshall/index';
 import { insert } from '../db/insert';
-import credentials from '../../db-credentials.json';
+import credentials from '../db-credentials.json';
 
 const parseString = promisify(xml2js.parseString);
 const baseURL = 'https://api.geekdo.com/xmlapi2/things';

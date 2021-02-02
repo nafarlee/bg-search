@@ -7,7 +7,7 @@ import _ from 'lodash';
 import get from '../get';
 import throttle from '../throttle';
 import { toSQL } from '../db/insert';
-import credentials from '../../db-credentials.json';
+import credentials from '../db-credentials.json';
 import T from '../T';
 
 const parseString = promisify(xml2js.parseString);
