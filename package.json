@@ -10,7 +10,7 @@
     "eslint-plugin-import": "^2.22.1",
     "jest": "^26.6.3",
     "pug-lint": "2.6.0",
-    "shadow-cljs": "^2.11.15"
+    "shadow-cljs": "^2.11.17"
   },
   "dependencies": {
     "express": "4.17.1",
