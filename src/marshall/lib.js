@@ -1,4 +1,4 @@
-import { partition } from 'lodash';
+import _ from 'lodash';
 
 export function id(game) {
   return parseInt(game.$.id, 10);
@@ -8,7 +8,7 @@ export function name(game) {
   const [
     primaries,
     alternates,
-  ] = partition(game.name, (record) => record.$.type === 'primary');
+  ] = _.partition(game.name, (record) => record.$.type === 'primary');
 
   return {
     'primary-name': primaries[0].$.value,

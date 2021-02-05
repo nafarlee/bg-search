@@ -1,5 +1,5 @@
-const language = require('./index');
-const tokens = require('./tokens');
+import language from './index';
+import tokens from './tokens';
 
 const spaces = ['', ' '];
 

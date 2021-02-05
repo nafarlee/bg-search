@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import _ from 'lodash';
 
 import {
   age,
@@ -17,8 +17,8 @@ export default function marshall(game) {
   return {
     'api-version': 3,
     id: id(game),
-    image: get(game, ['image', 0], null),
-    thumbnail: get(game, ['thumbnail', 0], null),
+    image: _.get(game, ['image', 0], null),
+    thumbnail: _.get(game, ['thumbnail', 0], null),
     ...name(game),
     description: description(game),
     year: year(game),
