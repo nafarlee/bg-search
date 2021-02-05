@@ -16,6 +16,7 @@
   (set! (.-locals app) (merge (.-locals app) locals))
   (doto app
         (.set "view engine" "pug")
+        (.set "views" "src/views")
         (.use (.static express "public"))
         (.get "/search" (search credentials))
         (.get "/pubsub/pull" (pull credentials))
