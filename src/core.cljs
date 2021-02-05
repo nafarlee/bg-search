@@ -13,7 +13,8 @@
 (defonce credentials (.parse js/JSON (rc/inline "/db-credentials.json")))
 
 (defn main []
-  (set! (.-locals app) (merge (.-locals app) locals))
+  (set! (.-locals app)
+        (js/Object.assign (.-locals app) locals))
   (doto app
         (.set "view engine" "pug")
         (.set "views" "src/views")
