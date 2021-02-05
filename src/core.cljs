@@ -10,7 +10,7 @@
 
 (defonce ^:export app (express))
 
-(defonce credentials (rc/inline "/db-credentials.json"))
+(defonce credentials (.parse js/JSON (rc/inline "/db-credentials.json")))
 
 (defn main []
   (set! (.-locals app) (merge (.-locals app) locals))
