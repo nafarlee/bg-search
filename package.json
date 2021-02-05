@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "jest",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "eslint": "eslint",
     "start": "node app.js"
   },
