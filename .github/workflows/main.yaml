@@ -18,7 +18,7 @@ jobs:
       - run: npm t
 
       - if: github.ref == 'refs/heads/master'
-        run: echo "$DATABASE_CREDENTIALS" | base64 -d > db-credentials.json
+        run: echo "$DATABASE_CREDENTIALS" | base64 -d > src/db-credentials.json
         env:
           DATABASE_CREDENTIALS: ${{ secrets.DATABASE_CREDENTIALS }}
 
