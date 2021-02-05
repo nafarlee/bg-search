@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "scripts": {
     "build": "shadow-cljs compile app",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
