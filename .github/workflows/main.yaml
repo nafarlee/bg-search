@@ -15,14 +15,15 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run build
-
       - run: npm t
 
       - if: github.ref == 'refs/heads/master'
         run: echo "$DATABASE_CREDENTIALS" | base64 -d > src/db-credentials.json
         env:
           DATABASE_CREDENTIALS: ${{ secrets.DATABASE_CREDENTIALS }}
+
+      - if: github.ref == 'refs/heads/master'
+        run: npm run build
 
       - if: github.ref == 'refs/heads/master'
         uses: google-github-actions/setup-gcloud@master
