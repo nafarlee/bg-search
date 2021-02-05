@@ -68,3 +68,4 @@ typings/
 
 /out/
 .shadow-cljs
+/app.js
