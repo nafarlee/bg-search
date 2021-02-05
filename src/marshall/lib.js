@@ -1,14 +1,14 @@
-const { partition } = require('lodash');
+import _ from 'lodash';
 
-function id(game) {
+export function id(game) {
   return parseInt(game.$.id, 10);
 }
 
-function name(game) {
+export function name(game) {
   const [
     primaries,
     alternates,
-  ] = partition(game.name, (record) => record.$.type === 'primary');
+  ] = _.partition(game.name, (record) => record.$.type === 'primary');
 
   return {
     'primary-name': primaries[0].$.value,
@@ -16,15 +16,15 @@ function name(game) {
   };
 }
 
-function description(game) {
+export function description(game) {
   return game.description[0];
 }
 
-function year(game) {
+export function year(game) {
   return parseInt(game.yearpublished[0].$.value, 10) || 0;
 }
 
-function players(game) {
+export function players(game) {
   const suggestedNumplayers = game
     .poll
     .find((x) => x.$.name === 'suggested_numplayers');
@@ -54,20 +54,20 @@ function players(game) {
   return result;
 }
 
-function playtime(game) {
+export function playtime(game) {
   return {
     'minimum-playtime': parseInt(game.minplaytime[0].$.value, 10) || 0,
     'maximum-playtime': parseInt(game.maxplaytime[0].$.value, 10) || 0,
   };
 }
 
-function age(game) {
+export function age(game) {
   return {
     'minimum-age': parseInt(game.minage[0].$.value, 10) || 0,
   };
 }
 
-function links({ link = [] }) {
+export function links({ link = [] }) {
   const sections = {
     boardgamecategory(record) {
       return ['categories', {
@@ -143,7 +143,7 @@ function links({ link = [] }) {
     }, {});
 }
 
-function ratings(game) {
+export function ratings(game) {
   const getValue = (property) => game.statistics[0].ratings[0][property][0].$.value;
   return {
     'rating-votes': parseInt(getValue('usersrated'), 10) || 0,
@@ -153,22 +153,9 @@ function ratings(game) {
   };
 }
 
-function weight(game) {
+export function weight(game) {
   return {
     'weight-votes': parseInt(game.statistics[0].ratings[0].numweights[0].$.value, 10) || 0,
     'average-weight': parseFloat(game.statistics[0].ratings[0].averageweight[0].$.value) || 0,
   };
 }
-
-module.exports = {
-  age,
-  description,
-  id,
-  links,
-  name,
-  players,
-  playtime,
-  ratings,
-  weight,
-  year,
-};

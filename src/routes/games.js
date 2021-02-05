@@ -1,9 +1,8 @@
-const { Client } = require('pg');
+import { Client } from 'pg';
 
-const credentials = require('../../db-credentials');
-const T = require('../T');
+import T from '../T';
 
-module.exports = async function search(req, res) {
+export default (credentials) => async (req, res) => {
   res.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 7}`);
   const { id } = req.params;
   const client = new Client(credentials);

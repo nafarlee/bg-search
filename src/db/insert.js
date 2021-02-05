@@ -1,7 +1,7 @@
-const _ = require('lodash');
+import _ from 'lodash';
 
 // toSQL :: String -> [String] -> [String] -> [[a]] -> (String, [a])
-function toSQL(table, columns, uniques, chunks) {
+export function toSQL(table, columns, uniques, chunks) {
   const values = _.flatten(chunks);
   const positions = _(values)
     .map((_v, i) => `$${i + 1}`)
@@ -230,14 +230,9 @@ const tables = {
   },
 };
 
-function insert(games) {
+export function insert(games) {
   return _(tables)
     .map((f) => f(games))
     .compact()
     .value();
 }
-
-module.exports = {
-  insert,
-  toSQL,
-};

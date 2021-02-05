@@ -1,6 +1,5 @@
-const lib = require('./lib');
-const language = require('../language');
-const { FIELDS, CONCATENATED_FIELDS } = require('./lib');
+import language from '../language/index';
+import lib from './lib';
 
 function toSQL(predicates, intersect = true) {
   const joiningTerm = intersect ? 'INTERSECT ALL' : 'UNION ALL';
@@ -24,8 +23,8 @@ function toSQL(predicates, intersect = true) {
   }, { text: '', values: [] });
 }
 
-module.exports = function transpile(s, order, direction, offset) {
-  if (!FIELDS.includes(order)) throw new Error('SQL injection attempt!');
+export default function transpile(s, order, direction, offset) {
+  if (!lib.FIELDS.includes(order)) throw new Error('SQL injection attempt!');
   if (direction !== 'ASC' && direction !== 'DESC') throw new Error('SQL injection attempt!');
 
   const predicates = language.tryParse(s);
@@ -35,7 +34,7 @@ module.exports = function transpile(s, order, direction, offset) {
     ? 'games'
     : `(${text}) AS GameSubquery NATURAL INNER JOIN games`;
 
-  text = `SELECT DISTINCT ${CONCATENATED_FIELDS}
+  text = `SELECT DISTINCT ${lib.CONCATENATED_FIELDS}
           FROM ${from}
           ORDER BY ${order} ${direction}
           LIMIT 25 OFFSET {{}}`;
@@ -47,4 +46,4 @@ module.exports = function transpile(s, order, direction, offset) {
     text: text.replace(/\{\{\}\}/g, replacer),
     values,
   };
-};
+}

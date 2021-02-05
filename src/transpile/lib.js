@@ -55,7 +55,7 @@ function toRange(operator, value) {
   }
 }
 
-module.exports = {
+export default {
   FIELDS,
   CONCATENATED_FIELDS,
 

@@ -1,4 +1,4 @@
-module.exports = function throttle(fn, wait) {
+export default function throttle(fn, wait) {
   let last = null;
   return async (...args) => {
     if (last === null) {
@@ -12,4 +12,4 @@ module.exports = function throttle(fn, wait) {
       }, last + wait - Date.now());
     });
   };
-};
+}

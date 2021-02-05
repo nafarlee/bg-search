@@ -1,17 +1,17 @@
-const { promisify } = require('util');
+import { promisify } from 'util';
 
-const parseString = promisify(require('xml2js').parseString);
-const { Client } = require('pg');
-const { range } = require('lodash');
+import { Client } from 'pg';
+import { range } from 'lodash';
+import xml2js from 'xml2js';
 
-const get = require('../get');
-const marshall = require('../marshall');
-const { insert } = require('../db/insert');
-const credentials = require('../../db-credentials');
+import get from '../get';
+import marshall from '../marshall/index';
+import { insert } from '../db/insert';
 
+const parseString = promisify(xml2js.parseString);
 const baseURL = 'https://api.geekdo.com/xmlapi2/things';
 
-async function pull(req, res) {
+export default (credentials) => async (req, res) => {
   const client = new Client(credentials);
 
   await client.connect();
@@ -44,6 +44,4 @@ async function pull(req, res) {
   } finally {
     await client.end();
   }
-}
-
-module.exports = pull;
+};

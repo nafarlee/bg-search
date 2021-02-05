@@ -41,7 +41,7 @@ const meta = [
   'REIMPLEMENTATION',
 ].reduce(mirror, {});
 
-module.exports = {
+export default {
   operators,
   tags: {
     meta: {

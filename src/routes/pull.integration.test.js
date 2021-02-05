@@ -1,11 +1,12 @@
-const { promisify } = require('util');
+import { promisify } from 'util';
 
-const parseString = promisify(require('xml2js').parseString);
+import xml2js from 'xml2js';
 
-const get = require('../get');
-const marshall = require('../marshall');
-const expected = require('./catan.json');
+import get from '../get';
+import marshall from '../marshall';
+import expected from './catan.json';
 
+const parseString = promisify(xml2js.parseString);
 const baseURL = 'https://api.geekdo.com/xmlapi2/things';
 test('Catan marshalled output matches', async () => {
   const stableFields = [

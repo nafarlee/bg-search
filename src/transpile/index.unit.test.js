@@ -1,4 +1,4 @@
-const transpile = require('./index');
+import transpile from './index';
 
 expect.extend({
   toMatchIgnoringWhitespace(received, other) {
