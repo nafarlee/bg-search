@@ -1,5 +1,5 @@
 import language from '../language/index';
-import * as lib from './lib';
+import lib from './lib';
 
 function toSQL(predicates, intersect = true) {
   const joiningTerm = intersect ? 'INTERSECT ALL' : 'UNION ALL';
