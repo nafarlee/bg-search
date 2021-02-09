@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "repl": "shadow-cljs node-repl",
     "build": "shadow-cljs compile app",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "eslint": "eslint",
