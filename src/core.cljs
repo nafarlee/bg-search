@@ -1,6 +1,6 @@
 (ns core
   (:require
-    [shadow.resource :as rc]
+    [static :refer [credentials]]
     ["express" :as express]
     ["/routes/pull" :default pull]
     ["/routes/search" :default search]
@@ -9,8 +9,6 @@
     ["/views/locals" :as locals]))
 
 (defonce ^:export app (express))
-
-(defonce credentials (.parse js/JSON (rc/inline "/db-credentials.json")))
 
 (defn main []
   (set! (.-locals app)
