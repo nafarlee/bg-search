@@ -14,6 +14,11 @@
 
 (def unwrap second)
 
+(defn attempt [f & args]
+  (try
+    (ok (apply f args))
+    (catch :default e (error e))))
+
 (defn from-promise [p]
   (-> p
       (.then ok)
