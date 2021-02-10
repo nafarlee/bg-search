@@ -3,7 +3,7 @@
     [static :refer [credentials]]
     ["express" :as express]
     ["/routes/pull" :default pull]
-    ["/routes/search" :default search]
+    [routes :as routes]
     ["/routes/pull-plays" :default pull-plays]
     ["/routes/games" :default games]
     ["/views/locals" :as locals]))
@@ -17,7 +17,7 @@
         (.set "view engine" "pug")
         (.set "views" "src/views")
         (.use (.static express "public"))
-        (.get "/search" (search credentials))
+        (.get "/search" routes.search)
         (.post "/pubsub/pull" (pull credentials))
         (.post "/pubsub/pull-plays" (pull-plays credentials))
         (.get "/games/:id" (games credentials))
