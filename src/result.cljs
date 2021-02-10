@@ -12,6 +12,8 @@
 (defn error? [[t]]
   (= :error t))
 
+(def unwrap second)
+
 (defn from-promise [p]
   (-> p
       (.then ok)
