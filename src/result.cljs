@@ -9,6 +9,9 @@
 (defn error [e]
   [:error e])
 
+(defn error? [[t]]
+  (= :error t))
+
 (defn from-promise [p]
   (-> p
       (.then ok)
