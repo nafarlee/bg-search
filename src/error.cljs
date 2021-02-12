@@ -13,3 +13,9 @@
         (.render "error" #js{:code code
                              :message message
                              :block block}))))
+
+(defn generic [error res code]
+  (-> res
+      (.status code)
+      (.render "error" (js-obj "code" code
+                               "message" error))))
