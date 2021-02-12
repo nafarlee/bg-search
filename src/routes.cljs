@@ -28,19 +28,11 @@
       (then-not (.query database (rs/unwrap sql-result))
         #(err/generic % res 500)
          (fn [db-response]
-           (let [games          (.-rows db-response)
-                 next-url-query (-> (.-query req)
-                                    js->clj
-                                    (update-in [:offset] + (count games))
-                                    clj->js)
-                 next-url       (-> {:protocol (.-protocol req)
-                                     :host (.get req "host")
-                                     :pathname (.-path req)
-                                     :query next-url-query}
-                                    clj->js
-                                    url/format)]
-             (.render res "search" (clj->js {:games games
-                                             :nextURL next-url
-                                             :query query
-                                             :order order
-                                             :direction direction}))))))))
+           (let [games (.-rows db-response)]
+             (.render res
+                      "search"
+                      #js{:games games
+                          :query query
+                          :order order
+                          :direction direction
+                          :nextURL (next-url req games)})))))))
