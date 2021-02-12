@@ -14,7 +14,7 @@
   (let [query     (or (.. req -query -query) "")
         order     (or (.. req -query -order) "bayes_rating")
         direction (or (.. req -query -direction) "DESC")
-        offset    (-> (or (.. req -query -offset) 0) (js/parseInt 10))]
+        offset    (-> (.. req -query -offset) (or 0) (js/parseInt 10))]
     (prn {:query query :order order :direction direction :offset offset})
     (let [sql-result (rs/attempt transpile query order direction offset)]
       (if (rs/error? sql-result)
