@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "up": "npm run build && npm start",
     "repl": "shadow-cljs node-repl",
     "build": "shadow-cljs compile app",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
