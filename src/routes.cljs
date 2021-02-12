@@ -7,7 +7,6 @@
    [result :as rs]))
 
 (defn search [req res]
-  (.set res "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
   (let [query      (or (.. req -query -query) "")
         order      (or (.. req -query -order) "bayes_rating")
         direction  (or (.. req -query -direction) "DESC")

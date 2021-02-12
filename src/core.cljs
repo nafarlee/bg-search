@@ -4,7 +4,7 @@
     ["express" :as express]
     ["/routes/pull" :default pull]
     [routes :as routes]
-    [middleware :refer [with-database]]
+    [middleware :refer [with-database with-header]]
     ["/routes/pull-plays" :default pull-plays]
     ["/routes/games" :default games]
     ["/views/locals" :as locals]))
@@ -18,7 +18,9 @@
         (.set "view engine" "pug")
         (.set "views" "src/views")
         (.use (.static express "public"))
-        (.get "/search" (with-database routes/search))
+        (.get "/search" (-> routes/search
+                            (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
+                            with-database))
         (.post "/pubsub/pull" (pull credentials))
         (.post "/pubsub/pull-plays" (pull-plays credentials))
         (.get "/games/:id" (games credentials))
