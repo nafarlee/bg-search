@@ -15,3 +15,8 @@
               (js/Object.assign #js{:database client})
               (handler res)
               (.finally #(.end client))))))))
+
+(defn with-header [handler header value]
+  (fn [req res]
+    (.set res header value)
+    (handler req res)))
