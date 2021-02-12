@@ -24,7 +24,7 @@
         sql-result (rs/attempt transpile query order direction offset)]
     (prn {:query query :order order :direction direction :offset offset})
     (if (rs/error? sql-result)
-      (err/transpile (rs/unwrap sql-result) res query)
+      (-> sql-result rs/unwrap (err/transpile res query) js/Promise.resolve)
       (then-not (.query database (rs/unwrap sql-result))
         #(err/generic % res 500)
         #(.render res "search" #js{:query     query
