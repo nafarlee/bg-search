@@ -27,12 +27,8 @@
       (err/transpile (rs/unwrap sql-result) res query)
       (then-not (.query database (rs/unwrap sql-result))
         #(err/generic % res 500)
-         (fn [db-response]
-           (let [games (.-rows db-response)]
-             (.render res
-                      "search"
-                      #js{:games games
-                          :query query
-                          :order order
-                          :direction direction
-                          :nextURL (next-url req games)})))))))
+        #(.render res "search" #js{:query     query
+                                   :order     order
+                                   :direction direction
+                                   :games     (.-rows %)
+                                   :nextURL   (next-url req (.-rows %))})))))
