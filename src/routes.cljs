@@ -6,6 +6,15 @@
    [error :as err]
    [result :as rs]))
 
+(defn- next-url [req games]
+   (url/format #js{:protocol (.-protocol req)
+                   :host (.get req "host")
+                   :pathname (.-path req)
+                   :query (-> (.-query req)
+                              js->clj
+                              (update-in [:offset] + (count games))
+                              clj->js)}))
+
 (defn search [req res]
   (let [query      (or (.. req -query -query) "")
         order      (or (.. req -query -order) "bayes_rating")
