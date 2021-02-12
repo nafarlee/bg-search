@@ -18,7 +18,7 @@
         (.set "view engine" "pug")
         (.set "views" "src/views")
         (.use (.static express "public"))
-        (.get "/search" (with-database routes.search))
+        (.get "/search" (with-database routes/search))
         (.post "/pubsub/pull" (pull credentials))
         (.post "/pubsub/pull-plays" (pull-plays credentials))
         (.get "/games/:id" (games credentials))
