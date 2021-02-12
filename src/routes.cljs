@@ -25,16 +25,12 @@
             (if (rs/error? connect-result)
               (do
                 (.end client)
-                (-> res
-                    (.status 500)
-                    (.send (rs/unwrap connect-result))))
+                (err/generic (rs/unwrap sql-result) res 500))
               (let [sql          (rs/unwrap sql-result)
                     query-result (<p! (rs/from-promise (.query client sql)))]
                 (.end client)
                 (if (rs/error? query-result)
-                  (-> res
-                      (.status 500)
-                      (.send (rs/unwrap query-result)))
+                  (err/generic (rs/unwrap query-result) res 500)
                   (let [games          (-> query-result
                                            rs/unwrap
                                            .-rows)
