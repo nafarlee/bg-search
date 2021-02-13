@@ -1,4 +1,5 @@
 {:source-paths ["src"]
+ :dependencies [[cider/cider-nrepl "0.24.0"]]
  :builds
  {:app
   {:target :node-script
