@@ -66,4 +66,4 @@
 (defn get-game [database id]
   (-> database
       (.query get-game-sql #js[id])
-      (.then js->clj)))
+      (.then #(-> % .-rows first))))
