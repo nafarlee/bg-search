@@ -67,3 +67,8 @@
   (-> database
       (.query get-game-sql #js[id])
       (.then #(-> % .-rows first))))
+
+(defn get-game-checkpoint [database]
+  (-> database
+      (.query "SELECT count FROM globals")
+      (.then #(-> % .-rows first .-count))))
