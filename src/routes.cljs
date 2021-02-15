@@ -2,7 +2,7 @@
   (:require
    ["url" :as url]
    ["/transpile/index" :default transpile]
-   [macro :refer [if-not-p]]
+   [promise :refer [then-not]]
    [error :as err]
    [result :as rs]))
 
@@ -25,10 +25,10 @@
     (prn {:query query :order order :direction direction :offset offset})
     (if (rs/error? sql-result)
       (-> sql-result rs/unwrap (err/transpile res query) js/Promise.resolve)
-      (if-not-p [[q-error q-result] (.query database (rs/unwrap sql-result))]
-        (err/generic q-error res 500)
-        (.render res "search" #js{:query     query
-                                  :order     order
-                                  :direction direction
-                                  :games     (.-rows q-result)
-                                  :nextURL   (next-url req (.-rows q-result))})))))
+      (then-not (.query database (rs/unwrap sql-result))
+        #(err/generic % res 500)
+        #(.render res "search" #js{:query     query
+                                   :order     order
+                                   :direction direction
+                                   :games     (.-rows %)
+                                   :nextURL   (next-url req (.-rows %))})))))
