@@ -64,4 +64,6 @@
   GROUP BY games.id")
 
 (defn get-game [database id]
-  (.query database get-game-sql #js[id]))
+  (-> database
+      (.query get-game-sql #js[id])
+      (.then js->clj)))
