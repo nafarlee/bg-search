@@ -3,8 +3,19 @@
    ["url" :as url]
    ["/transpile/index" :default transpile]
    [promise :refer [then-not]]
+   [sql :as sql]
    [error :as err]
    [result :as rs]))
+
+(defn games [req res]
+  (let [database (.-database req)
+        id       (.. req -params -id)]
+    (then-not (sql/get-game database id)
+      #(err/generic % res 500)
+      (fn [game]
+        (if-not game
+          (err/generic (str "No game found with id '" id "'") res 404)
+          (.render res "games" #js{:game game}))))))
 
 (defn- next-url [req games]
    (url/format #js{:protocol (.-protocol req)
