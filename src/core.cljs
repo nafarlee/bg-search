@@ -6,7 +6,6 @@
     [routes :as routes]
     [middleware :refer [with-database with-header]]
     ["/routes/pull-plays" :default pull-plays]
-    ["/routes/games" :default games]
     ["/views/locals" :as locals]))
 
 (defonce ^:export app (express))
@@ -23,5 +22,7 @@
                             with-database))
         (.post "/pubsub/pull" (pull credentials))
         (.post "/pubsub/pull-plays" (pull-plays credentials))
-        (.get "/games/:id" (games credentials))
+        (.get "/games/:id" (-> routes/games
+                               (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
+                               with-database))
         (.listen 8080 #(prn "Listening on 8080..."))))
