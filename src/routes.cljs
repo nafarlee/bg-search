@@ -2,10 +2,42 @@
   (:require
    ["url" :as url]
    ["/transpile/index" :default transpile]
+   ["/db/insert" :refer [insert]]
    [promise :refer [then-not]]
+   [api :as api]
    [sql :as sql]
    [error :as err]
    [result :as rs]))
+
+(defn pull [req res]
+  (let [database (.-database req)]
+    (-> (sql/get-game-checkpoint database)
+        (.then
+         (fn [checkpoint]
+           (let [new-checkpoint (+ checkpoint 500)]
+           (-> (api/get-games (range checkpoint new-checkpoint))
+               (then-not
+                 #(-> res (.status 500) .send)
+                 (fn [games]
+                   (if-not (seq games)
+                     (-> (sql/mobius-games database)
+                         (.then #(-> res (.status 200) .send)))
+                     (-> (sql/begin database)
+                         (.then #(sql/update-game-checkpoint database new-checkpoint))
+                         (.then
+                          (fn []
+                            (-> games
+                                insert
+                                (.map (fn [[sql values]]
+                                        (.query database sql values)))
+                                js/Promise.all)))
+                         (.then #(sql/commit database))
+                         (.then #(prn (str "SUCCESS: " checkpoint "..." (dec new-checkpoint))))
+                         (.then #(-> res (.status 200) .send))
+                         (.catch
+                          (fn []
+                            (-> (sql/rollback database)
+                                (.then #(-> res (.status 500) .send))))))))))))))))
 
 (defn games [req res]
   (let [database (.-database req)
