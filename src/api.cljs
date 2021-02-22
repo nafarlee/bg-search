@@ -14,5 +14,6 @@
   (-> (str base-url "/things?stats=1&type=boardgame,boardgameexpansion&id=" (join ", " ids))
       GET
       (.then parse-xml)
-      (.then #(.. % -items -item))
-      (.then #(.map % marshall))))
+      (.then #(some-> %
+                      (.. -items -item)
+                      (.map marshall)))))
