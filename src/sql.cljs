@@ -79,5 +79,8 @@
 (defn begin [database]
   (.query database "BEGIN"))
 
+(defn commit [database]
+  (.query database "COMMIT"))
+
 (defn update-game-checkpoint [database checkpoint]
   (.query database "UPDATE globals SET count = $1 WHERE id = $2" #js[checkpoint 1]))
