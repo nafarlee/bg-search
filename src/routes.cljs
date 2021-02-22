@@ -18,13 +18,15 @@
           (.render res "games" #js{:game game}))))))
 
 (defn- next-url [req games]
-   (url/format #js{:protocol (.-protocol req)
-                   :host     (.get req "host")
-                   :pathname (.-path req)
-                   :query    (-> (.-query req)
-                                 js->clj
-                                 (update-in [:offset] + (count games))
-                                 clj->js)}))
+  (url/format #js{:protocol (.-protocol req)
+                  :host     (.get req "host")
+                  :pathname (.-path req)
+                  :query    (js/Object.assign #js{}
+                                              (.-query req)
+                                              #js{:offset (-> req
+                                                              (.. -query -offset)
+                                                              (js/parseInt 10)
+                                                              (+ (count games)))})}))
 
 (defn search [req res]
   (let [query      (or (.. req -query -query) "")
