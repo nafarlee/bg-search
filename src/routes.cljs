@@ -35,7 +35,9 @@
                            (.then #(prn :success checkpoint (dec new-checkpoint)))
                            (.then #(-> res (.status 200) .send))
                            (.catch
-                            (fn []
+                            (fn [error]
+                              (js/console.error error)
+                              (prn :error checkpoint (dec new-checkpoint))
                               (-> (sql/rollback database)
                                   (.then #(-> res (.status 500) .send))))))))))))))))
 
