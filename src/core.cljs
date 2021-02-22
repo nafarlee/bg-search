@@ -2,7 +2,6 @@
   (:require
     [static :refer [credentials]]
     ["express" :as express]
-    ["/routes/pull" :default pull]
     [routes :as routes]
     [middleware :refer [with-database with-header]]
     ["/routes/pull-plays" :default pull-plays]
@@ -20,7 +19,8 @@
         (.get "/search" (-> routes/search
                             (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
                             with-database))
-        (.post "/pubsub/pull" (pull credentials))
+        (.post "/pubsub/pull" (-> routes/pull
+                                  with-database))
         (.post "/pubsub/pull-plays" (pull-plays credentials))
         (.get "/games/:id" (-> routes/games
                                (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
