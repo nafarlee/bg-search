@@ -75,3 +75,6 @@
 
 (defn mobius-games [database]
   (.query database "UPDATE globals SET count = $1 WHERE id = $2" #js[1 1]))
+
+(defn begin [database]
+  (.query database "BEGIN"))
