@@ -21,6 +21,7 @@
                    (fn [games]
                      (if-not (seq games)
                        (-> (sql/mobius-games database)
+                           (.then #(prn :success :mobius-games))
                            (.then #(-> res (.status 200) .send)))
                        (-> (sql/begin database)
                            (.then #(sql/update-game-checkpoint database new-checkpoint))
