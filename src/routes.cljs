@@ -32,7 +32,7 @@
                                           (.query database sql values)))
                                   js/Promise.all)))
                            (.then #(sql/commit database))
-                           (.then #(prn (str "SUCCESS: " checkpoint "..." (dec new-checkpoint))))
+                           (.then #(prn :success checkpoint (dec new-checkpoint)))
                            (.then #(-> res (.status 200) .send))
                            (.catch
                             (fn []
