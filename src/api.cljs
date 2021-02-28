@@ -17,3 +17,16 @@
       (.then #(some-> %
                       (.. -items -item)
                       (.map marshall)))))
+
+(defn get-plays [id page]
+  (-> (str base-url "/plays?type=thing&subtype=boardgame&id=" id "&page=" page)
+      GET
+      (.then parse-xml)
+      (.then (fn [body]
+               (as-> body $
+                     (or (.. $ -plays -play) #js[])
+                     (.map $ (fn [play]
+                               #js[(.. play -$ -id)
+                                   id
+                                   (.. play -$ -length)
+                                   (-> play .-players first .-player .-length)])))))))
