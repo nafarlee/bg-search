@@ -78,6 +78,16 @@
       (.query "SELECT count FROM globals")
       (.then #(-> % .-rows first .-count))))
 
+(defn get-plays-checkpoint [database]
+  (-> database
+      (.query "SELECT play_id, play_page FROM globals")
+      (.then (fn [result]
+               (-> result
+                   .-rows
+                   first
+                   (#(js-obj "play_id"   (.-play_id %)
+                             "play_page" (.-play_page %))))))))
+
 (defn mobius-games [database]
   (.query database "UPDATE globals SET count = $1 WHERE id = $2" #js[1 1]))
 
