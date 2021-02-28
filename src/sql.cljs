@@ -68,6 +68,11 @@
       (.query get-game-sql #js[id])
       (.then #(-> % .-rows first))))
 
+(defn get-last-game [database]
+  (-> database
+      (.query "SELECT id FROM games ORDER BY id DESC LIMIT 1")
+      (.then #(-> % .-rows first .-id))))
+
 (defn get-game-checkpoint [database]
   (-> database
       (.query "SELECT count FROM globals")
