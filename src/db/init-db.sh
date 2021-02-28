@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env oil
 docker run --network host \
            -it \
            -v "$PWD":/_ \
