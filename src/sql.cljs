@@ -68,6 +68,11 @@
       (.query get-game-sql #js[id])
       (.then #(-> % .-rows first))))
 
+(defn play? [database id]
+  (-> database
+      (.query "SELECT id FROM plays WHERE id = $1 LIMIT 1" #js[id])
+      (.then #(-> % .-rows first .-id some?))))
+
 (defn game? [database id]
   (-> database
       (.query "SELECT id FROM games WHERE id = $1 LIMIT 1" #js[id])
