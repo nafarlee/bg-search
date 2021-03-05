@@ -57,6 +57,7 @@
                                               (.-query req)
                                               #js{:offset (-> req
                                                               (.. -query -offset)
+                                                              (or "0")
                                                               (js/parseInt 10)
                                                               (+ (count games)))})}))
 
