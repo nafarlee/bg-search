@@ -112,3 +112,8 @@
 
 (defn mobius-games [database]
   (update-game-checkpoint database 1))
+
+(defn update-plays-checkpoint [database play-id play-page]
+  (.query database
+          "UPDATE globals SET play_id=$1, play_page=$2 WHERE id=1"
+          #js[play-id play-page]))
