@@ -98,9 +98,6 @@
                    ((juxt #(.-play_id %) #(.-play_page %)))
                    clj->js)))))
 
-(defn mobius-games [database]
-  (.query database "UPDATE globals SET count = $1 WHERE id = $2" #js[1 1]))
-
 (defn begin [database]
   (.query database "BEGIN"))
 
@@ -112,3 +109,6 @@
 
 (defn update-game-checkpoint [database checkpoint]
   (.query database "UPDATE globals SET count = $1 WHERE id = $2" #js[checkpoint 1]))
+
+(defn mobius-games [database]
+  (update-game-checkpoint database 1))
