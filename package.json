@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "watch": "shadow-cljs watch app",
     "up": "npm run build && npm start",
     "repl": "shadow-cljs node-repl",
     "build": "shadow-cljs compile app",
