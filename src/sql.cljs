@@ -95,7 +95,8 @@
                (-> result
                    .-rows
                    first
-                   ((juxt #(.-play_id %) #(.-play_page %))))))))
+                   ((juxt #(.-play_id %) #(.-play_page %)))
+                   clj->js)))))
 
 (defn mobius-games [database]
   (.query database "UPDATE globals SET count = $1 WHERE id = $2" #js[1 1]))
