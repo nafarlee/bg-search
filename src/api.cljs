@@ -28,6 +28,6 @@
                      (.map $ (fn [play]
                                #js[(js/parseInt (.. play -$ -id) 10)
                                    id
-                                   (.. play -$ -length)
+                                   (js/parseInt (.. play -$ -length) 10)
                                    (some-> play .-players first .-player .-length)]))
-                     (.filter $ (fn [[_ _ length]] (not= length "0"))))))))
+                     (.filter $ (fn [[_ _ length]] (pos? length))))))))
