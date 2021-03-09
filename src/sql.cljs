@@ -132,5 +132,5 @@
                                          plays)]
                  (.query database sql values))))
       (.then #(commit database))
-      (.catch #(-> (rollback database)
-                   (.then (constantly %))))))
+      (.catch (fn [error] (-> (rollback database)
+                              (.then #(js/Promise.reject error)))))))
