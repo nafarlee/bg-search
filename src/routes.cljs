@@ -14,6 +14,30 @@
       (.status 200)
       .send))
 
+(defn pull-plays [req res]
+  (let [database           (.-database req)
+        last-game-p        (sql/get-last-game database)
+        plays-checkpoint-p (sql/get-plays-checkpoint database)]
+    (then-not (js/Promise.all [last-game-p plays-checkpoint-p])
+      #(err/generic % res 500)
+      (fn [last-game [play-id play-page]]
+        (if (> play-id last-game)
+          (.then (sql/mobius-plays database) (success res))
+          (then-not (sql/game? database play-id)
+            #(err/generic % res 500)
+            (fn [game?]
+              (if-not game?
+                (.then (sql/update-plays-checkpoint (inc play-id) 1) (success res))
+                (then-not (api/get-plays play-id play-page)
+                  #(err/generic % res 500)
+                  (fn [plays]
+                    (then-not (sql/play? database (first plays))
+                      #(err/generic % res 500)
+                      (fn [play?]
+                        (if play?
+                          (.then (sql/update-plays-checkpoint database (inc play-id) 1) (success res))
+                          (.then (sql/save-plays database play-id play-page plays) #(success res)))))))))))))))
+
 (defn pull [req res]
   (let [database (.-database req)]
     (-> (sql/get-game-checkpoint database)
