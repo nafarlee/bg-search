@@ -30,4 +30,4 @@
                                    id
                                    (.. play -$ -length)
                                    (-> play .-players first .-player .-length)]))
-                     (.remove $ #(-> % (aget 2) zero?)))))))
+                     (.filter $ (fn [[_ _ length]] (not= length "0"))))))))
