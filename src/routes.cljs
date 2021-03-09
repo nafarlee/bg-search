@@ -9,6 +9,11 @@
    [error :as err]
    [result :as rs]))
 
+(defn success [res]
+  (-> res
+      (.status 200)
+      .send))
+
 (defn pull [req res]
   (let [database (.-database req)]
     (-> (sql/get-game-checkpoint database)
