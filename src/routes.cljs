@@ -20,7 +20,7 @@
         plays-checkpoint-p (sql/get-plays-checkpoint database)]
     (then-not (js/Promise.all [last-game-p plays-checkpoint-p])
       #(err/generic % res 500)
-      (fn [last-game [play-id play-page]]
+      (fn [[last-game [play-id play-page]]]
         (if (> play-id last-game)
           (.then (sql/mobius-plays database) (success res))
           (then-not (sql/game? database play-id)
