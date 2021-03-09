@@ -51,7 +51,6 @@
                         (then-not (sql/play? database (ffirst positive-plays))
                           #(err/generic % res 500)
                           (fn [play?]
-                            (js/console.log positive-plays)
                             (if play?
                               (-> (sql/update-plays-checkpoint database (inc play-id) 1)
                                   (.then #(prn :no-new-plays play-id play-page))
