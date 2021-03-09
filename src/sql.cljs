@@ -125,7 +125,8 @@
 (defn save-plays [database play-id play-page plays]
   (-> (begin database)
       (.then #(update-plays-checkpoint database play-id (inc play-page)))
-      (.then #((let [[sql values] (toSQL "plays"
+      (.then (fn [_]
+               (let [[sql values] (toSQL "plays"
                                          #js["id" "game_id" "length" "players"]
                                          #js["id"]
                                          plays)]
