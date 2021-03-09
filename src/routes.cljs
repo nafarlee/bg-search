@@ -22,21 +22,45 @@
       #(err/generic % res 500)
       (fn [[last-game [play-id play-page]]]
         (if (> play-id last-game)
-          (.then (sql/mobius-plays database) (success res))
+          (-> (sql/mobius-plays database)
+              (.then #(prn :mobius-plays))
+              (.then #(success res)))
           (then-not (sql/game? database play-id)
             #(err/generic % res 500)
             (fn [game?]
               (if-not game?
-                (.then (sql/update-plays-checkpoint (inc play-id) 1) (success res))
+                (-> (sql/update-plays-checkpoint database (inc play-id) 1)
+                    (.then #(prn :not-a-game play-id))
+                    (.then #(success res)))
                 (then-not (api/get-plays play-id play-page)
                   #(err/generic % res 500)
                   (fn [plays]
-                    (then-not (sql/play? database (first plays))
-                      #(err/generic % res 500)
-                      (fn [play?]
-                        (if play?
-                          (.then (sql/update-plays-checkpoint database (inc play-id) 1) (success res))
-                          (.then (sql/save-plays database play-id play-page plays) #(success res)))))))))))))))
+                    (let [positive-plays (.filter plays #(-> % (aget 2) pos?))]
+                      (cond
+                        (empty? plays)
+                        (-> (sql/update-plays-checkpoint database (inc play-id) 1)
+                            (.then #(prn :no-plays play-id play-page))
+                            (.then #(success res)))
+
+                        (empty? positive-plays)
+                        (-> (sql/update-plays-checkpoint database play-id (inc play-page))
+                            (.then #(prn :no-positive-plays play-id play-page))
+                            (.then #(success res)))
+
+                        :else
+                        (then-not (sql/play? database (ffirst positive-plays))
+                          #(err/generic % res 500)
+                          (fn [play?]
+                            (js/console.log positive-plays)
+                            (if play?
+                              (-> (sql/update-plays-checkpoint database (inc play-id) 1)
+                                  (.then #(prn :no-new-plays play-id play-page))
+                                  (.then #(success res))
+                                  (.catch #(err/generic % res 500)))
+                              (-> (sql/save-plays database play-id play-page positive-plays)
+                                  (.then #(prn :save-plays play-id play-page))
+                                  (.then #(success res))
+                                  (.catch #(err/generic % res 500))))))))))))))))))
 
 (defn pull [req res]
   (let [database (.-database req)]
