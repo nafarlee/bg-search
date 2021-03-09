@@ -29,5 +29,4 @@
                                #js[(js/parseInt (.. play -$ -id) 10)
                                    id
                                    (js/parseInt (.. play -$ -length) 10)
-                                   (some-> play .-players first .-player .-length)]))
-                     (.filter $ (fn [[_ _ length]] (pos? length))))))))
+                                   (some-> play .-players first .-player .-length)])))))))
