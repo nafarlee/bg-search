@@ -29,5 +29,5 @@
                                #js[(.. play -$ -id)
                                    id
                                    (.. play -$ -length)
-                                   (-> play .-players first .-player .-length)]))
+                                   (some-> play .-players first .-player .-length)]))
                      (.filter $ (fn [[_ _ length]] (not= length "0"))))))))
