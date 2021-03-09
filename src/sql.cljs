@@ -73,12 +73,12 @@
 (defn play? [database id]
   (-> database
       (.query "SELECT id FROM plays WHERE id = $1 LIMIT 1" #js[id])
-      (.then #(-> % .-rows first .-id some?))))
+      (.then #(some-> % .-rows first .-id))))
 
 (defn game? [database id]
   (-> database
       (.query "SELECT id FROM games WHERE id = $1 LIMIT 1" #js[id])
-      (.then #(-> % .-rows first .-id some?))))
+      (.then #(some-> % .-rows first .-id))))
 
 (defn get-last-game [database]
   (-> database
