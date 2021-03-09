@@ -15,6 +15,7 @@
                              :block block}))))
 
 (defn generic [error res code]
+  (js/console.error error)
   (-> res
       (.status code)
       (.render "error" (js-obj "code" code
