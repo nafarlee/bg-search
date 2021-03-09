@@ -97,8 +97,7 @@
                (-> result
                    .-rows
                    first
-                   ((juxt #(.-play_id %) #(.-play_page %)))
-                   clj->js)))))
+                   ((juxt #(.-play_id %) #(.-play_page %))))))))
 
 (defn begin [database]
   (.query database "BEGIN"))
