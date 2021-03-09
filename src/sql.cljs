@@ -1,4 +1,6 @@
-(ns sql)
+(ns sql
+  (:require
+    ["/db/insert" :refer [toSQL]]))
 
 (def ^:private get-game-sql
   "SELECT
@@ -120,3 +122,15 @@
 
 (defn mobius-plays [database]
   (update-plays-checkpoint database 1 1))
+
+(defn save-plays [database play-id play-page plays]
+  (-> (begin database)
+      (.then #(update-plays-checkpoint database play-id (inc play-page)))
+      (.then #((let [[sql values] (toSQL "plays"
+                                         #js["id" "game_id" "length" "players"]
+                                         #js["id"]
+                                         plays)]
+                 (.query database sql values))))
+      (.then #(commit database))
+      (.catch #(-> (rollback database)
+                   (.then (constantly %))))))
