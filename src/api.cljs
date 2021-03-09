@@ -26,7 +26,7 @@
                (as-> body $
                      (or (.. $ -plays -play) #js[])
                      (.map $ (fn [play]
-                               #js[(.. play -$ -id)
+                               #js[(js/parseInt (.. play -$ -id) 10)
                                    id
                                    (.. play -$ -length)
                                    (some-> play .-players first .-player .-length)]))
