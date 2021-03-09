@@ -29,4 +29,5 @@
                                #js[(.. play -$ -id)
                                    id
                                    (.. play -$ -length)
-                                   (-> play .-players first .-player .-length)])))))))
+                                   (-> play .-players first .-player .-length)]))
+                     (.remove $ #(-> % (aget 2) zero?)))))))
