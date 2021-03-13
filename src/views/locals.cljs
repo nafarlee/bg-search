@@ -10,5 +10,11 @@
        (.toFixed decimals)
        (str "%"))))
 
+(defn- range->text [r]
+  (let [regex         #"\[(\d+),(\d*)\)"
+        [_ start end] (re-matches regex r)]
+    (str start (when (empty? end) "+"))))
+
 (def all
-  #js{:percentageOf percentage-of})
+  #js{:rangeToText  range->text
+      :percentageOf percentage-of})
