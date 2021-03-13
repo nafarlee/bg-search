@@ -7,8 +7,6 @@ export const rangeToText = (text) => {
   throw new Error('Could not parse player recommendation range');
 };
 
-export const percentageOf = (num, denom, decimals = 1) => `${(num / denom * 100).toFixed(decimals)}%`;
-
 export const sortByProperty = (objects, field) => {
   objects.sort((a, b) => {
     const af = a[field];
