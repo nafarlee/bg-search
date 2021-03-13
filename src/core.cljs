@@ -8,8 +8,7 @@
 (defonce ^:export app (express))
 
 (defn main []
-  (set! (.-locals app)
-        (js/Object.assign (.-locals app) locals))
+  (js/Object.assign (.-locals app) locals)
   (doto app
         (.set "view engine" "pug")
         (.set "views" "src/views")
