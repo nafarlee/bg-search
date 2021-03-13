@@ -60,7 +60,7 @@ html
       details
         summary Player Recommendations
         ul
-          each pr in sortByProperty(game.player_recommendations, 'players')
+          each pr in sortRecommendations(game.player_recommendations)
             - const total = pr.best + pr.recommended + pr.not_recommended
             li #{rangeToText(pr.players)}
               ul

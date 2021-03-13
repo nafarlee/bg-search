@@ -15,6 +15,11 @@
         [_ start end] (re-matches regex r)]
     (str start (when (empty? end) "+"))))
 
+(defn- sort-recommendations [recommendations]
+  (clj->js (sort-by #(-> % (. -players) range->text (js/parseInt 10))
+                    recommendations)))
+
 (def all
-  #js{:rangeToText  range->text
-      :percentageOf percentage-of})
+  #js{:sortRecommendations sort-recommendations
+      :rangeToText         range->text
+      :percentageOf        percentage-of})
