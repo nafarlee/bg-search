@@ -3,13 +3,12 @@
     ["express" :as express]
     [views.locals :refer [all]]
     [routes :as routes]
-    [middleware :refer [with-database with-header]]
-    ["/views/locals" :as locals]))
+    [middleware :refer [with-database with-header]]))
 
 (defonce ^:export app (express))
 
 (defn main []
-  (js/Object.assign (.-locals app) locals all)
+  (js/Object.assign (.-locals app) all)
   (doto app
         (.set "view engine" "pug")
         (.set "views" "src/views")
