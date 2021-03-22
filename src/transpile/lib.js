@@ -73,6 +73,7 @@ export default {
   RATING_VOTES: relational('rating_votes'),
   AVERAGE_RATING: relational('average_rating'),
   GEEK_RATING: relational('bayes_rating'),
+  STEAMDB_RATING: relational('steamdb_rating'),
   RATING_DEVIATION: relational('rating_deviation'),
   AVERAGE_WEIGHT: relational('average_weight'),
   WEIGHT_VOTES: relational('weight_votes'),

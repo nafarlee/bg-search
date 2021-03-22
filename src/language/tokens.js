@@ -12,6 +12,7 @@ const tags = [
   'RATING_VOTES',
   'AVERAGE_RATING',
   'GEEK_RATING',
+  'STEAMDB_RATING',
   'RATING_DEVIATION',
   'AVERAGE_WEIGHT',
   'WEIGHT_VOTES',
@@ -87,6 +88,9 @@ export default {
 
       'geek-rating': tags.GEEK_RATING,
       gr: tags.GEEK_RATING,
+
+      'steamdb-rating': tags.STEAMDB_RATING,
+      sr: tags.STEAMDB_RATING,
 
       'rating-deviation': tags.RATING_DEVIATION,
       rd: tags.RATING_DEVIATION,
