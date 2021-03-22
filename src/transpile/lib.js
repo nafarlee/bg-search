@@ -3,6 +3,7 @@ const FIELDS = [
   'primary_name',
   'rating_votes',
   'average_rating',
+  'steamdb_rating',
   'bayes_rating',
   'rating_deviation',
   'average_weight',
