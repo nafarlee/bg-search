@@ -15,12 +15,6 @@ jobs:
 
       - run: npm ci
 
-      - run: >-
-          jq '.type = "module"' package.json > package.json.tmp
-          && mv package.json.tmp package.json
-          && npm t
-          && git checkout package.json
-
       - if: github.ref == 'refs/heads/master'
         run: echo "$DATABASE_CREDENTIALS" | base64 -d > src/db-credentials.json
         env:

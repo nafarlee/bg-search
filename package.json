@@ -4,7 +4,6 @@
     "up": "npm run build && npm start",
     "repl": "shadow-cljs node-repl",
     "build": "shadow-cljs compile app",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "eslint": "eslint",
     "start": "node app.js"
   },
@@ -12,7 +11,6 @@
     "eslint": "^7.18.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "jest": "^26.6.3",
     "pug-lint": "2.6.0",
     "shadow-cljs": "^2.11.17"
   },
