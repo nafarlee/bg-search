@@ -50,6 +50,7 @@
     average_rating,
     average_weight,
     bayes_rating,
+    steamdb_rating,
     description,
     maximum_players,
     maximum_playtime,
