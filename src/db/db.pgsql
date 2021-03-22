@@ -17,6 +17,7 @@ CREATE TABLE games (
   average_rating REAL,
   average_weight REAL,
   bayes_rating REAL,
+  steamdb_rating REAL GENERATED ALWAYS AS (average_rating - (average_rating - 5.0) * power(2, -log(rating_votes + 1))) STORED,
   description TEXT,
   maximum_players INTEGER CHECK (maximum_players >= 0),
   maximum_playtime INTEGER CHECK (maximum_playtime >= 0),
