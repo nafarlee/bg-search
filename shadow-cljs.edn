@@ -1,7 +1,8 @@
 {:source-paths ["src"]
  :dependencies [[cider/cider-nrepl "0.24.0"]]
- :builds
- {:app
-  {:target :node-script
-   :main core/main
-   :output-to "app.js"}}}
+ :builds {:test {:target :node-test
+                 :output-to "test.js"
+                 :autorun true}
+          :app  {:target :node-script
+                 :main core/main
+                 :output-to "app.js"}}}
