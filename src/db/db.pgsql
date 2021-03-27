@@ -40,6 +40,25 @@ CREATE TABLE plays (
 );
 
 
+DROP MATERIALIZED VIEW play_medians;
+
+CREATE MATERIALIZED VIEW play_medians AS
+SELECT game_id,
+       COUNT(id) AS count,
+       NULL AS players,
+       PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY length) AS median
+FROM plays
+GROUP BY game_id
+UNION
+SELECT game_id,
+       COUNT(id) AS count,
+       players,
+       PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY length) AS median
+FROM plays
+WHERE players IS NOT NULL
+GROUP BY game_id, players;
+
+
 DROP TABLE IF EXISTS alternate_names CASCADE;
 CREATE TABLE alternate_names (
   id INTEGER REFERENCES games ON DELETE CASCADE,
