@@ -1,7 +1,7 @@
 import language from '../language/index';
 import lib from './lib';
 
-function toSQL(predicates, intersect = true) {
+export function toSQL(predicates, intersect = true) {
   const joiningTerm = intersect ? 'INTERSECT ALL' : 'UNION ALL';
   return predicates.reduce((acc, cur) => {
     const isOR = cur.type === 'OR';
@@ -23,7 +23,7 @@ function toSQL(predicates, intersect = true) {
   }, { text: '', values: [] });
 }
 
-export default function transpile(s, order, direction, offset) {
+export function transpile(s, order, direction, offset) {
   if (!lib.FIELDS.includes(order)) throw new Error('SQL injection attempt!');
   if (direction !== 'ASC' && direction !== 'DESC') throw new Error('SQL injection attempt!');
 

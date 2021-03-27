@@ -1,5 +1,5 @@
 (ns transpile
   (:require
-    ["/transpile/index" :default js-transpile]))
+    ["/transpile/index" :as t]))
 
-(def transpile js-transpile)
+(def transpile t/transpile)
