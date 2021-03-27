@@ -7,15 +7,15 @@
     (SELECT JSON_OBJECT_AGG(players, median)
      FROM play_medians
      WHERE game_id = $1
-       AND players IS NOT NULL) as median_playtimes_by_players,
+       AND players != 0) as median_playtimes_by_players,
     (SELECT median
       FROM play_medians
       WHERE game_id = $1
-        AND players IS NULL) AS median_playtime,
+        AND players = 0) AS median_playtime,
     (SELECT count
       FROM play_medians
       WHERE game_id = $1
-        AND players IS NULL) AS recorded_play_count,
+        AND players = 0) AS recorded_play_count,
     (SELECT ARRAY_AGG(mechanic)
       FROM mechanics
       INNER JOIN games_mechanics ON id = mechanic_id

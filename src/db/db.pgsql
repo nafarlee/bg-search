@@ -45,7 +45,7 @@ DROP MATERIALIZED VIEW play_medians;
 CREATE MATERIALIZED VIEW play_medians AS
 SELECT game_id,
        COUNT(id) AS count,
-       NULL AS players,
+       0 AS players,
        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY length) AS median
 FROM plays
 GROUP BY game_id
