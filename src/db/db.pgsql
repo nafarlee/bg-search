@@ -60,6 +60,20 @@ GROUP BY game_id, players;
 
 CREATE UNIQUE INDEX play_medians_unique_index ON play_medians (game_id, players);
 
+CREATE OR REPLACE FUNCTION refresh_play_medians()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  REFRESH MATERIALIZED VIEW CONCURRENTLY play_medians;
+  RETURN NULL;
+END $$;
+
+CREATE TRIGGER refresh_play_medians
+AFTER INSERT OR UPDATE OR DELETE OR TRUNCATE
+ON plays
+FOR EACH STATEMENT
+EXECUTE PROCEDURE refresh_play_medians();
 
 
 DROP TABLE IF EXISTS alternate_names CASCADE;
