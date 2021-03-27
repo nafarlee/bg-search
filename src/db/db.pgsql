@@ -58,6 +58,9 @@ FROM plays
 WHERE players IS NOT NULL
 GROUP BY game_id, players;
 
+CREATE UNIQUE INDEX play_medians_unique_index ON play_medians (game_id, players);
+
+
 
 DROP TABLE IF EXISTS alternate_names CASCADE;
 CREATE TABLE alternate_names (
