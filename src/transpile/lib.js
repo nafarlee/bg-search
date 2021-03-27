@@ -113,11 +113,9 @@ export default {
 
   MEDIAN_PLAYTIME: ({ operator, value, negate = false }) => ({
     text: `SELECT game_id as id
-           FROM plays
-           GROUP BY game_id
-           HAVING ${negate ? 'NOT' : ''} percentile_cont(0.5)
-             WITHIN GROUP (ORDER BY length)
-             ${operator} {{}}`,
+           FROM play_medians
+           WHERE players IS NULL
+             AND ${negate ? 'NOT' : ''} median ${operator} {{}}`,
     values: [value],
   }),
 
