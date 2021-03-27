@@ -4,18 +4,9 @@
 
 (def ^:private get-game-sql
   "SELECT
-    (SELECT JSON_OBJECT_AGG(players, median)
+    (SELECT JSON_OBJECT_AGG(players, JSON_BUILD_OBJECT('median', median, 'count', count))
      FROM play_medians
-     WHERE game_id = $1
-       AND players != 0) as median_playtimes_by_players,
-    (SELECT median
-      FROM play_medians
-      WHERE game_id = $1
-        AND players = 0) AS median_playtime,
-    (SELECT count
-      FROM play_medians
-      WHERE game_id = $1
-        AND players = 0) AS recorded_play_count,
+     WHERE game_id = $1) as median_playtimes,
     (SELECT ARRAY_AGG(mechanic)
       FROM mechanics
       INNER JOIN games_mechanics ON id = mechanic_id

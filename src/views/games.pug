@@ -42,14 +42,14 @@ html
       ul
         li Minimum: #{game.minimum_playtime}
         li Maximum: #{game.maximum_playtime}
-        if game.median_playtime
-          li Median: #{game.median_playtime}
-        if game.median_playtimes_by_players
+        if game.median_playtimes
+          li Medians:
           ul
-            if game.recorded_play_count
-              li Number of Considered Plays: #{game.recorded_play_count}
-            each median, players in game.median_playtimes_by_players
-              li Median for #{players} player(s): #{median}
+            each plays, players in game.median_playtimes
+              if players == 0
+                li All Player Counts: #{plays.median} minutes across #{plays.count} plays
+              else
+                li #{players} Player(s): #{plays.median} minutes across #{plays.count} plays
 
     details
       summary Players
