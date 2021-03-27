@@ -4,11 +4,15 @@
 
 (def ^:private get-game-sql
   "SELECT
-    (SELECT JSON_OBJECT_AGG(players, medians)
-      FROM (SELECT players, PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY length) AS medians
-            FROM plays
-            WHERE game_id = $1 AND players IS NOT NULL
-            GROUP BY players) AS sub) as median_playtimes_by_players,
+    (WITH m AS (SELECT game_id,
+                       players,
+                       PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY length) AS median
+                FROM plays
+                WHERE players IS NOT NULL
+                GROUP BY game_id, players)
+     SELECT JSON_OBJECT_AGG(players, median)
+     FROM m
+     WHERE game_id = $1) as median_playtimes_by_players,
     (SELECT PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY length)
       FROM plays
       WHERE game_id = $1) AS median_playtime,
