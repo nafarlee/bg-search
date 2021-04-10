@@ -1,5 +1,6 @@
 (ns transpile
   (:require
+    [goog.object :as g]
     [clojure.string :as s]
     ["/language/index" :default lang]
     ["/transpile/lib" :default tl]
@@ -14,12 +15,34 @@
 
 (def ^:private parameter-templates (map #(str "$" (inc %)) (range)))
 
+(defn- to-sql
+  ([ast] (to-sql ast true))
+  ([ast intersect]
+   (.reduce ast
+     (fn [acc cur]
+       (let [joining-term (if intersect "INTERSECT ALL" "UNION ALL")
+             is-or        (= "OR" (.-type cur))
+             _ (js/console.log acc)
+             sql          (if is-or
+                            (to-sql (.-terms cur) false)
+                            ((g/get tl (.-tag cur)) cur))]
+         #js{:values (.concat (.-values acc) (or (.-values sql) #js[]))
+             :text (as-> sql $
+                         (.-text $)
+                         (if is-or
+                           (str "(" $ ")")
+                           $)
+                         (if (empty? (.-text acc))
+                           $
+                           (str (.-text acc) " " joining-term " " $)))}))
+     #js{:text "" :values #js[]})))
+
 (defn transpile [query order direction offset]
   {:pre [(some (partial = order)
                (.-FIELDS tl))
          (#{"ASC" "DESC"} direction)]}
   (let [ast                   (.tryParse lang query)
-        {:strs [text values]} (js->clj (.toSQL t ast))]
+        {:strs [text values]} (js->clj (to-sql ast))]
     #js{:values (conj values offset)
         :text   (as-> text $
                       (if (empty? $)
