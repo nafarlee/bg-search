@@ -3,8 +3,7 @@
     [goog.object :as g]
     [clojure.string :as s]
     ["/language/index" :default lang]
-    ["/transpile/lib" :default tl]
-    ["/transpile/index" :as t]))
+    ["/transpile/lib" :default tl]))
 
 (defn- create-generator [s]
   (let [remaining (atom s)]
