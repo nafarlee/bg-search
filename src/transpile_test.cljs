@@ -1,6 +1,5 @@
 (ns transpile-test
   (:require
-    ["/transpile/lib" :default tl]
     [clojure.string :as s]
     [transpile :as t]
     [cljs.test :refer [deftest is]]))
@@ -33,7 +32,7 @@
            "SELECT a.id FROM games a, games_recipes ab, recipes b WHERE a.id = ab.game_id AND ab.fruit_id = b.id GROUP BY a.id HAVING BOOL_OR(fruit ~~* {{}}) != false"))))
 
 (deftest relational
-  (let [relational-fruit      ((.-__relational tl) "fruit")
+  (let [relational-fruit      (partial t/relational "fruit")
         params                #js{:value "pear" :operator "="}
         {:strs [text values]} (js->clj (relational-fruit params))]
     (is (= values ["pear"]))

@@ -26,6 +26,15 @@
                       GROUP BY a.id
                       HAVING BOOL_OR(" field " ~~* {{}}) != " negate)}))
 
+(defn relational [field params]
+  (let [operator (.-operator params)
+        value    (.-value params)
+        modifier (if (.-negate params) "NOT" "")]
+    #js{:values [value]
+        :text (str "SELECT id
+                    FROM games
+                    WHERE " modifier " " field " " operator " {{}}")}))
+
 (defn- create-generator [s]
   (let [remaining (atom s)]
     (fn []
