@@ -1,23 +1,3 @@
-const FIELDS = [
-  'id',
-  'primary_name',
-  'rating_votes',
-  'average_rating',
-  'steamdb_rating',
-  'bayes_rating',
-  'rating_deviation',
-  'average_weight',
-  'weight_votes',
-  'year',
-  'minimum_age',
-  'minimum_players',
-  'maximum_players',
-  'minimum_playtime',
-  'maximum_playtime',
-  'description',
-];
-const CONCATENATED_FIELDS = FIELDS.join(', ');
-
 const simple = (field) => ({ value, negate = false }) => ({
   text: `SELECT id
          FROM games
@@ -60,8 +40,6 @@ export default {
   __simple: simple,
   __junction: junction,
   __relational: relational,
-  FIELDS,
-  CONCATENATED_FIELDS,
 
   RECOMMENDED_PLAYERS: ({ operator, value, negate = false }) => ({
     text: `SELECT a.id

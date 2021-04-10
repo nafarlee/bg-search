@@ -34,6 +34,24 @@
                     FROM games
                     WHERE " modifier " " field " " operator " {{}}")}))
 
+(def exported-fields
+  ["id"
+   "primary_name"
+   "rating_votes"
+   "average_rating"
+   "steamdb_rating"
+   "bayes_rating"
+   "rating_deviation"
+   "average_weight"
+   "weight_votes"
+   "year"
+   "minimum_age"
+   "minimum_players"
+   "maximum_players"
+   "minimum_playtime"
+   "maximum_playtime"
+   "description"])
+
 (def terms
   (reduce
     (fn [m [k v]]
@@ -100,8 +118,7 @@
      #js{:text "" :values #js[]})))
 
 (defn transpile [query order direction offset]
-  {:pre [(some (partial = order)
-               (.-FIELDS tl))
+  {:pre [(some (partial = order) exported-fields)
          (#{"ASC" "DESC"} direction)]}
   (let [ast                   (.tryParse lang query)
         {:strs [text values]} (js->clj (to-sql ast))]
@@ -110,7 +127,7 @@
                             (if (empty? $)
                               "games"
                               (str "(" $ ") AS GameSubquery NATURAL INNER JOIN games"))
-                            (str "SELECT DISTINCT " (.-CONCATENATED_FIELDS tl)
+                            (str "SELECT DISTINCT " (s/join ", " exported-fields)
                                  " FROM " $
                                  " ORDER BY " order " " direction
                                  " LIMIT 25 OFFSET {{}}")
