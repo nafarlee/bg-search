@@ -1,7 +1,7 @@
 (ns routes
   (:require
    ["url" :as url]
-   ["/transpile/index" :refer [transpile]]
+   [transpile :refer [transpile]]
    ["/db/insert" :refer [insert]]
    [promise :refer [then-not]]
    [api :as api]
