@@ -1,30 +1,3 @@
-const simple = (field) => ({ value, negate = false }) => ({
-  text: `SELECT id
-         FROM games
-         WHERE ${field} ${negate ? '!' : ''}~~* {{}}`,
-  values: [`%${value}%`],
-});
-
-const junction = ({
-  table,
-  field,
-}) => ({ value, negate = false }) => ({
-  text: `SELECT a.id
-         FROM games a, games_${table} ab, ${table} b
-         WHERE a.id = ab.game_id
-           AND ab.${field}_id = b.id
-         GROUP BY a.id
-         HAVING BOOL_OR(${field} ~~* {{}}) != ${negate}`,
-  values: [`%${value}%`],
-});
-
-const relational = (field) => ({ operator, value, negate = false }) => ({
-  text: `SELECT id
-         FROM games
-         WHERE ${negate ? 'NOT' : ''} ${field} ${operator} {{}}`,
-  values: [value],
-});
-
 function toRange(operator, value) {
   switch (operator) {
     case '>': return `(${value},)`;
