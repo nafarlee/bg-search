@@ -37,10 +37,6 @@ function toRange(operator, value) {
 }
 
 export default {
-  __simple: simple,
-  __junction: junction,
-  __relational: relational,
-
   RECOMMENDED_PLAYERS: ({ operator, value, negate = false }) => ({
     text: `SELECT a.id
            FROM games a, player_recommendations b
