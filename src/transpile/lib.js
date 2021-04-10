@@ -41,7 +41,7 @@ const junction = ({
 const relational = (field) => ({ operator, value, negate = false }) => ({
   text: `SELECT id
          FROM games
-         WHERE ${negate ? 'NOT' : ''} ${field} ${operator} {{}} `,
+         WHERE ${negate ? 'NOT' : ''} ${field} ${operator} {{}}`,
   values: [value],
 });
 
