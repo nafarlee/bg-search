@@ -1,6 +1,5 @@
 (ns transpile-test
   (:require
-    ["/transpile/lib" :default tl]
     [clojure.string :as s]
     [transpile :as t]
     [cljs.test :refer [deftest is]]))
@@ -25,7 +24,7 @@
 
 (deftest junction
   (let [schema                 #js{:table "recipes" :field "fruit"}
-        junction-fruit-recipes ((.-__junction tl) schema)
+        junction-fruit-recipes (partial t/junction schema)
         params                 #js{:value "pear"}
         {:strs [text values]}  (js->clj (junction-fruit-recipes params))]
     (is (= values ["%pear%"]))

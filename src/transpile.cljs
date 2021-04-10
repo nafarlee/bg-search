@@ -13,6 +13,19 @@
                    " FROM games"
                    " WHERE " field " " prefix "~~* {{}}")}))
 
+(defn junction [schema params]
+  (let [table  (.-table schema)
+        field  (.-field schema)
+        value  (.-value params)
+        negate (boolean (.-negate params))]
+    #js{:values [(str "%" value "%")]
+        :text   (str "SELECT a.id
+                      FROM games a, games_" table " ab, " table " b
+                      WHERE a.id = ab.game_id
+                        AND ab." field "_id = b.id
+                      GROUP BY a.id
+                      HAVING BOOL_OR(" field " ~~* {{}}) != " negate)}))
+
 (defn- create-generator [s]
   (let [remaining (atom s)]
     (fn []
