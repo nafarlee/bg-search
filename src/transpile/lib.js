@@ -44,31 +44,4 @@ export default {
              AND ${negate ? 'NOT' : ''} median ${operator} {{}}`,
     values: [value],
   }),
-
-  EXPANSION: ({ negate = false }) => ({
-    text: `SELECT id
-           FROM games
-           LEFT JOIN expansions
-             ON id = expansion
-           WHERE base IS ${negate ? '' : 'NOT'} NULL`,
-    values: null,
-  }),
-
-  COLLECTION: ({ negate = false }) => ({
-    text: `SELECT id
-           FROM games
-           LEFT JOIN collections
-             ON id = collection
-           WHERE item IS ${negate ? '' : 'NOT'} NULL`,
-    values: null,
-  }),
-
-  REIMPLEMENTATION: ({ negate = false }) => ({
-    text: `SELECT id
-           FROM games
-           LEFT JOIN reimplementations
-             ON id = reimplementation
-           WHERE original IS ${negate ? '' : 'NOT'} NULL`,
-    values: null,
-  }),
 };
