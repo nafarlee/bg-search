@@ -1,5 +1,6 @@
 (ns transpile-test
   (:require
+    ["/transpile/lib" :default tl]
     [clojure.string :as s]
     [transpile :as t]
     [cljs.test :refer [deftest is]]))
@@ -21,3 +22,12 @@
     (is (= values [(str "%" value "%")]))
     (is (= (compact-whitespace text)
            "SELECT id FROM games WHERE fruit ~~* {{}}"))))
+
+(deftest junction
+  (let [schema                 #js{:table "recipes" :field "fruit"}
+        junction-fruit-recipes ((.-__junction tl) schema)
+        params                 #js{:value "pear"}
+        {:strs [text values]}  (js->clj (junction-fruit-recipes params))]
+    (is (= values ["%pear%"]))
+    (is (= (compact-whitespace text)
+           "SELECT a.id FROM games a, games_recipes ab, recipes b WHERE a.id = ab.game_id AND ab.fruit_id = b.id GROUP BY a.id HAVING BOOL_OR(fruit ~~* {{}}) != false"))))
