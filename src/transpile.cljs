@@ -5,6 +5,14 @@
     ["/language/index" :default lang]
     ["/transpile/lib" :default tl]))
 
+(defn simple [field params]
+  (let [value  (.-value params)
+        prefix (if (.-negate params) "!" "")]
+  #js{:values #js[(str "%" value "%")]
+      :text (str "SELECT id"
+                 " FROM games"
+                 " WHERE " field " " prefix "~~* {{}}")}))
+
 (defn- create-generator [s]
   (let [remaining (atom s)]
     (fn []

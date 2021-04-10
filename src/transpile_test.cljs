@@ -1,6 +1,5 @@
 (ns transpile-test
   (:require
-    ["/transpile/lib" :default tl]
     [clojure.string :as s]
     [transpile :as t]
     [cljs.test :refer [deftest is]]))
@@ -16,7 +15,7 @@
     (is (= values [0]))))
 
 (deftest simple
-  (let [simple-fruit          ((.-__simple tl) "fruit")
+  (let [simple-fruit          (partial t/simple "fruit")
         value                 "pear"
         {:strs [text values]} (js->clj (simple-fruit #js{:value value}))]
     (is (= values [(str "%" value "%")]))
