@@ -34,6 +34,15 @@
                     FROM games
                     WHERE " modifier " " field " " operator " {{}}")}))
 
+(defn ->range [op x]
+  (case op
+    ">" (str "(" x ",)")
+    "<" (str "(," x ")")
+    "<=" (str "(," x "]")
+    ">=" (str "[" x ",)")
+    "=" (str "[" x "," x "]")
+    nil))
+
 (def exported-fields
   ["id"
    "primary_name"
