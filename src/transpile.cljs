@@ -102,6 +102,9 @@
      :best-players        (.-BEST_PLAYERS tl)
      :quorum-players      (.-QUORUM_PLAYERS tl)
      :median-playtime     (.-MEDIAN_PLAYTIME tl)
+     :reimplementation    (partial self-junction {:table "reimplementations"
+                                                  :join-field "reimplementation"
+                                                  :nullable-field "original"})
      :expansion           (partial self-junction {:table "expansions"
                                                   :join-field "expansion"
                                                   :nullable-field "base"})
