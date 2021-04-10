@@ -44,7 +44,7 @@
     nil))
 
 (defn self-junction [{:keys [table join-field nullable-field]} params]
-  (let [modifier       (if (.-negate params) "" "NOT")]
+  (let [modifier (if (.-negate params) "" "NOT")]
     #js{:values nil
         :text (str "SELECT id
                     FROM games
