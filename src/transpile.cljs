@@ -43,6 +43,15 @@
     "=" (str "[" x "," x "]")
     nil))
 
+(defn self-junction [{:keys [table join-field nullable-field]} params]
+  (let [modifier       (if (.-negate params) "" "NOT")]
+    #js{:values nil
+        :text (str "SELECT id
+                    FROM games
+                    LEFT JOIN " table "
+                      ON id = " join-field "
+                    WHERE " nullable-field " IS " modifier " NULL")}))
+
 (def exported-fields
   ["id"
    "primary_name"
@@ -93,8 +102,12 @@
      :best-players        (.-BEST_PLAYERS tl)
      :quorum-players      (.-QUORUM_PLAYERS tl)
      :median-playtime     (.-MEDIAN_PLAYTIME tl)
-     :expansion           (.-EXPANSION tl)
-     :collection          (.-COLLECTION tl)}))
+     :expansion           (partial self-junction {:table "expansions"
+                                                  :join-field "expansion"
+                                                  :nullable-field "base"})
+     :collection          (partial self-junction {:table "collections"
+                                                  :join-field "collection"
+                                                  :nullable-field "item"})}))
 
 (defn- create-generator [s]
   (let [remaining (atom s)]
