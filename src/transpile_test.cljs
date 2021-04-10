@@ -1,5 +1,6 @@
 (ns transpile-test
   (:require
+    ["/transpile/lib" :default tl]
     [clojure.string :as s]
     [transpile :as t]
     [cljs.test :refer [deftest is]]))
@@ -40,3 +41,13 @@
            (compact-whitespace "SELECT id
                                 FROM games
                                 WHERE fruit = {{}}")))))
+
+(deftest expansion
+  (let [{:strs [text values]} (js->clj ((.-EXPANSION tl) #js{}))]
+    (is (nil? values))
+    (is (= (compact-whitespace text)
+           (compact-whitespace "SELECT id
+                                FROM games
+                                LEFT JOIN expansions
+                                  ON id = expansion
+                               WHERE base IS NOT NULL")))))
