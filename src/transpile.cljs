@@ -1,6 +1,5 @@
 (ns transpile
   (:require
-    [goog.object :as g]
     [clojure.string :as s]
     ["/language/index" :default lang]
     ["/transpile/lib" :default tl]))
@@ -88,7 +87,7 @@
              is-or        (= "OR" (.-type cur))
              sql          (if is-or
                             (to-sql (.-terms cur) false)
-                            ((g/get tl (.-tag cur)) cur))]
+                            ((get terms (.-tag cur)) cur))]
          #js{:values (.concat (.-values acc) (or (.-values sql) #js[]))
              :text (as-> sql $
                          (.-text $)

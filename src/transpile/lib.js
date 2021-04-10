@@ -63,30 +63,6 @@ export default {
   FIELDS,
   CONCATENATED_FIELDS,
 
-  NAME: simple('primary_name'),
-  DESCRIPTION: simple('description'),
-
-  ARTIST: junction({ table: 'artists', field: 'artist' }),
-  CATEGORY: junction({ table: 'categories', field: 'category' }),
-  FAMILY: junction({ table: 'families', field: 'family' }),
-  MECHANIC: junction({ table: 'mechanics', field: 'mechanic' }),
-  PUBLISHER: junction({ table: 'publishers', field: 'publisher' }),
-  DESIGNER: junction({ table: 'designers', field: 'designer' }),
-
-  RATING_VOTES: relational('rating_votes'),
-  AVERAGE_RATING: relational('average_rating'),
-  GEEK_RATING: relational('bayes_rating'),
-  STEAMDB_RATING: relational('steamdb_rating'),
-  RATING_DEVIATION: relational('rating_deviation'),
-  AVERAGE_WEIGHT: relational('average_weight'),
-  WEIGHT_VOTES: relational('weight_votes'),
-  YEAR: relational('year'),
-  AGE: relational('minimum_age'),
-  MINIMUM_PLAYERS: relational('minimum_players'),
-  MAXIMUM_PLAYERS: relational('maximum_players'),
-  MINIMUM_PLAYTIME: relational('minimum_playtime'),
-  MAXIMUM_PLAYTIME: relational('maximum_playtime'),
-
   RECOMMENDED_PLAYERS: ({ operator, value, negate = false }) => ({
     text: `SELECT a.id
            FROM games a, player_recommendations b
