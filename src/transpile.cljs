@@ -35,6 +35,41 @@
                     FROM games
                     WHERE " modifier " " field " " operator " {{}}")}))
 
+(def terms
+  (reduce
+    (fn [m [k v]]
+      (assoc m
+             (-> k name s/upper-case (s/replace "-" "_"))
+             v))
+    {}
+    {:name                (partial simple "primary_name")
+     :description         (partial simple "description")
+     :artist              (partial junction #js{:table "artists" :field "artist"})
+     :category            (partial junction #js{:table "categories" :field "category"})
+     :family              (partial junction #js{:table "families" :field "family"})
+     :mechanic            (partial junction #js{:table "mechanics" :field "mechanic"})
+     :publisher           (partial junction #js{:table "publishers" :field "publisher"})
+     :designer            (partial junction #js{:table "designers" :field "designer"})
+     :rating-votes        (partial relational "rating_votes")
+     :average-rating      (partial relational "average_rating")
+     :geek-rating         (partial relational "bayes_rating")
+     :steamdb-rating      (partial relational "steamdb_rating")
+     :rating-deviation    (partial relational "rating_deviation")
+     :average-weight      (partial relational "average_weight")
+     :weight-votes        (partial relational "weight_votes")
+     :year                (partial relational "year")
+     :age                 (partial relational "minimum_age")
+     :minimum-players     (partial relational "minimum_players")
+     :maximum-players     (partial relational "maximum_players")
+     :minimum-playtime    (partial relational "minimum_playtime")
+     :maximum-playtime    (partial relational "maximum_playtime")
+     :recommended-players (.-RECOMMENDED_PLAYERS tl)
+     :best-players        (.-BEST_PLAYERS tl)
+     :quorum-players      (.-QUORUM_PLAYERS tl)
+     :median-playtime     (.-MEDIAN_PLAYTIME tl)
+     :expansion           (.-EXPANSION tl)
+     :collection          (.-COLLECTION tl)}))
+
 (defn- create-generator [s]
   (let [remaining (atom s)]
     (fn []
