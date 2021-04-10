@@ -9,9 +9,9 @@
   (let [value  (.-value params)
         prefix (if (.-negate params) "!" "")]
   #js{:values #js[(str "%" value "%")]
-      :text (str "SELECT id"
-                 " FROM games"
-                 " WHERE " field " " prefix "~~* {{}}")}))
+      :text   (str "SELECT id"
+                   " FROM games"
+                   " WHERE " field " " prefix "~~* {{}}")}))
 
 (defn- create-generator [s]
   (let [remaining (atom s)]
