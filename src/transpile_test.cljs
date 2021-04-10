@@ -1,6 +1,5 @@
 (ns transpile-test
   (:require
-    ["/transpile/lib" :default tl]
     [clojure.string :as s]
     [transpile :as t]
     [cljs.test :refer [deftest is]]))
@@ -43,7 +42,7 @@
                                 WHERE fruit = {{}}")))))
 
 (deftest expansion
-  (let [{:strs [text values]} (js->clj ((.-EXPANSION tl) #js{}))]
+  (let [{:strs [text values]} (js->clj ((get t/terms "EXPANSION") #js{}))]
     (is (nil? values))
     (is (= (compact-whitespace text)
            (compact-whitespace "SELECT id
