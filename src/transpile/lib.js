@@ -57,6 +57,9 @@ function toRange(operator, value) {
 }
 
 export default {
+  __simple: simple,
+  __junction: junction,
+  __relational: relational,
   FIELDS,
   CONCATENATED_FIELDS,
 
