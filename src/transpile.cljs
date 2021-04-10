@@ -21,7 +21,6 @@
      (fn [acc cur]
        (let [joining-term (if intersect "INTERSECT ALL" "UNION ALL")
              is-or        (= "OR" (.-type cur))
-             _ (js/console.log acc)
              sql          (if is-or
                             (to-sql (.-terms cur) false)
                             ((g/get tl (.-tag cur)) cur))]
