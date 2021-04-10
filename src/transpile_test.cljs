@@ -4,6 +4,9 @@
     [transpile :as t]
     [cljs.test :refer [deftest is]]))
 
+(defn compact-whitespace [s]
+  (s/replace s #"\s+" " "))
+
 (deftest transpile
   (let [actual (t/transpile "" "id" "DESC" 0)
         text   (s/replace (.-text actual) #"\s+" " ")
