@@ -17,7 +17,7 @@
         field  (.-field schema)
         value  (.-value params)
         negate (boolean (.-negate params))]
-    #js{:values [(str "%" value "%")]
+    #js{:values #js[(str "%" value "%")]
         :text   (str "SELECT a.id
                       FROM games a, games_" table " ab, " table " b
                       WHERE a.id = ab.game_id
