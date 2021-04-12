@@ -6,12 +6,8 @@
 (defn clj->sql [& tokens]
   (letfn [(map-token [token]
             (cond
-              (keyword? token)
+              ((some-fn keyword? string?) token)
               {:text [(name token)]
-               :values []}
-
-              (string? token)
-              {:text [token]
                :values []}
 
               (nil? token)
