@@ -1,16 +1,14 @@
 (ns transpile
   (:require
+    sql
     [clojure.string :as s]
     ["/language/index" :default lang]
     ["/transpile/lib" :default tl]))
 
-(defn simple [field params]
-  (let [value  (.-value params)
-        prefix (if (.-negate params) "!" "")]
-  #js{:values #js[(str "%" value "%")]
-      :text   (str "SELECT id"
-                   " FROM games"
-                   " WHERE " field " " prefix "~~* {{}}")}))
+(defn simple [field {:keys [value negate]}]
+  (sql/clj->sql :select :id
+                :from :games
+                :where field (if negate "!~~*" "~~*") #{value}))
 
 (defn junction [schema params]
   (let [table  (.-table schema)
@@ -77,8 +75,8 @@
              (-> k name s/upper-case (s/replace "-" "_"))
              v))
     {}
-    {:name                (partial simple "primary_name")
-     :description         (partial simple "description")
+    {:name                (partial simple :primary_name)
+     :description         (partial simple :description)
      :artist              (partial junction #js{:table "artists" :field "artist"})
      :category            (partial junction #js{:table "categories" :field "category"})
      :family              (partial junction #js{:table "families" :field "family"})
