@@ -1,6 +1,18 @@
 (ns sql
   (:require
+    [clojure.string :as s]
     ["/db/insert" :refer [toSQL]]))
+
+(defn clj->sql [& tokens]
+  (as-> tokens $
+       (reduce (fn [{:keys [text values]} token]
+                 (cond
+                   (keyword? token)
+                   {:text (conj text (name token))
+                    :values values}))
+               {:text [] :values []}
+               $)
+       (update $ :text (partial s/join " "))))
 
 (def ^:private get-game-sql
   "SELECT
