@@ -17,3 +17,8 @@
                        :from :table)))
   (is (= {:text ["select" "true" "and" "(" "true" "or" "false" ")"] :values []}
          (sql/clj->sql :select :true :and '(:true :or :false)))))
+
+(deftest realize-query
+  (is (= {:text "select id from table where id = $1"
+          :values [1]}
+         (sql/realize-query (sql/clj->sql :select :id :from :table :where :id := #{1})))))

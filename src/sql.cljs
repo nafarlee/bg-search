@@ -30,6 +30,17 @@
                              tokens))]
     (reduce-tokens tokens)))
 
+(defn realize-query [{:keys [text values]}]
+  (let [parameter-index (atom 1)]
+    {:values values
+     :text (->> text
+                (mapv #(if (not= :? %)
+                         %
+                         (do
+                           (swap! parameter-index inc)
+                           (str "$" (dec @parameter-index)))))
+                (s/join " "))}))
+
 (def ^:private get-game-sql
   "SELECT
     (SELECT JSON_OBJECT_AGG(players, JSON_BUILD_OBJECT('median', median, 'count', count))
