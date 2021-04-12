@@ -22,13 +22,13 @@
                        :where :fruit "~~*" #{"pear"}))))
 
 (deftest junction
-  (let [schema                 #js{:table "recipes" :field "fruit"}
-        junction-fruit-recipes (partial t/junction schema)
-        params                 #js{:value "pear"}
-        {:strs [text values]}  (js->clj (junction-fruit-recipes params))]
-    (is (= values ["%pear%"]))
-    (is (= (compact-whitespace text)
-           "SELECT a.id FROM games a, games_recipes ab, recipes b WHERE a.id = ab.game_id AND ab.fruit_id = b.id GROUP BY a.id HAVING BOOL_OR(fruit ~~* {{}}) != false"))))
+  (is (= t/junction {:table "recipes" :field "fruit"} {:value "pear"}
+         (sql/clj->sql :select :a.id
+                       :from ["games a" "games_recipes ab" "recipes b"]
+                       :where :a.id := :ab.game_id
+                         :and :ab.fruit_id := :b.id
+                       :group :by :a.id
+                       :having :bool_or'(:fruit "~~*" #{"pear"}) :!= :false))))
 
 (deftest relational
   (let [relational-fruit      (partial t/relational "fruit")
