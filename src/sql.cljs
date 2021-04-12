@@ -27,12 +27,8 @@
           (reduce-tokens [tokens]
             (reduce #(merge-with (comp vec concat) %1 (map-token %2))
                              {:text [] :values []}
-                             tokens))
-          (join-text [query]
-            (update query :text (partial s/join " ")))]
-    (-> tokens
-        reduce-tokens
-        join-text)))
+                             tokens))]
+    (reduce-tokens tokens)))
 
 (def ^:private get-game-sql
   "SELECT
