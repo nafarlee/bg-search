@@ -17,10 +17,9 @@
 
 (deftest simple
   (is (= (t/simple :fruit {:value "pear"})
-         {:values ["%pear%"]
-          :text (sql/clj->sql :select :id
-                              :from :games
-                              :where :fruit "~~*" :?)})))
+         (sql/clj->sql :select :id
+                       :from :games
+                       :where :fruit "~~*" #{"pear"}))))
 
 (deftest junction
   (let [schema                 #js{:table "recipes" :field "fruit"}
