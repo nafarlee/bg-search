@@ -4,15 +4,16 @@
     ["/db/insert" :refer [toSQL]]))
 
 (defn clj->sql [& tokens]
-  (as-> tokens $
-       (reduce (fn [{:keys [text values]} token]
-                 (cond
-                   (keyword? token)
-                   {:text (conj text (name token))
-                    :values values}))
-               {:text [] :values []}
-               $)
-       (update $ :text (partial s/join " "))))
+  (let [process-token (fn [token]
+                        (cond
+                          (keyword? token) {:text [(name token)] :values []}))]
+    (as-> tokens $
+         (reduce #(merge-with (comp vec concat) %1 (process-token %2))
+                 {:text [] :values []}
+                 $)
+         (update $
+                 :text
+                 (partial s/join " ")))))
 
 (def ^:private get-game-sql
   "SELECT
