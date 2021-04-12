@@ -10,6 +10,10 @@
               {:text [(name token)]
                :values []}
 
+              (set? token)
+              {:text [:?]
+               :values [(first token)]}
+
               (list? token)
               (update (reduce-tokens token)
                       :text
