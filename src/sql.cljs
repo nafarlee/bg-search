@@ -41,6 +41,9 @@
                            (str "$" (dec @parameter-index)))))
                 (s/join " "))}))
 
+(defn query [database q]
+  (.query database (realize-query q)))
+
 (def ^:private get-game-sql
   "SELECT
     (SELECT JSON_OBJECT_AGG(players, JSON_BUILD_OBJECT('median', median, 'count', count))
