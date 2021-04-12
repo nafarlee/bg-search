@@ -10,6 +10,11 @@
               {:text [(name token)]
                :values []}
 
+              (list? token)
+              (update (reduce-tokens token)
+                      :text
+                      #(vec (concat "(" % ")")))
+
               (vector? token)
               {:values []
                :text (conj (mapv (comp #(str % ",") name)
