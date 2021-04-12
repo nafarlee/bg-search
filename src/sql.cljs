@@ -14,6 +14,10 @@
               {:text [token]
                :values []}
 
+              (nil? token)
+              {:text []
+               :values []}
+
               (set? token)
               {:text [:?]
                :values [(first token)]}
