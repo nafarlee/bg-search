@@ -1,4 +1,4 @@
-(ns sql-test 
+(ns sql-test
   (:require
     [sql]
     [cljs.test :refer [deftest is]]))
