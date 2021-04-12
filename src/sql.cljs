@@ -10,6 +10,10 @@
               {:text [(name token)]
                :values []}
 
+              (string? token)
+              {:text [token]
+               :values []}
+
               (set? token)
               {:text [:?]
                :values [(first token)]}
