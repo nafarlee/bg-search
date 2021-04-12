@@ -1,5 +1,6 @@
 (ns transpile-test
   (:require
+    sql
     [clojure.string :as s]
     [transpile :as t]
     [cljs.test :refer [deftest is]]))
@@ -15,12 +16,11 @@
     (is (= values [0]))))
 
 (deftest simple
-  (let [simple-fruit          (partial t/simple "fruit")
-        value                 "pear"
-        {:strs [text values]} (js->clj (simple-fruit #js{:value value}))]
-    (is (= values [(str "%" value "%")]))
-    (is (= (compact-whitespace text)
-           "SELECT id FROM games WHERE fruit ~~* {{}}"))))
+  (is (= (t/simple :fruit {:value "pear"})
+         {:values ["%pear%"]
+          :text (sql/clj->sql :select :id
+                              :from :games
+                              :where :fruit "~~*" :?)})))
 
 (deftest junction
   (let [schema                 #js{:table "recipes" :field "fruit"}
