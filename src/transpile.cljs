@@ -32,6 +32,13 @@
     "=" (str "[" x "," x "]")
     nil))
 
+(defn recommendation [clause {:keys [operator value negate]}]
+  (sql/clj->sql :select :a.id
+                :from ["games a" "player_recommendations b"]
+                :where :a.id := :b.id
+                  :and :players "&&" #{(->range operator value)} "::int4range"
+                  :and (when negate :not) clause))
+
 (defn self-junction [{:keys [table join-field nullable-field]} {:keys [negate]}]
   (sql/clj->sql :select :id
                 :from :games
