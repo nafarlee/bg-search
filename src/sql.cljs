@@ -10,6 +10,9 @@
               {:text [(name token)]
                :values []}
 
+              (and (contains? token :text) (contains? token :values))
+              token
+
               (nil? token)
               {:text []
                :values []}
