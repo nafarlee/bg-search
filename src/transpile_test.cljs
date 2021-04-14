@@ -51,5 +51,5 @@
          (sql/clj->sql :select :a.id
                        :from ["games a" "player_recommendations b"]
                        :where :a.id := :b.id
-                         :and :players "&&" "[42,42]"
+                         :and :players "&&" #{"[42,42]"} "::int4range"
                          :and :recommended :> (list :best :+ :not_recommended)))))
