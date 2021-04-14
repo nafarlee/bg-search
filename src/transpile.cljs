@@ -32,14 +32,12 @@
     "=" (str "[" x "," x "]")
     nil))
 
-(defn self-junction [{:keys [table join-field nullable-field]} params]
-  (let [modifier (if (.-negate params) "" "NOT")]
-    #js{:values nil
-        :text (str "SELECT id
-                    FROM games
-                    LEFT JOIN " table "
-                      ON id = " join-field "
-                    WHERE " nullable-field " IS " modifier " NULL")}))
+(defn self-junction [{:keys [table join-field nullable-field]} {:keys [negate]}]
+  (sql/clj->sql :select :id
+                :from :games
+                :left :join table
+                  :on :id := join-field
+                :where nullable-field :is (when-not negate :not) :null))
 
 (def exported-fields
   ["id"
