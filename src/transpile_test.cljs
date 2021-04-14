@@ -24,13 +24,13 @@
                        :limit :25 :offset #{0}))))
 
 (deftest simple
-  (is (= (t/simple :fruit {:value "pear"})
+  (is (= (t/simple :fruit {"value" "pear"})
          (sql/clj->sql :select :id
                        :from :games
                        :where :fruit "~~*" #{"pear"}))))
 
 (deftest junction
-  (is (= (t/junction {:table "recipes" :field "fruit"} {:value "pear"})
+  (is (= (t/junction {:table "recipes" :field "fruit"} {"value" "pear"})
          (sql/clj->sql :select :a.id
                        :from ["games a" "games_recipes ab" "recipes b"]
                        :where :a.id := :ab.game_id
@@ -39,7 +39,7 @@
                        :having :bool_or (list :fruit "~~*" #{"%pear%"}) :!= :false))))
 
 (deftest relational
-  (is (= (t/relational "fruit" {:value "pear" :operator "="})
+  (is (= (t/relational "fruit" {"value" "pear" "operator" "="})
          (sql/clj->sql :select :id
                        :from :games
                        :where :fruit := #{"pear"}))))
@@ -55,7 +55,7 @@
 (deftest recommendation
   (is (= (t/recommendation {:text   ["recommended" ">" "(" "best" "+" "not_recommended" ")"]
                             :values []}
-                           {:operator "=" :value 42})
+                           {"operator" "=" "value" 42})
          (sql/clj->sql :select :a.id
                        :from ["games a" "player_recommendations b"]
                        :where :a.id := :b.id

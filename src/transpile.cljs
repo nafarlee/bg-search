@@ -4,12 +4,12 @@
     [clojure.string :as s]
     ["/language/index" :default lang]))
 
-(defn simple [field {:keys [value negate]}]
+(defn simple [field {:strs [value negate]}]
   (sql/clj->sql :select :id
                 :from :games
                 :where field (if negate "!~~*" "~~*") #{value}))
 
-(defn junction [{:keys [table field]} {:keys [value negate]}]
+(defn junction [{:keys [table field]} {:strs [value negate]}]
   (sql/clj->sql :select :a.id
                 :from ["games a" (str "games_" table " ab") (str table " b")]
                 :where :a.id := :ab.game_id
@@ -17,7 +17,7 @@
                 :group :by :a.id
                 :having :bool_or (list field "~~*" #{(str "%" value "%")}) :!= (-> negate boolean str)))
 
-(defn relational [field {:keys [value operator negate]}]
+(defn relational [field {:strs [value operator negate]}]
   (sql/clj->sql :select :id
                 :from :games
                 :where (when negate :not) field operator #{value}))
@@ -31,21 +31,21 @@
     "=" (str "[" x "," x "]")
     nil))
 
-(defn recommendation [clause {:keys [operator value negate]}]
+(defn recommendation [clause {:strs [operator value negate]}]
   (sql/clj->sql :select :a.id
                 :from ["games a" "player_recommendations b"]
                 :where :a.id := :b.id
                   :and :players "&&" #{(->range operator value)} "::int4range"
                   :and (when negate :not) clause))
 
-(defn self-junction [{:keys [table join-field nullable-field]} {:keys [negate]}]
+(defn self-junction [{:keys [table join-field nullable-field]} {:strs [negate]}]
   (sql/clj->sql :select :id
                 :from :games
                 :left :join table
                   :on :id := join-field
                 :where nullable-field :is (when-not negate :not) :null))
 
-(defn median-playtime [{:keys [operator value negate]}]
+(defn median-playtime [{:strs [operator value negate]}]
   (sql/clj->sql :select :game_id :as :id
                 :from :play_medians
                 :where :players := :0
