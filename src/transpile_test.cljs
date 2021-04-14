@@ -43,3 +43,13 @@
                         :left :join :table
                           :on :id := :child
                         :where :parent :is :not :null))))
+
+(deftest recommendation
+  (is (= (t/recommendation {:text   ["recommended" ">" "(" "best" "+" "not_recommended" ")"]
+                            :values []}
+                           {:operator "=" :value 42})
+         (sql/clj->sql :select :id
+                       :from ["games a" "player_recommendations b"]
+                       :where :a.id := :b.id
+                         :and :players "&&" "[42,42]"
+                         :and :recommended :> (list :best :+ :not_recommended)))))
