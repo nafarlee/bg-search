@@ -21,7 +21,7 @@
 (defn relational [field {:keys [value operator negate]}]
   (sql/clj->sql :select :id
                 :from :games
-                :where (if negate "not" nil) field operator #{value}))
+                :where (when negate :not) field operator #{value}))
 
 (defn ->range [op x]
   (case op
