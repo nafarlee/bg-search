@@ -9,13 +9,19 @@
   (s/replace s #"\s+" " "))
 
 (deftest transpile
+  (is (= (t/transpile "n:scythe" "id" "DESC" 0)
+          (sql/clj->sql :select :distinct t/exported-fields
+                        :from (list :select :id
+                                    :from :games
+                                    :where :primary_name "~~*" #{"scythe"}) :as :GameSubquery
+                          :natural :inner :join :games
+                        :order :by :id :DESC
+                        :limit :25 :offset #{0})))
   (is (= (t/transpile "" "id" "DESC" 0)
-         (-> (sql/clj->sql :select :distinct t/exported-fields
-                           :from :games
-                           :order :by :id :desc
-                           :limit :25 :offset #{0})
-             sql/realize-query
-             clj->js))))
+         (sql/clj->sql :select :distinct t/exported-fields
+                       :from :games
+                       :order :by :id :DESC
+                       :limit :25 :offset #{0}))))
 
 (deftest simple
   (is (= (t/simple :fruit {:value "pear"})
