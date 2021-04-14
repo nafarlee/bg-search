@@ -122,11 +122,18 @@
   ([ast intersect]
    (->> ast
         (map (fn [{:strs [tag type] :as term}]
-               (if (not= type "OR")
-                 ((get terms tag) term)
+               (case type
+                 "OR"
                  (-> (get term "terms")
                      (to-sql false)
-                     (update :text #(concat ["("] % [")"]))))))
+                     (update :text #(concat ["("] % [")"])))
+
+                 "AND"
+                 (-> (get term "terms")
+                     (to-sql true)
+                     (update :text #(concat ["("] % [")"])))
+
+                 ((get terms tag) term))))
         (reduce (fn [acc cur]
                   {:values (concat (:values acc) (:values cur))
                    :text (concat (:text acc)
