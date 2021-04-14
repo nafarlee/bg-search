@@ -10,18 +10,13 @@
                 :from :games
                 :where field (if negate "!~~*" "~~*") #{value}))
 
-(defn junction [schema params]
-  (let [table  (.-table schema)
-        field  (.-field schema)
-        value  (.-value params)
-        negate (boolean (.-negate params))]
-    #js{:values #js[(str "%" value "%")]
-        :text   (str "SELECT a.id
-                      FROM games a, games_" table " ab, " table " b
-                      WHERE a.id = ab.game_id
-                        AND ab." field "_id = b.id
-                      GROUP BY a.id
-                      HAVING BOOL_OR(" field " ~~* {{}}) != " negate)}))
+(defn junction [{:keys [table field]} {:keys [value negate]}]
+  (sql/clj->sql :select :a.id
+                :from ["games a" (str "games_" table " ab") (str table " b")]
+                :where :a.id := :ab.game_id
+                  :and (str "ab." field "_id") := :b.id
+                :group :by :a.id
+                :having :bool_or (list field "~~*" #{(str "%" value "%")}) :!= (-> negate boolean str)))
 
 (defn relational [field params]
   (let [operator (.-operator params)
