@@ -18,14 +18,10 @@
                 :group :by :a.id
                 :having :bool_or (list field "~~*" #{(str "%" value "%")}) :!= (-> negate boolean str)))
 
-(defn relational [field params]
-  (let [operator (.-operator params)
-        value    (.-value params)
-        modifier (if (.-negate params) "NOT" "")]
-    #js{:values [value]
-        :text (str "SELECT id
-                    FROM games
-                    WHERE " modifier " " field " " operator " {{}}")}))
+(defn relational [field {:keys [value operator negate]}]
+  (sql/clj->sql :select :id
+                :from :games
+                :where (if negate "not" nil) field operator #{value}))
 
 (defn ->range [op x]
   (case op
