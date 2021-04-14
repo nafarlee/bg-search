@@ -33,7 +33,7 @@ export default {
            FROM games a, player_recommendations b
            WHERE a.id = b.id
              AND players && {{}}::int4range
-             AND ${negate ? 'NOT' : ''} (best + recommended) >= (not_recommended / 3 * 7)`,
+             AND ${negate ? 'NOT' : ''} (best + recommended) >= (not_recommended / 3.0 * 7.0)`,
     values: [toRange(operator, value)],
   }),
 
