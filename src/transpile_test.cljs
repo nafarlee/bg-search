@@ -27,7 +27,7 @@
   (is (= (t/simple :fruit {"value" "pear"})
          (sql/clj->sql :select :id
                        :from :games
-                       :where :fruit "~~*" #{"pear"}))))
+                       :where :fruit "~~*" #{"%pear%"}))))
 
 (deftest junction
   (is (= (t/junction {:table "recipes" :field "fruit"} {"value" "pear"})
