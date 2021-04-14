@@ -92,9 +92,14 @@
      :maximum-players     (partial relational :maximum_players)
      :minimum-playtime    (partial relational :minimum_playtime)
      :maximum-playtime    (partial relational :maximum_playtime)
-     :recommended-players (.-RECOMMENDED_PLAYERS tl)
-     :best-players        (.-BEST_PLAYERS tl)
-     :quorum-players      (.-QUORUM_PLAYERS tl)
+     :recommended-players (partial recommendation
+                                   (sql/clj->sql :recommended :> (list :best :+ :not_recommended)))
+     :best-players        (partial recommendation
+                                   (sql/clj->sql :best :> (list :recommended :+ :not_recommended)))
+     :quorum-players      (partial recommendation
+                                   (sql/clj->sql (list :best :+ :recommended)
+                                                 :>=
+                                                 (list :not_recommended "/" :3.0 :* :7.0)))
      :median-playtime     (.-MEDIAN_PLAYTIME tl)
      :reimplementation    (partial self-junction {:table "reimplementations"
                                                   :join-field "reimplementation"
