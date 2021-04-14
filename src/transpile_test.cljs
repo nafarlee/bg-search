@@ -31,14 +31,10 @@
                        :having :bool_or (list :fruit "~~*" #{"%pear%"}) :!= :false))))
 
 (deftest relational
-  (let [relational-fruit      (partial t/relational "fruit")
-        params                #js{:value "pear" :operator "="}
-        {:strs [text values]} (js->clj (relational-fruit params))]
-    (is (= values ["pear"]))
-    (is (= (compact-whitespace text)
-           (compact-whitespace "SELECT id
-                                FROM games
-                                WHERE fruit = {{}}")))))
+  (is (= (t/relational "fruit" {:value "pear" :operator "="})
+         (sql/clj->sql :select :id
+                       :from :games
+                       :where :fruit := #{"pear"}))))
 
 (deftest expansion
   (let [{:strs [text values]} (js->clj ((get t/terms "EXPANSION") #js{}))]
