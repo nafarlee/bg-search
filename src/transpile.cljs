@@ -130,7 +130,7 @@
         (reduce (fn [acc cur]
                   {:values (concat (:values acc) (:values cur))
                    :text (concat (:text acc)
-                                 (if intersect [:intersect :all] [:union :all])
+                                 (if intersect ["intersect" "all"] ["union" "all"])
                                  (:text cur))})))))
 
 (defn transpile [query order direction offset]
