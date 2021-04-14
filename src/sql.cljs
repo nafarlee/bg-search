@@ -6,12 +6,15 @@
 (defn clj->sql [& tokens]
   (letfn [(map-token [token]
             (cond
-              (keyword? token)
+              ((some-fn keyword? string?) token)
               {:text [(name token)]
                :values []}
 
-              (string? token)
-              {:text [token]
+              (and (contains? token :text) (contains? token :values))
+              token
+
+              (nil? token)
+              {:text []
                :values []}
 
               (set? token)
@@ -46,7 +49,10 @@
                 (s/join " "))}))
 
 (defn query [database q]
-  (.query database (realize-query q)))
+  (->> q
+       realize-query
+       clj->js
+       (.query database)))
 
 (def ^:private get-game-sql
   "SELECT

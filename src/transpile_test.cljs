@@ -1,5 +1,6 @@
 (ns transpile-test
   (:require
+    sql
     [clojure.string :as s]
     [transpile :as t]
     [cljs.test :refer [deftest is]]))
@@ -8,45 +9,55 @@
   (s/replace s #"\s+" " "))
 
 (deftest transpile
-  (let [actual (t/transpile "" "id" "DESC" 0)
-        text   (s/replace (.-text actual) #"\s+" " ")
-        values (js->clj (.-values actual))]
-    (is (= text "SELECT DISTINCT id, primary_name, rating_votes, average_rating, steamdb_rating, bayes_rating, rating_deviation, average_weight, weight_votes, year, minimum_age, minimum_players, maximum_players, minimum_playtime, maximum_playtime, description FROM games ORDER BY id DESC LIMIT 25 OFFSET $1"))
-    (is (= values [0]))))
+  (is (= (t/transpile "n:scythe" "id" "DESC" 0)
+          (sql/clj->sql :select :distinct t/exported-fields
+                        :from (list :select :id
+                                    :from :games
+                                    :where :primary_name "~~*" #{"%scythe%"}) :as :GameSubquery
+                          :natural :inner :join :games
+                        :order :by :id :DESC
+                        :limit :25 :offset #{0})))
+  (is (= (t/transpile "" "id" "DESC" 0)
+         (sql/clj->sql :select :distinct t/exported-fields
+                       :from :games
+                       :order :by :id :DESC
+                       :limit :25 :offset #{0}))))
 
 (deftest simple
-  (let [simple-fruit          (partial t/simple "fruit")
-        value                 "pear"
-        {:strs [text values]} (js->clj (simple-fruit #js{:value value}))]
-    (is (= values [(str "%" value "%")]))
-    (is (= (compact-whitespace text)
-           "SELECT id FROM games WHERE fruit ~~* {{}}"))))
+  (is (= (t/simple :fruit {"value" "pear"})
+         (sql/clj->sql :select :id
+                       :from :games
+                       :where :fruit "~~*" #{"%pear%"}))))
 
 (deftest junction
-  (let [schema                 #js{:table "recipes" :field "fruit"}
-        junction-fruit-recipes (partial t/junction schema)
-        params                 #js{:value "pear"}
-        {:strs [text values]}  (js->clj (junction-fruit-recipes params))]
-    (is (= values ["%pear%"]))
-    (is (= (compact-whitespace text)
-           "SELECT a.id FROM games a, games_recipes ab, recipes b WHERE a.id = ab.game_id AND ab.fruit_id = b.id GROUP BY a.id HAVING BOOL_OR(fruit ~~* {{}}) != false"))))
+  (is (= (t/junction {:table "recipes" :field "fruit"} {"value" "pear"})
+         (sql/clj->sql :select :a.id
+                       :from ["games a" "games_recipes ab" "recipes b"]
+                       :where :a.id := :ab.game_id
+                         :and :ab.fruit_id := :b.id
+                       :group :by :a.id
+                       :having :bool_or (list :fruit "~~*" #{"%pear%"}) :!= :false))))
 
 (deftest relational
-  (let [relational-fruit      (partial t/relational "fruit")
-        params                #js{:value "pear" :operator "="}
-        {:strs [text values]} (js->clj (relational-fruit params))]
-    (is (= values ["pear"]))
-    (is (= (compact-whitespace text)
-           (compact-whitespace "SELECT id
-                                FROM games
-                                WHERE fruit = {{}}")))))
+  (is (= (t/relational "fruit" {"value" "pear" "operator" "="})
+         (sql/clj->sql :select :id
+                       :from :games
+                       :where :fruit := #{"pear"}))))
 
-(deftest expansion
-  (let [{:strs [text values]} (js->clj ((get t/terms "EXPANSION") #js{}))]
-    (is (nil? values))
-    (is (= (compact-whitespace text)
-           (compact-whitespace "SELECT id
-                                FROM games
-                                LEFT JOIN expansions
-                                  ON id = expansion
-                               WHERE base IS NOT NULL")))))
+(deftest self-junction
+  (is (= (t/self-junction {:table "table" :join-field "child" :nullable-field "parent"} {})
+          (sql/clj->sql :select :id
+                        :from :games
+                        :left :join :table
+                          :on :id := :child
+                        :where :parent :is :not :null))))
+
+(deftest recommendation
+  (is (= (t/recommendation {:text   ["recommended" ">" "(" "best" "+" "not_recommended" ")"]
+                            :values []}
+                           {"operator" "=" "value" 42})
+         (sql/clj->sql :select :a.id
+                       :from ["games a" "player_recommendations b"]
+                       :where :a.id := :b.id
+                         :and :players "&&" #{"[42,42]"} "::int4range"
+                         :and :recommended :> (list :best :+ :not_recommended)))))

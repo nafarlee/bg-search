@@ -123,7 +123,7 @@
     (prn {:query query :order order :direction direction :offset offset})
     (if (rs/error? sql-result)
       (-> sql-result rs/unwrap (err/transpile res query) js/Promise.resolve)
-      (then-not (.query database (rs/unwrap sql-result))
+      (then-not (sql/query database (rs/unwrap sql-result))
         #(err/generic % res 500)
         #(.render res "search" #js{:query     query
                                    :order     order
