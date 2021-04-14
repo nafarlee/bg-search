@@ -48,7 +48,7 @@
   (is (= (t/recommendation {:text   ["recommended" ">" "(" "best" "+" "not_recommended" ")"]
                             :values []}
                            {:operator "=" :value 42})
-         (sql/clj->sql :select :id
+         (sql/clj->sql :select :a.id
                        :from ["games a" "player_recommendations b"]
                        :where :a.id := :b.id
                          :and :players "&&" "[42,42]"
