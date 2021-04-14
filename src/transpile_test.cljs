@@ -22,7 +22,7 @@
                        :where :fruit "~~*" #{"pear"}))))
 
 (deftest junction
-  (is (= t/junction {:table "recipes" :field "fruit"} {:value "pear"}
+  (is (= (t/junction {:table "recipes" :field "fruit"} {:value "pear"})
          (sql/clj->sql :select :a.id
                        :from ["games a" "games_recipes ab" "recipes b"]
                        :where :a.id := :ab.game_id
