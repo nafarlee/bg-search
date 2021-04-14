@@ -116,15 +116,6 @@
                                                   :join-field "collection"
                                                   :nullable-field "item"})}))
 
-(defn- create-generator [s]
-  (let [remaining (atom s)]
-    (fn []
-      (let [f (first @remaining)]
-        (swap! remaining rest)
-        f))))
-
-(def ^:private parameter-templates (map #(str "$" (inc %)) (range)))
-
 (defn- to-sql
   ([ast]
    (to-sql ast true))
