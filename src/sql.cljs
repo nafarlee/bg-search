@@ -49,7 +49,10 @@
                 (s/join " "))}))
 
 (defn query [database q]
-  (.query database (realize-query q)))
+  (->> q
+       realize-query
+       clj->js
+       (.query database)))
 
 (def ^:private get-game-sql
   "SELECT
