@@ -36,12 +36,10 @@
                        :from :games
                        :where :fruit := #{"pear"}))))
 
-(deftest expansion
-  (let [{:strs [text values]} (js->clj ((get t/terms "EXPANSION") #js{}))]
-    (is (nil? values))
-    (is (= (compact-whitespace text)
-           (compact-whitespace "SELECT id
-                                FROM games
-                                LEFT JOIN expansions
-                                  ON id = expansion
-                               WHERE base IS NOT NULL")))))
+(deftest self-junction
+  (is (= (t/self-junction {:table "table" :join-field "child" :nullable-field "parent"} {})
+          (sql/clj->sql :select :id
+                        :from :games
+                        :left :join :table
+                          :on :id := :child
+                        :where :parent :is :not :null))))
