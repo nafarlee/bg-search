@@ -28,7 +28,7 @@
                        :where :a.id := :ab.game_id
                          :and :ab.fruit_id := :b.id
                        :group :by :a.id
-                       :having :bool_or'(:fruit "~~*" #{"pear"}) :!= :false))))
+                       :having :bool_or (list :fruit "~~*" #{"%pear%"}) :!= :false))))
 
 (deftest relational
   (let [relational-fruit      (partial t/relational "fruit")
