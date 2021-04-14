@@ -126,38 +126,32 @@
 (def ^:private parameter-templates (map #(str "$" (inc %)) (range)))
 
 (defn- to-sql
-  ([ast] (to-sql ast true))
+  ([ast]
+   (to-sql ast true))
   ([ast intersect]
-   (.reduce ast
-     (fn [acc cur]
-       (let [joining-term (if intersect "INTERSECT ALL" "UNION ALL")
-             is-or        (= "OR" (.-type cur))
-             sql          (if is-or
-                            (to-sql (.-terms cur) false)
-                            ((get terms (.-tag cur)) cur))]
-         #js{:values (.concat (.-values acc) (or (.-values sql) #js[]))
-             :text (as-> sql $
-                         (.-text $)
-                         (if is-or
-                           (str "(" $ ")")
-                           $)
-                         (if (empty? (.-text acc))
-                           $
-                           (str (.-text acc) " " joining-term " " $)))}))
-     #js{:text "" :values #js[]})))
+   (->> ast
+        (map (fn [{:strs [tag type] :as term}]
+               (if (not= type "OR")
+                 ((get terms tag) term)
+                 (-> (get term "terms")
+                     (to-sql false)
+                     (update :text #(concat ["("] % [")"]))))))
+        (reduce (fn [acc cur]
+                  {:values (concat (:values acc) (:values cur))
+                   :text (concat (:text acc)
+                                 (if intersect [:intersect :all] [:union :all])
+                                 (:text cur))})))))
 
 (defn transpile [query order direction offset]
   {:pre [(some (partial = order) exported-fields)
          (#{"ASC" "DESC"} direction)]}
-  (let [ast                   (.tryParse lang query)
-        {:strs [text values]} (js->clj (to-sql ast))]
-    (clj->js {:values (conj values offset)
-              :text   (as-> text $
-                            (if (empty? $)
-                              "games"
-                              (str "(" $ ") AS GameSubquery NATURAL INNER JOIN games"))
-                            (str "SELECT DISTINCT " (s/join ", " exported-fields)
-                                 " FROM " $
-                                 " ORDER BY " order " " direction
-                                 " LIMIT 25 OFFSET {{}}")
-                            (s/replace $ #"\{\{\}\}" (create-generator parameter-templates)))})))
+  (if (empty? query)
+    (sql/clj->sql :select :distinct exported-fields
+                  :from :games
+                  :order :by order direction
+                  :limit :25 :offset #{offset})
+    (sql/clj->sql :select :distinct exported-fields
+                  :from (list (to-sql (js->clj (.tryParse lang query)))) :as :GameSubquery
+                    :natural :inner :join :games
+                  :order :by order direction
+                  :limit :25 :offset #{offset})))
