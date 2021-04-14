@@ -13,7 +13,7 @@
           (sql/clj->sql :select :distinct t/exported-fields
                         :from (list :select :id
                                     :from :games
-                                    :where :primary_name "~~*" #{"scythe"}) :as :GameSubquery
+                                    :where :primary_name "~~*" #{"%scythe%"}) :as :GameSubquery
                           :natural :inner :join :games
                         :order :by :id :DESC
                         :limit :25 :offset #{0})))
