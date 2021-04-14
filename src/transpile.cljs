@@ -2,8 +2,7 @@
   (:require
     sql
     [clojure.string :as s]
-    ["/language/index" :default lang]
-    ["/transpile/lib" :default tl]))
+    ["/language/index" :default lang]))
 
 (defn simple [field {:keys [value negate]}]
   (sql/clj->sql :select :id
@@ -45,6 +44,12 @@
                 :left :join table
                   :on :id := join-field
                 :where nullable-field :is (when-not negate :not) :null))
+
+(defn median-playtime [{:keys [operator value negate]}]
+  (sql/clj->sql :select :game_id :as :id
+                :from :play_medians
+                :where :players := :0
+                  :and (when negate :not) :median operator #{value}))
 
 (def exported-fields
   ["id"
@@ -100,7 +105,7 @@
                                    (sql/clj->sql (list :best :+ :recommended)
                                                  :>=
                                                  (list :not_recommended "/" :3.0 :* :7.0)))
-     :median-playtime     (.-MEDIAN_PLAYTIME tl)
+     :median-playtime     median-playtime
      :reimplementation    (partial self-junction {:table "reimplementations"
                                                   :join-field "reimplementation"
                                                   :nullable-field "original"})
