@@ -26,6 +26,7 @@ const tags = [
   'MINIMUM_PLAYTIME',
   'MAXIMUM_PLAYTIME',
   'MEDIAN_PLAYTIME',
+  'MEDIAN_PLAYTIME_3',
 ].reduce(mirror, {});
 
 const operators = [
@@ -127,6 +128,9 @@ export default {
 
       'median-playtime': tags.MEDIAN_PLAYTIME,
       mdpt: tags.MEDIAN_PLAYTIME,
+
+      'median-playtime-3': tags.MEDIAN_PLAYTIME_3,
+      mdpt3: tags.MEDIAN_PLAYTIME_3,
     },
   },
 };
