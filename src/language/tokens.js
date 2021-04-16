@@ -126,11 +126,11 @@ export default {
       'max-playtime': tags.MAXIMUM_PLAYTIME,
       mxpt: tags.MAXIMUM_PLAYTIME,
 
-      'median-playtime': tags.MEDIAN_PLAYTIME,
-      mdpt: tags.MEDIAN_PLAYTIME,
-
       'median-playtime-3': tags.MEDIAN_PLAYTIME_3,
       mdpt3: tags.MEDIAN_PLAYTIME_3,
+
+      'median-playtime': tags.MEDIAN_PLAYTIME,
+      mdpt: tags.MEDIAN_PLAYTIME,
     },
   },
 };
