@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "express": "4.17.1",
+    "fast-xml-parser": "^3.19.0",
     "lodash": "^4.17.20",
     "parsimmon": "^1.16.0",
     "pg": "^8.5.1",
