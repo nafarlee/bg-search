@@ -1,14 +1,14 @@
 (ns api
   (:require
-    ["util" :refer [promisify]]
-    ["xml2js" :refer [parseString]]
+    ["fast-xml-parser" :as fxp]
     [clojure.string :refer [join]]
     [http :as h]
     ["/marshall/index" :default marshall]))
 
 (def ^:private base-url "https://api.geekdo.com/xmlapi2")
 
-(def ^:private parse-xml (promisify parseString))
+(defn- parse-xml [xml]
+  (.parse fxp xml #js{:ignoreAttributes false}))
 
 (defn get-games [ids]
   (-> (str base-url "/things?stats=1&type=boardgame,boardgameexpansion&id=" (join "," ids))
