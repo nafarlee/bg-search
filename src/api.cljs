@@ -11,7 +11,7 @@
 (def ^:private parse-xml (promisify parseString))
 
 (defn get-games [ids]
-  (-> (str base-url "/things?stats=1&type=boardgame,boardgameexpansion&id=" (join ", " ids))
+  (-> (str base-url "/things?stats=1&type=boardgame,boardgameexpansion&id=" (join "," ids))
       h/get
       (.then parse-xml)
       (.then #(some-> %
