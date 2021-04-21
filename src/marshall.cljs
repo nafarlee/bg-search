@@ -43,7 +43,9 @@
    :year
    (get-number-in game ["yearpublished" "$_value"])
 
-   :minimum-players nil
+   :minimum-players
+   (get-number-in game ["minplayers" "$_value"])
+
    :maximum-players nil
    :community-recommended-players nil
    :minimum-playtime nil
