@@ -4,6 +4,11 @@
 
 (defn get-value [{:strs [$_value]}] $_value)
 
+(defn get-number-in [m path]
+  (-> m
+      (get-in path "0")
+      (js/parseInt 10)))
+
 (def primary-name? (partial = "primary"))
 
 (def alternate-name? (partial = "alternate"))
@@ -13,7 +18,7 @@
    3
 
    :id
-   (js/parseInt (get game "$_id") 10)
+   (get-number-in game ["$_id"])
 
    :image
    (get game "image")
@@ -36,9 +41,7 @@
    (get game "description")
 
    :year
-   (-> game
-       (get-in ["yearpublished" "$_value"] "0")
-       (js/parseInt 10))
+   (get-number-in game ["yearpublished" "$_value"])
 
    :minimum-players nil
    :maximum-players nil
