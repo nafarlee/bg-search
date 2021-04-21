@@ -6,6 +6,8 @@
 
 (def primary-name? (partial = "primary"))
 
+(def alternate-name? (partial = "alternate"))
+
 (defn marshall [game]
   {:api-version
    3
@@ -25,7 +27,11 @@
         (map get-value)
         first)
 
-   :alternate-names nil
+   :alternate-names
+   (->> (get game "name")
+        (filter (comp alternate-name? get-type))
+        (map get-value))
+
    :description nil
    :year nil
    :minimum-players nil
