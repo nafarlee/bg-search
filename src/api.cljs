@@ -8,7 +8,8 @@
 (def ^:private base-url "https://api.geekdo.com/xmlapi2")
 
 (defn- parse-xml [xml]
-  (.parse fxp xml #js{:ignoreAttributes false}))
+  (.parse fxp xml #js{:ignoreAttributes    false
+                      :attributeNamePrefix "$_"}))
 
 (defn get-games [ids]
   (-> (str base-url "/things?stats=1&type=boardgame,boardgameexpansion&id=" (join "," ids))

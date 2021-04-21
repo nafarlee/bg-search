@@ -1,14 +1,14 @@
 (ns marshall)
 
-(defn primary-name? [m]
-  (= "primary" (get m "@_type")))
+(defn primary-name? [{:strs [$_type]}]
+  (= "primary" $_type))
 
 (defn marshall [game]
   {:api-version
    3
 
    :id
-   (get game "@_id")
+   (get game "$_id")
 
    :image
    (get game "image")
@@ -19,7 +19,7 @@
    :primary-name
    (->> (get game "name")
         (filter primary-name?)
-        (map #(get % "@_value"))
+        (map #(get % "$_value"))
         first)
 
    :alternate-names nil
