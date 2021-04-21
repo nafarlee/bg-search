@@ -5,7 +5,7 @@
     [http :as h]
     [marshall :refer [marshall]]))
 
-(def ^:private base-url "https://api.geekdo.com/xmlapi2")
+(def ^:private base-url "https://www.boardgamegeek.com/xmlapi2")
 
 (defn- parse-xml [xml]
   (.parse fxp xml #js{:ignoreAttributes    false
