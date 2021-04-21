@@ -32,7 +32,9 @@
         (filter (comp alternate-name? get-type))
         (map get-value))
 
-   :description nil
+   :description
+   (get game "description")
+
    :year nil
    :minimum-players nil
    :maximum-players nil
