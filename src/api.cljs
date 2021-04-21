@@ -3,7 +3,7 @@
     ["fast-xml-parser" :as fxp]
     [clojure.string :refer [join]]
     [http :as h]
-    ["/marshall/index" :default marshall]))
+    [marshall :refer [marshall]]))
 
 (def ^:private base-url "https://api.geekdo.com/xmlapi2")
 
@@ -13,10 +13,12 @@
 (defn get-games [ids]
   (-> (str base-url "/things?stats=1&type=boardgame,boardgameexpansion&id=" (join "," ids))
       h/get
-      (.then parse-xml)
-      (.then #(some-> %
-                      (.. -items -item)
-                      (.map marshall)))))
+      (.then #(as-> % $
+                    (parse-xml $)
+                    (js->clj $)
+                    (get-in $ ["items" "item"])
+                    (map marshall $)
+                    (clj->js $)))))
 
 (defn get-plays [id page]
   (-> (str base-url "/plays?type=thing&subtype=boardgame&id=" id "&page=" page)
