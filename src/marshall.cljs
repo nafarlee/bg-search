@@ -35,7 +35,9 @@
    :description
    (get game "description")
 
-   :year nil
+   :year
+   (get-in game ["yearpublished" "$_value"])
+
    :minimum-players nil
    :maximum-players nil
    :community-recommended-players nil
