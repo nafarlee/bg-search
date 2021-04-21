@@ -13,7 +13,7 @@
    3
 
    :id
-   (get game "$_id")
+   (js/parseInt (get game "$_id") 10)
 
    :image
    (get game "image")
@@ -36,7 +36,9 @@
    (get game "description")
 
    :year
-   (get-in game ["yearpublished" "$_value"])
+   (-> game
+       (get-in ["yearpublished" "$_value"] "0")
+       (js/parseInt 10))
 
    :minimum-players nil
    :maximum-players nil
