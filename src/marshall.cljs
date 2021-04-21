@@ -46,7 +46,9 @@
    :minimum-players
    (get-number-in game ["minplayers" "$_value"])
 
-   :maximum-players nil
+   :maximum-players
+   (get-number-in game ["maxplayers" "$_value"])
+
    :community-recommended-players nil
    :minimum-playtime nil
    :maximum-playtime nil
