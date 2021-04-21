@@ -12,7 +12,7 @@
                       :attributeNamePrefix "$_"}))
 
 (defn get-games [ids]
-  (-> (str base-url "/things?stats=1&type=boardgame,boardgameexpansion&id=" (join "," ids))
+  (-> (str base-url "/thing?stats=1&type=boardgame,boardgameexpansion&id=" (join "," ids))
       h/get
       (.then #(as-> % $
                     (parse-xml $)
