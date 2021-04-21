@@ -1,7 +1,10 @@
 (ns marshall)
 
-(defn primary-name? [{:strs [$_type]}]
-  (= "primary" $_type))
+(defn get-type [{:strs [$_type]}] $_type)
+
+(defn get-value [{:strs [$_value]}] $_value)
+
+(def primary-name? (partial = "primary"))
 
 (defn marshall [game]
   {:api-version
@@ -18,8 +21,8 @@
 
    :primary-name
    (->> (get game "name")
-        (filter primary-name?)
-        (map #(get % "$_value"))
+        (filter (comp primary-name? get-type))
+        (map get-value)
         first)
 
    :alternate-names nil
