@@ -60,7 +60,9 @@
    :minimum-age
    (get-number-in game ["minage" "$_value"])
 
-   :rating-votes nil
+   :rating-votes
+   (get-number-in game ["statistics" "ratings" "usersrated" "$_value"])
+
    :average-rating nil
    :bayes-rating nil
    :rating-deviation nil
