@@ -93,17 +93,17 @@
    :categories
    (->> (get game "link")
         (filter (comp category? get-type))
-        (map get-value))
+        (map id-bundle))
 
    :mechanics
    (->> (get game "link")
         (filter (comp mechanic? get-type))
-        (map get-value))
+        (map id-bundle))
 
    :families
    (->> (get game "link")
         (filter (comp family? get-type))
-        (map get-value))
+        (map id-bundle))
 
    :expanded-by nil
    :contained-in nil
