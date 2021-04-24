@@ -11,16 +11,6 @@
       (get-in path "0")
       (js/parseInt 10)))
 
-(def primary-name? (partial = "primary"))
-
-(def alternate-name? (partial = "alternate"))
-
-(def category? (partial = "boardgamecategory"))
-
-(def mechanic? (partial = "boardgamemechanic"))
-
-(def family? (partial = "boardgamefamily"))
-
 (defn id-bundle [x]
   {:id    (-> x get-id (js/parseInt 10))
    :value (get-value x)})
@@ -40,13 +30,13 @@
 
    :primary-name
    (->> (get game "name")
-        (filter (comp primary-name? get-type))
+        (filter (comp (partial = "primary") get-type))
         (map get-value)
         first)
 
    :alternate-names
    (->> (get game "name")
-        (filter (comp alternate-name? get-type))
+        (filter (comp (partial = "alternate") get-type))
         (map get-value))
 
    :description
@@ -92,17 +82,17 @@
 
    :categories
    (->> (get game "link")
-        (filter (comp category? get-type))
+        (filter (comp (partial = "boardgamecategory") get-type))
         (map id-bundle))
 
    :mechanics
    (->> (get game "link")
-        (filter (comp mechanic? get-type))
+        (filter (comp (partial = "boardgamemechanic") get-type))
         (map id-bundle))
 
    :families
    (->> (get game "link")
-        (filter (comp family? get-type))
+        (filter (comp (partial = "boardgamefamily") get-type))
         (map id-bundle))
 
    :expanded-by nil
