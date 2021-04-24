@@ -101,9 +101,24 @@
         (remove #(get % "$_inbound"))
         (map id-bundle))
 
-   :expands nil
-   :contained-in nil
-   :contains nil
+   :expands
+   (->> (get game "link")
+        (filter (comp (partial = "boardgameexpansion") get-type))
+        (filter #(get % "$_inbound"))
+        (map id-bundle))
+
+   :contained-in
+   (->> (get game "link")
+        (filter (comp (partial = "boardgamecompilation") get-type))
+        (remove #(get % "$_inbound"))
+        (map id-bundle))
+
+   :contains
+   (->> (get game "link")
+        (filter (comp (partial = "boardgamecompilation") get-type))
+        (filter #(get % "$_inbound"))
+        (map id-bundle))
+
    :reimplemented-by nil
    :reimplements nil
    :designers nil
