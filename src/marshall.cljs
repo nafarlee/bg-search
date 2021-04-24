@@ -136,5 +136,9 @@
         (filter (comp (partial = "boardgamedesigner") get-type))
         (map id-bundle))
 
-   :artists nil
+   :artists
+   (->> (get game "link")
+        (filter (comp (partial = "boardgameartist") get-type))
+        (map id-bundle))
+
    :publishers nil})
