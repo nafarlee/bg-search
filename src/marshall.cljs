@@ -95,7 +95,12 @@
         (filter (comp (partial = "boardgamefamily") get-type))
         (map id-bundle))
 
-   :expanded-by nil
+   :expanded-by
+   (->> (get game "link")
+        (filter (comp (partial = "boardgameexpansion") get-type))
+        (remove #(get % "$_inbound"))
+        (map id-bundle))
+
    :expands nil
    :contained-in nil
    :contains nil
