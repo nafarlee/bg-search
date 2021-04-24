@@ -119,8 +119,18 @@
         (filter #(get % "$_inbound"))
         (map id-bundle))
 
-   :reimplemented-by nil
-   :reimplements nil
+   :reimplemented-by
+   (->> (get game "link")
+        (filter (comp (partial = "boardgameimplementation") get-type))
+        (remove #(get % "$_inbound"))
+        (map id-bundle))
+
+   :reimplements
+   (->> (get game "link")
+        (filter (comp (partial = "boardgameimplementation") get-type))
+        (filter #(get % "$_inbound"))
+        (map id-bundle))
+
    :designers nil
    :artists nil
    :publishers nil})
