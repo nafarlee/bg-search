@@ -17,6 +17,8 @@
 
 (def mechanic? (partial = "boardgamemechanic"))
 
+(def family? (partial = "boardgamefamily"))
+
 (defn marshall [game]
   {:api-version
    3
@@ -92,7 +94,11 @@
         (filter (comp mechanic? get-type))
         (map get-value))
 
-   :families nil
+   :families
+   (->> (get game "link")
+        (filter (comp family? get-type))
+        (map get-value))
+
    :expanded-by nil
    :contained-in nil
    :reimplemented-by nil
