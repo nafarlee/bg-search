@@ -50,8 +50,13 @@
    (get-number-in game ["maxplayers" "$_value"])
 
    :community-recommended-players nil
-   :minimum-playtime nil
-   :maximum-playtime nil
+
+   :minimum-playtime
+   (get-number-in game ["minplaytime" "$_value"])
+
+   :maximum-playtime
+   (get-number-in game ["maxplaytime" "$_value"])
+
    :minimum-age nil
    :rating-votes nil
    :average-rating nil
