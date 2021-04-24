@@ -131,6 +131,11 @@
         (filter #(get % "$_inbound"))
         (map id-bundle))
 
+   :integrates-with
+   (->> (get game "link")
+        (filter (comp (partial = "boardgameintegration") get-type))
+        (map id-bundle))
+
    :designers
    (->> (get game "link")
         (filter (comp (partial = "boardgamedesigner") get-type))
