@@ -75,7 +75,9 @@
    :weight-votes
    (get-number-in game ["statistics" "ratings" "numweights" "$_value"])
 
-   :average-weight nil
+   :average-weight
+   (get-number-in game ["statistics" "ratings" "averageweight" "$_value"])
+
    :categories nil
    :mechanics nil
    :families nil
