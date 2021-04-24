@@ -15,6 +15,8 @@
 
 (def category? (partial = "boardgamecategory"))
 
+(def mechanic? (partial = "boardgamemechanic"))
+
 (defn marshall [game]
   {:api-version
    3
@@ -85,7 +87,11 @@
         (filter (comp category? get-type))
         (map get-value))
 
-   :mechanics nil
+   :mechanics
+   (->> (get game "link")
+        (filter (comp mechanic? get-type))
+        (map get-value))
+
    :families nil
    :expanded-by nil
    :contained-in nil
