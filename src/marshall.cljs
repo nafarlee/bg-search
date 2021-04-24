@@ -66,7 +66,9 @@
    :average-rating
    (get-number-in game ["statistics" "ratings" "average" "$_value"])
 
-   :bayes-rating nil
+   :bayes-rating
+   (get-number-in game ["statistics" "ratings" "bayesaverage" "$_value"])
+
    :rating-deviation nil
    :weight-votes nil
    :average-weight nil
