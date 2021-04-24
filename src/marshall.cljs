@@ -13,6 +13,8 @@
 
 (def alternate-name? (partial = "alternate"))
 
+(def category? (partial = "boardgamecategory"))
+
 (defn marshall [game]
   {:api-version
    3
@@ -78,7 +80,11 @@
    :average-weight
    (get-number-in game ["statistics" "ratings" "averageweight" "$_value"])
 
-   :categories nil
+   :categories
+   (->> (get game "link")
+        (filter (comp category? get-type))
+        (map get-value))
+
    :mechanics nil
    :families nil
    :expanded-by nil
