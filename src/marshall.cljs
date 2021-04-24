@@ -131,6 +131,10 @@
         (filter #(get % "$_inbound"))
         (map id-bundle))
 
-   :designers nil
+   :designers
+   (->> (get game "link")
+        (filter (comp (partial = "boardgamedesigner") get-type))
+        (map id-bundle))
+
    :artists nil
    :publishers nil})
