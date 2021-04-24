@@ -106,8 +106,11 @@
         (map id-bundle))
 
    :expanded-by nil
+   :expands nil
    :contained-in nil
+   :contains nil
    :reimplemented-by nil
+   :reimplements nil
    :designers nil
    :artists nil
    :publishers nil})
