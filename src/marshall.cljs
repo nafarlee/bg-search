@@ -57,7 +57,9 @@
    :maximum-playtime
    (get-number-in game ["maxplaytime" "$_value"])
 
-   :minimum-age nil
+   :minimum-age
+   (get-number-in game ["minage" "$_value"])
+
    :rating-votes nil
    :average-rating nil
    :bayes-rating nil
