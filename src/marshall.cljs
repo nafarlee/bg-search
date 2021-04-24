@@ -21,6 +21,10 @@
 
 (def family? (partial = "boardgamefamily"))
 
+(defn id-bundle [x]
+  {:id    (-> x get-id (js/parseInt 10))
+   :value (get-value x)})
+
 (defn marshall [game]
   {:api-version
    3
