@@ -4,6 +4,8 @@
 
 (defn get-value [{:strs [$_value]}] $_value)
 
+(defn get-id [{:strs [$_id]}] $_id)
+
 (defn get-number-in [m path]
   (-> m
       (get-in path "0")
