@@ -72,7 +72,9 @@
    :rating-deviation
    (get-number-in game ["statistics" "ratings" "stddev" "$_value"])
 
-   :weight-votes nil
+   :weight-votes
+   (get-number-in game ["statistics" "ratings" "numweights" "$_value"])
+
    :average-weight nil
    :categories nil
    :mechanics nil
