@@ -20,7 +20,7 @@
   {:id    (-> x get-id (js/parseInt 10))
    :value (get-value x)})
 
-(defn marshall [game]
+(defn- marshall-game [game]
   {:api-version
    3
 
@@ -183,3 +183,10 @@
    (->> (get game "link")
         (filter (comp (partial = "boardgamepublisher") get-type))
         (map id-bundle))})
+
+(defn marshall [game]
+  (->> game
+       marshall-game
+       (remove (comp #(js/Number.isNaN %) second))
+       (remove (comp nil? second))
+       (into {})))
