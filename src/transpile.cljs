@@ -112,7 +112,7 @@
                                                  :>=
                                                  (list :not_recommended "/" :3.0 :* :7.0)))
      :median-playtime     median-playtime
-     :median-playtime-3     median-playtime-3
+     :median-playtime-3   median-playtime-3
      :reimplementation    (partial self-junction {:table "reimplementations"
                                                   :join-field "reimplementation"
                                                   :nullable-field "original"})
