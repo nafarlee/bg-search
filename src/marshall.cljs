@@ -32,15 +32,20 @@
    (get game "thumbnail")
 
    :primary-name
-   (->> (get game "name")
-        (filter (comp (partial = "primary") get-type))
-        (map get-value)
-        first)
+   (let [name' (get game "name")]
+     (if (map? name')
+       (get name' "$_value")
+       (->> name'
+            (filter (comp (partial = "primary") get-type))
+            (map get-value)
+            first)))
 
    :alternate-names
-   (->> (get game "name")
-        (filter (comp (partial = "alternate") get-type))
-        (map get-value))
+   (let [name' (get game "name")]
+     (when-not (map? name')
+       (->> (get game "name")
+            (filter (comp (partial = "alternate") get-type))
+            (map get-value))))
 
    :description
    (get game "description")
