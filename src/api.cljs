@@ -1,22 +1,27 @@
 (ns api
   (:require
-    ["util" :refer [promisify]]
-    ["xml2js" :refer [parseString]]
+    ["fast-xml-parser" :as fxp]
     [clojure.string :refer [join]]
     [http :as h]
-    ["/marshall/index" :default marshall]))
+    [marshall :refer [marshall]]))
 
-(def ^:private base-url "https://api.geekdo.com/xmlapi2")
+(def ^:private base-url "https://www.boardgamegeek.com/xmlapi2")
 
-(def ^:private parse-xml (promisify parseString))
+(defn- parse-xml [xml]
+  (.parse fxp xml #js{:ignoreAttributes    false
+                      :attributeNamePrefix "$_"}))
 
 (defn get-games [ids]
-  (-> (str base-url "/things?stats=1&type=boardgame,boardgameexpansion&id=" (join "," ids))
+  (-> (str base-url "/thing?stats=1&type=boardgame,boardgameexpansion&id=" (join "," ids))
       h/get
-      (.then parse-xml)
-      (.then #(some-> %
-                      (.. -items -item)
-                      (.map marshall)))))
+      (.then #(as-> % $
+                    (parse-xml $)
+                    (js->clj $)
+                    (get-in $ ["items" "item"])
+                    (if (map? $)
+                      [(marshall $)]
+                      (map marshall $))
+                    (clj->js $)))))
 
 (defn get-plays [id page]
   (-> (str base-url "/plays?type=thing&subtype=boardgame&id=" id "&page=" page)
