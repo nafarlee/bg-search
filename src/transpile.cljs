@@ -45,17 +45,12 @@
                   :on :id := join-field
                 :where nullable-field :is (when-not negate :not) :null))
 
-(defn median-playtime [{:strs [operator value negate]}]
+(defn median-playtime [player-count {:strs [operator value negate]}]
   (sql/clj->sql :select :game_id :as :id
                 :from :play_medians
-                :where :players := :0
+                :where :players := (str player-count)
                   :and (when negate :not) :median operator #{value}))
 
-(defn median-playtime-3 [{:strs [operator value negate]}]
-  (sql/clj->sql :select :game_id :as :id
-                :from :play_medians
-                :where :players := :3
-                  :and (when negate :not) :median operator #{value}))
 
 (def exported-fields
   ["id"
@@ -111,8 +106,8 @@
                                    (sql/clj->sql (list :best :+ :recommended)
                                                  :>=
                                                  (list :not_recommended "/" :3.0 :* :7.0)))
-     :median-playtime     median-playtime
-     :median-playtime-3   median-playtime-3
+     :median-playtime     (partial median-playtime 0)
+     :median-playtime-3   (partial median-playtime 3)
      :reimplementation    (partial self-junction {:table "reimplementations"
                                                   :join-field "reimplementation"
                                                   :nullable-field "original"})
