@@ -28,6 +28,7 @@ const tags = [
   'MEDIAN_PLAYTIME',
   'MEDIAN_PLAYTIME_2',
   'MEDIAN_PLAYTIME_3',
+  'MEDIAN_PLAYTIME_4',
 ].reduce(mirror, {});
 
 const operators = [
@@ -132,6 +133,9 @@ export default {
 
       'median-playtime-3': tags.MEDIAN_PLAYTIME_3,
       mdpt3: tags.MEDIAN_PLAYTIME_3,
+
+      'median-playtime-4': tags.MEDIAN_PLAYTIME_4,
+      mdpt4: tags.MEDIAN_PLAYTIME_4,
 
       'median-playtime': tags.MEDIAN_PLAYTIME,
       mdpt: tags.MEDIAN_PLAYTIME,

@@ -109,6 +109,7 @@
      :median-playtime     (partial median-playtime 0)
      :median-playtime-2   (partial median-playtime 2)
      :median-playtime-3   (partial median-playtime 3)
+     :median-playtime-4   (partial median-playtime 4)
      :reimplementation    (partial self-junction {:table "reimplementations"
                                                   :join-field "reimplementation"
                                                   :nullable-field "original"})
