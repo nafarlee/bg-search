@@ -51,7 +51,19 @@
    :maximum-players
    (get-number-in game ["maxplayers" "$_value"])
 
-   :community-recommended-players nil
+   :community-recommended-players
+   (let [m (->> (get game "poll")
+                (filter (comp #(= % "suggested_numplayers") #(get % "$_name")))
+                first)]
+     {:votes  (get m "$_totalvotes")
+      :counts (letfn [(normalize-recommendation [{:strs [$_value $_numvotes]}]
+                         {(case $_value
+                                "Best" :best
+                                "Recommended" :recommended
+                                "Not Recommended" :not-recommended) (js/parseInt $_numvotes 10)})
+                      (normalize-results [{:strs [$_numplayers result]}]
+                         {$_numplayers (apply merge (map normalize-recommendation result))})]
+                 (apply merge (map normalize-results (get m "results"))))})
 
    :minimum-playtime
    (get-number-in game ["minplaytime" "$_value"])
