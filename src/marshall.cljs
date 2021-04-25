@@ -19,6 +19,9 @@
   {:api-version
    3
 
+   :last-updated
+   (.toString (js/Date.))
+
    :id
    (get-number-in game ["$_id"])
 
