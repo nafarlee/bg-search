@@ -11,6 +11,11 @@
       (get-in path "0")
       (js/parseInt 10)))
 
+(defn get-float-in [m path]
+  (-> m
+      (get-in path "0")
+      js/parseFloat))
+
 (defn id-bundle [x]
   {:id    (-> x get-id (js/parseInt 10))
    :value (get-value x)})
@@ -94,19 +99,19 @@
    (get-int-in game ["statistics" "ratings" "usersrated" "$_value"])
 
    :average-rating
-   (get-int-in game ["statistics" "ratings" "average" "$_value"])
+   (get-float-in game ["statistics" "ratings" "average" "$_value"])
 
    :bayes-rating
-   (get-int-in game ["statistics" "ratings" "bayesaverage" "$_value"])
+   (get-float-in game ["statistics" "ratings" "bayesaverage" "$_value"])
 
    :rating-deviation
-   (get-int-in game ["statistics" "ratings" "stddev" "$_value"])
+   (get-float-in game ["statistics" "ratings" "stddev" "$_value"])
 
    :weight-votes
    (get-int-in game ["statistics" "ratings" "numweights" "$_value"])
 
    :average-weight
-   (get-int-in game ["statistics" "ratings" "averageweight" "$_value"])
+   (get-float-in game ["statistics" "ratings" "averageweight" "$_value"])
 
    :categories
    (->> (get game "link")
