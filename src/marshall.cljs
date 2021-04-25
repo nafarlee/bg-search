@@ -60,18 +60,26 @@
    (get-number-in game ["maxplayers" "$_value"])
 
    :community-recommended-players
-   (let [m (->> (get game "poll")
-                (filter (comp #(= % "suggested_numplayers") #(get % "$_name")))
-                first)]
-     {:votes  (get m "$_totalvotes")
-      :counts (letfn [(normalize-recommendation [{:strs [$_value $_numvotes]}]
-                         {(case $_value
-                                "Best" :best
-                                "Recommended" :recommended
-                                "Not Recommended" :not-recommended) (js/parseInt $_numvotes 10)})
-                      (normalize-results [{:strs [$_numplayers result]}]
-                         {$_numplayers (apply merge (map normalize-recommendation result))})]
-                 (apply merge (map normalize-results (get m "results"))))})
+   (let [m                        (->> (get game "poll")
+                                       (filter (comp #(= % "suggested_numplayers")
+                                                     #(get % "$_name")))
+                                       first)
+         total-votes              (js/parseInt (get m "$_totalvotes") 10)
+         results                  (get m "results")
+         normalize-recommendation (fn [{:strs [$_value $_numvotes]}]
+                                    {(case $_value
+                                           "Best" :best
+                                           "Recommended" :recommended
+                                           "Not Recommended" :not-recommended)
+                                     (js/parseInt $_numvotes 10)})
+         normalize-results        (fn [{:strs [$_numplayers result]}]
+                                    {$_numplayers
+                                     (apply merge (map normalize-recommendation result))})]
+     (when-not (zero? total-votes)
+         {:votes  total-votes
+          :counts (if (map? results)
+                    (normalize-results results)
+                    (apply merge (map normalize-results results)))}))
 
    :minimum-playtime
    (get-number-in game ["minplaytime" "$_value"])
