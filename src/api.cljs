@@ -18,7 +18,9 @@
                     (parse-xml $)
                     (js->clj $)
                     (get-in $ ["items" "item"])
-                    (map marshall $)
+                    (if (map? $)
+                      [(marshall $)]
+                      (map marshall $))
                     (clj->js $)))))
 
 (defn get-plays [id page]
