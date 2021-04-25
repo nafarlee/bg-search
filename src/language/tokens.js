@@ -26,6 +26,7 @@ const tags = [
   'MINIMUM_PLAYTIME',
   'MAXIMUM_PLAYTIME',
   'MEDIAN_PLAYTIME',
+  'MEDIAN_PLAYTIME_1',
   'MEDIAN_PLAYTIME_2',
   'MEDIAN_PLAYTIME_3',
   'MEDIAN_PLAYTIME_4',
@@ -128,6 +129,9 @@ export default {
 
       'max-playtime': tags.MAXIMUM_PLAYTIME,
       mxpt: tags.MAXIMUM_PLAYTIME,
+
+      'median-playtime-1': tags.MEDIAN_PLAYTIME_1,
+      mdpt1: tags.MEDIAN_PLAYTIME_1,
 
       'median-playtime-2': tags.MEDIAN_PLAYTIME_2,
       mdpt2: tags.MEDIAN_PLAYTIME_2,
