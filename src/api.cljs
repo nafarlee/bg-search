@@ -26,12 +26,15 @@
 (defn get-plays [game-id page]
   (-> (str base-url "/plays?type=thing&subtype=boardgame&id=" game-id "&page=" page)
       h/get
-      (.then parse-xml)
-      (.then (fn [body]
-               (as-> body $
-                     (or (.. $ -plays -play) #js[])
-                     (.map $ (fn [play]
-                               #js[(js/parseInt (.. play -$ -id) 10)
-                                   game-id
-                                   (js/parseInt (.. play -$ -length) 10)
-                                   (some-> play .-players first .-player .-length)])))))))
+      (.then (fn [xml]
+               (as-> xml <>
+                     (parse-xml <>)
+                     (js->clj <>)
+                     (get-in <> ["plays" "play"] [])
+                     (map #(vector
+                            (js/parseInt (get % "$_id") 10)
+                            game-id
+                            (js/parseInt (get % "$_length") 10)
+                            (some-> % (get-in ["players" "player"]) count))
+                          <>)
+                     (clj->js <>))))))
