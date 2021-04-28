@@ -23,8 +23,8 @@
                       (map marshall $))
                     (clj->js $)))))
 
-(defn get-plays [id page]
-  (-> (str base-url "/plays?type=thing&subtype=boardgame&id=" id "&page=" page)
+(defn get-plays [game-id page]
+  (-> (str base-url "/plays?type=thing&subtype=boardgame&id=" game-id "&page=" page)
       h/get
       (.then parse-xml)
       (.then (fn [body]
@@ -32,6 +32,6 @@
                      (or (.. $ -plays -play) #js[])
                      (.map $ (fn [play]
                                #js[(js/parseInt (.. play -$ -id) 10)
-                                   id
+                                   game-id
                                    (js/parseInt (.. play -$ -length) 10)
                                    (some-> play .-players first .-player .-length)])))))))
