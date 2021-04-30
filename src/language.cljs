@@ -14,6 +14,7 @@
 (def string (.-string ps))
 
 (def language
+  (.-Language
    (.createLanguage
     ps
     #js{:Language
@@ -138,4 +139,4 @@
         #(regexp (js/RegExp. (-> (.-operators tokens)
                               js/Object.keys
                               (.sort (fn [a b] (- (.-length b) (.-length a))))
-                              (.join "|"))))}))
+                              (.join "|"))))})))
