@@ -2,7 +2,7 @@
   (:require
     sql
     [clojure.string :as s]
-    ["/language/index" :default lang]))
+    [language :refer [language] :rename {language lang}]))
 
 (defn simple [field {:strs [value negate]}]
   (sql/clj->sql :select :id
