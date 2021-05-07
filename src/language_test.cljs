@@ -1,10 +1,10 @@
 (ns language-test
   (:require
-    ["/language/index" :default lang]
+    [language :refer [language]]
     [cljs.test :refer [deftest is]]))
 
 (deftest parse
-  (let [actual (js->clj (.tryParse lang "-is:e (m:\"Dice Rolling\" bp=2) or (c:economic bp=4)"))
+  (let [actual (js->clj (.tryParse language "-is:e (m:\"Dice Rolling\" bp=2) or (c:economic bp=4)"))
         expected (js->clj
                   (clj->js
                    [{:negate true

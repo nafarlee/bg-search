@@ -31,7 +31,7 @@
         #(alt (-> (seq (.-Expression %)
                        whitespace
                        (.-ExpressionList %))
-                  (.map (fn [exp _ exps] (.concat #js[exp] exps))))
+                  (.map (fn [[exp _ exps]] (.concat #js[exp] exps))))
               (-> (.-Expression %)
                   (.map array)))
 
