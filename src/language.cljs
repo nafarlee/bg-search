@@ -94,7 +94,7 @@
     ps
     #js{:Language
         #(alt (-> (seq opt-whitespace
-                       (.-ExpressionList %)
+                       ^js(.-ExpressionList %)
                        opt-whitespace
                        end)
                   (.map second))
@@ -103,39 +103,39 @@
               (.result end #js[]))
         
         :ExpressionList
-        #(alt (-> (seq (.-Expression %)
+        #(alt (-> (seq ^js(.-Expression %)
                        whitespace
-                       (.-ExpressionList %))
+                       ^js(.-ExpressionList %))
                   (.map (fn [[exp _ exps]] (.concat #js[exp] exps))))
-              (-> (.-Expression %)
+              (-> ^js(.-Expression %)
                   (.map array)))
 
         :Expression
-        #(alt (.-OrChain %)
-              (.-SubExpression %))
+        #(alt ^js(.-OrChain %)
+              ^js(.-SubExpression %))
 
         :OrChain
-        #(-> (seq (.-SubExpression %)
+        #(-> (seq ^js(.-SubExpression %)
                   whitespace
-                  (.-Or %)
+                  ^js(.-Or %)
                   whitespace
-                  (.-SubExpression %)
-                  (.many (seq whitespace
-                              (.-Or %)
-                              whitespace
-                              (.-SubExpression %))))
+                  ^js(.-SubExpression %)
+                  ^js(.many (seq whitespace
+                                 ^js(.-Or %)
+                                 whitespace
+                                 ^js(.-SubExpression %))))
              (.map (fn [[f _ _ _ s r]]
                      #js{:type  "OR"
                          :terms (.concat #js[f s] (.map r (fn [_ _ _ term] term)))})))
 
         :SubExpression
-        #(alt (.-Group %)
-              (.-Term %))
+        #(alt ^js(.-Group %)
+              ^js(.-Term %))
 
         :Group
         #(-> (seq (string "(")
                   opt-whitespace
-                  (.-ExpressionList %)
+                  ^js(.-ExpressionList %)
                   opt-whitespace
                   (string ")"))
              (.map (fn [[_ _ terms]]
@@ -144,10 +144,10 @@
                        #js{:type "AND" :terms terms}))))
 
         :Term
-        #(-> (seq (-> (string "-") (.atMost 1))
-                  (alt (.-DeclarativeTerm %)
-                       (.-RelationalTerm %)
-                       (.-MetaTerm %)))
+        #(-> (seq ^js(.atMost (string "-") 1)
+                  (alt ^js(.-DeclarativeTerm %)
+                       ^js(.-RelationalTerm %)
+                       ^js(.-MetaTerm %)))
              (.map (fn [parsed]
                      (let [sign (ffirst parsed)
                            term (second parsed)]
@@ -155,7 +155,7 @@
 
         :MetaTerm
         #(-> (seq (regexp #"(?i)is:")
-                  (.-MetaTag %))
+                  ^js(.-MetaTag %))
              (.map (fn [parsed]
                      (let [value (second parsed)]
                        #js{:type "META"
@@ -165,9 +165,9 @@
         #(apply alt (map string (keys meta-tags)))
 
         :DeclarativeTerm
-        #(-> (seq (.-DeclarativeTag %)
+        #(-> (seq ^js(.-DeclarativeTag %)
                   (string ":")
-                  (.-Value %))
+                  ^js(.-Value %))
              (.map (fn [parsed]
                      (let [tag       (first parsed)
                            value     (nth parsed 2)]
@@ -176,9 +176,9 @@
                            :tag   (declarative-tags (.toLowerCase tag))}))))
 
         :RelationalTerm
-        #(-> (seq (.-RelationalTag %)
-                  (.-RelationalOperator %)
-                  (.-SimpleValue %))
+        #(-> (seq ^js(.-RelationalTag %)
+                  ^js(.-RelationalOperator %)
+                  ^js(.-SimpleValue %))
              (.map (fn [[tag operator value]]
                      #js{:type "RELATIONAL"
                          :tag (relational-tags (.toLowerCase tag))
@@ -186,8 +186,8 @@
                          :value value})))
 
         :Value
-        #(alt (.-SimpleValue %)
-              (.-QuotedValue %))
+        #(alt ^js(.-SimpleValue %)
+              ^js(.-QuotedValue %))
         
         :Or
         #(regexp #"(?i)or")
