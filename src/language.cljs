@@ -1,9 +1,84 @@
 (ns language
   (:refer-clojure :exclude [seq string])
   (:require
-    [goog.object :as g]
-    ["parsimmon" :as ps]
-    ["/language/tokens" :default tokens]))
+    [clojure.string :refer [join]]
+    ["parsimmon" :as ps]))
+
+(def ^:private operators
+  #{"="
+    ">"
+    ">="
+    "<"
+    "<="})
+
+(def ^:private meta-tags
+  {"e"                "EXPANSION"
+   "expansion"        "EXPANSION"
+   "c"                "COLLECTION"
+   "collection"       "COLLECTION"
+   "reimplementation" "REIMPLEMENTATION"
+   "r"                "REIMPLEMENTATION"})
+
+(def ^:private declarative-tags
+  {"name"     "NAME"
+   "n"        "NAME"
+   "art"      "ARTIST"
+   "a"        "ARTIST"
+   "category" "CATEGORY"
+   "c"        "CATEGORY"
+   "desc"     "DESCRIPTION"
+   "family"   "FAMILY"
+   "f"        "FAMILY"
+   "mechanic" "MECHANIC"
+   "m"        "MECHANIC"
+   "publish"  "PUBLISHER"
+   "p"        "PUBLISHER"
+   "design"   "DESIGNER"
+   "desi"     "DESIGNER"})
+
+(def ^:private relational-tags
+  {"rating-votes"      "RATING_VOTES"
+   "rv"                "RATING_VOTES"
+   "average-rating"    "AVERAGE_RATING"
+   "ar"                "AVERAGE_RATING"
+   "geek-rating"       "GEEK_RATING"
+   "gr"                "GEEK_RATING"
+   "steamdb-rating"    "STEAMDB_RATING"
+   "sr"                "STEAMDB_RATING"
+   "rating-deviation"  "RATING_DEVIATION"
+   "rd"                "RATING_DEVIATION"
+   "average-weight"    "AVERAGE_WEIGHT"
+   "aw"                "AVERAGE_WEIGHT"
+   "weight-votes"      "WEIGHT_VOTES"
+   "wv"                "WEIGHT_VOTES"
+   "year"              "YEAR"
+   "age"               "AGE"
+   "rec-players"       "RECOMMENDED_PLAYERS"
+   "rp"                "RECOMMENDED_PLAYERS"
+   "best-players"      "BEST_PLAYERS"
+   "bp"                "BEST_PLAYERS"
+   "quorum-players"    "QUORUM_PLAYERS"
+   "qp"                "QUORUM_PLAYERS"
+   "min-players"       "MINIMUM_PLAYERS"
+   "mnpr"              "MINIMUM_PLAYERS"
+   "max-players"       "MAXIMUM_PLAYERS"
+   "mxpr"              "MAXIMUM_PLAYERS"
+   "min-playtime"      "MINIMUM_PLAYTIME"
+   "mnpt"              "MINIMUM_PLAYTIME"
+   "max-playtime"      "MAXIMUM_PLAYTIME"
+   "mxpt"              "MAXIMUM_PLAYTIME"
+   "median-playtime-1" "MEDIAN_PLAYTIME_1"
+   "mdpt1"             "MEDIAN_PLAYTIME_1"
+   "median-playtime-2" "MEDIAN_PLAYTIME_2"
+   "mdpt2"             "MEDIAN_PLAYTIME_2"
+   "median-playtime-3" "MEDIAN_PLAYTIME_3"
+   "mdpt3"             "MEDIAN_PLAYTIME_3"
+   "median-playtime-4" "MEDIAN_PLAYTIME_4"
+   "mdpt4"             "MEDIAN_PLAYTIME_4"
+   "median-playtime-5" "MEDIAN_PLAYTIME_5"
+   "mdpt5"             "MEDIAN_PLAYTIME_5"
+   "median-playtime"   "MEDIAN_PLAYTIME"
+   "mdpt"              "MEDIAN_PLAYTIME"})
 
 (def alt (.-alt ps))
 (def seq (.-seq ps))
@@ -84,13 +159,10 @@
              (.map (fn [parsed]
                      (let [value (second parsed)]
                        #js{:type "META"
-                           :tag  (g/get (.. tokens -tags -meta) value)}))))
+                           :tag  (meta-tags value)}))))
 
         :MetaTag
-        #(regexp (js/RegExp. (-> (.. tokens -tags -meta)
-                                 js/Object.keys
-                                 (.join "|"))
-                             "i"))
+        #(apply alt (map string (keys meta-tags)))
 
         :DeclarativeTerm
         #(-> (seq (.-DeclarativeTag %)
@@ -101,7 +173,7 @@
                            value     (nth parsed 2)]
                        #js{:type  "DECLARATIVE"
                            :value value
-                           :tag   (g/get (.. tokens -tags -declarative) (.toLowerCase tag))}))))
+                           :tag   (declarative-tags (.toLowerCase tag))}))))
 
         :RelationalTerm
         #(-> (seq (.-RelationalTag %)
@@ -109,8 +181,8 @@
                   (.-SimpleValue %))
              (.map (fn [[tag operator value]]
                      #js{:type "RELATIONAL"
-                         :tag (g/get (.. tokens -tags -relational) (.toLowerCase tag))
-                         :operator (g/get (.-operators tokens) operator)
+                         :tag (relational-tags (.toLowerCase tag))
+                         :operator (operators operator)
                          :value value})))
 
         :Value
@@ -121,10 +193,7 @@
         #(regexp #"(?i)or")
 
         :DeclarativeTag
-        #(regexp (js/RegExp. (-> (.. tokens -tags -declarative)
-                              js/Object.keys
-                              (.join "|"))
-                          "i"))
+        #(apply alt (map string (keys declarative-tags)))
 
         :SimpleValue
         #(regexp #"[^\"][^) ]*")
@@ -133,10 +202,7 @@
         #(regexp #"\"([^\"]+)\"" 1)
 
         :RelationalTag
-        #(regexp (js/RegExp. (-> (.. tokens -tags -relational) js/Object.keys (.join "|")) "i"))
+        #(apply alt (map string (keys relational-tags)))
 
         :RelationalOperator
-        #(regexp (js/RegExp. (-> (.-operators tokens)
-                              js/Object.keys
-                              (.sort (fn [a b] (- (.-length b) (.-length a))))
-                              (.join "|"))))})))
+        #(apply alt (map string operators))})))
