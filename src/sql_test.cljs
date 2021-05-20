@@ -23,16 +23,3 @@
   (is (= {:text "select id from table where id = $1"
           :values [1]}
          (sql/realize-query (sql/clj->sql :select :id :from :table :where :id := #{1})))))
-
-(deftest ->inserts
-  (is (= (sql/generate-insert "my-table"
-                              ["id" "name"]
-                              ["id"]
-                              [[1 "banana"]
-                               [2 "pear"]])
-         {:text ["insert" "into" "my-table" "(" "id," "name" ")"
-                 "values" "(" :? "," :? ")" "," "(" :? "," :? ")"
-                 "on" "conflict" "(" "id" ")" "do" "update" "set"
-                 "id" "=" "EXCLUDED.id" ","
-                 "name" "=" "EXCLUDED.name"],
-          :values [1 "banana" 2 "pear"]})))

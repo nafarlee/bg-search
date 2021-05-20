@@ -54,26 +54,6 @@
        clj->js
        (.query database)))
 
-(defn generate-insert [table columns uniques chunks]
-  (let [chunk->row #(as-> % $
-                          (map hash-set $)
-                          (interpose "," $)
-                          (concat "(" $ ")"))
-        values     (->> chunks
-                        (map chunk->row)
-                        (interpose ",")
-                        flatten
-                        (apply clj->sql))
-        updates    (->> columns
-                        (map #(vector % := (str "EXCLUDED." %)))
-                        (interpose ",")
-                        flatten
-                        (apply clj->sql))]
-    (clj->sql :insert :into table (list columns)
-              :values values
-              :on :conflict (list uniques)
-              :do :update :set updates)))
-
 (def ^:private get-game-sql
   "SELECT
     (SELECT JSON_OBJECT_AGG(players, JSON_BUILD_OBJECT('median', median, 'count', count))
