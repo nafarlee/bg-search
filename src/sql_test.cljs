@@ -25,10 +25,14 @@
          (sql/realize-query (sql/clj->sql :select :id :from :table :where :id := #{1})))))
 
 (deftest ->inserts
-  (is (= (js->clj (toSQL "my-table"
-                         #js["id" "name"]
-                         #js["id"]
-                         (clj->js [[1 "banana"]
-                                   [2 "pear"]])))
-         ["INSERT INTO my-table (id, name)\n     VALUES ($1, $2), ($3, $4)\n     ON CONFLICT (id)\n     DO UPDATE SET id = EXCLUDED.id, name = EXCLUDED.name;"
-          [1 "banana" 2 "pear"]])))
+  (is (= (sql/generate-insert "my-table"
+                              ["id" "name"]
+                              ["id"]
+                              [[1 "banana"]
+                               [2 "pear"]])
+         {:text ["insert" "into" "my-table" "(" "id," "name" ")"
+                 "values" "(" :? "," :? ")" "," "(" :? "," :? ")"
+                 "on" "conflict" "(" "id" ")" "do" "update" "set"
+                 "id" "=" "EXCLUDED.id" ","
+                 "name" "=" "EXCLUDED.name"],
+          :values [1 "banana" 2 "pear"]})))
