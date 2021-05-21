@@ -126,7 +126,8 @@
                                  ^js(.-SubExpression %))))
              (.map (fn [[f _ _ _ s r]]
                      #js{:type  "OR"
-                         :terms (.concat #js[f s] (.map r (fn [_ _ _ term] term)))})))
+                         :terms (.concat #js[f s]
+                                         (.map r (fn [[_ _ _ term]] term)))})))
 
         :SubExpression
         #(alt ^js(.-Group %)
