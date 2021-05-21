@@ -32,3 +32,20 @@
                                        :operator "="
                                        :value "4"}]}]}]))]
     (is (= actual expected))))
+
+(deftest or-chain
+  (let [actual (js->clj (.tryParse language "n:a or n:b or n:c"))
+        expected [{"type" "OR"
+                   "terms" [{"negate" false
+                             "type" "DECLARATIVE"
+                             "value" "a"
+                             "tag" "NAME"}
+                            {"negate" false
+                             "type" "DECLARATIVE"
+                             "value" "b"
+                             "tag" "NAME"}
+                            {"negate" false
+                             "type" "DECLARATIVE"
+                             "value" "c"
+                             "tag" "NAME"}]}]]
+  (is (= actual expected))))
