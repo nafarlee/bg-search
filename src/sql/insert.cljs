@@ -1,5 +1,6 @@
 (ns sql.insert
   (:require
+    string
     [sql :refer [clj->sql]]))
 
 (defn generate [table columns uniques chunks]
@@ -21,3 +22,26 @@
               :values values
               :on :conflict (list uniques)
               :do :update :set updates)))
+
+(defn games [gs]
+  (let [columns     [:id
+                     :image
+                     :thumbnail
+                     :average_rating
+                     :bayes_rating
+                     :description
+                     :maximum_players
+                     :maximum_playtime
+                     :minimum_age
+                     :minimum_players
+                     :minimum_playtime
+                     :primary_name
+                     :rating_deviation
+                     :rating_votes
+                     :weight_votes
+                     :year]
+        game->chunk (fn [game]
+                      (map #(get game (-> % name string/snake->kebab))
+                           columns))
+        chunks      (map game->chunk (js->clj gs))]
+    (generate :games columns [:id] chunks)))
