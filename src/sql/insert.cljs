@@ -45,3 +45,12 @@
                            columns))
         chunks      (map game->chunk (js->clj gs))]
     (generate :games columns [:id] chunks)))
+
+(defn one-to-many [property games]
+  (->> games
+       js->clj
+       (mapcat #(get % property))
+       (filter some?)
+       (map (juxt #(get % "id") #(get % "value")))
+       (apply hash-set)
+       clj->js))
