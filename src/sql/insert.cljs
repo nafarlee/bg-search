@@ -54,3 +54,9 @@
        (map (juxt #(get % "id") #(get % "value")))
        (apply hash-set)
        clj->js))
+
+(defn publishers [games]
+  (generate :publishers
+            [:id :publisher]
+            [:id]
+            (one-to-many "publishers" games)))
