@@ -72,3 +72,8 @@
             [:id :family]
             [:id]
             (one-to-many games "families")))
+
+(defn artists [games]
+  (generate :artists
+            [:id :artist]
+            (one-to-many games "artists")))
