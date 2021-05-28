@@ -60,3 +60,9 @@
             [:id :publisher]
             [:id]
             (one-to-many "publishers" games)))
+
+(defn mechanics [games]
+  (generate :mechanics
+            [:id :mechanic]
+            [:id]
+            (one-to-many "mechanics" games)))
