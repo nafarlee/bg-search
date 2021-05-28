@@ -76,9 +76,11 @@
 (defn artists [games]
   (generate :artists
             [:id :artist]
+            [:id]
             (one-to-many games "artists")))
 
 (defn categories [games]
   (generate :categories
             [:id :category]
+            [:id]
             (one-to-many games "categories")))
