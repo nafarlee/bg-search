@@ -66,3 +66,9 @@
             [:id :mechanic]
             [:id]
             (one-to-many games "mechanics")))
+
+(defn families [games]
+  (generate :families
+            [:id :family]
+            [:id]
+            (one-to-many games "families")))
