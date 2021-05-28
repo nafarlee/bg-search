@@ -84,3 +84,9 @@
             [:id :category]
             [:id]
             (one-to-many games "categories")))
+
+(defn designers [games]
+  (generate :designers
+            [:id :designer]
+            [:id]
+            (one-to-many games "designers")))
