@@ -46,7 +46,7 @@
         chunks      (map game->chunk (js->clj gs))]
     (generate :games columns [:id] chunks)))
 
-(defn one-to-many [property games]
+(defn one-to-many [games property]
   (->> games
        js->clj
        (mapcat #(get % property))
@@ -59,10 +59,10 @@
   (generate :publishers
             [:id :publisher]
             [:id]
-            (one-to-many "publishers" games)))
+            (one-to-many games "publishers")))
 
 (defn mechanics [games]
   (generate :mechanics
             [:id :mechanic]
             [:id]
-            (one-to-many "mechanics" games)))
+            (one-to-many games "mechanics")))
