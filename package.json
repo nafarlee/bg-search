@@ -15,7 +15,7 @@
     "pug-lint": "2.6.0",
     "shadow-cljs": "^2.11.24",
     "source-map-support": "^0.5.19",
-    "ws": "^7.4.4"
+    "ws": "^7.4.6"
   },
   "dependencies": {
     "express": "4.17.1",
