@@ -46,14 +46,10 @@
         chunks      (map game->chunk (js->clj gs))]
     (generate :games columns [:id] chunks)))
 
-(defn one-to-many [games property]
-  (->> games
-       js->clj
-       (mapcat #(get % property))
-       (filter some?)
+(defn one-to-many [property game]
+  (->> (get game property)
        (map (juxt #(get % "id") #(get % "value")))
-       (apply hash-set)
-       clj->js))
+       set))
 
 (defn publishers [games]
   (generate :publishers
