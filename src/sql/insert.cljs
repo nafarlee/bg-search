@@ -1,5 +1,6 @@
 (ns sql.insert
   (:require
+    [clojure.set :refer [union]]
     string
     [sql :refer [clj->sql]]))
 
@@ -50,6 +51,12 @@
   (->> (get game property)
        (map (juxt #(get % "id") #(get % "value")))
        set))
+
+(defn mapset [f coll]
+  (->> coll
+       (map f)
+       (filter some?)
+       (apply union)))
 
 (defn publishers [games]
   (generate :publishers
