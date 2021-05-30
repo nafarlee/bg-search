@@ -52,6 +52,11 @@
        (map (juxt #(get % "id") #(get % "value")))
        set))
 
+(defn many-to-many [property game]
+  (->> (get game property)
+       (map #(vector (get game "id") (get % "id")))
+       set))
+
 (defn mapset [f coll]
   (->> coll
        (map f)
