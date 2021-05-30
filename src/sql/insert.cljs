@@ -62,34 +62,34 @@
   (generate :publishers
             [:id :publisher]
             [:id]
-            (one-to-many games "publishers")))
+            (mapset (partial one-to-many "publishers") games)))
 
 (defn mechanics [games]
   (generate :mechanics
             [:id :mechanic]
             [:id]
-            (one-to-many games "mechanics")))
+            (mapset (partial one-to-many "mechanics") games)))
 
 (defn families [games]
   (generate :families
             [:id :family]
             [:id]
-            (one-to-many games "families")))
+            (mapset (partial one-to-many "families") games)))
 
 (defn artists [games]
   (generate :artists
             [:id :artist]
             [:id]
-            (one-to-many games "artists")))
+            (mapset (partial one-to-many "artists") games)))
 
 (defn categories [games]
   (generate :categories
             [:id :category]
             [:id]
-            (one-to-many games "categories")))
+            (mapset (partial one-to-many "categories") games)))
 
 (defn designers [games]
   (generate :designers
             [:id :designer]
             [:id]
-            (one-to-many games "designers")))
+            (mapset (partial one-to-many "designers") games)))
