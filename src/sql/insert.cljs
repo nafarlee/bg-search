@@ -59,37 +59,37 @@
        (apply union)))
 
 (defn publishers [games]
-  (generate :publishers
-            [:id :publisher]
-            [:id]
+  (generate "publishers"
+            ["id" "publisher"]
+            ["id"]
             (mapset (partial one-to-many "publishers") games)))
 
 (defn mechanics [games]
-  (generate :mechanics
-            [:id :mechanic]
-            [:id]
+  (generate "mechanics"
+            ["id" "mechanic"]
+            ["id"]
             (mapset (partial one-to-many "mechanics") games)))
 
 (defn families [games]
-  (generate :families
-            [:id :family]
-            [:id]
+  (generate "families"
+            ["id" "family"]
+            ["id"]
             (mapset (partial one-to-many "families") games)))
 
 (defn artists [games]
-  (generate :artists
-            [:id :artist]
-            [:id]
+  (generate "artists"
+            ["id" "artist"]
+            ["id"]
             (mapset (partial one-to-many "artists") games)))
 
 (defn categories [games]
-  (generate :categories
-            [:id :category]
-            [:id]
+  (generate "categories"
+            ["id" "category"]
+            ["id"]
             (mapset (partial one-to-many "categories") games)))
 
 (defn designers [games]
-  (generate :designers
-            [:id :designer]
-            [:id]
+  (generate "designers"
+            ["id" "designer"]
+            ["id"]
             (mapset (partial one-to-many "designers") games)))
