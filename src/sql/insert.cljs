@@ -69,11 +69,25 @@
             ["id"]
             (mapset (partial one-to-many "publishers") games)))
 
+(defn games-publishers [games]
+  (let [columns ["game_id" "publisher_id"]]
+    (generate "games_publishers"
+              columns
+              columns
+              (mapset (partial many-to-many "publishers") games))))
+
 (defn mechanics [games]
   (generate "mechanics"
             ["id" "mechanic"]
             ["id"]
             (mapset (partial one-to-many "mechanics") games)))
+
+(defn games-mechanics [games]
+  (let [columns ["game_id" "mechanic_id"]]
+    (generate "games_mechanics"
+              columns
+              columns
+              (mapset (partial many-to-many "mechanics") games))))
 
 (defn families [games]
   (generate "families"
@@ -81,11 +95,25 @@
             ["id"]
             (mapset (partial one-to-many "families") games)))
 
+(defn games-families [games]
+  (let [columns ["game_id" "family_id"]]
+    (generate "games_families"
+              columns
+              columns
+              (mapset (partial many-to-many "families") games))))
+
 (defn artists [games]
   (generate "artists"
             ["id" "artist"]
             ["id"]
             (mapset (partial one-to-many "artists") games)))
+
+(defn games-artists [games]
+  (let [columns ["game_id" "artist_id"]]
+    (generate "games_artists"
+              columns
+              columns
+              (mapset (partial many-to-many "artists") games))))
 
 (defn categories [games]
   (generate "categories"
@@ -93,8 +121,22 @@
             ["id"]
             (mapset (partial one-to-many "categories") games)))
 
+(defn games-categories [games]
+  (let [columns ["game_id" "category_id"]]
+    (generate "games_categories"
+              columns
+              columns
+              (mapset (partial many-to-many "categories") games))))
+
 (defn designers [games]
   (generate "designers"
             ["id" "designer"]
             ["id"]
             (mapset (partial one-to-many "designers") games)))
+
+(defn games-designers [games]
+  (let [columns ["game_id" "designer_id"]]
+    (generate "games_designers"
+              columns
+              columns
+              (mapset (partial many-to-many "designers") games))))
