@@ -57,6 +57,15 @@
        (map #(vector (get game "id") (get % "id")))
        set))
 
+(defn many-to-many-symmetric [root leaf game]
+  (union
+   (->> (get game root)
+        (map #(vector (get game "id") (get % "id")))
+        set)
+   (->> (get game leaf)
+        (map #(vector (get % "id") (get game "id")))
+        set)))
+
 (defn mapset [f coll]
   (->> coll
        (map f)
