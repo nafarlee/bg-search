@@ -72,6 +72,14 @@
        (filter some?)
        (apply union)))
 
+(defn reimplementations [games]
+  (let [columns ["original" "reimplementation"]]
+  (generate "reimplementations"
+            columns
+            columns
+            (mapset (partial many-to-many-symmetric "reimplemented-by" "reimplements")
+                    games))))
+
 (defn publishers [games]
   (generate "publishers"
             ["id" "publisher"]
