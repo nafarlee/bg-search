@@ -80,6 +80,14 @@
             (mapset (partial many-to-many-symmetric "reimplemented-by" "reimplements")
                     games))))
 
+(defn collections [games]
+  (let [columns ["item" "collection"]]
+  (generate "collections"
+            columns
+            columns
+            (mapset (partial many-to-many-symmetric "contained-in" "contains")
+                    games))))
+
 (defn publishers [games]
   (generate "publishers"
             ["id" "publisher"]
