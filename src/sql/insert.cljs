@@ -72,6 +72,15 @@
         chunks      (map game->chunk (js->clj gs))]
     (generate :games columns [:id] chunks)))
 
+(defn alternate-names [games]
+  (let [columns ["id" "alternate_name"]]
+    (generate "alternate_names"
+              columns
+              columns
+              (mapset (fn [{:strs [id alternate-names]}]
+                        (set (map vector (repeat id) alternate-names)))
+                      games))))
+
 (defn reimplementations [games]
   (let [columns ["original" "reimplementation"]]
     (generate "reimplementations"
