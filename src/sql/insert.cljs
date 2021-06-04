@@ -190,7 +190,7 @@
               columns
               (mapset (partial many-to-many "designers") games))))
 
-(defn player_recommendations [games]
+(defn player-recommendations [games]
   (let [->range     #(if (s/ends-with? % "+")
                         (str "(" (s/replace % "+" "") ",)")
                         (str "[" % "," % "]"))
