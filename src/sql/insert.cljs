@@ -74,27 +74,27 @@
 
 (defn reimplementations [games]
   (let [columns ["original" "reimplementation"]]
-  (generate "reimplementations"
-            columns
-            columns
-            (mapset (partial many-to-many-symmetric "reimplemented-by" "reimplements")
-                    games))))
+    (generate "reimplementations"
+              columns
+              columns
+              (mapset (partial many-to-many-symmetric "reimplemented-by" "reimplements")
+                      games))))
 
 (defn collections [games]
   (let [columns ["item" "collection"]]
-  (generate "collections"
-            columns
-            columns
-            (mapset (partial many-to-many-symmetric "contained-in" "contains")
-                    games))))
+    (generate "collections"
+              columns
+              columns
+              (mapset (partial many-to-many-symmetric "contained-in" "contains")
+                      games))))
 
 (defn expansions [games]
   (let [columns ["base" "expansion"]]
-  (generate "expansions"
-            columns
-            columns
-            (mapset (partial many-to-many-symmetric "expanded-by" "expands")
-                    games))))
+    (generate "expansions"
+              columns
+              columns
+              (mapset (partial many-to-many-symmetric "expanded-by" "expands")
+                      games))))
 
 (defn publishers [games]
   (generate "publishers"
