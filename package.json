@@ -6,7 +6,7 @@
     "repl": "shadow-cljs node-repl",
     "build": "shadow-cljs compile app",
     "eslint": "eslint",
-    "start": "node app.js"
+    "start": "node --unhandled-rejections=strict app.js"
   },
   "devDependencies": {
     "eslint": "^7.18.0",
