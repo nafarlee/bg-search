@@ -1,6 +1,7 @@
 (ns sql.insert
   (:require
     [clojure.set :refer [union]]
+    [clojure.string :as s]
     string
     [sql :refer [clj->sql]]))
 
@@ -188,3 +189,17 @@
               columns
               columns
               (mapset (partial many-to-many "designers") games))))
+
+(defn player_recommendations [games]
+  (let [->range     #(if (s/ends-with? % "+")
+                        (str "(" (s/replace % "+" "") ",)")
+                        (str "[" % "," % "]"))
+        game->chunk (fn [{:strs [id community-recommended-players]}]
+                      (->> (get community-recommended-players "counts")
+                           (map (fn [[player-count {:strs [best recommended not-recommended]}]]
+                                  [id (->range player-count) best recommended not-recommended]))
+                           set))]
+    (generate "player_recommendations"
+              ["id" "players" "best" "recommended" "not_recommended"]
+              ["id" "players"]
+              (mapset game->chunk games))))
