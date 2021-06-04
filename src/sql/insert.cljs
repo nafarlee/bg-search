@@ -25,16 +25,19 @@
               :do :update :set updates)))
 
 (defn one-to-many [property game]
+  {:post [(set? %)]}
   (->> (get game property)
        (map (juxt #(get % "id") #(get % "value")))
        set))
 
 (defn many-to-many [property game]
+  {:post [(set? %)]}
   (->> (get game property)
        (map #(vector (get game "id") (get % "id")))
        set))
 
 (defn many-to-many-symmetric [root leaf game]
+  {:post [(set? %)]}
   (union
    (->> (get game root)
         (map #(vector (get game "id") (get % "id")))
@@ -44,6 +47,7 @@
         set)))
 
 (defn mapset [f coll]
+  {:post [(int? %)]}
   (->> coll
        (map f)
        (filter some?)
