@@ -203,3 +203,24 @@
               ["id" "players" "best" "recommended" "not_recommended"]
               ["id" "players"]
               (mapset game->chunk games))))
+
+(defn insert [gs]
+  (map #(% gs)
+       [games
+        alternate-names
+        reimplementations
+        collections
+        expansions
+        publishers
+        games-publishers
+        mechanics
+        games-mechanics
+        families
+        games-families
+        artists
+        games-artists
+        categories
+        games-categories
+        designers
+        games-designers
+        player-recommendations]))
