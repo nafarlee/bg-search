@@ -5,6 +5,8 @@
     [sql :refer [clj->sql]]))
 
 (defn generate [table columns uniques chunks]
+  {:post [(contains? % :text)
+          (contains? % :values)]}
   (let [chunk->row #(as-> % $
                           (map hash-set $)
                           (interpose "," $)
