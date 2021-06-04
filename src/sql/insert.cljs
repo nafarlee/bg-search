@@ -88,6 +88,14 @@
             (mapset (partial many-to-many-symmetric "contained-in" "contains")
                     games))))
 
+(defn expansions [games]
+  (let [columns ["base" "expansion"]]
+  (generate "expansions"
+            columns
+            columns
+            (mapset (partial many-to-many-symmetric "expanded-by" "expands")
+                    games))))
+
 (defn publishers [games]
   (generate "publishers"
             ["id" "publisher"]
