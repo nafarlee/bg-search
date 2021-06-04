@@ -49,7 +49,7 @@
         set)))
 
 (defn mapset [f coll]
-  {:post [(int? %)]}
+  {:post [(set? %)]}
   (->> coll
        (map f)
        (filter some?)
