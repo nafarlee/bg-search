@@ -1,6 +1,6 @@
 (ns sql-test
   (:require
-    [sql.dsl :as sd]]
+    [sql.dsl :as sd]
     [cljs.test :refer [deftest is]]))
 
 (deftest clj->sql
