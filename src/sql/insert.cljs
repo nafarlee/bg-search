@@ -1,6 +1,5 @@
 (ns sql.insert
   (:require
-    [clojure.test :refer [is]]
     [clojure.set :refer [union]]
     [clojure.string :as s]
     string
