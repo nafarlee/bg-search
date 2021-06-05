@@ -7,9 +7,9 @@
     [sql :refer [clj->sql]]))
 
 (defn generate [table columns uniques chunks]
-  {:post [(or (is (nil? %))
-              (and (is (contains? % :text))
-                   (is (contains? % :values))))]}
+  {:post [(or (nil? %)
+              (and (contains? % :text)
+                   (contains? % :values)))]}
   (when (seq chunks)
     (let [chunk->row #(as-> % $
                             (map hash-set $)
