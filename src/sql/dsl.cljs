@@ -1,4 +1,6 @@
-(ns sql.dsl)
+(ns sql.dsl
+  (:require
+    [clojure.string :as s]))
 
 (defn clj->sql [& tokens]
   (letfn [(map-token [token]
