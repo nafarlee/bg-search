@@ -1,6 +1,6 @@
 (ns sql-test
   (:require
-    [sql.dsl :refer [clj->sql]]
+    [sql.dsl :refer [clj->sql realize-query]]
     [cljs.test :refer [deftest is]]))
 
 (deftest clj->sql
@@ -21,4 +21,4 @@
 (deftest realize-query
   (is (= {:text "select id from table where id = $1"
           :values [1]}
-         (sql/realize-query (clj->sql :select :id :from :table :where :id := #{1})))))
+         (realize-query (clj->sql :select :id :from :table :where :id := #{1})))))
