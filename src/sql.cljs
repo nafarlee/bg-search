@@ -1,7 +1,7 @@
 (ns sql
   (:require
     [clojure.string :as s]
-    ["/db/insert" :refer [toSQL]]))
+    [sql.insert :refer [generate]]))
 
 (defn clj->sql [& tokens]
   (letfn [(map-token [token]
@@ -173,11 +173,11 @@
   (-> (begin database)
       (.then #(update-plays-checkpoint database play-id (inc play-page)))
       (.then (fn [_]
-               (let [[sql values] (toSQL "plays"
-                                         #js["id" "game_id" "length" "players"]
-                                         #js["id"]
-                                         plays)]
-                 (.query database sql values))))
+               (let [q (generate "plays"
+                                 ["id" "game_id" "length" "players"]
+                                 ["id"]
+                                 (js->clj plays))]
+                 (query database q))))
       (.then #(commit database))
       (.catch (fn [error] (-> (rollback database)
                               (.then #(js/Promise.reject error)))))))

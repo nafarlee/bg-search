@@ -1,7 +1,6 @@
 (ns sql-test
   (:require
     [sql]
-    ["/db/insert" :refer [toSQL]]
     [cljs.test :refer [deftest is]]))
 
 (deftest clj->sql
