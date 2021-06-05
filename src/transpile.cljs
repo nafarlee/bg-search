@@ -1,16 +1,16 @@
 (ns transpile
   (:require
-    sql
+    [sql.dsl :refer [clj->sql]]
     [clojure.string :as s]
     [language :refer [language] :rename {language lang}]))
 
 (defn simple [field {:strs [value negate]}]
-  (sql/clj->sql :select :id
+  (clj->sql :select :id
                 :from :games
                 :where field (if negate "!~~*" "~~*") #{(str "%" value "%")}))
 
 (defn junction [{:keys [table field]} {:strs [value negate]}]
-  (sql/clj->sql :select :a.id
+  (clj->sql :select :a.id
                 :from ["games a" (str "games_" table " ab") (str table " b")]
                 :where :a.id := :ab.game_id
                   :and (str "ab." field "_id") := :b.id
@@ -18,7 +18,7 @@
                 :having :bool_or (list field "~~*" #{(str "%" value "%")}) :!= (-> negate boolean str)))
 
 (defn relational [field {:strs [value operator negate]}]
-  (sql/clj->sql :select :id
+  (clj->sql :select :id
                 :from :games
                 :where (when negate :not) field operator #{value}))
 
@@ -32,21 +32,21 @@
     nil))
 
 (defn recommendation [clause {:strs [operator value negate]}]
-  (sql/clj->sql :select :a.id
+  (clj->sql :select :a.id
                 :from ["games a" "player_recommendations b"]
                 :where :a.id := :b.id
                   :and :players "&&" #{(->range operator value)} "::int4range"
                   :and (when negate :not) clause))
 
 (defn self-junction [{:keys [table join-field nullable-field]} {:strs [negate]}]
-  (sql/clj->sql :select :id
+  (clj->sql :select :id
                 :from :games
                 :left :join table
                   :on :id := join-field
                 :where nullable-field :is (when-not negate :not) :null))
 
 (defn median-playtime [player-count {:strs [operator value negate]}]
-  (sql/clj->sql :select :game_id :as :id
+  (clj->sql :select :game_id :as :id
                 :from :play_medians
                 :where :players := (str player-count)
                   :and (when negate :not) :median operator #{value}))
@@ -99,11 +99,11 @@
      :minimum-playtime    (partial relational :minimum_playtime)
      :maximum-playtime    (partial relational :maximum_playtime)
      :recommended-players (partial recommendation
-                                   (sql/clj->sql :recommended :> (list :best :+ :not_recommended)))
+                                   (clj->sql :recommended :> (list :best :+ :not_recommended)))
      :best-players        (partial recommendation
-                                   (sql/clj->sql :best :> (list :recommended :+ :not_recommended)))
+                                   (clj->sql :best :> (list :recommended :+ :not_recommended)))
      :quorum-players      (partial recommendation
-                                   (sql/clj->sql (list :best :+ :recommended)
+                                   (clj->sql (list :best :+ :recommended)
                                                  :>=
                                                  (list :not_recommended "/" :3.0 :* :7.0)))
      :median-playtime     (partial median-playtime 0)
@@ -150,11 +150,11 @@
   {:pre [(some (partial = order) exported-fields)
          (#{"ASC" "DESC"} direction)]}
   (if (empty? query)
-    (sql/clj->sql :select :distinct exported-fields
+    (clj->sql :select :distinct exported-fields
                   :from :games
                   :order :by order direction
                   :limit :25 :offset #{offset})
-    (sql/clj->sql :select :distinct exported-fields
+    (clj->sql :select :distinct exported-fields
                   :from (list (to-sql (js->clj (.tryParse lang query)))) :as :GameSubquery
                     :natural :inner :join :games
                   :order :by order direction

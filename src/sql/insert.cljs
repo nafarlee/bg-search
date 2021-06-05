@@ -3,7 +3,7 @@
     [clojure.set :refer [union]]
     [clojure.string :as s]
     string
-    [sql :refer [clj->sql]]))
+    [sql.dsl :refer [clj->sql]]))
 
 (defn generate [table columns uniques chunks]
   {:post [(or (nil? %)
