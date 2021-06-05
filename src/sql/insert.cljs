@@ -1,31 +1,34 @@
 (ns sql.insert
   (:require
+    [clojure.test :refer [is]]
     [clojure.set :refer [union]]
     [clojure.string :as s]
     string
     [sql :refer [clj->sql]]))
 
 (defn generate [table columns uniques chunks]
-  {:post [(contains? % :text)
-          (contains? % :values)]}
-  (let [chunk->row #(as-> % $
-                          (map hash-set $)
-                          (interpose "," $)
-                          (concat "(" $ ")"))
-        values     (->> chunks
-                        (map chunk->row)
-                        (interpose ",")
-                        flatten
-                        (apply clj->sql))
-        updates    (->> columns
-                        (map #(vector % := (str "EXCLUDED." %)))
-                        (interpose ",")
-                        flatten
-                        (apply clj->sql))]
-    (clj->sql :insert :into table (list columns)
-              :values values
-              :on :conflict (list uniques)
-              :do :update :set updates)))
+  {:post [(or (is (nil? %))
+              (and (is (contains? % :text))
+                   (is (contains? % :values))))]}
+  (when (seq chunks)
+    (let [chunk->row #(as-> % $
+                            (map hash-set $)
+                            (interpose "," $)
+                            (concat "(" $ ")"))
+          values     (->> chunks
+                          (map chunk->row)
+                          (interpose ",")
+                          flatten
+                          (apply clj->sql))
+          updates    (->> columns
+                          (map #(vector % := (str "EXCLUDED." %)))
+                          (interpose ",")
+                          flatten
+                          (apply clj->sql))]
+      (clj->sql :insert :into table (list columns)
+                :values values
+                :on :conflict (list uniques)
+                :do :update :set updates))))
 
 (defn one-to-many [property game]
   {:post [(set? %)]}
@@ -205,8 +208,7 @@
               (mapset game->chunk games))))
 
 (defn insert [gs]
-  (map #(% gs)
-       [games
+  (->> [games
         alternate-names
         reimplementations
         collections
@@ -223,4 +225,6 @@
         games-categories
         designers
         games-designers
-        player-recommendations]))
+        player-recommendations]
+       (map #(% gs))
+       (remove nil?)))
