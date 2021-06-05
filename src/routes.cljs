@@ -2,7 +2,8 @@
   (:require
    ["url" :as url]
    [transpile :refer [transpile]]
-   ["/db/insert" :refer [insert]]
+   [sql.insert :refer [insert]]
+   [sql :refer [query]]
    [promise :refer [then-not]]
    [api :as api]
    [sql :as sql]
@@ -77,11 +78,12 @@
                              (-> (sql/begin database)
                                  (.then #(sql/update-game-checkpoint database new-checkpoint))
                                  (.then (fn []
-                                          (-> games
-                                              insert
-                                              (.map (fn [[sql values]]
-                                                      (.query database sql values)))
-                                              js/Promise.all)))
+                                          (->> games
+                                               js->clj
+                                               insert
+                                               (map (partial query database))
+                                               clj->js
+                                               js/Promise.all)))
                                  (.then #(sql/commit database))
                                  (.then #(prn :success checkpoint (dec new-checkpoint)))
                                  (.then #(-> res (.status 200) .send))
