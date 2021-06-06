@@ -6,7 +6,7 @@
     [http :as h]
     [marshall :refer [marshall]]))
 
-(def ^:private base-url "https://www.boardgamegeek.com/xmlapi2")
+(def ^:private base-url "https://www.boardgamegeek.com")
 
 (defn- construct-url [base path qp]
   (let [u (URL. path base)]
@@ -17,7 +17,9 @@
   (js->clj (.parse fxp xml #js{:ignoreAttributes false :attributeNamePrefix "$_"})))
 
 (defn get-games [ids]
-  (-> (str base-url "/thing?stats=1&type=boardgame,boardgameexpansion&id=" (join "," ids))
+  (-> (construct-url base-url "xmlapi2/thing" {:stats 1
+                                               :type ["boardgame" "boardgameexpansion"]
+                                               :id ids})
       h/get
       (.then #(as-> % $
                     (parse-xml $)
@@ -28,7 +30,10 @@
                     (clj->js $)))))
 
 (defn get-plays [game-id page]
-  (-> (str base-url "/plays?type=thing&subtype=boardgame&id=" game-id "&page=" page)
+  (-> (construct-url base-url "xmlapi2/plays" {:type "thing"
+                                               :subtype "boardgame"
+                                               :id game-id
+                                               :page page})
       h/get
       (.then (fn [xml]
                (as-> xml <>
