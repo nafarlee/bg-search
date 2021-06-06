@@ -30,19 +30,20 @@
                     (clj->js $)))))
 
 (defn get-plays [game-id page]
-  (-> (construct-url base-url "xmlapi2/plays" {:type "thing"
-                                               :subtype "boardgame"
-                                               :id game-id
-                                               :page page})
-      h/get
-      (.then (fn [xml]
-               (as-> xml <>
-                     (parse-xml <>)
-                     (get-in <> ["plays" "play"] [])
-                     (map #(vector
-                            (js/parseInt (get % "$_id") 10)
-                            game-id
-                            (js/parseInt (get % "$_length") 10)
-                            (some-> % (get-in ["players" "player"]) count))
-                          <>)
-                     (clj->js <>))))))
+  (let [url         (construct-url base-url
+                                   "xmlapi2/plays"
+                                   {:type "thing"
+                                    :subtype "boardgame"
+                                    :id game-id
+                                    :page page})
+        play->chunk (fn [{:strs [$_id $_length players]}]
+                      [(js/parseInt $_id 10)
+                       game-id
+                       (js/parseInt $_length 10)
+                       (some-> players (get "player") count)])]
+    (.then (h/get url)
+           #(as-> % $
+                  (parse-xml $)
+                  (get-in $ ["plays" "play"] [])
+                  (map play->chunk $)
+                  (clj->js $)))))
