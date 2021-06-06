@@ -8,7 +8,7 @@
 
 (def ^:private base-url "https://www.boardgamegeek.com/xmlapi2")
 
-(defn construct-url [base path qp]
+(defn- construct-url [base path qp]
   (let [u (URL. path base)]
     (set! (.-search u) (URLSearchParams. (clj->js qp)))
     (.toString u)))
