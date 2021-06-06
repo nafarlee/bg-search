@@ -8,15 +8,13 @@
 (def ^:private base-url "https://www.boardgamegeek.com/xmlapi2")
 
 (defn- parse-xml [xml]
-  (.parse fxp xml #js{:ignoreAttributes    false
-                      :attributeNamePrefix "$_"}))
+  (js->clj (.parse fxp xml #js{:ignoreAttributes false :attributeNamePrefix "$_"})))
 
 (defn get-games [ids]
   (-> (str base-url "/thing?stats=1&type=boardgame,boardgameexpansion&id=" (join "," ids))
       h/get
       (.then #(as-> % $
                     (parse-xml $)
-                    (js->clj $)
                     (get-in $ ["items" "item"])
                     (if (map? $)
                       [(marshall $)]
@@ -29,7 +27,6 @@
       (.then (fn [xml]
                (as-> xml <>
                      (parse-xml <>)
-                     (js->clj <>)
                      (get-in <> ["plays" "play"] [])
                      (map #(vector
                             (js/parseInt (get % "$_id") 10)
