@@ -77,13 +77,12 @@
                                  (.then #(-> res (.status 200) .send)))
                              (-> (sql/begin database)
                                  (.then #(sql/update-game-checkpoint database new-checkpoint))
-                                 (.then (fn []
-                                          (->> games
-                                               js->clj
-                                               insert
-                                               (map (partial query database))
-                                               clj->js
-                                               js/Promise.all)))
+                                 (.then #(->> games
+                                              js->clj
+                                              insert
+                                              (map (partial query database))
+                                              clj->js
+                                              js/Promise.all))
                                  (.then #(sql/commit database))
                                  (.then #(prn :success checkpoint (dec new-checkpoint)))
                                  (.then #(-> res (.status 200) .send))
