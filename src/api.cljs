@@ -1,11 +1,17 @@
 (ns api
   (:require
     ["fast-xml-parser" :as fxp]
+    ["url" :refer [URL URLSearchParams]]
     [clojure.string :refer [join]]
     [http :as h]
     [marshall :refer [marshall]]))
 
 (def ^:private base-url "https://www.boardgamegeek.com/xmlapi2")
+
+(defn construct-url [base path qp]
+  (let [u (URL. path base)]
+    (set! (.-search u) (URLSearchParams. (clj->js qp)))
+    (.toString u)))
 
 (defn- parse-xml [xml]
   (js->clj (.parse fxp xml #js{:ignoreAttributes false :attributeNamePrefix "$_"})))
