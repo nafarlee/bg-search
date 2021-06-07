@@ -87,7 +87,7 @@
     (generate "alternate_names"
               columns
               columns
-              (mapset (fn [{:strs [id alternate-names]}]
+              (mapset (fn [{:keys [id alternate-names]}]
                         (set (map vector (repeat id) alternate-names)))
                       games))))
 
