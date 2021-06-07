@@ -146,7 +146,7 @@
   (generate "families"
             ["id" "family"]
             ["id"]
-            (mapset (partial one-to-many "families") games)))
+            (mapset (partial one-to-many :families) games)))
 
 (defn games-families [games]
   (let [columns ["game_id" "family_id"]]
