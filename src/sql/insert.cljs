@@ -32,7 +32,7 @@
 (defn one-to-many [property game]
   {:post [(set? %)]}
   (->> (get game property)
-       (map (juxt #(get % "id") #(get % "value")))
+       (map (juxt :id :value))
        set))
 
 (defn many-to-many [property game]
@@ -120,7 +120,7 @@
   (generate "publishers"
             ["id" "publisher"]
             ["id"]
-            (mapset (partial one-to-many "publishers") games)))
+            (mapset (partial one-to-many :publishers) games)))
 
 (defn games-publishers [games]
   (let [columns ["game_id" "publisher_id"]]
