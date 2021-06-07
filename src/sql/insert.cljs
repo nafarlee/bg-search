@@ -179,7 +179,7 @@
     (generate "games_categories"
               columns
               columns
-              (mapset (partial many-to-many "categories") games))))
+              (mapset (partial many-to-many :categories) games))))
 
 (defn designers [games]
   (generate "designers"
