@@ -104,7 +104,7 @@
     (generate "collections"
               columns
               columns
-              (mapset (partial many-to-many-symmetric "contained-in" "contains")
+              (mapset (partial many-to-many-symmetric :contained-in :contains)
                       games))))
 
 (defn expansions [games]
