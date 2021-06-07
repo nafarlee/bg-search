@@ -153,7 +153,7 @@
     (generate "games_families"
               columns
               columns
-              (mapset (partial many-to-many "families") games))))
+              (mapset (partial many-to-many :families) games))))
 
 (defn artists [games]
   (generate "artists"
