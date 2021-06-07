@@ -78,7 +78,6 @@
                              (-> (sql/begin database)
                                  (.then #(sql/update-game-checkpoint database new-checkpoint))
                                  (.then #(->> games
-                                              js->clj
                                               insert
                                               (map (partial query database))
                                               clj->js
