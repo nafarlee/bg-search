@@ -62,6 +62,7 @@
   (let [columns     ["id"
                      "primary_name"
                      "year"
+                     "last_updated"
                      "average_rating"
                      "bayes_rating"
                      "rating_votes"
