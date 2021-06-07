@@ -36,7 +36,7 @@
                 (then-not (api/get-plays play-id play-page)
                   #(err/generic % res 500)
                   (fn [plays]
-                    (let [positive-plays (.filter plays #(-> % (aget 2) pos?))]
+                    (let [positive-plays (filter (fn [[_ _ play-time]] (pos? play-time)) plays)]
                       (cond
                         (empty? plays)
                         (-> (sql/update-plays-checkpoint database (inc play-id) 1)

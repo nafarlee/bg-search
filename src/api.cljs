@@ -44,5 +44,4 @@
            #(as-> % $
                   (parse-xml $)
                   (get-in $ ["plays" "play"] [])
-                  (map play->chunk $)
-                  (clj->js $)))))
+                  (map play->chunk $)))))

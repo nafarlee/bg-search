@@ -128,12 +128,10 @@
 (defn save-plays [database play-id play-page plays]
   (-> (begin database)
       (.then #(update-plays-checkpoint database play-id (inc play-page)))
-      (.then (fn [_]
-               (let [q (generate "plays"
-                                 ["id" "game_id" "length" "players"]
-                                 ["id"]
-                                 (js->clj plays))]
-                 (query database q))))
+      (.then #(query database (generate "plays"
+                                         ["id" "game_id" "length" "players"]
+                                         ["id"]
+                                         plays)))
       (.then #(commit database))
       (.catch (fn [error] (-> (rollback database)
                               (.then #(js/Promise.reject error)))))))
