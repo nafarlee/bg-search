@@ -60,22 +60,22 @@
 
 (defn games [gs]
   (let [columns     ["id"
-                     "image"
-                     "thumbnail"
+                     "primary_name"
+                     "year"
                      "average_rating"
                      "bayes_rating"
-                     "description"
+                     "rating_votes"
+                     "rating_deviation"
+                     "average_weight"
+                     "weight_votes"
+                     "minimum_players"
                      "maximum_players"
+                     "minimum_playtime"
                      "maximum_playtime"
                      "minimum_age"
-                     "minimum_players"
-                     "minimum_playtime"
-                     "primary_name"
-                     "rating_deviation"
-                     "rating_votes"
-                     "weight_votes"
-                     "average_weight"
-                     "year"]
+                     "image"
+                     "thumbnail"
+                     "description"]
         game->chunk (fn [game]
                       (map #(get game (keyword (string/snake->kebab %)))
                            columns))
