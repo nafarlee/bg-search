@@ -198,9 +198,9 @@
   (let [->range     #(if (s/ends-with? % "+")
                         (str "(" (s/replace % "+" "") ",)")
                         (str "[" % "," % "]"))
-        game->chunk (fn [{:strs [id community-recommended-players]}]
-                      (->> (get community-recommended-players "counts")
-                           (map (fn [[player-count {:strs [best recommended not-recommended]}]]
+        game->chunk (fn [{:keys [id community-recommended-players]}]
+                      (->> (:counts community-recommended-players)
+                           (map (fn [[player-count {:keys [best recommended not-recommended]}]]
                                   [id (->range player-count) best recommended not-recommended]))
                            set))]
     (generate "player_recommendations"
