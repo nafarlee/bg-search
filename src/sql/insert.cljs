@@ -45,10 +45,10 @@
   {:post [(set? %)]}
   (union
    (->> (get game root)
-        (map #(vector (get game "id") (get % "id")))
+        (map #(vector (:id game) (:id %)))
         set)
    (->> (get game leaf)
-        (map #(vector (get % "id") (get game "id")))
+        (map #(vector (:id %) (:id game)))
         set)))
 
 (defn mapset [f coll]
@@ -96,7 +96,7 @@
     (generate "reimplementations"
               columns
               columns
-              (mapset (partial many-to-many-symmetric "reimplemented-by" "reimplements")
+              (mapset (partial many-to-many-symmetric :reimplemented-by :reimplements)
                       games))))
 
 (defn collections [games]
