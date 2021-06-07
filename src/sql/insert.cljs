@@ -185,7 +185,7 @@
   (generate "designers"
             ["id" "designer"]
             ["id"]
-            (mapset (partial one-to-many "designers") games)))
+            (mapset (partial one-to-many :designers) games)))
 
 (defn games-designers [games]
   (let [columns ["game_id" "designer_id"]]
