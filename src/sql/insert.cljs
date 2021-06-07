@@ -45,10 +45,10 @@
   {:post [(set? %)]}
   (union
    (->> (get game root)
-        (map #(vector (:id game) (:id %)))
+        (map (juxt (constantly (:id game)) :id))
         set)
    (->> (get game leaf)
-        (map #(vector (:id %) (:id game)))
+        (map (juxt :id (constantly (:id game))))
         set)))
 
 (defn mapset [f coll]
