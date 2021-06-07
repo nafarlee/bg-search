@@ -26,8 +26,7 @@
                     (get-in $ ["items" "item"])
                     (if (map? $)
                       [(marshall $)]
-                      (map marshall $))
-                    (clj->js $)))))
+                      (map marshall $))))))
 
 (defn get-plays [game-id page]
   (let [url         (construct-url base-url
