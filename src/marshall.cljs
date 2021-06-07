@@ -25,7 +25,7 @@
    3
 
    :last-updated
-   (.toString (js/Date.))
+   (.toISOString (js/Date.))
 
    :id
    (get-int-in game ["$_id"])
