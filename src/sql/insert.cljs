@@ -112,7 +112,7 @@
     (generate "expansions"
               columns
               columns
-              (mapset (partial many-to-many-symmetric "expanded-by" "expands")
+              (mapset (partial many-to-many-symmetric :expanded-by :expands)
                       games))))
 
 (defn publishers [games]
