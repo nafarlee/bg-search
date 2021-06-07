@@ -192,7 +192,7 @@
     (generate "games_designers"
               columns
               columns
-              (mapset (partial many-to-many "designers") games))))
+              (mapset (partial many-to-many :designers) games))))
 
 (defn player-recommendations [games]
   (let [->range     #(if (s/ends-with? % "+")
