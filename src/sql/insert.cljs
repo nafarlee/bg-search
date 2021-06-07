@@ -159,7 +159,7 @@
   (generate "artists"
             ["id" "artist"]
             ["id"]
-            (mapset (partial one-to-many "artists") games)))
+            (mapset (partial one-to-many :artists) games)))
 
 (defn games-artists [games]
   (let [columns ["game_id" "artist_id"]]
