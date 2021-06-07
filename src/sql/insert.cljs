@@ -140,7 +140,7 @@
     (generate "games_mechanics"
               columns
               columns
-              (mapset (partial many-to-many "mechanics") games))))
+              (mapset (partial many-to-many :mechanics) games))))
 
 (defn families [games]
   (generate "families"
