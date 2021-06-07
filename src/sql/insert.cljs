@@ -172,7 +172,7 @@
   (generate "categories"
             ["id" "category"]
             ["id"]
-            (mapset (partial one-to-many "categories") games)))
+            (mapset (partial one-to-many :categories) games)))
 
 (defn games-categories [games]
   (let [columns ["game_id" "category_id"]]
