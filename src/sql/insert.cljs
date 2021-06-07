@@ -74,6 +74,7 @@
                      "rating_deviation"
                      "rating_votes"
                      "weight_votes"
+                     "average_weight"
                      "year"]
         game->chunk (fn [game]
                       (map #(get game (keyword (string/snake->kebab %)))
