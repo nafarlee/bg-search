@@ -38,7 +38,7 @@
 (defn many-to-many [property game]
   {:post [(set? %)]}
   (->> (get game property)
-       (map #(vector (get game "id") (get % "id")))
+       (map (juxt (constantly (:id game)) :id))
        set))
 
 (defn many-to-many-symmetric [root leaf game]
