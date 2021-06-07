@@ -133,7 +133,7 @@
   (generate "mechanics"
             ["id" "mechanic"]
             ["id"]
-            (mapset (partial one-to-many "mechanics") games)))
+            (mapset (partial one-to-many :mechanics) games)))
 
 (defn games-mechanics [games]
   (let [columns ["game_id" "mechanic_id"]]
