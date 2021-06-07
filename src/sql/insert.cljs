@@ -76,9 +76,9 @@
                      "weight_votes"
                      "year"]
         game->chunk (fn [game]
-                      (map #(get game (string/snake->kebab %))
+                      (map #(get game (keyword (string/snake->kebab %)))
                            columns))
-        chunks      (map game->chunk (js->clj gs))]
+        chunks      (map game->chunk gs)]
     (generate "games" columns ["id"] chunks)))
 
 (defn alternate-names [games]
