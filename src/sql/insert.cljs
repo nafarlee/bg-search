@@ -127,7 +127,7 @@
     (generate "games_publishers"
               columns
               columns
-              (mapset (partial many-to-many "publishers") games))))
+              (mapset (partial many-to-many :publishers) games))))
 
 (defn mechanics [games]
   (generate "mechanics"
