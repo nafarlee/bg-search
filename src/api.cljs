@@ -9,14 +9,22 @@
 (def ^:private base-url "https://www.boardgamegeek.com")
 
 (defn- construct-url [base path qp]
+  {:pre [(string? base)
+         (string? path)
+         (map? qp)]
+   :post [(string? %)]}
   (let [u (URL. path base)]
     (set! (.-search u) (URLSearchParams. (clj->js qp)))
     (.toString u)))
 
 (defn- parse-xml [xml]
+  {:pre [(string? xml)]
+   :post [(map? %)]}
   (js->clj (.parse fxp xml #js{:ignoreAttributes false :attributeNamePrefix "$_"})))
 
 (defn get-games [ids]
+  {:pre [(sequential? ids)]
+   :post [(vector? %)]}
   (-> (construct-url base-url "xmlapi2/thing" {:stats 1
                                                :type ["boardgame" "boardgameexpansion"]
                                                :id ids})
@@ -29,6 +37,9 @@
                       (map marshall $))))))
 
 (defn get-plays [game-id page]
+  {:pre [(string? game-id)
+         (string? page)]
+   :post [(vector? %)]}
   (let [url         (construct-url base-url
                                    "xmlapi2/plays"
                                    {:type "thing"
