@@ -38,9 +38,9 @@
                       (map marshall $))))))
 
 (defn get-plays [game-id page]
-  {:pre [(string? game-id)
-         (string? page)]
-   :post [(vector? %)]}
+  {:pre [(pos-int? game-id)
+         (pos-int? page)]
+   :post [(js-promise? %)]}
   (let [url         (construct-url base-url
                                    "xmlapi2/plays"
                                    {:type "thing"
