@@ -66,7 +66,7 @@
   (let [database (.-database req)]
     (-> (sql/get-game-checkpoint database)
         (.then (fn [checkpoint]
-                 (let [new-checkpoint (+ checkpoint 500)]
+                 (let [new-checkpoint (+ checkpoint 200)]
                    (-> (api/get-games (range checkpoint new-checkpoint))
                        (then-not
                          #(-> res (.status 500) .send)
