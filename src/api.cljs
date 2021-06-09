@@ -2,6 +2,7 @@
   (:require
     ["fast-xml-parser" :as fxp]
     ["url" :refer [URL URLSearchParams]]
+    [promise :refer [js-promise?]]
     [clojure.string :refer [join]]
     [http :as h]
     [marshall :refer [marshall]]))
@@ -24,7 +25,7 @@
 
 (defn get-games [ids]
   {:pre [(sequential? ids)]
-   :post [(vector? %)]}
+   :post [(js-promise? %)]}
   (-> (construct-url base-url "xmlapi2/thing" {:stats 1
                                                :type ["boardgame" "boardgameexpansion"]
                                                :id ids})
