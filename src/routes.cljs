@@ -4,7 +4,7 @@
    [transpile :refer [transpile]]
    [sql.insert :refer [insert]]
    [sql :refer [query]]
-   [promise :refer [then-not]]
+   [promise :refer [then-not js-promise?]]
    [api :as api]
    [sql :as sql]
    [error :as err]
@@ -63,6 +63,7 @@
                                   (.catch #(err/generic % res 500))))))))))))))))))
 
 (defn pull [req res]
+  {:post [(js-promise? %)]}
   (let [database (.-database req)]
     (-> (sql/get-game-checkpoint database)
         (.then (fn [checkpoint]
