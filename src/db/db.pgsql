@@ -198,3 +198,11 @@ CREATE TABLE games_designers (
   designer_id INTEGER REFERENCES designers ON DELETE RESTRICT,
   PRIMARY KEY (game_id, designer_id)
 );
+
+DROP TABLE IF EXISTS player_collections CASCADE;
+CREATE TABLE player_collections (
+  username TEXT,
+  game_id INTEGER REFERENCES games ON DELETE CASCADE,
+  own BOOLEAN,
+  PRIMARY KEY (username, game_id)
+);
