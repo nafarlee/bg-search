@@ -28,6 +28,7 @@
       h/get
       (.then (fn [res]
                (as-> res $
+                     (h/unwrap $)
                      (parse-xml $)
                      (get-in $ ["items" "item"])
                      (map #(hash-map :id (js/parseInt (get % "$_objectid") 10)
@@ -42,6 +43,7 @@
                                                :id ids})
       h/get
       (.then #(as-> % $
+                    (h/unwrap $)
                     (parse-xml $)
                     (get-in $ ["items" "item"])
                     (if (map? $)
@@ -65,6 +67,7 @@
                        (some-> players (get "player") count)])]
     (.then (h/get url)
            #(as-> % $
+                  (h/unwrap $)
                   (parse-xml $)
                   (get-in $ ["plays" "play"] [])
                   (map play->chunk $)))))

@@ -5,10 +5,9 @@
 (defn- success? [code]
   (and (>= code 200) (< code 300)))
 
-(defn- handle-response [on-success on-error res]
-  (let [chunks      #js[]
-        status-code (.-statusCode res)
-        cb          (if (success? status-code) on-success on-error)]
+(defn- handle-response [on-success res]
+  (let [chunks #js[]
+        cb     #(on-success {:body % :status (.-statusCode res)})]
     (doto res
           (.on "data" #(.push chunks %))
           (.on "end" #(-> chunks
@@ -19,7 +18,7 @@
 (defn get [url]
   (js/Promise.
    (fn [fulfill reject]
-     (-> (js-https/get url (partial handle-response fulfill reject))
+     (-> (js-https/get url (partial handle-response fulfill))
          (.on "error" reject)))))
 
 (defn unwrap [{:keys [status body] :as response}]
