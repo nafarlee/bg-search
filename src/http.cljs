@@ -21,3 +21,8 @@
    (fn [fulfill reject]
      (-> (js-https/get url (partial handle-response fulfill reject))
          (.on "error" reject)))))
+
+(defn unwrap [{:keys [status body] :as response}]
+  (if (success? status)
+    body
+    (throw response)))
