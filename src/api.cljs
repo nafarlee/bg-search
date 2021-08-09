@@ -23,6 +23,17 @@
    :post [(map? %)]}
   (js->clj (.parse fxp xml #js{:ignoreAttributes false :attributeNamePrefix "$_"})))
 
+(defn get-collection [username]
+  (-> (construct-url base-url "xmlapi2/collection" {:brief 1 :username username})
+      h/get
+      (.then (fn [res]
+               (as-> res $
+                     (parse-xml $)
+                     (get-in $ ["items" "item"])
+                     (map #(hash-map :id (js/parseInt (get % "$_objectid") 10)
+                                     :own (== "1" (get-in % ["status" "$_own"])))
+                          $))))))
+
 (defn get-games [ids]
   {:pre [(sequential? ids)]
    :post [(js-promise? %)]}
