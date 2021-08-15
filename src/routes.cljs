@@ -139,12 +139,10 @@
                                    :nextURL   (next-url req (.-rows %))})))))
 
 (defn pull-collection [req res]
-  (-> (.. req -query -username)
-      api/get-collection
-      (.then clj->js)
-      (.then #(-> res
-                  (.status 200)
-                  (.send %)))
-      (.catch #(-> res
-                   (.status 500)
-                   (.send "Could not pull collection information")))))
+  (let [username (.. req -query -username)
+        database (.-database req)]
+    (-> (api/get-collection username)
+        (.catch #(error res 500 "Could not get collection" %))
+        (.then #(sql/save-collection database %))
+        (.catch #(error res 500 "Could not save collection to database" %))
+        (.then #(success res)))))
