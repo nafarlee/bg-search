@@ -131,3 +131,14 @@
                                    :direction direction
                                    :games     (.-rows %)
                                    :nextURL   (next-url req (.-rows %))})))))
+
+(defn pull-collection [req res]
+  (-> (.. req -query -username)
+      api/get-collection
+      (.then clj->js)
+      (.then #(-> res
+                  (.status 200)
+                  (.send %)))
+      (.catch #(-> res
+                   (.status 500)
+                   (.send "Could not pull collection information")))))
