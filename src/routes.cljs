@@ -15,6 +15,12 @@
       (.status 200)
       .send))
 
+(defn error [res status message js-error]
+  (js/console.log js-error)
+  (-> res
+      (.status status)
+      (.send message)))
+
 (defn pull-plays [req res]
   (let [database           (.-database req)
         last-game-p        (sql/get-last-game database)
