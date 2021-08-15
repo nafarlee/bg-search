@@ -51,6 +51,12 @@
                 :where :players := (str player-count)
                   :and (when negate :not) :median operator #{value}))
 
+(defn own [{:strs [value negate]}]
+  (clj->sql :select :game_id :as :id
+            :from :player_collections
+            :where :username := #{value}
+              :and (when negate :not) :own := :TRUE))
+
 
 (def exported-fields
   ["id"
@@ -112,6 +118,7 @@
      :median-playtime-3   (partial median-playtime 3)
      :median-playtime-4   (partial median-playtime 4)
      :median-playtime-5   (partial median-playtime 5)
+     :own                 own
      :reimplementation    (partial self-junction {:table "reimplementations"
                                                   :join-field "reimplementation"
                                                   :nullable-field "original"})

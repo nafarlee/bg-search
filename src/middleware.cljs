@@ -1,5 +1,7 @@
 (ns middleware
   (:require
+    [clojure.string :refer [join]]
+    [clojure.set :refer [difference]]
     ["pg" :refer [Client]]
     [promise :refer [then-not]]
     [error :as err]
@@ -19,3 +21,14 @@
   (fn [req res]
     (.set res header value)
     (handler req res)))
+
+(defn with-required-query-parameters [handler required]
+  (fn [req res]
+    (let [qps  (set (keys (js->clj (.-query req))))
+          diff (difference required qps)]
+      (if (= diff #{})
+        (handler req res)
+        (-> res
+            (.status 422)
+            (.send (str "Missing required query parameters: "
+                        (join ", " diff))))))))

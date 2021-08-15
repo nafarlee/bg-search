@@ -2,7 +2,7 @@
   (:require
     ["fast-xml-parser" :as fxp]
     ["url" :refer [URL URLSearchParams]]
-    [promise :refer [js-promise?]]
+    [promise :refer [js-promise? wait]]
     [clojure.string :refer [join]]
     [http :as h]
     [marshall :refer [marshall]]))
@@ -23,6 +23,22 @@
    :post [(map? %)]}
   (js->clj (.parse fxp xml #js{:ignoreAttributes false :attributeNamePrefix "$_"})))
 
+(defn get-collection [username]
+  (-> (construct-url base-url "xmlapi2/collection" {:brief 1 :username username})
+      h/get
+      (.then (fn [res]
+               (case (:status res)
+                     202 (.then (wait 5000) #(get-collection username))
+                     200 (as-> res $
+                               (:body $)
+                               (parse-xml $)
+                               (get-in $ ["items" "item"])
+                               (map #(hash-map :id  (js/parseInt (get % "$_objectid") 10)
+                                               :username username
+                                               :own (== "1" (get-in % ["status" "$_own"])))
+                                    $))
+                     (throw res))))))
+
 (defn get-games [ids]
   {:pre [(sequential? ids)]
    :post [(js-promise? %)]}
@@ -31,6 +47,7 @@
                                                :id ids})
       h/get
       (.then #(as-> % $
+                    (h/unwrap $)
                     (parse-xml $)
                     (get-in $ ["items" "item"])
                     (if (map? $)
@@ -54,6 +71,7 @@
                        (some-> players (get "player") count)])]
     (.then (h/get url)
            #(as-> % $
+                  (h/unwrap $)
                   (parse-xml $)
                   (get-in $ ["plays" "play"] [])
                   (map play->chunk $)))))

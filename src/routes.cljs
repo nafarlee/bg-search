@@ -15,6 +15,12 @@
       (.status 200)
       .send))
 
+(defn error [res status message js-error]
+  (js/console.log js-error)
+  (-> res
+      (.status status)
+      (.send message)))
+
 (defn pull-plays [req res]
   (let [database           (.-database req)
         last-game-p        (sql/get-last-game database)
@@ -131,3 +137,12 @@
                                    :direction direction
                                    :games     (.-rows %)
                                    :nextURL   (next-url req (.-rows %))})))))
+
+(defn pull-collection [req res]
+  (let [username (.. req -query -username)
+        database (.-database req)]
+    (-> (api/get-collection username)
+        (.catch #(error res 500 "Could not get collection" %))
+        (.then #(sql/save-collection database %))
+        (.catch #(error res 500 "Could not save collection to database" %))
+        (.then #(success res)))))

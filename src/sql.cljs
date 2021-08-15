@@ -135,3 +135,14 @@
       (.then #(commit database))
       (.catch (fn [error] (-> (rollback database)
                               (.then #(js/Promise.reject error)))))))
+
+(defn save-collection [database collection-maps]
+  (query database
+         (generate "player_collections"
+                   ["username" "game_id" "last_updated" "own"]
+                   ["username" "game_id"]
+                   (map #(vector (:username %)
+                                 (:id %)
+                                 (.toISOString (js/Date.))
+                                 (:own %))
+                        collection-maps))))
