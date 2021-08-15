@@ -203,6 +203,7 @@ DROP TABLE IF EXISTS player_collections CASCADE;
 CREATE TABLE player_collections (
   username TEXT,
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
+  last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   own BOOLEAN,
   PRIMARY KEY (username, game_id)
 );
