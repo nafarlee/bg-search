@@ -24,7 +24,7 @@
 
 (defn with-required-query-parameters [handler required]
   (fn [req res]
-    (let [qps  (hash-set (js->clj (.-query req)))
+    (let [qps  (set (keys (js->clj (.-query req))))
           diff (difference required qps)]
       (if (= diff #{})
         (handler req res)
