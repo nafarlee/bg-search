@@ -135,3 +135,11 @@
       (.then #(commit database))
       (.catch (fn [error] (-> (rollback database)
                               (.then #(js/Promise.reject error)))))))
+
+(defn save-collection [database collection-maps]
+  (query database
+         (generate "player_collections"
+                   ["username" "game_id" "own"]
+                   ["username" "game_id"]
+                   (map (juxt :username :id :own)
+                        collection-maps))))
