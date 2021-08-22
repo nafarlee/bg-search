@@ -14,17 +14,27 @@
         (.set "views" "src/views")
         (.use (.urlencoded express #js{:extended true}))
         (.use (.static express "public"))
-        (.get "/search" (-> routes/search
-                            (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
-                            with-database))
-        (.post "/pubsub/pull" (-> routes/pull
-                                  with-database))
-        (.post "/pubsub/pull-plays" (-> routes/pull-plays
-                                        with-database))
-        (.post "/pull-collection" (-> routes/pull-collection
-                                      with-database
-                                      (with-required-body-parameters #{"username"})))
-        (.get "/games/:id" (-> routes/games
-                               (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
-                               with-database))
+        (.get
+         "/search"
+         (-> routes/search
+             (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
+             with-database))
+        (.post
+         "/pubsub/pull"
+         (-> routes/pull
+             with-database))
+        (.post
+         "/pubsub/pull-plays"
+         (-> routes/pull-plays
+             with-database))
+        (.post
+         "/pull-collection"
+         (-> routes/pull-collection
+             with-database
+             (with-required-body-parameters #{"username"})))
+        (.get
+         "/games/:id"
+         (-> routes/games
+             (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
+             with-database))
         (.listen 8080 #(prn "Listening on 8080..."))))
