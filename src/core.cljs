@@ -22,8 +22,8 @@
         (.post "/pubsub/pull-plays" (-> routes/pull-plays
                                         with-database))
         (.post "/pull-collection" (-> routes/pull-collection
-                                      (with-required-body-parameters #{"username"})
-                                      with-database))
+                                      with-database
+                                      (with-required-body-parameters #{"username"})))
         (.get "/games/:id" (-> routes/games
                                (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
                                with-database))
