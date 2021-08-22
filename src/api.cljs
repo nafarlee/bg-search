@@ -1,5 +1,6 @@
 (ns api
   (:require
+    ["html-entities" :as he]
     ["fast-xml-parser" :as fxp]
     ["url" :refer [URL URLSearchParams]]
     [promise :refer [js-promise? wait]]
@@ -19,9 +20,15 @@
     (.toString u)))
 
 (defn- parse-xml [xml]
-  {:pre [(string? xml)]
+  {:pre  [(string? xml)]
    :post [(map? %)]}
-  (js->clj (.parse fxp xml #js{:ignoreAttributes false :attributeNamePrefix "$_"})))
+  (js->clj
+   (.parse fxp
+           xml
+           #js{:ignoreAttributes    false
+               :attributeNamePrefix "$_"
+               :attrValueProcessor  #(.decode he % #js{:attribute true})
+               :tagValueProcessor   #(.decode he %)})))
 
 (defn get-collection [username]
   (-> (construct-url base-url "xmlapi2/collection" {:brief 1 :username username})
