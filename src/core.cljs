@@ -3,7 +3,7 @@
     ["express" :as express]
     [views.locals :refer [all]]
     [routes :as routes]
-    [middleware :refer [with-database with-header with-required-query-parameters]]))
+    [middleware :refer [with-database with-header with-required-body-parameters]]))
 
 (defonce ^:export app (express))
 
@@ -12,6 +12,7 @@
   (doto app
         (.set "view engine" "pug")
         (.set "views" "src/views")
+        (.use (.urlencoded express #js{:extended true}))
         (.use (.static express "public"))
         (.get "/search" (-> routes/search
                             (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
@@ -21,7 +22,7 @@
         (.post "/pubsub/pull-plays" (-> routes/pull-plays
                                         with-database))
         (.post "/pull-collection" (-> routes/pull-collection
-                                      (with-required-query-parameters #{"username"})
+                                      (with-required-body-parameters #{"username"})
                                       with-database))
         (.get "/games/:id" (-> routes/games
                                (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))

@@ -22,9 +22,9 @@
     (.set res header value)
     (handler req res)))
 
-(defn with-required-query-parameters [handler required]
+(defn with-required-body-parameters [handler required]
   (fn [req res]
-    (let [qps  (set (keys (js->clj (.-query req))))
+    (let [qps  (set (keys (js->clj (.-body req))))
           diff (difference required qps)]
       (if (= diff #{})
         (handler req res)

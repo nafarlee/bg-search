@@ -139,7 +139,7 @@
                                    :nextURL   (next-url req (.-rows %))})))))
 
 (defn pull-collection [req res]
-  (let [username (.. req -query -username)
+  (let [username (.. req -body -username)
         database (.-database req)]
     (-> (api/get-collection username)
         (.catch #(error res 500 "Could not get collection" %))
