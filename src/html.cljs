@@ -1,6 +1,6 @@
 (ns html)
 
-(defn render [[tag attributes & body]]
+(defn clj->html [[tag attributes & body]]
   (if-not (map? attributes)
     (recur (concat [tag {} attributes] body))
     (str "<"
@@ -12,7 +12,7 @@
          (reduce (fn [acc b]
                    (if (string? b)
                      (str acc b)
-                     (str acc (render b))))
+                     (str acc (clj->html b))))
                  ""
                  body)
          "</"
