@@ -6,7 +6,7 @@
           ""
           attributes))
 
-(declare clj->html)
+(declare html)
 
 (defn render-element [[tag attributes & body]]
   (if-not (map? attributes)
@@ -16,7 +16,7 @@
      (name tag)
      (render-attributes attributes)
      ">"
-     (apply str (map clj->html body))
+     (apply str (map html body))
      "</"
      (name tag)
      ">")))

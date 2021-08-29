@@ -1,16 +1,16 @@
 (ns html-test
   (:require
-    html
+    [html :as h]
     [cljs.test :refer [deftest is]]))
 
-(deftest clj->html
-  (is (= (html/clj->html [:h1 "Hello!"])
+(deftest html
+  (is (= (h/html [:h1 "Hello!"])
          "<h1>Hello!</h1>"))
-  (is (= (html/clj->html [:h1 {:class "hidden"} "Hello!"])
+  (is (= (h/html [:h1 {:class "hidden"} "Hello!"])
          "<h1 class=\"hidden\">Hello!</h1>"))
   (is (= "<html><head><title>Hello</title></head><body><h1>World</h1></body></html>"
-         (html/clj->html [:html
-                          [:head
-                           [:title "Hello"]]
-                          [:body
-                           [:h1 "World"]]]))))
+         (h/html  [:html
+                   [:head
+                    [:title "Hello"]]
+                   [:body
+                    [:h1 "World"]]]))))
