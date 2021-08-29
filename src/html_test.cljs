@@ -17,4 +17,9 @@
   (is (= "<h1>A</h1><h1>B</h1>"
          (h/html (list
                   [:h1 "A"]
-                  [:h1 "B"])))))
+                  [:h1 "B"]))))
+  (is (= "<ul><li>1</li><li>2</li></ul>"
+         (h/html [:ul
+                  [:li 1]
+                  (when false [:li 1.5])
+                  [:li 2]]))))
