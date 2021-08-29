@@ -22,6 +22,7 @@
      ">")))
 
 (defn html [element]
-  (if-not (vector? element)
-    (str element)
-    (render-element element)))
+  (cond
+    (vector? element) (render-element element)
+    (list? element)   (apply str (map html element))
+    :else             (str element)))
