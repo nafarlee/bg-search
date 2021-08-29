@@ -13,4 +13,8 @@
                    [:head
                     [:title "Hello"]]
                    [:body
-                    [:h1 "World"]]]))))
+                    [:h1 "World"]]])))
+  (is (= "<h1>A</h1><h1>B</h1>"
+         (h/html (list
+                  [:h1 "A"]
+                  [:h1 "B"])))))
