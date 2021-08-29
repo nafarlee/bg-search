@@ -26,3 +26,5 @@
     (vector? element) (render-element element)
     (list? element)   (apply str (map html element))
     :else             (str element)))
+
+(def doctype "<!DOCTYPE html>")
