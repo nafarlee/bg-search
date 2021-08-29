@@ -21,7 +21,7 @@
      (name tag)
      ">")))
 
-(defn clj->html [element]
+(defn html [element]
   (if-not (vector? element)
     (str element)
     (render-element element)))
