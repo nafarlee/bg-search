@@ -2,7 +2,9 @@
 
 (defn render-attributes [attributes]
   (reduce (fn [acc [k v]]
-            (str acc " " (name k) "=\"" v "\""))
+            (if v
+              (str acc " " (name k) "=\"" v "\"")
+              acc))
           ""
           attributes))
 
