@@ -81,3 +81,15 @@
            [:br]))
         (when (= 25 (count games))
           [:p [:a {:href next-url} "Next"]])]]))))
+
+(defn error [{:keys [code message block]}]
+  (html
+   (list
+    doctype
+    [:html
+     [:head head]
+     [:body {:class "container"}
+      [:h1 {:class "center"} code]
+      [:h3 {:class "center"} message]
+      (when block
+        [:pre [:code block]])]])))
