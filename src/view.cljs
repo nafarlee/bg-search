@@ -22,7 +22,8 @@
      :content "width=device-width, initial-scale=1"}]))
 
 (defn options [selected m]
-  (map #(vector :option {:value (name %1) :selected (= %1 selected)} %2)
+  (map (fn [[k v]]
+         [:option {:value (name k) :selected (= (name k) selected)} v])
        m))
 
 (defn search [{:keys [games query next-url direction order]}]
