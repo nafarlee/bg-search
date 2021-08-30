@@ -52,9 +52,9 @@
                            :type "search"
                            :mozactionhint "search"
                            :name "query"}
-        game->heading (fn [{:keys [id year primary-name]}]
+        game->heading (fn [{:strs [id year primary_name]}]
                         [:p [:a {:href (str "/games/" id)}
-                             (str primary-name " (" year ")")]])]
+                             (str primary_name " (" year ")")]])]
     (html
      (list
       doctype
