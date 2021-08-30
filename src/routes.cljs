@@ -133,11 +133,11 @@
       (-> sql-result rs/unwrap (err/transpile res query) js/Promise.resolve)
       (then-not (sql/query database (rs/unwrap sql-result))
         #(err/generic % res 500)
-        #(.send res (v/search {:query     query
-                               :order     order
-                               :direction direction
-                               :games     (js->clj (.-rows %))
-                               :nextURL   (next-url req (.-rows %))}))))))
+        #(.send res (v/search {:query      query
+                               :order      order
+                               :direction  direction
+                               :games      (js->clj (.-rows %))
+                               :next-url   (next-url req (.-rows %))}))))))
 
 (defn pull-collection [req res]
   (let [username (.. req -body -username)
