@@ -107,7 +107,7 @@
       (fn [game]
         (if-not game
           (err/generic (str "No game found with id '" id "'") res 404)
-          (.render res "games" #js{:game game}))))))
+          (.send res (v/games (js->clj game))))))))
 
 (defn- next-url [req games]
   (url/format #js{:protocol (.-protocol req)
