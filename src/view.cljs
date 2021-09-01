@@ -1,5 +1,6 @@
 (ns view
   (:require
+    [clojure.string :as s]
     [html :refer [html doctype]]))
 
 (def head
@@ -93,3 +94,78 @@
       [:h3 {:class "center"} message]
       (when block
         [:pre [:code block]])]])))
+
+(defn games
+  [{:strs [primary_name
+           minimum_players
+           maximum_players
+           weight_votes
+           average_weight
+           categories
+           mechanics
+           families
+           designers
+           publishers
+           artists
+           alternate_names
+           year
+           id
+           description
+           image
+           rating_votes
+           average_rating
+           bayes_rating
+           steamdb_rating
+           rating_deviation]}]
+  (let [maybe-details-list (fn [heading coll]
+                             (when coll
+                               [:details
+                                [:summary heading]
+                                [:ul (map #(vector :li %) coll)]]))]
+    (html
+     (list
+      doctype
+      [:html
+       [:head
+        head
+        [:title primary_name]]
+       [:body {:class "container"}
+        [:h1 {:class "center"} (str primary_name " (" year ")")]
+        [:h2 [:a {:href (str "https://boardgamegeek.com/boardgame/" id)} "BGG"]]
+        [:h2 [:a {:href image} "Image"]]
+        (when description
+          [:details
+           [:summary "Description"]
+           (map (fn [p] [:p p])
+                (s/split description "&amp;#10;&amp;#10;"))])
+        [:details
+         [:summary "Rating"]
+         [:ul
+          [:li (str "Votes: " rating_votes)]
+          [:li (str "Average: " average_rating)]
+          [:li (str "Bayes: " bayes_rating)]
+          [:li (str "SteamDB " steamdb_rating)]
+          [:li (str "Deviation: " rating_deviation)]]]
+        [:details
+         [:summary "Playtime"]
+         [:h1 "TODO"]]
+        [:details
+         [:summary "Players"]
+         [:ul
+          [:li "Minimum: " minimum_players]
+          [:li "Maximum: " maximum_players]]]
+        [:details
+         [:summary "Player Recommendations"]
+         [:h1 "TODO"]]
+        [:details
+         [:summary "Weight"]
+         [:ul
+          [:li "Votes: " weight_votes]
+          [:li "Average: " average_weight]]]
+        (maybe-details-list "Categories" categories)
+        (maybe-details-list "Mechanics" mechanics)
+        (maybe-details-list "Families" families)
+        (maybe-details-list "Designers" designers)
+        (maybe-details-list "Publishers" publishers)
+        (maybe-details-list "Artists" artists)
+        (maybe-details-list "Alternate Names" alternate_names)]]))))
