@@ -116,6 +116,7 @@
 
 (defn games
   [{:strs [primary_name
+           player_recommendations
            median_playtimes
            minimum_playtime
            maximum_playtime
@@ -147,7 +148,15 @@
         render-median-playtime (fn [[players {:strs [median count]}]]
                                  (if (= "0" players)
                                    [:li (str "All Player Counts: " median " minutes across " count " plays")]
-                                   [:li (str players " Player(s): " median " minutes across " count " plays")]))]
+                                   [:li (str players " Player(s): " median " minutes across " count " plays")]))
+        render-player-recommendation (fn [{:strs [players best recommended not_recommended]}]
+                                       (let [total (+ best recommended not_recommended)]
+                                         [:li
+                                          (range->text players)
+                                          [:ul
+                                           [:li (str "Best: " (percentage-of best total) " (" best ")")]
+                                           [:li (str "Recommended: " (percentage-of recommended total) " (" recommended ")")]
+                                           [:li (str "Not Recommended: " (percentage-of not_recommended total) " (" not_recommended ")")]]]))]
     (html
      (list
       doctype
@@ -188,9 +197,10 @@
          [:ul
           [:li "Minimum: " minimum_players]
           [:li "Maximum: " maximum_players]]]
-        [:details
-         [:summary "Player Recommendations"]
-         [:h1 "TODO"]]
+        (when player_recommendations
+          [:details
+           [:summary "Player Recommendations"]
+           [:ul (map render-player-recommendation (sort-recommendations player_recommendations))]])
         [:details
          [:summary "Weight"]
          [:ul
