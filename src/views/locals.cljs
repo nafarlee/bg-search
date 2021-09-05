@@ -16,8 +16,8 @@
     (str start (when (empty? end) "+"))))
 
 (defn sort-recommendations [recommendations]
-  (clj->js (sort-by #(-> % (. -players) range->text (js/parseInt 10))
-                    recommendations)))
+  (sort-by #(-> % (get "players") range->text (js/parseInt 10))
+           recommendations))
 
 (def all
   #js{:sortRecommendations sort-recommendations
