@@ -97,6 +97,9 @@
 
 (defn games
   [{:strs [primary_name
+           median_playtimes
+           minimum_playtime
+           maximum_playtime
            minimum_players
            maximum_players
            weight_votes
@@ -121,7 +124,11 @@
                              (when coll
                                [:details
                                 [:summary heading]
-                                [:ul (map #(vector :li %) coll)]]))]
+                                [:ul (map #(vector :li %) coll)]]))
+        render-median-playtime (fn [[players {:strs [median count]}]]
+                                 (if (= "0" players)
+                                   [:li (str "All Player Counts: " median " minutes across " count " plays")]
+                                   [:li (str players " Player(s): " median " minutes across " count " plays")]))]
     (html
      (list
       doctype
@@ -148,7 +155,15 @@
           [:li (str "Deviation: " rating_deviation)]]]
         [:details
          [:summary "Playtime"]
-         [:h1 "TODO"]]
+         [:ul
+          [:li (str "Minimum: " minimum_playtime)]
+          [:li (str "Maximum: " maximum_playtime)]
+          (when median_playtimes
+            (list
+             [:li "Medians:"]
+             [:ul (map render-median-playtime
+                       (sort-by #(js/parseInt (first %) 10)
+                                median_playtimes))]))]]
         [:details
          [:summary "Players"]
          [:ul
