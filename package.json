@@ -8,15 +8,15 @@
     "start": "node --unhandled-rejections=strict app.js"
   },
   "devDependencies": {
-    "shadow-cljs": "^2.15.5",
+    "shadow-cljs": "^2.15.8",
     "source-map-support": "^0.5.19",
-    "ws": "^7.4.6"
+    "ws": "^8.2.1"
   },
   "dependencies": {
     "express": "4.17.1",
     "fast-xml-parser": "^3.19.0",
     "html-entities": "^2.3.2",
-    "parsimmon": "^1.17.0",
-    "pg": "^8.6.0"
+    "parsimmon": "^1.18.0",
+    "pg": "^8.7.1"
   }
 }
