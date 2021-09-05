@@ -3,6 +3,25 @@
     [clojure.string :as s]
     [html :refer [html doctype]]))
 
+(defn- percentage-of
+  ([numer denom]
+   (percentage-of numer denom 1))
+  ([numer denom decimals]
+   (-> numer
+       (/ denom)
+       (* 100)
+       (.toFixed decimals)
+       (str "%"))))
+
+(defn- range->text [r]
+  (let [regex         #"\[(\d+),(\d*)\)"
+        [_ start end] (re-matches regex r)]
+    (str start (when (empty? end) "+"))))
+
+(defn- sort-recommendations [recommendations]
+  (sort-by #(-> % (get "players") range->text (js/parseInt 10))
+           recommendations))
+
 (def head
   (list
    [:link
