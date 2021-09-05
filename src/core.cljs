@@ -1,14 +1,12 @@
 (ns core
   (:require
     ["express" :as express]
-    [views.locals :refer [all]]
     [routes :as routes]
     [middleware :refer [with-database with-header with-required-body-parameters]]))
 
 (defonce ^:export app (express))
 
 (defn main []
-  (js/Object.assign (.-locals app) all)
   (doto app
         (.set "view engine" "pug")
         (.set "views" "src/views")

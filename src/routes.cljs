@@ -1,5 +1,6 @@
 (ns routes
   (:require
+   [view :as v]
    ["url" :as url]
    [transpile :refer [transpile]]
    [sql.insert :refer [insert]]
@@ -106,7 +107,7 @@
       (fn [game]
         (if-not game
           (err/generic (str "No game found with id '" id "'") res 404)
-          (.render res "games" #js{:game game}))))))
+          (.send res (v/games (js->clj game))))))))
 
 (defn- next-url [req games]
   (url/format #js{:protocol (.-protocol req)
@@ -132,11 +133,11 @@
       (-> sql-result rs/unwrap (err/transpile res query) js/Promise.resolve)
       (then-not (sql/query database (rs/unwrap sql-result))
         #(err/generic % res 500)
-        #(.render res "search" #js{:query     query
-                                   :order     order
-                                   :direction direction
-                                   :games     (.-rows %)
-                                   :nextURL   (next-url req (.-rows %))})))))
+        #(.send res (v/search {:query      query
+                               :order      order
+                               :direction  direction
+                               :games      (js->clj (.-rows %))
+                               :next-url   (next-url req (.-rows %))}))))))
 
 (defn pull-collection [req res]
   (let [username (.. req -body -username)

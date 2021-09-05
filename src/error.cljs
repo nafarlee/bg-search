@@ -1,4 +1,6 @@
-(ns error)
+(ns error
+  (:require
+    [view :as v]))
 
 (defn transpile [error res query]
   (let [code       422
@@ -10,13 +12,13 @@
         block      (str query "\n" annotation)]
     (-> res
         (.status code)
-        (.render "error" #js{:code code
-                             :message message
-                             :block block}))))
+        (.send (v/error {:code    code
+                         :message message
+                         :block   block})))))
 
 (defn generic [error res code]
   (js/console.error error)
   (-> res
       (.status code)
-      (.render "error" (js-obj "code" code
-                               "message" error))))
+      (.send (v/error {:code    code
+                       :message error}))))
