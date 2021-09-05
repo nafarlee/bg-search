@@ -178,8 +178,7 @@
       [:li "Grouped together by surrounding one or more with parentheses. This is useful in
             conjunction with the \"or\" separator."]]
      [:div
-      [:pre [:code "-is:expansion (mechanic:\"Dice Rolling\" best-players=2) or (category:economic
-                    best-players=4)"]]
+      [:pre [:code "-is:expansion (mechanic:\"Dice Rolling\" best-players=2) or (category:economic best-players=4)"]]
       [:p "For example, the above query would match any games, which are"
           [:strong "not expansions"] ", and are" [:strong "either dice rolling"] "games that play"
           [:strong "best with 4 players"]]
