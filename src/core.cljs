@@ -8,8 +8,6 @@
 
 (defn main []
   (doto app
-        (.set "view engine" "pug")
-        (.set "views" "src/views")
         (.use (.urlencoded express #js{:extended true}))
         (.use (.static express "public"))
         (.get
