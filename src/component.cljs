@@ -50,15 +50,16 @@
                            :type "search"
                            :mozactionhint "search"
                            :name "query"}]
-    [:div {:class "row"}
-     [:div {:class "column"}
-      [:input search-attributes]]]
-    [:div {:class "row"}
-     [:div {:class "column"}
-      [:label {:for "order"} "Sort"]
-      [:select {:name "order"}
-       (options order possible-orders)]]
-     [:div {:class "column"}
-      [:label {:for "direction"} "Direction"]
-      [:select {:name "direction"}
-       (options direction possible-directions)]]]))
+    [:form {:method "get" :action "/search"}
+     [:div {:class "row"}
+      [:div {:class "column"}
+       [:input search-attributes]]]
+     [:div {:class "row"}
+      [:div {:class "column"}
+       [:label {:for "order"} "Sort"]
+       [:select {:name "order"}
+        (options order possible-orders)]]
+      [:div {:class "column"}
+       [:label {:for "direction"} "Direction"]
+       [:select {:name "direction"}
+          (options direction possible-directions)]]]]))
