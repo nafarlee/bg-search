@@ -1,6 +1,6 @@
 (ns view
   (:require
-    [component :refer [head]]
+    [component :refer [head options]]
     [clojure.string :as s]
     [html :refer [html doctype]]))
 
@@ -22,11 +22,6 @@
 (defn- sort-recommendations [recommendations]
   (sort-by #(-> % (get "players") range->text (js/parseInt 10))
            recommendations))
-
-(defn options [selected m]
-  (map (fn [[k v]]
-         [:option {:value (name k) :selected (= (name k) selected)} v])
-       m))
 
 (defn search [{:keys [games query next-url direction order]}]
   (let [possible-orders {:id "ID"
