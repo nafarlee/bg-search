@@ -1,6 +1,6 @@
 (ns views.locals)
 
-(defn- percentage-of
+(defn percentage-of
   ([numer denom]
    (percentage-of numer denom 1))
   ([numer denom decimals]
@@ -10,12 +10,12 @@
        (.toFixed decimals)
        (str "%"))))
 
-(defn- range->text [r]
+(defn range->text [r]
   (let [regex         #"\[(\d+),(\d*)\)"
         [_ start end] (re-matches regex r)]
     (str start (when (empty? end) "+"))))
 
-(defn- sort-recommendations [recommendations]
+(defn sort-recommendations [recommendations]
   (clj->js (sort-by #(-> % (. -players) range->text (js/parseInt 10))
                     recommendations)))
 
