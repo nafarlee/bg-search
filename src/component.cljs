@@ -62,4 +62,6 @@
       [:div {:class "column"}
        [:label {:for "direction"} "Direction"]
        [:select {:name "direction"}
-          (options direction possible-directions)]]]]))
+          (options direction possible-directions)]]]
+     [:div {:class "row"}
+      [:input {:class "column" :type "submit" :value "Search"}]]]))
