@@ -9,6 +9,10 @@
 (defn main []
   (doto app
         (.use (.urlencoded express #js{:extended true}))
+        (.get
+         "/"
+         (-> routes/index
+             (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24)))))
         (.use (.static express "public"))
         (.get
          "/search"

@@ -147,3 +147,6 @@
         (.then #(sql/save-collection database %))
         (.catch #(error res 500 "Could not save collection to database" %))
         (.then #(success res)))))
+
+(defn index [req res]
+  (.send res (v/index)))
