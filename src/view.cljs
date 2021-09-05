@@ -173,10 +173,11 @@
      [:p "A valid query in this language is comprised of any number of terms, combined or modified
           in certain ways. All terms may be:"]
      [:ul
-      [:li "Separated by spaces for an" [:strong "AND"] "relationship"]
-      [:li "Separated by the word \"or\" for an" [:strong "OR"] "relationship"]
+      [:li "Separated by spaces for an " [:strong "AND"] " relationship"]
+      [:li "Separated by the word \"or\" for an " [:strong "OR"] " relationship"]
       [:li "Grouped together by surrounding one or more with parentheses. This is useful in
-            conjunction with the \"or\" separator."]]
+            conjunction with the \"or\" separator"]
+      [:li "Prefixed with a minus (-) to " [:strong "NEGATE"] " the terms results"]]
      [:div
       [:pre [:code "-is:expansion (mechanic:\"Dice Rolling\" best-players=2) or (category:economic best-players=4)"]]
       [:p "For example, the above query would match any games, which are"
