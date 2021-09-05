@@ -1,6 +1,6 @@
 (ns view
   (:require
-    [component :refer [head options search]]
+    [component :as c]
     [clojure.string :as s]
     [html :refer [html doctype]]))
 
@@ -31,9 +31,9 @@
      (list
       doctype
       [:html
-       [:head head]
+       [:head c/head]
        [:body {:class "container"}
-        (search {:query query :order order :direction direction})
+        (c/search {:query query :order order :direction direction})
         (if (empty? games)
           [:h1 {:class "center"} "No more results!"]
           (list
@@ -47,7 +47,7 @@
    (list
     doctype
     [:html
-     [:head head]
+     [:head c/head]
      [:body {:class "container"}
       [:h1 {:class "center"} code]
       [:h3 {:class "center"} message]
@@ -102,7 +102,7 @@
       doctype
       [:html
        [:head
-        head
+        c/head
         [:title primary_name]]
        [:body {:class "container"}
         [:h1 {:class "center"} (str primary_name " (" year ")")]
