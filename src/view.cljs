@@ -192,6 +192,8 @@
            contain spaces. Eg." [:code "name:\"Race for the Galaxy\""]]
       [:li "Terms that work with numbers can use" [:strong "=, &gt; &lt; &gt;=, or &lt;=" "to
             specify relationships. Eg." [:code "average-rating&gt;=7.5"]]]
-      [:li "Some terms always start with" [:strong "is"] ", and are always separated by a" [:strong "colon (:)"] ", but otherwise are only allowed to have specific values. Eg." [:code "is:expansion"]]]
+      [:li "Some terms always start with" [:strong "is"] ", and are always separated by a"
+           [:strong "colon (:)"] ", but otherwise are only allowed to have specific values. Eg."
+           [:code "is:expansion"]]]
      [:h2 "Term Reference"]
      [:h3 "TODO"]])))
