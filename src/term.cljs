@@ -13,8 +13,10 @@
      :description (md->html "Matches a part of the games primary name")
      :example     (md->html "`art:\"jakub rozalski\"` Games where **Jakub Rozalski** supplied artwork")}
 
-    {:term :category
-     :alias :c}
+    {:term        :category
+     :alias       :c
+     :description (md->html "Matches a part of the name of any of the game's [categories](https://boardgamegeek.com/browse/boardgamecategory)")
+     :example     (md->html "`category:act` Matches any game in the **Abstract Strategy**, **Industry / Manufacturing**, or **Action / Dexterity** categories")}
 
     {:term :desc}
 
