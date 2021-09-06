@@ -18,7 +18,9 @@
      :description (md->html "Matches a part of the name of any of the game's [categories](https://boardgamegeek.com/browse/boardgamecategory)")
      :example     (md->html "`category:act` Matches any game in the **Abstract Strategy**, **Industry / Manufacturing**, or **Action / Dexterity** categories")}
 
-    {:term :desc}
+    {:term        :desc
+     :description (md->html "Matches part of the game's description")
+     :example     (md->html "`desc:flip` Matches any game that includes the word **flip** in its description")}
 
     {:term :family
      :alias :f}
