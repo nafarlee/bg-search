@@ -8,8 +8,10 @@
      :description (md->html "Matches a part of the games primary name")
      :example     (md->html "`name:catan` Games with **Catan** in the name")}
 
-    {:term :art
-     :alias :a}
+    {:term        :art
+     :alias       :a
+     :description (md->html "Matches a part of the games primary name")
+     :example     (md->html "`art:\"jakub rozalski\"` Games where **Jakub Rozalski** supplied artwork")}
 
     {:term :category
      :alias :c}
