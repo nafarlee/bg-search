@@ -22,8 +22,10 @@
      :description (md->html "Matches part of the game's description")
      :example     (md->html "`desc:flip` Matches any game that includes the word **flip** in its description")}
 
-    {:term :family
-     :alias :f}
+    {:term        :family
+     :alias       :f
+     :description (md->html "Matches a part of the name of any of the game's [families](https://boardgamegeek.com/browse/boardgamefamily)")
+     :example     (md->html "`family:dominion` Matches any game in the **Dominion** family")}
 
     {:term :mechanic
      :alias :m}
