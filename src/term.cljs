@@ -1,8 +1,12 @@
-(ns term)
+(ns term
+  (:require
+    [markdown.core :refer [md->html]]))
 
 (def terms
-  #{{:term :name
-     :alias :n}
+  #{{:term        :name
+     :alias       :n
+     :description (md->html "Matches a part of the games primary name")
+     :example     (md->html "`name:catan` Games with **Catan** in the name")}
 
     {:term :art
      :alias :a}
