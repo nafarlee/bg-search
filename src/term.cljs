@@ -191,7 +191,10 @@
      :example     (md->html "`is:collection family:carcassonne` Show any games that collects other
                              games in the Carcassonne family")}
 
-    {:term :is:reimplementation
-     :alias :is:r}
+    {:term        :is:reimplementation
+     :alias       :is:r
+     :description (md->html "Games which are reimplementations of others")
+     :example     (md->html "`-is:reimplementation -is:collection -is:expansion` Only shows
+                             standalone games which are the original version")}
 
     {:term :own}})
