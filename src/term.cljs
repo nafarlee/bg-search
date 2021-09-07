@@ -144,20 +144,40 @@
      :example     (md->html "`median-playtime<=60` Matches against any game that typically plays in an
                              hour or less")}
 
-    {:term :median-playtime-1
-     :alias :mdpt1}
+    {:term        :median-playtime-1
+     :alias       :mdpt1
+     :description (md->html "Matches against the median number of minutes required to play a game
+                             with 1 player, as sourced by BGG user play data")
+     :example     (md->html "`median-playtime-1<=60` Matches against any game that typically plays in
+                             an hour or less with 1 players")}
 
-    {:term :median-playtime-2
-     :alias :mdpt2}
+    {:term        :median-playtime-2
+     :alias       :mdpt2
+     :description (md->html "Matches against the median number of minutes required to play a game
+                             with 2 player, as sourced by BGG user play data")
+     :example     (md->html "`median-playtime-1<=60` Matches against any game that typically plays in
+                             an hour or less with 2 players")}
 
-    {:term :median-playtime-3
-     :alias :mdpt3}
+    {:term        :median-playtime-3
+     :alias       :mdpt3
+     :description (md->html "Matches against the median number of minutes required to play a game
+                             with 3 player, as sourced by BGG user play data")
+     :example     (md->html "`median-playtime-1<=60` Matches against any game that typically plays in
+                             an hour or less with 3 players")}
 
-    {:term :median-playtime-4
-     :alias :mdpt4}
+    {:term        :median-playtime-4
+     :alias       :mdpt4
+     :description (md->html "Matches against the median number of minutes required to play a game
+                             with 4 player, as sourced by BGG user play data")
+     :example     (md->html "`median-playtime-1<=60` Matches against any game that typically plays in
+                             an hour or less with 4 players")}
 
-    {:term :median-playtime-5
-     :alias :mdpt5}
+    {:term        :median-playtime-5
+     :alias       :mdpt5
+     :description (md->html "Matches against the median number of minutes required to play a game
+                             with 5 player, as sourced by BGG user play data")
+     :example     (md->html "`median-playtime-1<=60` Matches against any game that typically plays in
+                             an hour or less with 5 players")}
 
     {:term :is:expansion
      :alias :is:e}
