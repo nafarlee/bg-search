@@ -42,8 +42,10 @@
      :description (md->html "Matches a part of the name of any of the game's designers")
      :example     (md->html "`design:uwe` Matches any game designed by someone named **Uwe**")}
 
-    {:term :rating-votes
-     :alias :rv}
+    {:term        :rating-votes
+     :alias       :rv
+     :description (md->html "Compares against the number of user ratings the game has received")
+     :example     (md->html "`rating-votes>=1000` Matches any game with at least **1000** user ratings")}
 
     {:term :average-rating
      :alias :ar}
