@@ -67,8 +67,10 @@
      :description (md->html "Compares against the game's average rated complexity")
      :example     (md->html "`average-weight>=3.7` Matches against games with an average weight of at least **3.7**")}
 
-    {:term :weight-votes
-     :alias :wv}
+    {:term        :weight-votes
+     :alias       :wv
+     :description (md->html "Compares against the game's number of complexity ratings")
+     :example     (md->html "`weight-votes<1000` Matches any games that have less than **100** weight votes")}
 
     {:term :year}
 
