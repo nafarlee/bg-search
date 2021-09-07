@@ -11,26 +11,33 @@
     {:term        :art
      :alias       :a
      :description (md->html "Matches a part of the games primary name")
-     :example     (md->html "`art:\"jakub rozalski\"` Games where **Jakub Rozalski** supplied artwork")}
+     :example     (md->html "`art:\"jakub rozalski\"` Games where **Jakub Rozalski** supplied
+                             artwork")}
 
     {:term        :category
      :alias       :c
-     :description (md->html "Matches a part of the name of any of the game's [categories](https://boardgamegeek.com/browse/boardgamecategory)")
-     :example     (md->html "`category:act` Matches any game in the **Abstract Strategy**, **Industry / Manufacturing**, or **Action / Dexterity** categories")}
+     :description (md->html "Matches a part of the name of any of the game's
+                             [categories](https://boardgamegeek.com/browse/boardgamecategory)")
+     :example     (md->html "`category:act` Matches any game in the **Abstract Strategy**,
+                             **Industry / Manufacturing**, or **Action / Dexterity** categories")}
 
     {:term        :desc
      :description (md->html "Matches part of the game's description")
-     :example     (md->html "`desc:flip` Matches any game that includes the word **flip** in its description")}
+     :example     (md->html "`desc:flip` Matches any game that includes the word **flip** in its
+                             description")}
 
     {:term        :family
      :alias       :f
-     :description (md->html "Matches a part of the name of any of the game's [families](https://boardgamegeek.com/browse/boardgamefamily)")
+     :description (md->html "Matches a part of the name of any of the game's
+                             [families](https://boardgamegeek.com/browse/boardgamefamily)")
      :example     (md->html "`family:dominion` Matches any game in the **Dominion** family")}
 
     {:term        :mechanic
      :alias       :m
-     :description (md->html "Matches a part of the name of any of the game's [mechanics](https://boardgamegeek.com/browse/boardgamemechanic)")
-     :example     (md->html "`mechanic:building` Matches any game with **Pattern Building**, **Route/Network Building**, or **Deck / Pool Building** mechanics")}
+     :description (md->html "Matches a part of the name of any of the game's
+                             [mechanics](https://boardgamegeek.com/browse/boardgamemechanic)")
+     :example     (md->html "`mechanic:building` Matches any game with **Pattern Building**,
+                             **Route/Network Building**, or **Deck / Pool Building** mechanics")}
 
     {:term        :publish
      :alias       :p
@@ -45,17 +52,20 @@
     {:term        :rating-votes
      :alias       :rv
      :description (md->html "Compares against the number of user ratings the game has received")
-     :example     (md->html "`rating-votes>=1000` Matches any game with at least **1000** user ratings")}
+     :example     (md->html "`rating-votes>=1000` Matches any game with at least **1000** user
+                             ratings")}
 
     {:term        :average-rating
      :alias       :ar
      :description (md->html "Compares against the average user rating of a game")
-     :example     (md->html "`average-rating<6.5` Matches any game with an average rating below **6.5**")}
+     :example     (md->html "`average-rating<6.5` Matches any game with an average rating below
+                             **6.5**")}
 
     {:term        :geek-rating
      :alias       :gr
      :description (md->html "Compares against the game's BGG GeekRating metric")
-     :example     (md->html "`geek-rating>=8.0` Matches any game with a GeekRating of at least **8.0**")}
+     :example     (md->html "`geek-rating>=8.0` Matches any game with a GeekRating of at least
+                             **8.0**")}
 
     {:term        :rating-deviation
      :alias       :rd
@@ -65,16 +75,19 @@
     {:term        :average-weight
      :alias       :aw
      :description (md->html "Compares against the game's average rated complexity")
-     :example     (md->html "`average-weight>=3.7` Matches against games with an average weight of at least **3.7**")}
+     :example     (md->html "`average-weight>=3.7` Matches against games with an average weight of
+                             at least **3.7**")}
 
     {:term        :weight-votes
      :alias       :wv
      :description (md->html "Compares against the game's number of complexity ratings")
-     :example     (md->html "`weight-votes<1000` Matches any games that have less than **100** weight votes")}
+     :example     (md->html "`weight-votes<1000` Matches any games that have less than **100**
+                             weight votes")}
 
     {:term        :year
      :description (md->html "Matches the year a game was released")
-     :example     (md->html "`year=2018 family:\"roll-and-write\"` All the new Roll-and-Write games")}
+     :example     (md->html "`year=2018 family:\"roll-and-write\"` All the new Roll-and-Write
+                             games")}
 
     {:term        :age
      :description (md->html "Matches the game's minimum recommended player age")
@@ -82,12 +95,14 @@
 
     {:term        :rec-players
      :alias       :rp
-     :description (md->html "Matches against the number of players that are recommended by the BGG community")
+     :description (md->html "Matches against the number of players that are recommended by the BGG
+                             community")
      :example     (md->html "`rec-players=3` Matches any game that plays well with 3 players")}
 
     {:term        :best-players
      :alias       :bp
-     :description (md->html "Matches against the number of players that are best for a game as determined by the BGG community")
+     :description (md->html "Matches against the number of players that are best for a game as
+                             determined by the BGG community")
      :example     (md->html "`best-players=3` Matches any game that plays best with 3 players")}
 
     {:term        :quorum-players
