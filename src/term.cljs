@@ -37,8 +37,10 @@
      :description (md->html "Matches a part of the name of any of the game's publishers")
      :example     (md->html "`publish:z-man` Matches any game published by **Z-Man Games**")}
 
-    {:term :design
-     :alias :desi}
+    {:term        :design
+     :alias       :desi
+     :description (md->html "Matches a part of the name of any of the game's designers")
+     :example     (md->html "`design:uwe` Matches any game designed by someone named **Uwe**")}
 
     {:term :rating-votes
      :alias :rv}
