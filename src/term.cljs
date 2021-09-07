@@ -47,8 +47,10 @@
      :description (md->html "Compares against the number of user ratings the game has received")
      :example     (md->html "`rating-votes>=1000` Matches any game with at least **1000** user ratings")}
 
-    {:term :average-rating
-     :alias :ar}
+    {:term        :average-rating
+     :alias       :ar
+     :description (md->html "Compares against the average user rating of a game")
+     :example     (md->html "`average-rating<6.5` Matches any game with an average rating below **6.5**")}
 
     {:term :geek-rating
      :alias :gr}
