@@ -131,8 +131,11 @@
      :description (md->html "Matches against the minimum number of minutes needed to play a game")
      :example     (md->html "`min-playtime>=480` Matches **Twilight Imperium**")}
 
-    {:term :max-playtime
-     :alias :mxpt}
+    {:term        :max-playtime
+     :alias       :mxpt
+     :description (md->html "Matches against the maximum number of minutes needed to play a game")
+     :example     (md->html "`max-playtime<=30` Matches any game you can definitely complete in a
+                             half-hour")}
 
     {:term :median-playtime
      :alias :mdpt}
