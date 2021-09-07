@@ -62,8 +62,10 @@
      :description (md->html "Compares against the deviation in the game's ratings")
      :example     (md->html "`rating-deviation>=1.5` Matches against very divisive games")}
 
-    {:term :average-weight
-     :alias :aw}
+    {:term        :average-weight
+     :alias       :aw
+     :description (md->html "Compares against the game's average rated complexity")
+     :example     (md->html "`average-weight>=3.7` Matches against games with an average weight of at least **3.7**")}
 
     {:term :weight-votes
      :alias :wv}
