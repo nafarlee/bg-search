@@ -27,8 +27,10 @@
      :description (md->html "Matches a part of the name of any of the game's [families](https://boardgamegeek.com/browse/boardgamefamily)")
      :example     (md->html "`family:dominion` Matches any game in the **Dominion** family")}
 
-    {:term :mechanic
-     :alias :m}
+    {:term        :mechanic
+     :alias       :m
+     :description (md->html "Matches a part of the name of any of the game's [mechanics](https://boardgamegeek.com/browse/boardgamemechanic)")
+     :example     (md->html "`mechanic:building` Matches any game with **Pattern Building**, **Route/Network Building**, or **Deck / Pool Building** mechanics")}
 
     {:term :publish
      :alias :p}
