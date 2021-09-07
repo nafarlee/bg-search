@@ -198,9 +198,8 @@
                              standalone games which are the original version")}
 
     {:term        :own
-     :description (md->html "Games which are owned by a particular BGG user.
-                            
-                             > Note: Currently, you must manually pull your BGG collection to
-                               initialize/update it. This must be done before you use this term")
+     :description (md->html "Games which are owned by a particular BGG user. Currently, you must
+                             manually pull your BGG collection to initialize/update it. This must
+                             be done before you use this term")
      :example     (md->html "`own:nafarlee bp=2` Only show games which are owned by **nafarlee**
                              and are **best with 2 players**")}})
