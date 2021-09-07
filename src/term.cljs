@@ -32,8 +32,10 @@
      :description (md->html "Matches a part of the name of any of the game's [mechanics](https://boardgamegeek.com/browse/boardgamemechanic)")
      :example     (md->html "`mechanic:building` Matches any game with **Pattern Building**, **Route/Network Building**, or **Deck / Pool Building** mechanics")}
 
-    {:term :publish
-     :alias :p}
+    {:term        :publish
+     :alias       :p
+     :description (md->html "Matches a part of the name of any of the game's publishers")
+     :example     (md->html "`publish:z-man` Matches any game published by **Z-Man Games**")}
 
     {:term :design
      :alias :desi}
