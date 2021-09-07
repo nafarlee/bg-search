@@ -57,8 +57,10 @@
      :description (md->html "Compares against the game's BGG GeekRating metric")
      :example     (md->html "`geek-rating>=8.0` Matches any game with a GeekRating of at least **8.0**")}
 
-    {:term :rating-deviation
-     :alias :rd}
+    {:term        :rating-deviation
+     :alias       :rd
+     :description (md->html "Compares against the deviation in the game's ratings")
+     :example     (md->html "`rating-deviation>=1.5` Matches against very divisive games")}
 
     {:term :average-weight
      :alias :aw}
