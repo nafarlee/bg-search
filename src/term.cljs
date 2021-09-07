@@ -120,8 +120,11 @@
      :example     (md->html "`min-players>=3` Matches any game that is playable with at least **3**
                              players")}
 
-    {:term :max-players
-     :alias :mxpr}
+    {:term        :max-players
+     :alias       :mxpr
+     :description (md->html "Matches against the maximum number of players supported by a game")
+     :example     (md->html "`min-players=2 max-players=5` Matches any game that plays exactly
+                             **2** to **5** players")}
 
     {:term :min-playtime
      :alias :mnpt}
