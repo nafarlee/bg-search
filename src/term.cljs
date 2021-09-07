@@ -179,8 +179,11 @@
      :example     (md->html "`median-playtime-1<=60` Matches against any game that typically plays in
                              an hour or less with 5 players")}
 
-    {:term :is:expansion
-     :alias :is:e}
+    {:term        :is:expansion
+     :alias       :is:e
+     :description (md->html "Only matches against expansions")
+     :example     (md->html "- `is:expansion family:carcassonne` Expansions for Carcassonne
+                             - `-is:expansion` Only standalone games")}
 
     {:term :is:collection
      :alias :is:c}
