@@ -80,8 +80,10 @@
      :description (md->html "Matches the game's minimum recommended player age")
      :example     (md->html "`age<=12` Matches any game that would be suitable for pre-teens")}
 
-    {:term :rec-players
-     :alias :rp}
+    {:term        :rec-players
+     :alias       :rp
+     :description (md->html "Matches against the number of players that are recommended by the BGG community")
+     :example     (md->html "`rec-players=3` Matches any game that plays well with 3 players")}
 
     {:term :best-players
      :alias :bp}
