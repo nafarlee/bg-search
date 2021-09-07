@@ -90,8 +90,14 @@
      :description (md->html "Matches against the number of players that are best for a game as determined by the BGG community")
      :example     (md->html "`best-players=3` Matches any game that plays best with 3 players")}
 
-    {:term :quorum-players
-     :alias :qp}
+    {:term        :quorum-players
+     :alias       :qp
+     :description (md->html "Matches against games that play well at a particular player count
+                             according to feedback given by a quorum (currently 70%) of the players
+                             of said game. This quorum includes both **best** and **recommended**
+                             player ratings")
+     :example     (md->html "`quorum-players=3` Matches any game that plays well with 3 people as
+                             rated by at least 4 out of 5 players")}
 
     {:term :min-players
      :alias :mnpr}
