@@ -185,8 +185,11 @@
      :example     (md->html "- `is:expansion family:carcassonne` Expansions for Carcassonne
                              - `-is:expansion` Only standalone games")}
 
-    {:term :is:collection
-     :alias :is:c}
+    {:term        :is:collection
+     :alias       :is:c
+     :description (md->html "Only matches against games which are collections of other games")
+     :example     (md->html "`is:collection family:carcassonne` Show any games that collects other
+                             games in the Carcassonne family")}
 
     {:term :is:reimplementation
      :alias :is:r}
