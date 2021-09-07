@@ -76,7 +76,9 @@
      :description (md->html "Matches the year a game was released")
      :example     (md->html "`year=2018 family:\"roll-and-write\"` All the new Roll-and-Write games")}
 
-    {:term :age}
+    {:term        :age
+     :description (md->html "Matches the game's minimum recommended player age")
+     :example     (md->html "`age<=12` Matches any game that would be suitable for pre-teens")}
 
     {:term :rec-players
      :alias :rp}
