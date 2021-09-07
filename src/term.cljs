@@ -52,8 +52,10 @@
      :description (md->html "Compares against the average user rating of a game")
      :example     (md->html "`average-rating<6.5` Matches any game with an average rating below **6.5**")}
 
-    {:term :geek-rating
-     :alias :gr}
+    {:term        :geek-rating
+     :alias       :gr
+     :description (md->html "Compares against the game's BGG GeekRating metric")
+     :example     (md->html "`geek-rating>=8.0` Matches any game with a GeekRating of at least **8.0**")}
 
     {:term :rating-deviation
      :alias :rd}
