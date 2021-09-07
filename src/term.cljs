@@ -137,8 +137,12 @@
      :example     (md->html "`max-playtime<=30` Matches any game you can definitely complete in a
                              half-hour")}
 
-    {:term :median-playtime
-     :alias :mdpt}
+    {:term        :median-playtime
+     :alias       :mdpt
+     :description (md->html "Matches against the median number of minutes required to play a game,
+                             as sourced by BGG user play data")
+     :example     (md->html "`median-playtime<=60` Matches against any game that typically plays in an
+                             hour or less")}
 
     {:term :median-playtime-1
      :alias :mdpt1}
