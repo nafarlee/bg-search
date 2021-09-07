@@ -114,8 +114,11 @@
      :example     (md->html "`quorum-players=3` Matches any game that plays well with 3 people as
                              rated by at least 4 out of 5 players")}
 
-    {:term :min-players
-     :alias :mnpr}
+    {:term        :min-players
+     :alias       :mnpr
+     :description (md->html "Matches against the minimum number of required players")
+     :example     (md->html "`min-players>=3` Matches any game that is playable with at least **3**
+                             players")}
 
     {:term :max-players
      :alias :mxpr}
