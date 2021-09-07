@@ -85,8 +85,10 @@
      :description (md->html "Matches against the number of players that are recommended by the BGG community")
      :example     (md->html "`rec-players=3` Matches any game that plays well with 3 players")}
 
-    {:term :best-players
-     :alias :bp}
+    {:term        :best-players
+     :alias       :bp
+     :description (md->html "Matches against the number of players that are best for a game as determined by the BGG community")
+     :example     (md->html "`best-players=3` Matches any game that plays best with 3 players")}
 
     {:term :quorum-players
      :alias :qp}
