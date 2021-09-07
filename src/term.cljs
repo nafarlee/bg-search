@@ -72,7 +72,9 @@
      :description (md->html "Compares against the game's number of complexity ratings")
      :example     (md->html "`weight-votes<1000` Matches any games that have less than **100** weight votes")}
 
-    {:term :year}
+    {:term        :year
+     :description (md->html "Matches the year a game was released")
+     :example     (md->html "`year=2018 family:\"roll-and-write\"` All the new Roll-and-Write games")}
 
     {:term :age}
 
