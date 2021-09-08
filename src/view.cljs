@@ -215,4 +215,4 @@
         [:th "Shortcuts"]
         [:th "Description"]
         [:th "Examples"]]]
-      [:tbody (map c/term terms)]]])))
+      [:tbody (map c/term (sort-by :term terms))]]])))
