@@ -3,8 +3,7 @@ runtime: nodejs12
 handlers:
   - url: /
     secure: always
-    static_files: public/index.html
-    upload: public/index.html
+    script: auto
 
   - url: /style.css
     secure: always
