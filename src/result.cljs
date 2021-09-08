@@ -18,3 +18,8 @@
   (try
     (ok (apply f args))
     (catch :default e (error e))))
+
+(defn ->js-promise [r]
+  (if (ok? r)
+    (js/Promise.resolve (unwrap r))
+    (js/Promise.reject (unwrap r))))
