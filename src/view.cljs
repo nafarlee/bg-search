@@ -1,5 +1,6 @@
 (ns view
   (:require
+    [term :refer [terms]]
     [component :as c]
     [clojure.string :as s]
     [html :refer [html doctype]]))
@@ -207,4 +208,11 @@
            [:strong "colon (:)"] ", but otherwise are only allowed to have specific values. Eg. "
            [:code "is:expansion"]]]
      [:h2 "Term Reference"]
-     [:h3 "TODO"]])))
+     [:table
+      [:thead
+       [:tr
+        [:th "Term"]
+        [:th "Shortcuts"]
+        [:th "Description"]
+        [:th "Examples"]]]
+      [:tbody (map c/term terms)]]])))
