@@ -1,4 +1,6 @@
-(ns component)
+(ns component
+  (:require
+    [markdown.core :refer [md->html]]))
 
 (def head
   (list
@@ -65,3 +67,10 @@
           (options direction possible-directions)]]]
      [:div {:class "row"}
       [:input {:class "column" :type "submit" :value "Search"}]]]))
+
+(defn term [{:keys [term alias description example]}]
+  [:tr
+   [:td (name term)]
+   [:td (when alias [:code (name alias)])]
+   [:td (md->html description)]
+   [:td (md->html example)]])
