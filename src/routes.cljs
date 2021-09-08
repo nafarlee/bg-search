@@ -1,5 +1,6 @@
 (ns routes
   (:require
+   [interop :refer [parse-int]]
    [view :as v]
    ["url" :as url]
    [transpile :refer [transpile]]
@@ -122,22 +123,29 @@
                                                               (+ (count games)))})}))
 
 (defn search [req res]
-  (let [query      (or (.. req -query -query) "")
-        order      (or (.. req -query -order) "bayes_rating")
-        direction  (or (.. req -query -direction) "DESC")
-        offset     (-> (.. req -query -offset) (or 0) (js/parseInt 10))
-        database   (.-database req)
-        sql-result (rs/attempt transpile query order direction offset)]
-    (prn {:query query :order order :direction direction :offset offset})
-    (if (rs/error? sql-result)
-      (-> sql-result rs/unwrap (err/transpile res query) js/Promise.resolve)
-      (then-not (sql/query database (rs/unwrap sql-result))
-        #(err/generic % res 500)
-        #(.send res (v/search {:query      query
-                               :order      order
-                               :direction  direction
-                               :games      (js->clj (.-rows %))
-                               :next-url   (next-url req (.-rows %))}))))))
+  (let [{:strs [query
+                order
+                direction
+                offset]
+         :or   {query ""
+                order "bayes_rating"
+                direction "DESC"
+                offset "0"}
+         :as   qp} (js->clj (.-query req))
+        offset     (parse-int offset)]
+    (prn qp)
+    (-> (rs/attempt transpile query order direction offset)
+        rs/->js-promise
+        (.catch #(throw (ex-info "Could not transpile" {:error %} :transpile-error)))
+        (.then #(sql/query (.-database req) %))
+        (.then #(.send res (v/search {:query     query
+                                      :order     order
+                                      :direction direction
+                                      :games     (js->clj (.-rows %))
+                                      :next-url  (next-url req (.-rows %))})))
+        (.catch #(case (ex-cause %)
+                       :transpile-error (err/transpile (:error (ex-data %)) res query)
+                       (err/generic (:error (ex-data %)) res 500))))))
 
 (defn pull-collection [req res]
   (let [username (.. req -body -username)
