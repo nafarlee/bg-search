@@ -97,31 +97,39 @@
   {:post [(js-promise? %)]}
   (let [database (.-database req)]
     (-> (sql/get-game-checkpoint database)
-        (.then (fn [checkpoint]
-                 (let [new-checkpoint (+ checkpoint 200)]
-                   (-> (api/get-games (range checkpoint new-checkpoint))
-                       (then-not
-                         #(-> res (.status 500) .send)
-                         (fn [games]
-                           (if-not (seq games)
-                             (-> (sql/mobius-games database)
-                                 (.then #(prn :success :mobius-games))
-                                 (.then #(-> res (.status 200) .send)))
-                             (-> (sql/begin database)
-                                 (.then #(sql/update-game-checkpoint database new-checkpoint))
-                                 (.then #(->> games
-                                              insert
-                                              (map (partial query database))
-                                              clj->js
-                                              js/Promise.all))
-                                 (.then #(sql/commit database))
-                                 (.then #(prn :success checkpoint (dec new-checkpoint)))
-                                 (.then #(-> res (.status 200) .send))
-                                 (.catch (fn [error]
-                                           (js/console.error error)
-                                           (prn :error checkpoint (dec new-checkpoint))
-                                           (-> (sql/rollback database)
-                                               (.then #(-> res (.status 500) .send))))))))))))))))
+        (.then #(hash-map :checkpoint % :new-checkpoint (+ 200 %)))
+        (.then (fn [{:keys [checkpoint new-checkpoint] :as ctx}]
+                 (.then (api/get-games (range checkpoint new-checkpoint))
+                        #(assoc ctx :games %))))
+        (.then (fn [{:keys [games] :as ctx}]
+                 (if-not (seq games)
+                   (throw (ex-info "Mobius Games" ctx :mobius-games))
+                   ctx)))
+        (.then (fn [{:keys [games checkpoint new-checkpoint] :as ctx}]
+                 (-> (sql/begin database)
+                     (.then #(->> games
+                                  insert
+                                  (map (partial query database))
+                                  clj->js
+                                  js/Promise.all))
+                     (.then #(sql/commit database))
+                     (.then #(prn :save-games checkpoint (dec new-checkpoint)))
+                     (.then #(success res))
+                     (.catch #(throw (ex-info "Save Games Error" ctx :save-games-error))))))
+        (.catch (fn [e]
+                  (let [{:keys [checkpoint new-checkpoint]} (ex-data e)]
+                    (case (ex-cause e)
+                          :save-games-error
+                          (-> (sql/rollback database)
+                              (.then #(prn :save-games-error checkpoint (dec new-checkpoint)))
+                              (.then #(err/generic (ex-message e) res 500)))
+
+                          :mobius-games
+                          (-> (sql/mobius-games database)
+                              (.then #(prn :mobius-games))
+                              (.then #(success res)))
+
+                          (err/generic e res 500))))))))
 
 (defn games [req res]
   (let [database (.-database req)
