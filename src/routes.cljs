@@ -105,13 +105,11 @@
                  (if-not (seq games)
                    (throw (ex-info "Mobius Games" ctx :mobius-games))
                    ctx)))
-        (.then (fn [{:keys [games checkpoint new-checkpoint] :as ctx}]
+        (.then (fn [{:keys [games] :as ctx}]
+                 (assoc ctx :insertions (insert games))))
+        (.then (fn [{:keys [insertions checkpoint new-checkpoint] :as ctx}]
                  (-> (sql/begin database)
-                     (.then #(->> games
-                                  insert
-                                  (map (partial query database))
-                                  clj->js
-                                  js/Promise.all))
+                     (.then #(js/Promise.all (map (partial query database) insertions)))
                      (.then #(sql/commit database))
                      (.then #(prn :save-games checkpoint (dec new-checkpoint)))
                      (.then #(success res))
