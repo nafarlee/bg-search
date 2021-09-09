@@ -19,7 +19,7 @@
     (ok (apply f args))
     (catch :default e (error e))))
 
-(defn from-promise [p]
-  (-> p
-      (.then ok)
-      (.catch error)))
+(defn ->js-promise [r]
+  (if (ok? r)
+    (js/Promise.resolve (unwrap r))
+    (js/Promise.reject (unwrap r))))
