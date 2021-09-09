@@ -109,6 +109,7 @@
                  (assoc ctx :insertions (insert games))))
         (.then (fn [{:keys [insertions checkpoint new-checkpoint] :as ctx}]
                  (-> (sql/begin database)
+                     (.then #(sql/update-game-checkpoint database new-checkpoint))
                      (.then #(js/Promise.all (map (partial query database) insertions)))
                      (.then #(sql/commit database))
                      (.then #(prn :save-games checkpoint (dec new-checkpoint)))
