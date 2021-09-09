@@ -24,51 +24,74 @@
       (.send message)))
 
 (defn pull-plays [req res]
-  (let [database           (.-database req)
-        last-game-p        (sql/get-last-game database)
-        plays-checkpoint-p (sql/get-plays-checkpoint database)]
-    (then-not (js/Promise.all [last-game-p plays-checkpoint-p])
-      #(err/generic % res 500)
-      (fn [[last-game [play-id play-page]]]
-        (if (> play-id last-game)
-          (-> (sql/mobius-plays database)
-              (.then #(prn :mobius-plays))
-              (.then #(success res)))
-          (then-not (sql/game? database play-id)
-            #(err/generic % res 500)
-            (fn [game?]
-              (if-not game?
-                (-> (sql/update-plays-checkpoint database (inc play-id) 1)
-                    (.then #(prn :not-a-game play-id))
-                    (.then #(success res)))
-                (then-not (api/get-plays play-id play-page)
-                  #(err/generic % res 500)
-                  (fn [plays]
-                    (let [positive-plays (filter (fn [[_ _ play-time]] (pos? play-time)) plays)]
-                      (cond
-                        (empty? plays)
-                        (-> (sql/update-plays-checkpoint database (inc play-id) 1)
-                            (.then #(prn :no-plays play-id play-page))
-                            (.then #(success res)))
+  (let [database (.-database req)]
+    (-> (js/Promise.all [(sql/get-last-game database) (sql/get-plays-checkpoint database)])
+        (.then (fn [[last-game [play-id play-page]]]
+                 (if (> play-id last-game)
+                   (throw (ex-info "Mobius Plays" {} :mobius-plays))
+                   {:play-id play-id :play-page play-page})))
+        (.then (fn [{:keys [play-id] :as ctx}]
+                 (.then (sql/game? database play-id)
+                        #(assoc ctx :game? %))))
+        (.then (fn [{:keys [game?] :as ctx}]
+                 (if-not game?
+                   (throw (ex-info "Not a Game" ctx :not-a-game))
+                   ctx)))
+        (.then (fn [{:keys [play-id play-page] :as ctx}]
+                 (.then (api/get-plays play-id play-page)
+                        #(assoc ctx :plays %))))
+        (.then (fn [{:keys [plays] :as ctx}]
+                 (if (empty? plays)
+                   (throw (ex-info "No Plays" ctx :no-plays))
+                   ctx)))
+        (.then (fn [{:keys [plays] :as ctx}]
+                 (assoc ctx
+                        :positive-plays
+                        (filter (fn [[_ _ play-time]] (pos? play-time)) plays))))
+        (.then (fn [{:keys [positive-plays] :as ctx}]
+                 (if (empty? positive-plays)
+                   (throw (ex-info "No Positive Plays" ctx :no-positive-plays))
+                   ctx)))
+        (.then (fn [{:keys [positive-plays] :as ctx}]
+                 (.then (sql/play? database (ffirst positive-plays))
+                        #(assoc ctx :play? %))))
+        (.then (fn [{:keys [play?] :as ctx}]
+                 (if play?
+                   (throw (ex-info "No New Plays" ctx :no-new-plays))
+                   ctx)))
+        (.then (fn [{:keys [play-id play-page positive-plays]}]
+                (-> (sql/save-plays database play-id play-page positive-plays)
+                    (.then #(prn :save-plays play-id play-page))
+                    (.then #(success res)))))
+        (.catch (fn [e]
+                  (let [{:keys [play-id play-page]} (ex-data e)]
+                    (case (ex-cause e)
+                          :no-new-plays
+                          (-> (sql/update-plays-checkpoint database (inc play-id) 1)
+                              (.then #(prn :no-new-plays play-id play-page))
+                              (.then #(success res)))
 
-                        (empty? positive-plays)
-                        (-> (sql/update-plays-checkpoint database play-id (inc play-page))
-                            (.then #(prn :no-positive-plays play-id play-page))
-                            (.then #(success res)))
+                          :no-positive-plays
+                          (-> (sql/update-plays-checkpoint database play-id (inc play-page))
+                              (.then #(prn :no-positive-plays play-id play-page))
+                              (.then #(success res)))
 
-                        :else
-                        (then-not (sql/play? database (ffirst positive-plays))
-                          #(err/generic % res 500)
-                          (fn [play?]
-                            (if play?
-                              (-> (sql/update-plays-checkpoint database (inc play-id) 1)
-                                  (.then #(prn :no-new-plays play-id play-page))
-                                  (.then #(success res))
-                                  (.catch #(err/generic % res 500)))
-                              (-> (sql/save-plays database play-id play-page positive-plays)
-                                  (.then #(prn :save-plays play-id play-page))
-                                  (.then #(success res))
-                                  (.catch #(err/generic % res 500))))))))))))))))))
+                          :no-plays
+                          (-> (sql/update-plays-checkpoint database (inc play-id) 1)
+                              (.then #(prn :no-plays play-id play-page))
+                              (.then #(success res)))
+
+                          :mobius-plays
+                          (-> (sql/mobius-plays database)
+                              (.then #(prn :mobius-plays))
+                              (.then #(success res)))
+
+                          :not-a-game
+                          (-> (sql/update-plays-checkpoint database (inc play-id) 1)
+                              (.then #(prn :not-a-game play-id))
+                              (.then #(success res)))
+
+                          (err/generic e res 500))))))))
 
 (defn pull [req res]
   {:post [(js-promise? %)]}
