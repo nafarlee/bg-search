@@ -33,10 +33,10 @@
       doctype
       [:html
        [:head c/head]
-       [:body {:class "container"}
+       [:body
         (c/search {:query query :order order :direction direction})
         (if (empty? games)
-          [:h1 {:class "center"} "No more results!"]
+          [:h1 "No more results!"]
           (list
            (map game->heading games)
            [:br]))
@@ -49,9 +49,9 @@
     doctype
     [:html
      [:head c/head]
-     [:body {:class "container"}
-      [:h1 {:class "center"} code]
-      [:h3 {:class "center"} message]
+     [:body
+      [:h1 code]
+      [:h3 message]
       (when block
         [:pre [:code block]])]])))
 
@@ -105,8 +105,8 @@
        [:head
         c/head
         [:title primary_name]]
-       [:body {:class "container"}
-        [:h1 {:class "center"} (str primary_name " (" year ")")]
+       [:body
+        [:h1 (str primary_name " (" year ")")]
         [:h2 [:a {:href (str "https://boardgamegeek.com/boardgame/" id)} "BGG"]]
         [:h2 [:a {:href image} "Image"]]
         (when description
@@ -162,14 +162,14 @@
     [:head
      c/head
      [:title "Board Game Search"]]
-    [:body {:class "container"}
-     [:h1 {:class "center"} "Board Game Search"]
+    [:body
+     [:h1 "Board Game Search"]
      (c/search {:order "bayes_rating" :direction "DESC"})
      [:form {:method "post" :action "/pull-collection"}
-      [:div {:class "row"}
-       [:div {:class "column column-75"}
+      [:div
+       [:div
         [:input {:name "username"}]]
-       [:input {:class "column column-25" :type "submit" :value "Pull BGG Collection"}]]]
+       [:input {:type "submit" :value "Pull BGG Collection"}]]]
      [:h2 "Language"]
      [:p "A valid query in this language is comprised of any number of terms, combined or modified
           in certain ways. All terms may be:"]

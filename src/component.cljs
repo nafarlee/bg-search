@@ -44,20 +44,20 @@
                            :mozactionhint "search"
                            :name "query"}]
     [:form {:method "get" :action "/search"}
-     [:div {:class "row"}
-      [:div {:class "column"}
+     [:div
+      [:div
        [:input search-attributes]]]
-     [:div {:class "row"}
-      [:div {:class "column"}
+     [:div
+      [:div
        [:label {:for "order"} "Sort"]
        [:select {:name "order"}
         (options order possible-orders)]]
-      [:div {:class "column"}
+      [:div
        [:label {:for "direction"} "Direction"]
        [:select {:name "direction"}
           (options direction possible-directions)]]]
-     [:div {:class "row"}
-      [:input {:class "column" :type "submit" :value "Search"}]]]))
+     [:div
+      [:input {:type "submit" :value "Search"}]]]))
 
 (defn term [{:keys [term alias description example]}]
   [:tr
