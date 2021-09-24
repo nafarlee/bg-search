@@ -1,4 +1,6 @@
-(ns html)
+(ns html
+  (:require
+   [clojure.string :refer [join split trim]]))
 
 (defn render-attributes [attributes]
   (reduce (fn [acc [k v]]
@@ -10,18 +12,30 @@
 
 (declare html)
 
-(defn render-element [[tag attributes & body]]
+(defn parse-tag-keyword [kw]
+  (let [s               (name kw)
+        [tag & classes] (split s #"\.")]
+    {:tag   tag
+     :class (when classes (join " " classes))}))
+
+(defn render-element [[kw attributes & body]]
   (if-not (map? attributes)
-    (recur (concat [tag {} attributes] body))
-    (str
-     "<"
-     (name tag)
-     (render-attributes attributes)
-     ">"
-     (apply str (map html body))
-     "</"
-     (name tag)
-     ">")))
+    (recur (concat [kw {} attributes] body))
+    (let [{:keys [tag class]} (parse-tag-keyword kw)
+          merged-attributes   (update attributes
+                                      :class
+                                      (fn [explicit-class]
+                                        (when (or class explicit-class)
+                                          (trim (str class " " explicit-class)))))]
+      (str
+       "<"
+       tag
+       (render-attributes merged-attributes)
+       ">"
+       (apply str (map html body))
+       "</"
+       tag
+       ">"))))
 
 (defn html [element]
   (cond
