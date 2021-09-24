@@ -22,4 +22,7 @@
          (h/html [:ul
                   [:li 1]
                   (when false [:li 1.5])
-                  [:li 2]]))))
+                  [:li 2]])))
+  (is (= "<p class=\"hidden primary center\">Hello!</p>"
+         (h/html [:p.hidden.primary {:class "center"}
+                  "Hello!"]))))
