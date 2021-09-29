@@ -37,11 +37,11 @@
         (c/search-form {:query query :order order :direction direction})
         (if (empty? games)
           [:h1 "No more results!"]
-          (list
-           (map game->heading games)
-           [:br]))
+          (map game->heading games))
         (when (= 25 (count games))
-          [:p [:a {:href next-url} "Next"]])]]))))
+          (list
+           [:hr]
+           [:p [:a {:href next-url} "Next"]]))]]))))
 
 (defn error [{:keys [code message block]}]
   (html
