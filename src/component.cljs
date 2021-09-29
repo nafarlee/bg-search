@@ -48,9 +48,7 @@
                            :mozactionhint "search"
                            :name "query"}]
     [:form {:method "get" :action "/search"}
-     [:div
-      [:div
-       [:input.box-border.w-full search-attributes]]]
+     [:input.box-border.w-full search-attributes]
      [:div.flex.flex-wrap
       [:div.flex-grow
        [:label {:for "order"} "Sort"]
