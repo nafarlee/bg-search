@@ -34,7 +34,7 @@
       [:html
        [:head c/head]
        [:body
-        (c/search {:query query :order order :direction direction})
+        (c/search-form {:query query :order order :direction direction})
         (if (empty? games)
           [:h1 "No more results!"]
           (list
@@ -164,7 +164,7 @@
      [:title "Board Game Search"]]
     [:body
      [:h1.text-center "Board Game Search"]
-     (c/search {:order "bayes_rating" :direction "DESC"})
+     (c/search-form {:order "bayes_rating" :direction "DESC"})
      c/collection-form
      [:h2 "Language"]
      [:p "A valid query in this language is comprised of any number of terms, combined or modified

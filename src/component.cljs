@@ -20,7 +20,7 @@
          [:option {:value (name k) :selected (= (name k) selected)} v])
        m))
 
-(defn search [{:keys [query order direction]}]
+(defn search-form [{:keys [query order direction]}]
   (let [possible-orders {:id "ID"
                          :primary_name "Name"
                          :rating_votes "Number of Ratings"
