@@ -50,7 +50,7 @@
     [:form {:method "get" :action "/search"}
      [:div
       [:div
-       [:input search-attributes]]]
+       [:input.box-border.w-full search-attributes]]]
      [:div
       [:div
        [:label {:for "order"} "Sort"]

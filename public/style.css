@@ -1,3 +1,11 @@
 .text-center {
   text-align: center;
 }
+
+.box-border {
+  box-sizing: border-box;
+}
+
+.w-full {
+  width: 100%;
+}
