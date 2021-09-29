@@ -9,3 +9,19 @@
 .w-full {
   width: 100%;
 }
+
+.flex {
+  display: flex;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.min-w-max {
+  min-width: max-content;
+}

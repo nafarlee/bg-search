@@ -51,14 +51,14 @@
      [:div
       [:div
        [:input.box-border.w-full search-attributes]]]
-     [:div
-      [:div
+     [:div.flex.flex-wrap
+      [:div.flex-grow
        [:label {:for "order"} "Sort"]
-       [:select {:name "order"}
+       [:select.min-w-max.w-full {:name "order"}
         (options order possible-orders)]]
-      [:div
+      [:div.flex-grow
        [:label {:for "direction"} "Direction"]
-       [:select {:name "direction"}
+       [:select.min-w-max.w-full {:name "direction"}
           (options direction possible-directions)]]]
      [:div
       [:input {:type "submit" :value "Search"}]]]))
