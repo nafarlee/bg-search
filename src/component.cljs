@@ -39,6 +39,7 @@
         possible-directions {:DESC "Descending"
                              :ASC "Ascending"}
         search-attributes {:spellcheck "false"
+                           :placeholder "n:catan"
                            :autocomplete "off"
                            :autocapitalize "off"
                            :autocorrect "off"
