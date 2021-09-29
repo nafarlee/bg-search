@@ -60,6 +60,11 @@
         (options direction possible-directions)]]]
      [:input.w-full {:type "submit" :value "Search"}]]))
 
+(def collection-form
+  [:form {:method "post" :action "/pull-collection"}
+   [:input {:name "username"}]
+   [:input {:type "submit" :value "Pull BGG Collection"}]])
+
 (defn term [{:keys [term alias description example]}]
   [:tr
    [:td (name term)]

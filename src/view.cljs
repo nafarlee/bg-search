@@ -165,11 +165,7 @@
     [:body
      [:h1.text-center "Board Game Search"]
      (c/search {:order "bayes_rating" :direction "DESC"})
-     [:form {:method "post" :action "/pull-collection"}
-      [:div
-       [:div
-        [:input {:name "username"}]]
-       [:input {:type "submit" :value "Pull BGG Collection"}]]]
+     c/collection-form
      [:h2 "Language"]
      [:p "A valid query in this language is comprised of any number of terms, combined or modified
           in certain ways. All terms may be:"]
