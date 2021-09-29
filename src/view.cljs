@@ -165,6 +165,7 @@
     [:body
      [:h1.text-center "Board Game Search"]
      (c/search-form {:order "bayes_rating" :direction "DESC"})
+     [:hr]
      (c/collection-form)
      (c/tutorial)
      [:h2 "Term Reference"]
