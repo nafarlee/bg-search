@@ -58,8 +58,7 @@
        [:label {:for "direction"} "Direction"]
        [:select.min-w-max.w-full {:name "direction"}
         (options direction possible-directions)]]]
-     [:div
-      [:input {:type "submit" :value "Search"}]]]))
+     [:input.w-full {:type "submit" :value "Search"}]]))
 
 (defn term [{:keys [term alias description example]}]
   [:tr
