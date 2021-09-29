@@ -59,7 +59,7 @@
       [:div.flex-grow
        [:label {:for "direction"} "Direction"]
        [:select.min-w-max.w-full {:name "direction"}
-          (options direction possible-directions)]]]
+        (options direction possible-directions)]]]
      [:div
       [:input {:type "submit" :value "Search"}]]]))
 
