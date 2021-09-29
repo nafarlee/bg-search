@@ -62,8 +62,8 @@
 
 (defn collection-form []
   [:form {:method "post" :action "/pull-collection"}
-   [:input {:name "username"}]
-   [:input {:type "submit" :value "Pull BGG Collection"}]])
+   [:input.box-border.w-full {:name "username"}]
+   [:input.box-border.w-full {:type "submit" :value "Pull BGG Collection"}]])
 
 (defn tutorial []
   (md->html
