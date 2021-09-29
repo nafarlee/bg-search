@@ -32,7 +32,7 @@
      (list
       doctype
       [:html
-       [:head c/head]
+       [:head (c/head)]
        [:body
         (c/search-form {:query query :order order :direction direction})
         (if (empty? games)
@@ -48,7 +48,7 @@
    (list
     doctype
     [:html
-     [:head c/head]
+     [:head (c/head)]
      [:body
       [:h1 code]
       [:h3 message]
@@ -103,7 +103,7 @@
       doctype
       [:html
        [:head
-        c/head
+        (c/head)
         [:title primary_name]]
        [:body
         [:h1 (str primary_name " (" year ")")]
@@ -160,13 +160,13 @@
    (list
     doctype
     [:head
-     c/head
+     (c/head)
      [:title "Board Game Search"]]
     [:body
      [:h1.text-center "Board Game Search"]
      (c/search-form {:order "bayes_rating" :direction "DESC"})
-     c/collection-form
-     c/tutorial
+     (c/collection-form)
+     (c/tutorial)
      [:h2 "Term Reference"]
      [:table
       [:thead

@@ -2,7 +2,7 @@
   (:require
     [markdown.core :refer [md->html]]))
 
-(def head
+(defn head []
   (list
    [:link
     {:rel "stylesheet"
@@ -60,12 +60,13 @@
         (options direction possible-directions)]]]
      [:input.w-full {:type "submit" :value "Search"}]]))
 
-(def collection-form
+(defn collection-form []
   [:form {:method "post" :action "/pull-collection"}
    [:input {:name "username"}]
    [:input {:type "submit" :value "Pull BGG Collection"}]])
 
-(def tutorial (md->html
+(defn tutorial []
+  (md->html
 "
 ## Language
 
