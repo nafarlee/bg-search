@@ -65,6 +65,46 @@
    [:input {:name "username"}]
    [:input {:type "submit" :value "Pull BGG Collection"}]])
 
+(def tutorial (md->html
+"
+## Language
+
+A valid query in this language is comprised of any number of terms, combined or modified in certain
+ways. All terms may be:
+
+- Separated by spaces for an **AND** relationship
+- Separated by the word \"or\" for an **OR** relationship
+- Grouped together by surrounding one or more with parentheses. This is useful in conjunction with
+  the \"or\" separator
+- Prefixed with a minus (-) to **NEGATE** the terms results
+
+
+```
+-is:expansion (mechanic:\"Dice Rolling\" best-players=2) or (category:economic best-players=4)
+```
+
+For example, the above query would match any games, which are **not expansions**, and are **either
+dice rolling** games that play **best with 2 players**, **or** are **economic games** that play
+**best with 4 players**
+
+Most terms have shortcuts, so if you like saving time, the above query could also be written as
+follows:
+
+
+```
+-is:e (m:\"Dice Rolling\" bp=2) or (c:economic bp=4)
+```
+
+There are also some behaviors that are specific to the type of the term:
+
+- Most terms are separated by a colon (:), and can use quotes to specify values that contain
+  spaces. Eg. `name:\"Race for the Galaxy\"`
+- Terms that work with numbers can use **=, >, <, >=, or <=** to specify relationships. Eg.
+  `average-rating>=7.5`
+- Some terms always start with **is**, and are always separated by a **colon (:)**, but otherwise
+  are only allowed to have specific values. Eg. `is:expansion`
+"))
+
 (defn term [{:keys [term alias description example]}]
   [:tr
    [:td (name term)]

@@ -166,43 +166,7 @@
      [:h1.text-center "Board Game Search"]
      (c/search-form {:order "bayes_rating" :direction "DESC"})
      c/collection-form
-     [:h2 "Language"]
-     [:p "A valid query in this language is comprised of any number of terms, combined or modified
-          in certain ways. All terms may be:"]
-     [:ul
-      [:li "Separated by spaces for an " [:strong "AND"] " relationship"]
-      [:li "Separated by the word \"or\" for an " [:strong "OR"] " relationship"]
-      [:li "Grouped together by surrounding one or more with parentheses. This is useful in
-            conjunction with the \"or\" separator"]
-      [:li "Prefixed with a minus (-) to " [:strong "NEGATE"] " the terms results"]]
-     [:div
-      [:pre [:code "-is:expansion (mechanic:\"Dice Rolling\" best-players=2) or (category:economic best-players=4)"]]
-      [:p "For example, the above query would match any games, which are "
-          [:strong "not expansions"]
-          ", and are "
-          [:strong "either dice rolling"]
-          " games that play "
-          [:strong "best with 2 players"]
-          ", "
-          [:strong "or"]
-          " are "
-          [:strong "economic games"]
-          " that play "
-          [:strong "best with 4 players"]]
-      [:p "Most terms have shortcuts, so if you like saving time, the above query could also be
-           written as follows:"]
-      [:pre [:code "-is:e (m:\"Dice Rolling\" bp=2) or (c:economic bp=4)"]]]
-     [:p "There are also some behaviours that are specific to the type of the term:"]
-     [:ul
-      [:li "Most terms are separated by a colon (:), and can use quotes to specify values that
-           contain spaces. Eg. " [:code "name:\"Race for the Galaxy\""]]
-      [:li "Terms that work with numbers can use "
-           [:strong "=, &gt;, &lt;, &gt;=, or &lt;="]
-           " to specify relationships. Eg. "
-           [:code "average-rating&gt;=7.5"]]
-      [:li "Some terms always start with " [:strong "is"] ", and are always separated by a "
-           [:strong "colon (:)"] ", but otherwise are only allowed to have specific values. Eg. "
-           [:code "is:expansion"]]]
+     c/tutorial
      [:h2 "Term Reference"]
      [:table
       [:thead
