@@ -163,7 +163,7 @@
      c/head
      [:title "Board Game Search"]]
     [:body
-     [:h1 "Board Game Search"]
+     [:h1.text-center "Board Game Search"]
      (c/search {:order "bayes_rating" :direction "DESC"})
      [:form {:method "post" :action "/pull-collection"}
       [:div
