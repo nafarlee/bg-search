@@ -24,7 +24,7 @@
   (sort-by #(-> % (get "players") range->text (js/parseInt 10))
            recommendations))
 
-(defn search [{:keys [games query next-url direction order previous-url]}]
+(defn search [{:keys [games query next-url direction order previous-url page-number]}]
   (let [game->heading (fn [{:strs [id year primary_name]}]
                         [:p [:a {:href (str "/games/" id)}
                              (str primary_name " (" year ")")]])]
@@ -43,6 +43,7 @@
            [:hr]
            [:div.flex.justify-between
             (when previous-url [:p [:a {:href previous-url} "Previous"]])
+            [:p.ml-auto page-number]
             [:p.ml-auto [:a {:href next-url} "Next"]]]))]]))))
 
 (defn error [{:keys [code message block]}]
