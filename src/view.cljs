@@ -43,7 +43,7 @@
            [:hr]
            [:div.flex.justify-between
             (when previous-url [:p [:a {:href previous-url} "Previous"]])
-            [:p [:a {:href next-url} "Next"]]]))]]))))
+            [:p.ml-auto [:a {:href next-url} "Next"]]]))]]))))
 
 (defn error [{:keys [code message block]}]
   (html
