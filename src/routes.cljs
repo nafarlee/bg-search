@@ -159,6 +159,13 @@
                       :pathname (.-path req)
                       :query    (clj->js (assoc query :offset (- (parse-int offset) 25)))}))))
 
+(defn- page-number [req]
+  (let [offset (-> req
+                   (.. -query -offset)
+                   (or "0")
+                   parse-int)]
+    (inc (quot offset 25))))
+
 (defn search [req res]
   (let [{:strs [query
                 order
