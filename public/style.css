@@ -25,3 +25,7 @@
 .min-w-max {
   min-width: max-content;
 }
+
+.justify-between {
+  justify-content: space-between;
+}
