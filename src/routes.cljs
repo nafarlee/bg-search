@@ -140,16 +140,15 @@
           (.send res (v/games (js->clj game))))))))
 
 (defn- next-url [req games]
-  (url/format #js{:protocol (.-protocol req)
-                  :host     (.get req "host")
-                  :pathname (.-path req)
-                  :query    (js/Object.assign #js{}
-                                              (.-query req)
-                                              #js{:offset (-> req
-                                                              (.. -query -offset)
-                                                              (or "0")
-                                                              (js/parseInt 10)
-                                                              (+ (count games)))})}))
+  (let [query            (js->clj (.-query req))
+        {:strs [offset]} query
+        new-offset       (+ (parse-int (or offset "0"))
+                            (count games))
+        new-query        (clj->js (assoc query :offset new-offset))]
+    (url/format #js{:host     (.get req "host")
+                    :protocol (.-protocol req)
+                    :pathname (.-path req)
+                    :query    new-query})))
 
 (defn search [req res]
   (let [{:strs [query
