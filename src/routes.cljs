@@ -187,6 +187,7 @@
                                       :direction    direction
                                       :games        (js->clj (.-rows %))
                                       :previous-url (previous-url req)
+                                      :page-number  (page-number req)
                                       :next-url     (next-url req (.-rows %))})))
         (.catch #(case (ex-cause %)
                        :transpile-error (err/transpile (:error (ex-data %)) res query)
