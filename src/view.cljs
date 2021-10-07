@@ -24,7 +24,7 @@
   (sort-by #(-> % (get "players") range->text (js/parseInt 10))
            recommendations))
 
-(defn search [{:keys [games query next-url direction order]}]
+(defn search [{:keys [games query next-url direction order previous-url]}]
   (let [game->heading (fn [{:strs [id year primary_name]}]
                         [:p [:a {:href (str "/games/" id)}
                              (str primary_name " (" year ")")]])]
@@ -41,7 +41,9 @@
         (when (= 25 (count games))
           (list
            [:hr]
-           [:p [:a {:href next-url} "Next"]]))]]))))
+           [:div.flex.justify-between
+            (when previous-url [:p [:a {:href previous-url} "Previous"]])
+            [:p [:a {:href next-url} "Next"]]]))]]))))
 
 (defn error [{:keys [code message block]}]
   (html
