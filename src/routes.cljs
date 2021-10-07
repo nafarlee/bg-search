@@ -175,11 +175,12 @@
         rs/->js-promise
         (.catch #(throw (ex-info "Could not transpile" {:error %} :transpile-error)))
         (.then #(sql/query (.-database req) %))
-        (.then #(.send res (v/search {:query     query
-                                      :order     order
-                                      :direction direction
-                                      :games     (js->clj (.-rows %))
-                                      :next-url  (next-url req (.-rows %))})))
+        (.then #(.send res (v/search {:query        query
+                                      :order        order
+                                      :direction    direction
+                                      :games        (js->clj (.-rows %))
+                                      :previous-url (previous-url req)
+                                      :next-url     (next-url req (.-rows %))})))
         (.catch #(case (ex-cause %)
                        :transpile-error (err/transpile (:error (ex-data %)) res query)
                        (err/generic (:error (ex-data %)) res 500))))))
