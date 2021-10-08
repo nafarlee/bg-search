@@ -49,7 +49,7 @@
                            :name "query"}]
     [:form {:method "get" :action "/search"}
      [:input.box-border.w-full search-attributes]
-     [:div.flex.flex-wrap
+     [:div.flex.flex-wrap.gap-2
       [:div.flex-grow.flex-basis-0
        [:label {:for "order"} "Sort"]
        [:select.min-w-max.w-full {:name "order"}
