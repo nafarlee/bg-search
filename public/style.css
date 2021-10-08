@@ -65,3 +65,7 @@
 .grid-col-3 {
   grid-column: 3;
 }
+
+.flex-basis-0 {
+  flex-basis: 0;
+}
