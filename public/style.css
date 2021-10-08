@@ -33,3 +33,7 @@
 .ml-auto {
   margin-left: auto;
 }
+
+.text-left {
+  text-align: left;
+}
