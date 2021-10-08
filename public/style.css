@@ -41,3 +41,7 @@
 .text-right {
   text-align: right;
 }
+
+.grid-col-3 {
+  grid-column: 3;
+}
