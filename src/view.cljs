@@ -39,10 +39,10 @@
           [:h1 "No more results!"]
           (map game->heading games))
         [:hr]
-        [:div.flex.justify-between
-         (when previous-url [:p [:a {:href previous-url} "Previous"]])
-         [:p.ml-auto page-number]
-         (when (= 25 (count games)) [:p.ml-auto [:a {:href next-url} "Next"]])]]]))))
+        [:div.grid.grid-rows-1.grid-cols-3
+         (when previous-url [:p.grid-col-1.text-left [:a {:href previous-url} "Previous"]])
+         [:p.grid-col-2.text-center page-number]
+         (when (= 25 (count games)) [:p.grid-col-3.text-right [:a {:href next-url} "Next"]])]]]))))
 
 (defn error [{:keys [code message block]}]
   (html
