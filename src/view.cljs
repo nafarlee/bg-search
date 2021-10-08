@@ -38,13 +38,11 @@
         (if (empty? games)
           [:h1 "No more results!"]
           (map game->heading games))
-        (when (= 25 (count games))
-          (list
-           [:hr]
-           [:div.flex.justify-between
-            (when previous-url [:p [:a {:href previous-url} "Previous"]])
-            [:p.ml-auto page-number]
-            [:p.ml-auto [:a {:href next-url} "Next"]]]))]]))))
+        [:hr]
+        [:div.flex.justify-between
+         (when previous-url [:p [:a {:href previous-url} "Previous"]])
+         [:p.ml-auto page-number]
+         (when (= 25 (count games)) [:p.ml-auto [:a {:href next-url} "Next"]])]]]))))
 
 (defn error [{:keys [code message block]}]
   (html
