@@ -185,6 +185,13 @@
      :example     "`-is:reimplementation -is:collection -is:expansion` Only shows standalone games
                    which are the original version"}
 
+    {:term        :is:player-count-expansion
+     :alias       :is:pce
+     :description "Expansions which increase the maximum player count over the base game"
+     :example     "`is:pce or -is:e qp=5` Show games which are naturally good at 5 players, or
+                   games which are now good at 5 players due to an expansion increasing the player
+                   count"}
+
     {:term        :own
      :description "Games which are owned by a particular BGG user. Currently, you must manually
                    pull your BGG collection to initialize/update it. This must be done before you

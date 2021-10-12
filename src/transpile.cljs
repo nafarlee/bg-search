@@ -57,6 +57,13 @@
             :where :username := #{value}
               :and (when negate :not) :own := :TRUE))
 
+(defn player-count-expansion [{:strs [value negate]}]
+  (clj->sql :select :e.id :as :id
+            :from :expansions :mid
+              :inner :join :games :b :on :mid.base := :b.id
+              :inner :join :games :e :on :mid.expansion := :e.id
+            :where (when negate not) :e.maximum_players :> :b.maximum_players))
+
 
 (def exported-fields
   ["id"
@@ -119,6 +126,7 @@
      :median-playtime-4   (partial median-playtime 4)
      :median-playtime-5   (partial median-playtime 5)
      :own                 own
+     :player-count-expansion player-count-expansion
      :reimplementation    (partial self-junction {:table "reimplementations"
                                                   :join-field "reimplementation"
                                                   :nullable-field "original"})

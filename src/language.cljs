@@ -14,6 +14,8 @@
 (def ^:private meta-tags
   {"e"                "EXPANSION"
    "expansion"        "EXPANSION"
+   "pce"                    "PLAYER_COUNT_EXPANSION"
+   "player-count-expansion" "PLAYER_COUNT_EXPANSION"
    "c"                "COLLECTION"
    "collection"       "COLLECTION"
    "reimplementation" "REIMPLEMENTATION"
