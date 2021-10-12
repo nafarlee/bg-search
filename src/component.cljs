@@ -50,11 +50,11 @@
     [:form {:method "get" :action "/search"}
      [:input.box-border.w-full search-attributes]
      [:div.flex.flex-wrap.gap-2
-      [:div.flex-grow.flex-basis-0
+      [:div.flex-grow
        [:label {:for "order"} "Sort"]
        [:select.min-w-max.w-full {:name "order"}
         (options order possible-orders)]]
-      [:div.flex-grow.flex-basis-0
+      [:div.flex-grow
        [:label {:for "direction"} "Direction"]
        [:select.min-w-max.w-full {:name "direction"}
         (options direction possible-directions)]]]
