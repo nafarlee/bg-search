@@ -164,7 +164,7 @@
                            :tag  (meta-tags value)}))))
 
         :MetaTag
-        #(apply alt (map string (keys meta-tags)))
+        #(apply alt (map string (sort-by (comp - count) (keys meta-tags))))
 
         :DeclarativeTerm
         #(-> (seq ^js(.-DeclarativeTag %)
