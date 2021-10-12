@@ -62,7 +62,7 @@
             :from :expansions :mid
               :inner :join :games :b :on :mid.base := :b.id
               :inner :join :games :e :on :mid.expansion := :e.id
-            :where (when negate not) :e.maximum_players :> :b.maximum_players))
+            :where (when negate :not) :e.maximum_players :> :b.maximum_players))
 
 
 (def exported-fields
