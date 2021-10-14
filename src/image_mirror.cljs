@@ -1,8 +1,10 @@
 (ns image-mirror
   (:require
+    [clojure.string :as s]
     ["crypto" :as crypto]
     ["https" :as https]
     ["util" :as util]
+    ["fs" :as fs]
     ["stream" :as stream]))
 
 (def pipeline (util/promisify stream/pipeline))
@@ -22,3 +24,9 @@
       (.update string)
       (.digest "hex")
       .toString))
+
+(defn serve [url]
+  (let [path (str "public/" (md5 url) "." (last (s/split url ".")))]
+    (-> (download-stream url)
+        (.then #(pipeline % (fs/createWriteStream path)))
+        (.then (constantly path)))))
