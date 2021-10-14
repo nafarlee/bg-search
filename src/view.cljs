@@ -58,6 +58,7 @@
 
 (defn games
   [{:strs [primary_name
+           image
            player_recommendations
            median_playtimes
            minimum_playtime
@@ -108,8 +109,8 @@
         [:title primary_name]]
        [:body
         [:h1 (str primary_name " (" year ")")]
+        [:img {:src (str "/image-mirror/" image)}]
         [:h2 [:a {:href (str "https://boardgamegeek.com/boardgame/" id)} "BGG"]]
-        [:h2 [:a {:href image} "Image"]]
         (when description
           [:details
            [:summary "Description"]
