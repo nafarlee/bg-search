@@ -27,6 +27,10 @@
       (.digest "hex")
       .toString))
 
+(defn- download [url write-stream]
+  (-> (download-stream url)
+      (.then #(pipeline % write-stream))))
+
 (defn serve [url]
   (let [filename (str (md5 url) "." (last (s/split url ".")))
         folder   "public/image/"
