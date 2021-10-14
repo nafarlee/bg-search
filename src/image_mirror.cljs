@@ -7,9 +7,9 @@
     ["fs" :as fs]
     ["stream" :as stream]))
 
-(def pipeline (util/promisify stream/pipeline))
+(def ^:private pipeline (util/promisify stream/pipeline))
 
-(defn download-stream [url]
+(defn- download-stream [url]
   (js/Promise.
    (fn [fulfill reject]
      (https/get
@@ -19,7 +19,7 @@
           (fulfill res)
           (reject res)))))))
 
-(defn md5 [string]
+(defn- md5 [string]
   (-> (crypto/createHash "md5")
       (.update string)
       (.digest "hex")
