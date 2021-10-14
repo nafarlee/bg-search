@@ -1,5 +1,6 @@
 (ns image-mirror
   (:require
+    ["crypto" :as crypto]
     ["https" :as https]
     ["util" :as util]
     ["stream" :as stream]))
@@ -15,3 +16,9 @@
         (if (== 200 (.-statusCode res))
           (fulfill res)
           (reject res)))))))
+
+(defn md5 [string]
+  (-> (crypto/createHash "md5")
+      (.update string)
+      (.digest "hex")
+      .toString))
