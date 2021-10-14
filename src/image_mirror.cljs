@@ -9,6 +9,8 @@
 
 (def ^:private pipeline (util/promisify stream/pipeline))
 
+(def ^:private mkdir (util/promisify fs/mkdir))
+
 (defn- download-stream [url]
   (js/Promise.
    (fn [fulfill reject]
