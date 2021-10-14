@@ -28,7 +28,9 @@
       .toString))
 
 (defn serve [url]
-  (let [path (str "public/" (md5 url) "." (last (s/split url ".")))]
+  (let [filename (str (md5 url) "." (last (s/split url ".")))
+        folder   "public/"
+        path     (str folder filename)]
     (-> (download-stream url)
         (.then #(pipeline % (fs/createWriteStream path)))
-        (.then (constantly path)))))
+        (.then (constantly filename)))))
