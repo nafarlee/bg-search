@@ -29,8 +29,9 @@
 
 (defn serve [url]
   (let [filename (str (md5 url) "." (last (s/split url ".")))
-        folder   "public/"
+        folder   "public/image/"
         path     (str folder filename)]
-    (-> (download-stream url)
+    (-> (mkdir folder #js{:recursive true})
+        (.then #(download-stream url))
         (.then #(pipeline % (fs/createWriteStream path)))
         (.then (constantly filename)))))
