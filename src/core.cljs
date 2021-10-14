@@ -15,6 +15,9 @@
              (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24)))))
         (.use (.static express "public"))
         (.get
+         "/image-mirror/:url(\\S+)"
+         routes/image-mirror)
+        (.get
          "/search"
          (-> routes/search
              (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
