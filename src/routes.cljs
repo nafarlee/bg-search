@@ -1,5 +1,6 @@
 (ns routes
   (:require
+   [image-mirror :as im]
    [interop :refer [parse-int]]
    [view :as v]
    ["url" :as url]
@@ -204,3 +205,8 @@
 
 (defn index [req res]
   (.send res (v/index)))
+
+(defn image-mirror [req res]
+  (-> (im/serve (.. req -params -url))
+      (.then #(.redirect res 302 (str "/image/" %)))
+      (.catch js/console.error)))
