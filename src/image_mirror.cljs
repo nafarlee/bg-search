@@ -39,10 +39,8 @@
       (.then #(download url (fs/createWriteStream filepath)))))
 
 (defn serve [url]
-  (let [filename (str (md5 url) "." (last (s/split url ".")))
-        folder   "public/image/"
-        path     (str folder filename)]
-    (-> (mkdir folder #js{:recursive true})
-        (.then #(download-stream url))
-        (.then #(pipeline % (fs/createWriteStream path)))
+  (let [filename (str (md5 url) (path/extname url))
+        filepath (path/join "public/image" filename)]
+    (-> (access filepath)
+        (.catch #(download-local url filepath))
         (.then (constantly filename)))))
