@@ -90,8 +90,8 @@
                                 [:ul (map #(vector :li %) coll)]]))
         render-median-playtime (fn [[players {:strs [median count]}]]
                                  (if (= "0" players)
-                                   [:li (str "All Player Counts: " median " minutes across " count " plays")]
-                                   [:li (str players " Player(s): " median " minutes across " count " plays")]))
+                                   [:li (str "All: " median " minutes across " count " plays")]
+                                   [:li (str players ": " median " minutes across " count " plays")]))
         render-player-recommendation (fn [{:strs [players best recommended not_recommended]}]
                                        (let [total (+ best recommended not_recommended)]
                                          [:li
@@ -131,7 +131,7 @@
           [:li (str "Maximum: " maximum_playtime)]
           (when median_playtimes
             (list
-             [:li "Medians:"]
+             [:li "Medians by Player Count:"]
              [:ul (map render-median-playtime
                        (sort-by #(js/parseInt (first %) 10)
                                 median_playtimes))]))]]
