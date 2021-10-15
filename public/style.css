@@ -79,6 +79,10 @@
   grid-column: 3;
 }
 
+.col-span-3 {
+  grid-column: span 3 / span 3;
+}
+
 .gap-2 {
   gap: 0.5rem;
 }
