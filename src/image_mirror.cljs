@@ -1,6 +1,5 @@
 (ns image-mirror
   (:require
-    [clojure.string :as s]
     ["path" :as path]
     ["crypto" :as crypto]
     ["https" :as https]
