@@ -25,9 +25,12 @@
            recommendations))
 
 (defn search [{:keys [games query next-url direction order previous-url page-number]}]
-  (let [game->heading (fn [{:strs [id year primary_name]}]
-                        [:p [:a {:href (str "/games/" id)}
-                             (str primary_name " (" year ")")]])]
+  (let [game->heading (fn [{:strs [id year primary_name thumbnail]}]
+                        (list
+                         [:img.h-28.w-full.object-cover.object-top
+                          {:src (str "/image-mirror/" thumbnail)}]
+                         [:h3.col-span-3
+                          [:a {:href (str "/games/" id)} (str primary_name " (" year ")")]]))]
     (html
      (list
       doctype
@@ -37,7 +40,8 @@
         (c/search-form {:query query :order order :direction direction})
         (if (empty? games)
           [:h1 "No more results!"]
-          (map game->heading games))
+          [:div.grid.grid-cols-4.gap-4.justify-items-start.items-center
+           (map game->heading games)])
         [:hr]
         [:div.grid.grid-rows-1.grid-cols-3
          (when previous-url [:p.grid-col-1.text-left [:a {:href previous-url} "Previous"]])
