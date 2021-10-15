@@ -29,7 +29,7 @@
                         (list
                          [:img.h-28.w-full.object-cover.object-top
                           {:src (str "/image-mirror/" thumbnail)}]
-                         [:h3.col-span-3
+                         [:h3.col-span-3.m-0
                           [:a {:href (str "/games/" id)} (str primary_name " (" year ")")]]))]
     (html
      (list
