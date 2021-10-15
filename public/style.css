@@ -98,3 +98,7 @@
 .justify-items-start {
   justify-items: start;
 }
+
+.items-center {
+  align-items: center;
+}
