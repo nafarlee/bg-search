@@ -108,9 +108,9 @@
         (c/head)
         [:title primary_name]]
        [:body
-        [:h1 (str primary_name " (" year ")")]
-        [:img {:src (str "/image-mirror/" image)}]
-        [:h2 [:a {:href (str "https://boardgamegeek.com/boardgame/" id)} "BGG"]]
+        [:h1.text-center (str primary_name " (" year ")")]
+        [:img.block.mx-auto {:src (str "/image-mirror/" image)}]
+        [:h2.text-center [:a {:href (str "https://boardgamegeek.com/boardgame/" id)} "BGG"]]
         (when description
           [:details
            [:summary "Description"]
