@@ -1,6 +1,7 @@
 (ns image-mirror
   (:require
     [clojure.string :as s]
+    ["path" :as path]
     ["crypto" :as crypto]
     ["https" :as https]
     ["util" :as util]
@@ -32,6 +33,10 @@
 (defn- download [url write-stream]
   (-> (download-stream url)
       (.then #(pipeline % write-stream))))
+
+(defn- download-local [url filepath]
+  (-> (mkdir (path/dirname filepath) #js{:recursive true})
+      (.then #(download url (fs/createWriteStream filepath)))))
 
 (defn serve [url]
   (let [filename (str (md5 url) "." (last (s/split url ".")))
