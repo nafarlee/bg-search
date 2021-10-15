@@ -106,3 +106,7 @@
 .object-cover {
   object-fit: cover;
 }
+
+.object-top {
+  object-position: top;
+}
