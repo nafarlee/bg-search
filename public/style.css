@@ -47,6 +47,10 @@
   text-align: right;
 }
 
+.block {
+  display: block;
+}
+
 .grid {
   display: grid;
 }
