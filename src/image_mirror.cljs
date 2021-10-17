@@ -37,10 +37,6 @@
   (-> (download-stream url)
       (.then #(pipeline % write-stream))))
 
-(defn- download-local [url filepath]
-  (-> (mkdir (path/dirname filepath) #js{:recursive true})
-      (.then #(download url (fs/createWriteStream filepath)))))
-
 (defn serve [url]
   (let [filename (str (md5 url) (path/extname url))
         gcs-file (.file bucket filename)]
