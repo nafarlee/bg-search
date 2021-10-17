@@ -15,8 +15,6 @@
 
 (def ^:private mkdir (util/promisify fs/mkdir))
 
-(def ^:private access (util/promisify fs/access))
-
 (defn- download-stream [url]
   (js/Promise.
    (fn [fulfill reject]
