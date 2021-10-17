@@ -4,7 +4,6 @@
     ["crypto" :as crypto]
     ["https" :as https]
     ["util" :as util]
-    ["fs" :as fs]
     ["stream" :as stream]
     ["@google-cloud/storage" :as gcs]))
 
@@ -12,8 +11,6 @@
                 (.bucket "bg-search-images")))
 
 (def ^:private pipeline (util/promisify stream/pipeline))
-
-(def ^:private mkdir (util/promisify fs/mkdir))
 
 (defn- download-stream [url]
   (js/Promise.
