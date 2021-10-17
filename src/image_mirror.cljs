@@ -38,6 +38,5 @@
     (-> (.exists gcs-file)
         (.then (fn [[exists?]]
                  (when-not exists?
-                   (prn :cache-miss)
                    (download url (.createWriteStream gcs-file)))))
         (.then #(.publicUrl gcs-file)))))
