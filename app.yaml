@@ -1,5 +1,5 @@
 ---
-runtime: nodejs12
+runtime: nodejs16
 handlers:
   - url: /
     secure: always

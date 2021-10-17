@@ -208,5 +208,5 @@
 
 (defn image-mirror [req res]
   (-> (im/serve (.. req -params -url))
-      (.then #(.redirect res 302 (str "/image/" %)))
+      (.then #(.redirect res 302 %))
       (.catch js/console.error)))

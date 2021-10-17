@@ -1,15 +1,16 @@
 (ns image-mirror
   (:require
-    [clojure.string :as s]
+    ["path" :as path]
     ["crypto" :as crypto]
     ["https" :as https]
     ["util" :as util]
-    ["fs" :as fs]
-    ["stream" :as stream]))
+    ["stream" :as stream]
+    ["@google-cloud/storage" :as gcs]))
+
+(def bucket (-> (gcs/Storage.)
+                (.bucket "bg-search-images")))
 
 (def ^:private pipeline (util/promisify stream/pipeline))
-
-(def ^:private mkdir (util/promisify fs/mkdir))
 
 (defn- download-stream [url]
   (js/Promise.
@@ -27,11 +28,15 @@
       (.digest "hex")
       .toString))
 
+(defn- download [url write-stream]
+  (-> (download-stream url)
+      (.then #(pipeline % write-stream))))
+
 (defn serve [url]
-  (let [filename (str (md5 url) "." (last (s/split url ".")))
-        folder   "public/image/"
-        path     (str folder filename)]
-    (-> (mkdir folder #js{:recursive true})
-        (.then #(download-stream url))
-        (.then #(pipeline % (fs/createWriteStream path)))
-        (.then (constantly filename)))))
+  (let [filename (str (md5 url) (path/extname url))
+        gcs-file (.file bucket filename)]
+    (-> (.exists gcs-file)
+        (.then (fn [[exists?]]
+                 (when-not exists?
+                   (download url (.createWriteStream gcs-file)))))
+        (.then #(.publicUrl gcs-file)))))

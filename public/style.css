@@ -34,12 +34,25 @@
   margin-left: auto;
 }
 
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.m-0 {
+  margin: 0;
+}
+
 .text-left {
   text-align: left;
 }
 
 .text-right {
   text-align: right;
+}
+
+.block {
+  display: block;
 }
 
 .grid {
@@ -54,6 +67,10 @@
   grid-template-columns: repeat(3, minmax(0, 1fr))
 }
 
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr))
+}
+
 .grid-col-1 {
   grid-column: 1;
 }
@@ -66,6 +83,34 @@
   grid-column: 3;
 }
 
+.col-span-3 {
+  grid-column: span 3 / span 3;
+}
+
 .gap-2 {
   gap: 0.5rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.h-28 {
+  height: 7rem;
+}
+
+.justify-items-start {
+  justify-items: start;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
+.object-top {
+  object-position: top;
 }

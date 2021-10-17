@@ -68,6 +68,7 @@
 (def exported-fields
   ["id"
    "primary_name"
+   "thumbnail"
    "rating_votes"
    "average_rating"
    "steamdb_rating"

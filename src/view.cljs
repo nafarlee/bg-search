@@ -25,9 +25,12 @@
            recommendations))
 
 (defn search [{:keys [games query next-url direction order previous-url page-number]}]
-  (let [game->heading (fn [{:strs [id year primary_name]}]
-                        [:p [:a {:href (str "/games/" id)}
-                             (str primary_name " (" year ")")]])]
+  (let [game->heading (fn [{:strs [id year primary_name thumbnail]}]
+                        (list
+                         [:img.h-28.w-full.object-cover.object-top
+                          {:src (str "/image-mirror/" thumbnail)}]
+                         [:h3.col-span-3.m-0
+                          [:a {:href (str "/games/" id)} (str primary_name " (" year ")")]]))]
     (html
      (list
       doctype
@@ -37,7 +40,8 @@
         (c/search-form {:query query :order order :direction direction})
         (if (empty? games)
           [:h1 "No more results!"]
-          (map game->heading games))
+          [:div.grid.grid-cols-4.gap-4.justify-items-start.items-center
+           (map game->heading games)])
         [:hr]
         [:div.grid.grid-rows-1.grid-cols-3
          (when previous-url [:p.grid-col-1.text-left [:a {:href previous-url} "Previous"]])
@@ -58,6 +62,7 @@
 
 (defn games
   [{:strs [primary_name
+           image
            player_recommendations
            median_playtimes
            minimum_playtime
@@ -89,8 +94,8 @@
                                 [:ul (map #(vector :li %) coll)]]))
         render-median-playtime (fn [[players {:strs [median count]}]]
                                  (if (= "0" players)
-                                   [:li (str "All Player Counts: " median " minutes across " count " plays")]
-                                   [:li (str players " Player(s): " median " minutes across " count " plays")]))
+                                   [:li (str "All: " median " minutes across " count " plays")]
+                                   [:li (str players ": " median " minutes across " count " plays")]))
         render-player-recommendation (fn [{:strs [players best recommended not_recommended]}]
                                        (let [total (+ best recommended not_recommended)]
                                          [:li
@@ -107,9 +112,9 @@
         (c/head)
         [:title primary_name]]
        [:body
-        [:h1 (str primary_name " (" year ")")]
-        [:h2 [:a {:href (str "https://boardgamegeek.com/boardgame/" id)} "BGG"]]
-        [:h2 [:a {:href image} "Image"]]
+        [:h1.text-center (str primary_name " (" year ")")]
+        [:img.block.mx-auto {:src (str "/image-mirror/" image)}]
+        [:h2.text-center [:a {:href (str "https://boardgamegeek.com/boardgame/" id)} "BGG"]]
         (when description
           [:details
            [:summary "Description"]
@@ -130,7 +135,7 @@
           [:li (str "Maximum: " maximum_playtime)]
           (when median_playtimes
             (list
-             [:li "Medians:"]
+             [:li "Medians by Player Count:"]
              [:ul (map render-median-playtime
                        (sort-by #(js/parseInt (first %) 10)
                                 median_playtimes))]))]]
