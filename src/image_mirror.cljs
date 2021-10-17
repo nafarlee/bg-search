@@ -5,7 +5,11 @@
     ["https" :as https]
     ["util" :as util]
     ["fs" :as fs]
-    ["stream" :as stream]))
+    ["stream" :as stream]
+    ["@google-cloud/storage" :as gcs]))
+
+(def bucket (-> (gcs/Storage.)
+                (.bucket "bg-search-images")))
 
 (def ^:private pipeline (util/promisify stream/pipeline))
 
