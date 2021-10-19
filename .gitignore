@@ -69,3 +69,4 @@ typings/
 /app.js
 /test.js
 /public/image
+/env.fish

@@ -4,7 +4,6 @@ env_variables:
   PGUSER: postgres
   PGHOST: /cloudsql/bg-search:us-east1:postgres-next
   PGDATABASE: bg_search
-  PGPASSWORD: ''
 handlers:
   - url: /
     secure: always
