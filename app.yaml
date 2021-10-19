@@ -2,7 +2,7 @@
 runtime: nodejs16
 env_variables:
   PGUSER: postgres
-  PGHOST: 35.231.119.33
+  PGHOST: /cloudsql/bg-search:us-east1:postgres-next
   PGDATABASE: bg_search
   PGPASSWORD: ''
 handlers:
