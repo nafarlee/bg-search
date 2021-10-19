@@ -64,8 +64,6 @@ typings/
 .firebase
 *.tfstate.backup
 
-/src/db-credentials.json
-
 /out/
 .shadow-cljs
 /app.js
