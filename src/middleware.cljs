@@ -9,7 +9,7 @@
 
 (defn with-database [handler]
   (fn [req res]
-    (let [client (Client. credentials)]
+    (let [client (Client.)]
       (then-not (.connect client)
         #(err/generic % res 500)
         (fn [] (-> req
