@@ -17,9 +17,13 @@ jobs:
 
       - run: npm t
 
-      - run: echo "$DATABASE_CREDENTIALS" | base64 -d > src/db-credentials.json
+      - use: colpal/setup-yq@v1
+        with:
+          yq-version: 4.13.4
+
+      - run: yq -i eval '.env_variables.PGPASSWORD = env(POSTGRES_PASSWORD)' app.yaml
         env:
-          DATABASE_CREDENTIALS: ${{ secrets.DATABASE_CREDENTIALS }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
 
       - run: npm run build
 
