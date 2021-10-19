@@ -17,7 +17,7 @@ jobs:
 
       - run: npm t
 
-      - use: colpal/setup-yq@v1
+      - uses: colpal/setup-yq@v1
         with:
           yq-version: 4.13.4
 
