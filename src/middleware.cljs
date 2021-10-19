@@ -4,8 +4,7 @@
     [clojure.set :refer [difference]]
     ["pg" :refer [Client]]
     [promise :refer [then-not]]
-    [error :as err]
-    [static :refer [credentials]]))
+    [error :as err]))
 
 (defn with-database [handler]
   (fn [req res]
