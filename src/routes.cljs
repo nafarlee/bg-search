@@ -108,21 +108,14 @@
         (.then (fn [{:keys [games] :as ctx}]
                  (assoc ctx :insertions (insert games))))
         (.then (fn [{:keys [insertions checkpoint new-checkpoint] :as ctx}]
-                 (-> (sql/begin database)
-                     (.then #(sql/update-game-checkpoint database new-checkpoint))
-                     (.then #(js/Promise.all (map (partial query database) insertions)))
-                     (.then #(sql/commit database))
+                 (-> (sql/insert-games database insertions new-checkpoint)
                      (.then #(prn :save-games checkpoint (dec new-checkpoint)))
                      (.then #(success res))
-                     (.catch #(throw (ex-info "Save Games Error" ctx :save-games-error))))))
+                     (.catch #(do (prn :save-games-error checkpoint (dec new-checkpoint))
+                                  (err/generic % res 500))))))
         (.catch (fn [e]
                   (let [{:keys [checkpoint new-checkpoint]} (ex-data e)]
                     (case (ex-cause e)
-                          :save-games-error
-                          (-> (sql/rollback database)
-                              (.then #(prn :save-games-error checkpoint (dec new-checkpoint)))
-                              (.then #(err/generic (ex-message e) res 500)))
-
                           :mobius-games
                           (-> (sql/mobius-games database)
                               (.then #(prn :mobius-games))

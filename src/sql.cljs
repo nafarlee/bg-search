@@ -1,8 +1,17 @@
 (ns sql
   (:require
-    [clojure.string :as s]
-    [sql.dsl :refer [clj->sql realize-query]]
+    ["pg" :refer [Pool]]
+    [sql.dsl :refer [realize-query]]
     [sql.insert :refer [generate]]))
+
+(defn pool []
+  (Pool.))
+
+(defn client [pool]
+  (.connect pool))
+
+(defn release [client]
+  (.release client))
 
 (defn query [database q]
   (->> q
@@ -125,16 +134,19 @@
 (defn mobius-plays [database]
   (update-plays-checkpoint database 1 1))
 
-(defn save-plays [database play-id play-page plays]
-  (-> (begin database)
-      (.then #(update-plays-checkpoint database play-id (inc play-page)))
-      (.then #(query database (generate "plays"
-                                         ["id" "game_id" "length" "players"]
-                                         ["id"]
-                                         plays)))
-      (.then #(commit database))
-      (.catch (fn [error] (-> (rollback database)
-                              (.then #(js/Promise.reject error)))))))
+(defn save-plays [db-pool play-id play-page plays]
+  (.then
+   (client db-pool)
+   (fn [db-client]
+    (-> (begin db-client)
+        (.then #(update-plays-checkpoint db-client play-id (inc play-page)))
+        (.then #(query db-client (generate "plays"
+                                           ["id" "game_id" "length" "players"]
+                                           ["id"]
+                                           plays)))
+        (.then #(commit db-client))
+        (.catch #(rollback db-client))
+        (.finally #(release db-client))))))
 
 (defn save-collection [database collection-maps]
   (query database
@@ -146,3 +158,14 @@
                                  (.toISOString (js/Date.))
                                  (:own %))
                         collection-maps))))
+
+(defn insert-games [db-pool insertions new-checkpoint]
+  (.then
+   (client db-pool)
+   (fn [db-client]
+     (-> (begin db-client)
+         (.then #(update-game-checkpoint db-client new-checkpoint))
+         (.then #(js/Promise.all (map (partial query db-client) insertions)))
+         (.then #(commit db-client))
+         (.catch #(rollback db-client))
+         (.finally #(release db-client))))))

@@ -1,20 +1,7 @@
 (ns middleware
   (:require
     [clojure.string :refer [join]]
-    [clojure.set :refer [difference]]
-    ["pg" :refer [Client]]
-    [promise :refer [then-not]]
-    [error :as err]))
-
-(defn with-database [handler]
-  (fn [req res]
-    (let [client (Client.)]
-      (then-not (.connect client)
-        #(err/generic % res 500)
-        (fn [] (-> req
-                   (js/Object.assign #js{:database client})
-                   (handler res)
-                   (.finally #(.end client))))))))
+    [clojure.set :refer [difference]]))
 
 (defn with-header [handler header value]
   (fn [req res]
@@ -31,3 +18,8 @@
             (.status 422)
             (.send (str "Missing required query parameters: "
                         (join ", " diff))))))))
+
+(defn with-database-pool [pool]
+  (fn [req _res nxt]
+    (set! (.-database req) @pool)
+    (nxt)))
