@@ -3,7 +3,7 @@
     ["express" :as express]
     [sql :as sql]
     [routes :as routes]
-    [middleware :refer [with-database-pool with-header with-required-body-parameters]]))
+    [middleware :as middleware]))
 
 (defonce ^:export app (express))
 
@@ -13,7 +13,7 @@
           (.use (.urlencoded express #js{:extended true}))
           (.get
            "/"
-           (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24)))
+           (middleware/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24)))
            routes/index)
           (.use (.static express "public"))
           (.get
@@ -21,25 +21,25 @@
            routes/image-mirror)
           (.get
            "/search"
-           (with-database-pool pool)
-           (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
+           (middleware/with-database-pool pool)
+           (middleware/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
            routes/search)
           (.post
            "/pubsub/pull"
-           (with-database-pool pool)
+           (middleware/with-database-pool pool)
            routes/pull)
           (.post
            "/pubsub/pull-plays"
-           (with-database-pool pool)
+           (middleware/with-database-pool pool)
            routes/pull-plays)
           (.post
            "/pull-collection"
-           (with-required-body-parameters #{"username"})
-           (with-database-pool pool)
+           (middleware/with-required-body-parameters #{"username"})
+           (middleware/with-database-pool pool)
            routes/pull-collection)
           (.get
            "/games/:id"
-           (with-database-pool pool)
-           (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
+           (middleware/with-database-pool pool)
+           (middleware/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
            routes/games)
           (.listen 8080 #(prn "Listening on 8080...")))))
