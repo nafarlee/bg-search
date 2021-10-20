@@ -31,3 +31,8 @@
             (.status 422)
             (.send (str "Missing required query parameters: "
                         (join ", " diff))))))))
+
+(defn with-database-pool [pool]
+  (fn [req _res nxt]
+    (set! (.-database req) @pool)
+    (nxt)))
