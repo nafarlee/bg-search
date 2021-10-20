@@ -143,11 +143,10 @@
          [:summary "Players"]
          [:ul
           [:li "Minimum: " minimum_players]
-          [:li "Maximum: " maximum_players]]]
-        (when player_recommendations
-          [:details
-           [:summary "Player Recommendations"]
-           [:ul (map render-player-recommendation (sort-recommendations player_recommendations))]])
+          [:li "Maximum: " maximum_players]
+          (when player_recommendations
+            [:li "Recommendations:"
+             [:ul (map render-player-recommendation (sort-recommendations player_recommendations))]])]]
         [:details
          [:summary "Weight"]
          [:ul
