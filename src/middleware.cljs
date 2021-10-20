@@ -8,16 +8,15 @@
     (.set res header value)
     (nxt)))
 
-(defn with-required-body-parameters [handler required]
-  (fn [req res]
-    (let [qps  (set (keys (js->clj (.-body req))))
-          diff (difference required qps)]
-      (if (= diff #{})
-        (handler req res)
+(defn with-required-body-parameters [required]
+  (fn [req res nxt]
+    (let [actual  (-> req .-body js->clj keys set)
+          diff    (difference required actual)]
+      (if (empty? diff)
+        (nxt)
         (-> res
             (.status 422)
-            (.send (str "Missing required query parameters: "
-                        (join ", " diff))))))))
+            (.send (str "Missing required query parameters: " (join ", " diff))))))))
 
 (defn with-database-pool [pool]
   (fn [req _res nxt]
