@@ -13,8 +13,8 @@
           (.use (.urlencoded express #js{:extended true}))
           (.get
            "/"
-           (-> routes/index
-               (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24)))))
+           (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24)))
+           routes/index)
           (.use (.static express "public"))
           (.get
            "/image-mirror/:url(\\S+)"
@@ -22,8 +22,8 @@
           (.get
            "/search"
            (with-database-pool pool)
-           (-> routes/search
-               (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))))
+           (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
+           routes/search)
           (.post
            "/pubsub/pull"
            (with-database-pool pool)
@@ -40,6 +40,6 @@
           (.get
            "/games/:id"
            (with-database-pool pool)
-           (-> routes/games
-               (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))))
+           (with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
+           routes/games)
           (.listen 8080 #(prn "Listening on 8080...")))))

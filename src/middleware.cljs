@@ -3,10 +3,10 @@
     [clojure.string :refer [join]]
     [clojure.set :refer [difference]]))
 
-(defn with-header [handler header value]
-  (fn [req res]
+(defn with-header [header value]
+  (fn [_req res nxt]
     (.set res header value)
-    (handler req res)))
+    (nxt)))
 
 (defn with-required-body-parameters [handler required]
   (fn [req res]
