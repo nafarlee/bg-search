@@ -155,3 +155,14 @@
                                  (.toISOString (js/Date.))
                                  (:own %))
                         collection-maps))))
+
+(defn insert-games [db-pool insertions new-checkpoint]
+  (.then
+   (client db-pool)
+   (fn [db-client]
+     (-> (begin db-client)
+         (.then #(update-game-checkpoint db-client new-checkpoint))
+         (.then #(js/Promise.all (map (partial query db-client) insertions)))
+         (.then #(commit db-client))
+         (.catch #(rollback db-client))
+         (.finally #(release db-client))))))
