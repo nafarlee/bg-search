@@ -61,7 +61,7 @@
      [:input.w-full {:type "submit" :value "Search"}]]))
 
 (defn collection-form []
-  [:form {:method "post" :action "/pull-collection"}
+  [:form {:method "put" :action "/pull-collection"}
    [:input.box-border.w-full {:name "username"}]
    [:input.box-border.w-full {:type "submit" :value "Pull BGG Collection"}]])
 
