@@ -134,16 +134,19 @@
 (defn mobius-plays [database]
   (update-plays-checkpoint database 1 1))
 
-(defn save-plays [database play-id play-page plays]
-  (-> (begin database)
-      (.then #(update-plays-checkpoint database play-id (inc play-page)))
-      (.then #(query database (generate "plays"
-                                         ["id" "game_id" "length" "players"]
-                                         ["id"]
-                                         plays)))
-      (.then #(commit database))
-      (.catch (fn [error] (-> (rollback database)
-                              (.then #(js/Promise.reject error)))))))
+(defn save-plays [db-pool play-id play-page plays]
+  (.then
+   (client db-pool)
+   (fn [db-client]
+    (-> (begin db-client)
+        (.then #(update-plays-checkpoint db-client play-id (inc play-page)))
+        (.then #(query db-client (generate "plays"
+                                           ["id" "game_id" "length" "players"]
+                                           ["id"]
+                                           plays)))
+        (.then #(commit db-client))
+        (.catch #(rollback db-client))
+        (.finally #(release db-client))))))
 
 (defn save-collection [database collection-maps]
   (query database
