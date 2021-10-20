@@ -1,7 +1,7 @@
 (ns core
   (:require
-    [sql :as sql]
     ["express" :as express]
+    [sql :as sql]
     [routes :as routes]
     [middleware :refer [with-database-pool with-header with-required-body-parameters]]))
 
