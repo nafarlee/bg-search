@@ -10,6 +10,9 @@
 (defn client [pool]
   (.connect pool))
 
+(defn release [client]
+  (.release client))
+
 (defn query [database q]
   (->> q
        realize-query
