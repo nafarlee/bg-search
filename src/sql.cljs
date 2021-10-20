@@ -1,7 +1,11 @@
 (ns sql
   (:require
+    ["pg" :refer [Pool]]
     [sql.dsl :refer [realize-query]]
     [sql.insert :refer [generate]]))
+
+(defn pool []
+  (Pool.))
 
 (defn query [database q]
   (->> q
