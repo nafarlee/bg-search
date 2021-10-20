@@ -7,6 +7,9 @@
 (defn pool []
   (Pool.))
 
+(defn client [pool]
+  (.connect pool))
+
 (defn query [database q]
   (->> q
        realize-query
