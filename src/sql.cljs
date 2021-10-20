@@ -1,7 +1,6 @@
 (ns sql
   (:require
-    [clojure.string :as s]
-    [sql.dsl :refer [clj->sql realize-query]]
+    [sql.dsl :refer [realize-query]]
     [sql.insert :refer [generate]]))
 
 (defn query [database q]
