@@ -1,6 +1,14 @@
 (ns html
   (:require
-   [clojure.string :refer [join split trim]]))
+   [clojure.string :refer [join replace split trim]]))
+
+(defn escape [h]
+  (-> h
+      (replace "&" "&amp;")
+      (replace "<" "&lt;")
+      (replace ">" "&gt;")
+      (replace "\"" "&quot;")
+      (replace "'" "&apos;")))
 
 (defn render-attributes [attributes]
   (reduce (fn [acc [k v]]
