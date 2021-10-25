@@ -185,7 +185,9 @@
                                       :next-url     (next-url req (.-rows %))})))
         (.catch #(case (ex-cause %)
                        :transpile-error (err/transpile (:error (ex-data %)) res query)
-                       (err/generic (:error (ex-data %)) res 500))))))
+                       (do
+                         (js/console.error %)
+                         (err/generic (:error (ex-data %)) res 500)))))))
 
 (defn pull-collection [^js req res]
   (let [username (.. req -body -username)
