@@ -13,7 +13,7 @@
 (defn render-attributes [attributes]
   (reduce (fn [acc [k v]]
             (if v
-              (str acc " " (name k) "=\"" v "\"")
+              (str acc " " (name k) "=\"" (escape (str v)) "\"")
               acc))
           ""
           attributes))
