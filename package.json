@@ -4,6 +4,7 @@
     "watch": "shadow-cljs watch app",
     "repl": "shadow-cljs node-repl",
     "build": "shadow-cljs compile app",
+    "release": "shadow-cljs release app",
     "start": "node --unhandled-rejections=strict app.js"
   },
   "devDependencies": {
