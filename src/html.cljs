@@ -2,7 +2,7 @@
   (:require
    [clojure.string :refer [join replace split trim]]))
 
-(defn escape [h]
+(defn- escape [h]
   (-> h
       (replace "&" "&amp;")
       (replace "<" "&lt;")
@@ -10,7 +10,7 @@
       (replace "\"" "&quot;")
       (replace "'" "&apos;")))
 
-(defn render-attributes [attributes]
+(defn- render-attributes [attributes]
   (reduce (fn [acc [k v]]
             (if v
               (str acc " " (name k) "=\"" (escape (str v)) "\"")
@@ -20,13 +20,13 @@
 
 (declare html)
 
-(defn parse-tag-keyword [kw]
+(defn- parse-tag-keyword [kw]
   (let [s               (name kw)
         [tag & classes] (split s #"\.")]
     {:tag   tag
      :class (when classes (join " " classes))}))
 
-(defn render-element [[kw attributes & body]]
+(defn- render-element [[kw attributes & body]]
   (if-not (map? attributes)
     (recur (concat [kw {} attributes] body))
     (let [{:keys [tag class]} (parse-tag-keyword kw)
