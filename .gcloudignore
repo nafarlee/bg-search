@@ -1,4 +1,6 @@
-.gcloudignore
-.git
-.gitignore
-node_modules/
+**
+!app.yaml
+!package.json
+!package-lock.json
+!app.js
+!public/
