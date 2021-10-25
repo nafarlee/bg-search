@@ -42,7 +42,7 @@
                                (get-in $ ["items" "item"])
                                (map #(hash-map :id  (js/parseInt (get % "$_objectid") 10)
                                                :username username
-                                               :own (== "1" (get-in % ["status" "$_own"])))
+                                               :own (= "1" (get-in % ["status" "$_own"])))
                                     $))
                      (throw res))))))
 
