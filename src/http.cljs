@@ -1,4 +1,5 @@
 (ns http
+  (:refer-clojure :exclude [get])
   (:require
     ["https" :as js-https]))
 
