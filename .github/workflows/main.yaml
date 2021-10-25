@@ -25,7 +25,7 @@ jobs:
         env:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
 
-      - run: npm run build
+      - run: npm run release
 
       - uses: google-github-actions/setup-gcloud@master
         with:
