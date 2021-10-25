@@ -23,7 +23,7 @@
       (.status status)
       (.send message)))
 
-(defn pull-plays [req res]
+(defn pull-plays [^js req res]
   (let [database (.-database req)]
     (-> (js/Promise.all [(sql/get-last-game database) (sql/get-plays-checkpoint database)])
         (.then (fn [[last-game [play-id play-page]]]
@@ -93,7 +93,7 @@
 
                           (err/generic e res 500))))))))
 
-(defn pull [req res]
+(defn pull [^js req res]
   {:post [(js-promise? %)]}
   (let [database (.-database req)]
     (-> (sql/get-game-checkpoint database)
@@ -123,7 +123,7 @@
 
                           (err/generic e res 500))))))))
 
-(defn games [req res]
+(defn games [^js req res]
   (let [database (.-database req)
         id       (.. req -params -id)]
     (then-not (sql/get-game database id)
@@ -160,7 +160,7 @@
                    parse-int)]
     (inc (quot offset 25))))
 
-(defn search [req res]
+(defn search [^js req res]
   (let [{:strs [query
                 order
                 direction
@@ -187,7 +187,7 @@
                        :transpile-error (err/transpile (:error (ex-data %)) res query)
                        (err/generic (:error (ex-data %)) res 500))))))
 
-(defn pull-collection [req res]
+(defn pull-collection [^js req res]
   (let [username (.. req -body -username)
         database (.-database req)]
     (-> (api/get-collection username)
@@ -199,7 +199,7 @@
 (defn index [req res]
   (.send res (v/index)))
 
-(defn image-mirror [req res]
+(defn image-mirror [^js req res]
   (-> (im/serve (.. req -params -url))
       (.then #(.redirect res 302 %))
       (.catch js/console.error)))

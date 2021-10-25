@@ -17,7 +17,7 @@
    (fn [fulfill reject]
      (https/get
       url
-      (fn [res]
+      (fn [^js res]
         (if (== 200 (.-statusCode res))
           (fulfill res)
           (reject res)))))))

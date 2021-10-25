@@ -5,7 +5,7 @@
 (defn- success? [code]
   (and (>= code 200) (< code 300)))
 
-(defn- handle-response [on-success res]
+(defn- handle-response [on-success ^js res]
   (let [chunks #js[]
         cb     #(on-success {:body % :status (.-statusCode res)})]
     (doto res
