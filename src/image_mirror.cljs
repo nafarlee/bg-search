@@ -1,5 +1,6 @@
 (ns image-mirror
   (:require
+    ["url" :as u]
     ["path" :as path]
     ["crypto" :as crypto]
     ["https" :as https]
@@ -32,7 +33,7 @@
   (-> (download-stream url)
       (.then #(pipeline % write-stream))))
 
-(defn serve [url]
+(defn- serve-with-gcs [url]
   (let [filename (str (md5 url) (path/extname url))
         gcs-file (.file bucket filename)]
     (-> (.exists gcs-file)
@@ -40,3 +41,9 @@
                  (when-not exists?
                    (download url (.createWriteStream gcs-file)))))
         (.then #(.publicUrl gcs-file)))))
+
+(defn serve [allowed-hostnames url]
+  (let [hostname (-> url u/URL. .-hostname)]
+    (if (contains? allowed-hostnames hostname)
+      (serve-with-gcs url)
+      (js/Promise.reject (js/Error (str hostname " is not an allowed hostname"))))))

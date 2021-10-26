@@ -202,7 +202,7 @@
   (.send res (v/index)))
 
 (defn image-mirror [^js req res]
-  (-> (im/serve (.. req -params -url))
+  (-> (im/serve #{"cf.geekdo-images.com"} (.. req -params -url))
       (.then #(.redirect res 302 %))
       (.catch (fn [e]
                 (js/console.error e)
