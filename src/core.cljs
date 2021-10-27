@@ -32,7 +32,7 @@
            "/pubsub/pull-plays"
            (middleware/with-database-pool pool)
            routes/pull-plays)
-          (.put
+          (.post
            "/pull-collection"
            (middleware/with-required-body-parameters #{"username"})
            (middleware/with-database-pool pool)
