@@ -23,6 +23,7 @@
            "/search"
            (middleware/with-database-pool pool)
            (middleware/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
+           middleware/with-query-params
            routes/search)
           (.post
            "/pubsub/pull"

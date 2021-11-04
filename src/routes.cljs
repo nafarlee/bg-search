@@ -161,17 +161,17 @@
     (inc (quot offset 25))))
 
 (defn search [^js req res]
-  (let [{:strs [query
+  (let [{:keys [database query]}         (.-locals req)
+        {:strs [query
                 order
                 direction
                 offset]
-         :or   {query ""
-                order "bayes_rating"
+         :or   {query     ""
+                order     "bayes_rating"
                 direction "DESC"
-                offset "0"}
-         :as   qp}                   (js->clj (.-query req))
-        {:keys [database]}           (.-locals req)
-        offset                       (parse-int offset)]
+                offset    "0"}
+         :as   qp}                       query
+        offset                           (parse-int offset)]
     (prn qp)
     (-> (rs/attempt transpile query order direction offset)
         rs/->js-promise
