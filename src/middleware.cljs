@@ -23,3 +23,8 @@
     (let [locals (or (.-locals req) {})]
       (set! (.-locals req) (assoc locals :database @pool))
       (nxt))))
+
+(defn with-query-params [^js req _res nxt]
+  (let [locals (or (.-locals req) {})]
+    (set! (.-locals req) (assoc locals :query (js->clj (.-query req))))
+    (nxt)))
