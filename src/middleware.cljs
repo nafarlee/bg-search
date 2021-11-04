@@ -28,3 +28,8 @@
   (let [locals (or (.-locals req) {})]
     (set! (.-locals req) (assoc locals :query (js->clj (.-query req))))
     (nxt)))
+
+(defn with-body [^js req _res nxt]
+  (let [locals (or (.-locals req) {})]
+    (set! (.-locals req) (assoc locals :body (js->clj (.-body req))))
+    (nxt)))
