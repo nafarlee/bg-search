@@ -18,6 +18,10 @@
             (.status 422)
             (.send (str "Missing required query parameters: " (join ", " diff))))))))
 
+(defn- assoc-locals! [^js req k v]
+  (let [locals (or (.-locals req) {})]
+    (set! (.-locals req) (assoc locals k v))))
+
 (defn with-database-pool [pool]
   (fn [^js req _res nxt]
     (let [locals (or (.-locals req) {})]
