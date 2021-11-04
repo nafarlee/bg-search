@@ -20,5 +20,6 @@
 
 (defn with-database-pool [pool]
   (fn [^js req _res nxt]
-    (set! (.-database req) @pool)
-    (nxt)))
+    (let [locals (or (.-locals req) {})]
+      (set! (.-locals req) (assoc locals :database @pool))
+      (nxt))))

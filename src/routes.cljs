@@ -24,7 +24,7 @@
       (.send message)))
 
 (defn pull-plays [^js req res]
-  (let [database (.-database req)]
+  (let [{:keys [database]} (.-locals req)]
     (-> (js/Promise.all [(sql/get-last-game database) (sql/get-plays-checkpoint database)])
         (.then (fn [[last-game [play-id play-page]]]
                  (if (> play-id last-game)
@@ -95,7 +95,7 @@
 
 (defn pull [^js req res]
   {:post [(js-promise? %)]}
-  (let [database (.-database req)]
+  (let [{:keys [database]} (.-locals req)]
     (-> (sql/get-game-checkpoint database)
         (.then #(hash-map :checkpoint % :new-checkpoint (+ 200 %)))
         (.then (fn [{:keys [checkpoint new-checkpoint] :as ctx}]
@@ -124,8 +124,8 @@
                           (err/generic e res 500))))))))
 
 (defn games [^js req res]
-  (let [database (.-database req)
-        id       (.. req -params -id)]
+  (let [{:keys [database]} (.-locals req)
+        id                 (.. req -params -id)]
     (then-not (sql/get-game database id)
       #(err/generic % res 500)
       (fn [game]
@@ -169,13 +169,14 @@
                 order "bayes_rating"
                 direction "DESC"
                 offset "0"}
-         :as   qp} (js->clj (.-query req))
-        offset     (parse-int offset)]
+         :as   qp}                   (js->clj (.-query req))
+        {:keys [database]}           (.-locals req)
+        offset                       (parse-int offset)]
     (prn qp)
     (-> (rs/attempt transpile query order direction offset)
         rs/->js-promise
         (.catch #(throw (ex-info "Could not transpile" {:error %} :transpile-error)))
-        (.then #(sql/query (.-database req) %))
+        (.then #(sql/query database %))
         (.then #(.send res (v/search {:query        query
                                       :order        order
                                       :direction    direction
@@ -191,7 +192,7 @@
 
 (defn pull-collection [^js req res]
   (let [username (.. req -body -username)
-        database (.-database req)]
+        {:keys [database]} (.-locals req)]
     (-> (api/get-collection username)
         (.catch #(error res 500 "Could not get collection" %))
         (.then #(sql/save-collection database %))
