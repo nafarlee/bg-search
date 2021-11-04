@@ -24,16 +24,13 @@
 
 (defn with-database-pool [pool]
   (fn [^js req _res nxt]
-    (let [locals (or (.-locals req) {})]
-      (set! (.-locals req) (assoc locals :database @pool))
-      (nxt))))
+    (assoc-locals! req :database @pool)
+    (nxt)))
 
 (defn with-query-params [^js req _res nxt]
-  (let [locals (or (.-locals req) {})]
-    (set! (.-locals req) (assoc locals :query (js->clj (.-query req))))
-    (nxt)))
+  (assoc-locals! req :query (js->clj (.-query req)))
+  (nxt))
 
 (defn with-body [^js req _res nxt]
-  (let [locals (or (.-locals req) {})]
-    (set! (.-locals req) (assoc locals :body (js->clj (.-body req))))
-    (nxt)))
+  (assoc-locals! req :body (js->clj (.-body req)))
+  (nxt))
