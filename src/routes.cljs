@@ -12,18 +12,13 @@
    [error :as err]
    [result :as rs]))
 
-(defn success [res]
-  (-> res
-      (.status 200)
-      .send))
-
 (defn error [res status message js-error]
   (js/console.log js-error)
   (-> res
       (.status status)
       (.send message)))
 
-(defn pull-plays [^js req res]
+(defn pull-plays [^js req ^js res]
   (let [{:keys [database]} (.-locals req)]
     (-> (js/Promise.all [(sql/get-last-game database) (sql/get-plays-checkpoint database)])
         (.then (fn [[last-game [play-id play-page]]]
@@ -62,38 +57,38 @@
         (.then (fn [{:keys [play-id play-page positive-plays]}]
                 (-> (sql/save-plays database play-id play-page positive-plays)
                     (.then #(prn :save-plays play-id play-page))
-                    (.then #(success res)))))
+                    (.then #(.sendStatus res 200)))))
         (.catch (fn [e]
                   (let [{:keys [play-id play-page]} (ex-data e)]
                     (case (ex-cause e)
                           :no-new-plays
                           (-> (sql/update-plays-checkpoint database (inc play-id) 1)
                               (.then #(prn :no-new-plays play-id play-page))
-                              (.then #(success res)))
+                              (.then #(.sendStatus res 200)))
 
                           :no-positive-plays
                           (-> (sql/update-plays-checkpoint database play-id (inc play-page))
                               (.then #(prn :no-positive-plays play-id play-page))
-                              (.then #(success res)))
+                              (.then #(.sendStatus res 200)))
 
                           :no-plays
                           (-> (sql/update-plays-checkpoint database (inc play-id) 1)
                               (.then #(prn :no-plays play-id play-page))
-                              (.then #(success res)))
+                              (.then #(.sendStatus res 200)))
 
                           :mobius-plays
                           (-> (sql/mobius-plays database)
                               (.then #(prn :mobius-plays))
-                              (.then #(success res)))
+                              (.then #(.sendStatus res 200)))
 
                           :not-a-game
                           (-> (sql/update-plays-checkpoint database (inc play-id) 1)
                               (.then #(prn :not-a-game play-id))
-                              (.then #(success res)))
+                              (.then #(.sendStatus res 200)))
 
                           (err/generic e res 500))))))))
 
-(defn pull [^js req res]
+(defn pull [^js req ^js res]
   {:post [(js-promise? %)]}
   (let [{:keys [database]} (.-locals req)]
     (-> (sql/get-game-checkpoint database)
@@ -110,7 +105,7 @@
         (.then (fn [{:keys [insertions checkpoint new-checkpoint] :as ctx}]
                  (-> (sql/insert-games database insertions new-checkpoint)
                      (.then #(prn :save-games checkpoint (dec new-checkpoint)))
-                     (.then #(success res))
+                     (.then #(.sendStatus res 200))
                      (.catch #(do (prn :save-games-error checkpoint (dec new-checkpoint))
                                   (err/generic % res 500))))))
         (.catch (fn [e]
@@ -119,7 +114,7 @@
                           :mobius-games
                           (-> (sql/mobius-games database)
                               (.then #(prn :mobius-games))
-                              (.then #(success res)))
+                              (.then #(.sendStatus res 200)))
 
                           (err/generic e res 500))))))))
 
@@ -190,14 +185,14 @@
                          (js/console.error %)
                          (err/generic (:error (ex-data %)) res 500)))))))
 
-(defn pull-collection [^js req res]
+(defn pull-collection [^js req ^js res]
   (let [{:keys [database body]} (.-locals req)
         {:strs [username]}      body]
     (-> (api/get-collection username)
         (.catch #(error res 500 "Could not get collection" %))
         (.then #(sql/save-collection database %))
         (.catch #(error res 500 "Could not save collection to database" %))
-        (.then #(success res)))))
+        (.then #(.sendStatus res 200)))))
 
 (defn index [req res]
   (.send res (v/index)))
