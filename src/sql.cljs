@@ -153,11 +153,12 @@
          (generate "player_collections"
                    ["username" "game_id" "last_updated" "own"]
                    ["username" "game_id"]
-                   (map #(vector (:username %)
-                                 (:id %)
-                                 (.toISOString (js/Date.))
-                                 (:own %))
-                        collection-maps))))
+                   (->> collection-maps
+                        (filter :own)
+                        (map #(vector (:username %)
+                                      (:id %)
+                                      (.toISOString (js/Date.))
+                                      (:own %)))))))
 
 (defn insert-games [db-pool insertions new-checkpoint]
   (.then
