@@ -37,6 +37,7 @@
            "/pull-collection"
            (middleware/with-required-body-parameters #{"username"})
            (middleware/with-database-pool pool)
+           middleware/with-body
            routes/pull-collection)
           (.get
            "/games/:id"
