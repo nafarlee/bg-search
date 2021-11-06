@@ -7,9 +7,7 @@
 (defn with-error-handler [^js err _req ^js res _nxt]
   (js/console.error err)
   (js/console.error #js{:cause (.-cause err)})
-  (-> res
-      (.status 500)
-      (.send "Internal Server Error")))
+  (.sendStatus res 500))
 
 (defn with-header [header value]
   (fn [_req res nxt]
