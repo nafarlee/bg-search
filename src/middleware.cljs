@@ -44,10 +44,10 @@
   (assoc-locals! req :body (js->clj (.-body req)))
   (nxt))
 
-(defn with-scraped-collection [^js req ^js res nxt]
+(defn with-scraped-collection [^js req _res nxt]
   (let [{:keys [body]}     (.-locals req)
         {:strs [username]} body]
     (-> (api/get-collection username)
         (.then #(assoc-locals! req :collection %))
         (.then #(nxt))
-        (.catch #(.sendStatus res 500)))))
+        (.catch nxt))))
