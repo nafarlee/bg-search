@@ -6,7 +6,7 @@
    ["url" :as url]
    [transpile :refer [transpile]]
    [sql.insert :refer [insert]]
-   [sql :refer [query] :as sql]
+   [sql :as sql]
    [promise :refer [then-not js-promise?]]
    [api :as api]
    [error :as err]
