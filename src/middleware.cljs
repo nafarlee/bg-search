@@ -4,7 +4,7 @@
     [clojure.string :refer [join]]
     [clojure.set :refer [difference]]))
 
-(defn with-error-handler [err _req ^js res _nxt]
+(defn with-error-handler [^js err _req ^js res _nxt]
   (js/console.error err)
   (js/console.error #js{:cause (.-cause err)})
   (-> res
