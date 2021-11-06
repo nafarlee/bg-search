@@ -4,7 +4,6 @@
     ["fast-xml-parser" :as fxp]
     ["url" :refer [URL URLSearchParams]]
     [promise :refer [js-promise? wait]]
-    [clojure.string :refer [join]]
     [interop :refer [parse-int]]
     [http :as h]
     [marshall :refer [marshall]]))
