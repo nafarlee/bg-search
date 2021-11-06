@@ -186,13 +186,10 @@
                          (err/generic (:error (ex-data %)) res 500)))))))
 
 (defn pull-collection [^js req ^js res]
-  (let [{:keys [database body]} (.-locals req)
-        {:strs [username]}      body]
-    (-> (api/get-collection username)
-        (.catch #(error res 500 "Could not get collection" %))
-        (.then #(sql/save-collection database %))
-        (.catch #(error res 500 "Could not save collection to database" %))
-        (.then #(.sendStatus res 200)))))
+  (let [{:keys [database collection]} (.-locals req)]
+    (-> (sql/save-collection database collection)
+        (.then #(.sendStatus res 200))
+        (.catch #(error res 500 "Could not save collection to database" %)))))
 
 (defn index [req res]
   (.send res (v/index)))

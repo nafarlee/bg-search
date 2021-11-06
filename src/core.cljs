@@ -37,6 +37,7 @@
            "/pull-collection"
            middleware/with-body
            (middleware/with-required-body-parameters #{"username"})
+           middleware/with-scraped-collection
            (middleware/with-database-pool pool)
            routes/pull-collection)
           (.get
