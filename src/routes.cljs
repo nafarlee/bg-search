@@ -191,7 +191,7 @@
         (.then #(.sendStatus res 200))
         (.catch #(error res 500 "Could not save collection to database" %)))))
 
-(defn index [req res]
+(defn index [_req res]
   (.send res (v/index)))
 
 (defn image-mirror [^js req res nxt]
