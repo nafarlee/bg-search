@@ -30,6 +30,11 @@
                :attrValueProcessor  #(.decode he % #js{:attribute true})
                :tagValueProcessor   #(.decode he %)})))
 
+(defn- ->collection-row [username game]
+  {:id      (parse-int (get game "$_objectid"))
+   :username username
+   :own      (= "1" (get-in game ["status" "$_own"]))})
+
 (defn get-collection [username]
   (-> (construct-url base-url "xmlapi2/collection" {:brief 1 :username username})
       h/get
