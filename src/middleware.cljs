@@ -9,7 +9,7 @@
     (nxt)))
 
 (defn with-required-body-parameters [required]
-  (fn [req res nxt]
+  (fn [^js req res nxt]
     (let [{:keys [body]} (.-locals req)
           actual         (-> body keys set)
           diff           (difference required actual)]
