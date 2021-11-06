@@ -5,6 +5,7 @@
     ["url" :refer [URL URLSearchParams]]
     [promise :refer [js-promise? wait]]
     [clojure.string :refer [join]]
+    [interop :refer [parse-int]]
     [http :as h]
     [marshall :refer [marshall]]))
 
@@ -38,18 +39,17 @@
 (defn get-collection [username]
   (-> (construct-url base-url "xmlapi2/collection" {:brief 1 :username username})
       h/get
-      (.then (fn [res]
-               (case (:status res)
-                     202 (.then (wait 5000) #(get-collection username))
-                     200 (as-> res $
-                               (:body $)
-                               (parse-xml $)
-                               (get-in $ ["items" "item"])
-                               (map #(hash-map :id  (js/parseInt (get % "$_objectid") 10)
-                                               :username username
-                                               :own (= "1" (get-in % ["status" "$_own"])))
-                                    $))
-                     (throw res))))))
+      (.then
+       (fn [res]
+         (case (:status res)
+               202 (.then (wait 5000) #(get-collection username))
+               200 (let [xml   (:body res)
+                         tree  (parse-xml xml)
+                         games (get-in tree ["items" "item"])]
+                     (if games
+                       (map (partial ->collection-row username) games)
+                       (throw (js/Error. "Invalid username"))))
+               (throw (js/Error. "Could not pull collection" #js{:cause res})))))))
 
 (defn get-games [ids]
   {:pre [(sequential? ids)]
