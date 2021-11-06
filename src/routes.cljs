@@ -194,9 +194,7 @@
 (defn index [req res]
   (.send res (v/index)))
 
-(defn image-mirror [^js req res]
+(defn image-mirror [^js req res nxt]
   (-> (im/serve #{"cf.geekdo-images.com"} (.. req -params -url))
       (.then #(.redirect res 302 %))
-      (.catch (fn [e]
-                (js/console.error e)
-                (-> res (.status 500) .send)))))
+      (.catch nxt)))
