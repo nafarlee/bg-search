@@ -4,9 +4,12 @@
     [clojure.string :refer [join]]
     [clojure.set :refer [difference]]))
 
-(defn with-error-handler [err _req res _nxt]
-  (js/console.error err #js{:cause (.-cause err)})
-  (.statusCode res 500))
+(defn with-error-handler [err _req ^js res _nxt]
+  (js/console.error err)
+  (js/console.error #js{:cause (.-cause err)})
+  (-> res
+      (.status 500)
+      (.send "Internal Server Error")))
 
 (defn with-header [header value]
   (fn [_req res nxt]
