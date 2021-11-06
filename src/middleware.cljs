@@ -1,5 +1,6 @@
 (ns middleware
   (:require
+    api
     [clojure.string :refer [join]]
     [clojure.set :refer [difference]]))
 
@@ -35,3 +36,11 @@
 (defn with-body [^js req _res nxt]
   (assoc-locals! req :body (js->clj (.-body req)))
   (nxt))
+
+(defn with-scraped-collection [^js req ^js res nxt]
+  (let [{:keys [body]}     (.-locals req)
+        {:strs [username]} body]
+    (-> (api/get-collection username)
+        (.then #(assoc-locals! req :collection %))
+        (.then #(nxt))
+        (.catch #(.sendStatus res 500)))))
