@@ -45,4 +45,5 @@
            (middleware/with-database-pool pool)
            (middleware/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
            routes/games)
+          (.use middleware/with-error-handler)
           (.listen 8080 #(prn "Listening on 8080...")))))
