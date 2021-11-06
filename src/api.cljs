@@ -47,7 +47,7 @@
                          games (get-in tree ["items" "item"])]
                      (if games
                        (map (partial ->collection-row username) games)
-                       (throw (js/Error. "Invalid username"))))
+                       (throw (js/Error. "Invalid username" #js{:cause username}))))
                (throw (js/Error. "Could not pull collection" #js{:cause res})))))))
 
 (defn get-games [ids]
