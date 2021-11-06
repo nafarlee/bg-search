@@ -10,8 +10,9 @@
 
 (defn with-required-body-parameters [required]
   (fn [req res nxt]
-    (let [actual  (-> req .-body js->clj keys set)
-          diff    (difference required actual)]
+    (let [{:keys [body]} (.-locals req)
+          actual         (-> body keys set)
+          diff           (difference required actual)]
       (if (empty? diff)
         (nxt)
         (-> res
