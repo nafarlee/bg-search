@@ -4,7 +4,7 @@
     ["fast-xml-parser" :as fxp]
     ["url" :refer [URL URLSearchParams]]
     [promise :refer [js-promise? wait]]
-    [interop :refer [parse-int]]
+    [interop :refer [js-error parse-int]]
     [http :as h]
     [marshall :refer [marshall]]))
 
@@ -47,8 +47,8 @@
                          games (get-in tree ["items" "item"])]
                      (if games
                        (map (partial ->collection-row username) games)
-                       (throw (js/Error. "Invalid username" #js{:cause username}))))
-               (throw (js/Error. "Could not pull collection" #js{:cause res})))))))
+                       (throw (js-error "Invalid username" username))))
+               (throw (js-error "Could not pull collection" res)))))))
 
 (defn get-games [ids]
   {:pre [(sequential? ids)]
