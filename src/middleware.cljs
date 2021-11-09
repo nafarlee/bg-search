@@ -60,3 +60,6 @@
     (-> (sql/save-collection database collection)
         (.then #(nxt))
         (.catch nxt))))
+
+(defn with-success [_req res]
+  (.sendStatus res 200))
