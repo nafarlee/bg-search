@@ -55,11 +55,11 @@
         (.then #(nxt))
         (.catch nxt))))
 
-(defn with-save-collection [req _res nxt]
+(defn with-save-collection [^js req _res nxt]
   (let [{:keys [database collection]} (.-locals req)]
     (-> (sql/save-collection database collection)
         (.then #(nxt))
         (.catch nxt))))
 
-(defn with-success [_req res]
+(defn with-success [_req ^js res]
   (.sendStatus res 200))
