@@ -1,6 +1,7 @@
 (ns middleware
   (:require
     api
+    sql
     [clojure.string :refer [join]]
     [clojure.set :refer [difference]]))
 
