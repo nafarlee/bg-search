@@ -72,3 +72,7 @@
 
 (defn with-success [_req ^js res]
   (.sendStatus res 200))
+
+(defn with-permanent-redirect [^js req res]
+  (let [{:keys [redirect-url]} (.-locals req)]
+    (.redirect res 301 redirect-url)))
