@@ -4,7 +4,7 @@
     [view :as v]
     [sql :as sql]
     [routes :as routes]
-    [middleware :as middleware]))
+    [middleware :as m]))
 
 (defonce ^:export app (express))
 
@@ -14,40 +14,40 @@
           (.use (.urlencoded express #js{:extended true}))
           (.get
            "/"
-           (middleware/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24)))
+           (m/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24)))
            (fn [_req res]
              (.send res (v/index))))
           (.use (.static express "public"))
           (.get
            "/image-mirror/:url(\\S+)"
-           middleware/with-params
+           m/with-params
            routes/image-mirror)
           (.get
            "/search"
-           (middleware/with-database-pool pool)
-           (middleware/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
-           middleware/with-query-params
+           (m/with-database-pool pool)
+           (m/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
+           m/with-query-params
            routes/search)
           (.post
            "/pubsub/pull"
-           (middleware/with-database-pool pool)
+           (m/with-database-pool pool)
            routes/pull)
           (.post
            "/pubsub/pull-plays"
-           (middleware/with-database-pool pool)
+           (m/with-database-pool pool)
            routes/pull-plays)
           (.post
            "/pull-collection"
-           middleware/with-body
-           (middleware/with-required-body-parameters #{:username})
-           middleware/with-scraped-collection
-           (middleware/with-database-pool pool)
-           middleware/with-save-collection
-           middleware/with-success)
+           m/with-body
+           (m/with-required-body-parameters #{:username})
+           m/with-scraped-collection
+           (m/with-database-pool pool)
+           m/with-save-collection
+           m/with-success)
           (.get
            "/games/:id"
-           (middleware/with-database-pool pool)
-           (middleware/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
+           (m/with-database-pool pool)
+           (m/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
            routes/games)
-          (.use middleware/with-error-handler)
+          (.use m/with-error-handler)
           (.listen 8080 #(prn "Listening on 8080...")))))
