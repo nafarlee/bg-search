@@ -36,7 +36,7 @@
     (nxt)))
 
 (defn with-query-params [^js req _res nxt]
-  (assoc-locals! req :query (js->clj (.-query req)))
+  (assoc-locals! req :query (js->clj (.-query req) :keywordize-keys true))
   (nxt))
 
 (defn with-body [^js req _res nxt]
