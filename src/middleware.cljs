@@ -53,3 +53,9 @@
         (.then #(assoc-locals! req :collection %))
         (.then #(nxt))
         (.catch nxt))))
+
+(defn with-save-collection [req _res nxt]
+  (let [{:keys [database collection]} (.-locals req)]
+    (-> (sql/save-collection database collection)
+        (.then #(nxt))
+        (.catch nxt))))
