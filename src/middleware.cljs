@@ -44,7 +44,7 @@
   (nxt))
 
 (defn with-params [^js req _res nxt]
-  (assoc-locals! req :params (js->clj (.-params req)))
+  (assoc-locals! req :params (js->clj (.-params req) :keywordize-keys true))
   (nxt))
 
 (defn with-scraped-collection [^js req _res nxt]
