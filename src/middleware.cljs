@@ -2,6 +2,7 @@
   (:require
     api
     sql
+    [image-mirror :as im]
     [clojure.string :refer [join]]
     [clojure.set :refer [difference]]))
 
@@ -59,6 +60,14 @@
   (let [{:keys [database collection]} (.-locals req)]
     (-> (sql/save-collection database collection)
         (.then #(nxt))
+        (.catch nxt))))
+
+(defn with-image-mirror [^js req _res nxt]
+  (let [{{:keys [url]} :params} (.-locals req)]
+    (-> (im/serve #{"cf.geekdo-images.com"} url)
+        (.then (fn [redirect-url]
+                 (assoc-locals! req :redirect-url redirect-url)
+                 (nxt)))
         (.catch nxt))))
 
 (defn with-success [_req ^js res]
