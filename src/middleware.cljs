@@ -40,7 +40,7 @@
   (nxt))
 
 (defn with-body [^js req _res nxt]
-  (assoc-locals! req :body (js->clj (.-body req)))
+  (assoc-locals! req :body (js->clj (.-body req) :keywordize-keys true))
   (nxt))
 
 (defn with-params [^js req _res nxt]
@@ -48,8 +48,7 @@
   (nxt))
 
 (defn with-scraped-collection [^js req _res nxt]
-  (let [{:keys [body]}     (.-locals req)
-        {:strs [username]} body]
+  (let [{{:keys [username]} :body} (.-locals req)]
     (-> (api/get-collection username)
         (.then #(assoc-locals! req :collection %))
         (.then #(nxt))
