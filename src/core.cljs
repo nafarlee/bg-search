@@ -1,6 +1,7 @@
 (ns core
   (:require
     ["express" :as express]
+    [view :as v]
     [sql :as sql]
     [routes :as routes]
     [middleware :as middleware]))
@@ -14,7 +15,8 @@
           (.get
            "/"
            (middleware/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24)))
-           routes/index)
+           (fn [_req res]
+             (.send res (v/index))))
           (.use (.static express "public"))
           (.get
            "/image-mirror/:url(\\S+)"

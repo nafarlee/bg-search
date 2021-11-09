@@ -185,9 +185,6 @@
                          (js/console.error %)
                          (err/generic (:error (ex-data %)) res 500)))))))
 
-(defn index [_req res]
-  (.send res (v/index)))
-
 (defn image-mirror [^js req res nxt]
   (let [{{:keys [url]} :params} (.-locals req)]
     (-> (im/serve #{"cf.geekdo-images.com"} url)
