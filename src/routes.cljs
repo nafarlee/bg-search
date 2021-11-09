@@ -185,11 +185,11 @@
                          (js/console.error %)
                          (err/generic (:error (ex-data %)) res 500)))))))
 
-(defn pull-collection [^js req ^js res]
+(defn pull-collection [^js req ^js res nxt]
   (let [{:keys [database collection]} (.-locals req)]
     (-> (sql/save-collection database collection)
         (.then #(.sendStatus res 200))
-        (.catch #(error res 500 "Could not save collection to database" %)))))
+        (.catch nxt))))
 
 (defn index [_req res]
   (.send res (v/index)))
