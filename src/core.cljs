@@ -3,7 +3,7 @@
     ["express" :as express]
     [view :as v]
     [sql :as sql]
-    [routes :as routes]
+    [routes :as r]
     [middleware :as m]))
 
 (defonce ^:export app (express))
@@ -21,21 +21,21 @@
           (.get
            "/image-mirror/:url(\\S+)"
            m/with-params
-           routes/image-mirror)
+           r/image-mirror)
           (.get
            "/search"
            (m/with-database-pool pool)
            (m/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
            m/with-query-params
-           routes/search)
+           r/search)
           (.post
            "/pubsub/pull"
            (m/with-database-pool pool)
-           routes/pull)
+           r/pull)
           (.post
            "/pubsub/pull-plays"
            (m/with-database-pool pool)
-           routes/pull-plays)
+           r/pull-plays)
           (.post
            "/pull-collection"
            m/with-body
@@ -48,6 +48,6 @@
            "/games/:id"
            (m/with-database-pool pool)
            (m/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
-           routes/games)
+           r/games)
           (.use m/with-error-handler)
           (.listen 8080 #(prn "Listening on 8080...")))))
