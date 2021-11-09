@@ -24,7 +24,8 @@
           (.get
            "/image-mirror/:url(\\S+)"
            m/with-params
-           r/image-mirror)
+           m/with-image-mirror
+           m/with-permanent-redirect)
 
           (.get
            "/search"

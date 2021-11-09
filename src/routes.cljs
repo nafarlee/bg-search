@@ -184,9 +184,3 @@
                        (do
                          (js/console.error %)
                          (err/generic (:error (ex-data %)) res 500)))))))
-
-(defn image-mirror [^js req res nxt]
-  (let [{{:keys [url]} :params} (.-locals req)]
-    (-> (im/serve #{"cf.geekdo-images.com"} url)
-        (.then #(.redirect res 301 %))
-        (.catch nxt))))
