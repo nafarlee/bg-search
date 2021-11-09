@@ -1,10 +1,10 @@
 (ns middleware
   (:require
+    [clojure.string :refer [join]]
+    [clojure.set :refer [difference]]
     api
     sql
-    [image-mirror :as im]
-    [clojure.string :refer [join]]
-    [clojure.set :refer [difference]]))
+    [image-mirror :as im]))
 
 (defn with-error-handler [^js err _req ^js res _nxt]
   (js/console.error err)
