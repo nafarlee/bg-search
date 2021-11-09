@@ -43,6 +43,10 @@
   (assoc-locals! req :body (js->clj (.-body req)))
   (nxt))
 
+(defn with-params [^js req _res nxt]
+  (assoc-locals! req :params (js->clj (.-params req)))
+  (nxt))
+
 (defn with-scraped-collection [^js req _res nxt]
   (let [{:keys [body]}     (.-locals req)
         {:strs [username]} body]
