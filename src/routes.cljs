@@ -1,9 +1,9 @@
 (ns routes
   (:require
+   ["url" :as u]
    [image-mirror :as im]
    [interop :refer [parse-int]]
    [view :as v]
-   ["url" :as url]
    [transpile :refer [transpile]]
    [sql.insert :refer [insert]]
    [sql :as sql]
@@ -134,7 +134,7 @@
         new-offset       (+ (parse-int (or offset "0"))
                             (count games))
         new-query        (clj->js (assoc query :offset new-offset))]
-    (url/format #js{:host     (.get req "host")
+    (u/format #js{:host     (.get req "host")
                     :protocol (.-protocol req)
                     :pathname (.-path req)
                     :query    new-query})))
@@ -143,7 +143,7 @@
   (let [query (js->clj   (.-query req))
         {:strs [offset]} query]
     (when (and (string? offset) (not= "0" offset))
-      (url/format #js{:host     (.get req "host")
+      (u/format #js{:host     (.get req "host")
                       :protocol (.-protocol req)
                       :pathname (.-path req)
                       :query    (clj->js (assoc query :offset (- (parse-int offset) 25)))}))))
