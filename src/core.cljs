@@ -40,7 +40,8 @@
            (middleware/with-required-body-parameters #{:username})
            middleware/with-scraped-collection
            (middleware/with-database-pool pool)
-           routes/pull-collection)
+           middleware/with-save-collection
+           middleware/with-success)
           (.get
            "/games/:id"
            (middleware/with-database-pool pool)
