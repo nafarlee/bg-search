@@ -195,6 +195,7 @@
   (.send res (v/index)))
 
 (defn image-mirror [^js req res nxt]
-  (-> (im/serve #{"cf.geekdo-images.com"} (.. req -params -url))
-      (.then #(.redirect res 302 %))
-      (.catch nxt)))
+  (let [{{:keys [url]} :params} (.-locals req)]
+    (-> (im/serve #{"cf.geekdo-images.com"} url)
+        (.then #(.redirect res 302 %))
+        (.catch nxt))))

@@ -18,6 +18,7 @@
           (.use (.static express "public"))
           (.get
            "/image-mirror/:url(\\S+)"
+           middleware/with-params
            routes/image-mirror)
           (.get
            "/search"
