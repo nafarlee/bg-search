@@ -6,12 +6,6 @@
     sql
     [image-mirror :as im]))
 
-(defn with-error-handler [^js err _req ^js res _nxt]
-  (js/console.error err)
-  (when (.-cause err)
-    (js/console.error #js{:cause (.-cause err)}))
-  (.sendStatus res 500))
-
 (defn with-header [header value]
   (fn [_req res nxt]
     (.set res header value)
