@@ -6,12 +6,6 @@
    [api :as api]
    [error :as err]))
 
-(defn error [res status message js-error]
-  (js/console.log js-error)
-  (-> res
-      (.status status)
-      (.send message)))
-
 (defn pull-plays [^js req ^js res]
   (let [{:keys [database]} (.-locals req)]
     (-> (js/Promise.all [(sql/get-last-game database) (sql/get-plays-checkpoint database)])
