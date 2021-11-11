@@ -1,7 +1,5 @@
 (ns routes
   (:require
-   ["url" :as u]
-   [interop :refer [parse-int]]
    [view :as v]
    [sql.insert :refer [insert]]
    [sql :as sql]
@@ -124,21 +122,3 @@
         (if-not game
           (err/generic (str "No game found with id '" id "'") res 404)
           (.send res (v/games (js->clj game))))))))
-
-(defn- page-number [req]
-  (let [offset (-> req
-                   (.. -query -offset)
-                   (or "0")
-                   parse-int)]
-    (inc (quot offset 25))))
-
-(defn search [^js req res]
-  (let [{:keys [previous-url next-url query searched-games]}  (.-locals req)
-        {:keys [direction order query]} query]
-    (.send res (v/search {:query        query
-                          :order        order
-                          :direction    direction
-                          :games        searched-games
-                          :previous-url previous-url
-                          :page-number  (page-number req)
-                          :next-url     next-url}))))

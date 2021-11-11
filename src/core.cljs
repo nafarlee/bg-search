@@ -34,9 +34,19 @@
            m/with-query-params
            m/with-transpiled-query
            m/with-searched-games
+           m/with-search-page-number
            m/with-previous-search-url
            m/with-next-search-url
-           r/search)
+           (fn [^js req res]
+             (let [{:keys [previous-url page-number next-url query searched-games]}  (.-locals req)
+                   {:keys [direction order query]}                                   query]
+               (.send res (v/search {:query        query
+                                     :order        order
+                                     :direction    direction
+                                     :games        searched-games
+                                     :previous-url previous-url
+                                     :page-number  page-number
+                                     :next-url     next-url})))))
 
           (.post
            "/pubsub/pull"
