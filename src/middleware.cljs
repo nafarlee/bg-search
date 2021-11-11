@@ -2,6 +2,9 @@
   (:require
     [clojure.string :refer [join]]
     [clojure.set :refer [difference]]
+    [transpile :refer [transpile]]
+    [interop :refer [parse-int]]
+    [error :as e]
     api
     sql
     [image-mirror :as im]))
@@ -75,3 +78,21 @@
 (defn with-permanent-redirect [^js req res]
   (let [{:keys [redirect-url]} (.-locals req)]
     (.redirect res 301 redirect-url)))
+
+(defn with-transpiled-query [req res nxt]
+  (let [{qp :query}                   (.-locals req)
+        {:keys [query
+                order
+                direction
+                offset]
+         :or   {query ""
+                order "bayes_rating"
+                direction "DESC"
+                offset "0"}}          qp
+        offset                        (parse-int offset)]
+    (prn qp)
+    (try
+      (assoc-locals! req :transpiled-query (transpile query order direction offset))
+      (nxt)
+      (catch :default err
+        (e/transpile err res query)))))
