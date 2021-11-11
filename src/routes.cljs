@@ -163,4 +163,4 @@
                                       :previous-url (previous-url req)
                                       :page-number  (page-number req)
                                       :next-url     (next-url req (.-rows %))})))
-        (.catch #(nxt)))))
+        (.catch nxt))))
