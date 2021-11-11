@@ -71,7 +71,12 @@
            "/games/:id"
            (m/with-database-pool pool)
            (m/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
-           r/games)
+           m/with-params
+           m/with-game
+           (fn [^js req res]
+             (let [{:keys [game]} (.-locals req)]
+               (prn game)
+               (.send res (v/games game)))))
 
           (.use m/log-error-cause)
 

@@ -1,9 +1,8 @@
 (ns routes
   (:require
-   [view :as v]
    [sql.insert :refer [insert]]
    [sql :as sql]
-   [promise :refer [then-not js-promise?]]
+   [promise :refer [js-promise?]]
    [api :as api]
    [error :as err]))
 
@@ -112,13 +111,3 @@
                               (.then #(.sendStatus res 200)))
 
                           (err/generic e res 500))))))))
-
-(defn games [^js req res]
-  (let [{:keys [database]} (.-locals req)
-        id                 (.. req -params -id)]
-    (then-not (sql/get-game database id)
-      #(err/generic % res 500)
-      (fn [game]
-        (if-not game
-          (err/generic (str "No game found with id '" id "'") res 404)
-          (.send res (v/games (js->clj game))))))))
