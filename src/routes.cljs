@@ -125,17 +125,6 @@
           (err/generic (str "No game found with id '" id "'") res 404)
           (.send res (v/games (js->clj game))))))))
 
-(defn- next-url [req games]
-  (let [query            (js->clj (.-query req))
-        {:strs [offset]} query
-        new-offset       (+ (parse-int (or offset "0"))
-                            (count games))
-        new-query        (clj->js (assoc query :offset new-offset))]
-    (u/format #js{:host     (.get req "host")
-                    :protocol (.-protocol req)
-                    :pathname (.-path req)
-                    :query    new-query})))
-
 (defn- previous-url [req]
   (let [query (js->clj   (.-query req))
         {:strs [offset]} query]
