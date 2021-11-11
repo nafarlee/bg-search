@@ -1,5 +1,4 @@
-DROP TABLE IF EXISTS globals CASCADE;
-CREATE TABLE globals (
+CREATE TABLE IF NOT EXISTS globals (
   id INTEGER PRIMARY KEY DEFAULT 1,
   count INTEGER CHECK (count >= 1),
   play_id INTEGER CHECK (count >= 1),
@@ -8,8 +7,7 @@ CREATE TABLE globals (
 INSERT INTO globals
 VALUES (1, 1, 1, 1);
 
-DROP TABLE IF EXISTS games CASCADE;
-CREATE TABLE games (
+CREATE TABLE IF NOT EXISTS games (
   id INTEGER PRIMARY KEY,
   image TEXT,
   thumbnail TEXT,
@@ -31,8 +29,7 @@ CREATE TABLE games (
   year INTEGER
 );
 
-DROP TABLE IF EXISTS plays CASCADE;
-CREATE TABLE plays (
+CREATE TABLE IF NOT EXISTS plays (
   id INTEGER PRIMARY KEY,
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
   length INTEGER CHECK (length > 0) NOT NULL,
@@ -76,15 +73,13 @@ FOR EACH STATEMENT
 EXECUTE PROCEDURE refresh_play_medians();
 
 
-DROP TABLE IF EXISTS alternate_names CASCADE;
-CREATE TABLE alternate_names (
+CREATE TABLE IF NOT EXISTS alternate_names (
   id INTEGER REFERENCES games ON DELETE CASCADE,
   alternate_name TEXT,
   PRIMARY KEY (id, alternate_name)
 );
 
-DROP TABLE IF EXISTS player_recommendations CASCADE;
-CREATE TABLE player_recommendations (
+CREATE TABLE IF NOT EXISTS player_recommendations (
   id INTEGER REFERENCES games ON DELETE CASCADE,
   players INT4RANGE,
   best INTEGER CHECK (best >= 0),
@@ -94,113 +89,97 @@ CREATE TABLE player_recommendations (
 );
 
 
-DROP TABLE IF EXISTS reimplementations CASCADE;
-CREATE TABLE reimplementations (
+CREATE TABLE IF NOT EXISTS reimplementations (
   original INTEGER,
   reimplementation INTEGER,
   PRIMARY KEY (reimplementation, original)
 );
 
-DROP TABLE IF EXISTS collections CASCADE;
-CREATE TABLE collections (
+CREATE TABLE IF NOT EXISTS collections (
   item INTEGER,
   collection INTEGER,
   PRIMARY KEY (collection, item)
 );
 
-DROP TABLE IF EXISTS expansions CASCADE;
-CREATE TABLE expansions (
+CREATE TABLE IF NOT EXISTS expansions (
   base INTEGER,
   expansion INTEGER,
   PRIMARY KEY (expansion, base)
 );
 
 
-DROP TABLE IF EXISTS publishers CASCADE;
-CREATE TABLE publishers (
+CREATE TABLE IF NOT EXISTS publishers (
   id INTEGER PRIMARY KEY,
   publisher TEXT
 );
 
-DROP TABLE IF EXISTS games_publishers CASCADE;
-CREATE TABLE games_publishers (
+CREATE TABLE IF NOT EXISTS games_publishers (
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
   publisher_id INTEGER REFERENCES publishers ON DELETE RESTRICT,
   PRIMARY KEY (game_id, publisher_id)
 );
 
 
-DROP TABLE IF EXISTS mechanics CASCADE;
-CREATE TABLE mechanics (
+CREATE TABLE IF NOT EXISTS mechanics (
   id INTEGER PRIMARY KEY,
   mechanic TEXT
 );
 
-DROP TABLE IF EXISTS games_mechanics CASCADE;
-CREATE TABLE games_mechanics (
+CREATE TABLE IF NOT EXISTS games_mechanics (
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
   mechanic_id INTEGER REFERENCES mechanics ON DELETE RESTRICT,
   PRIMARY KEY (game_id, mechanic_id)
 );
 
 
-DROP TABLE IF EXISTS families CASCADE;
-CREATE TABLE families (
+CREATE TABLE IF NOT EXISTS families (
   id INTEGER PRIMARY KEY,
   family TEXT
 );
 
-DROP TABLE IF EXISTS games_families CASCADE;
-CREATE TABLE games_families (
+CREATE TABLE IF NOT EXISTS games_families (
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
   family_id INTEGER REFERENCES families ON DELETE RESTRICT,
   PRIMARY KEY (game_id, family_id)
 );
 
 
-DROP TABLE IF EXISTS artists CASCADE;
-CREATE TABLE artists (
+CREATE TABLE IF NOT EXISTS artists (
   id INTEGER PRIMARY KEY,
   artist TEXT
 );
 
-DROP TABLE IF EXISTS games_artists CASCADE;
-CREATE TABLE games_artists (
+CREATE TABLE IF NOT EXISTS games_artists (
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
   artist_id INTEGER REFERENCES artists ON DELETE RESTRICT,
   PRIMARY KEY (game_id, artist_id)
 );
 
 
-DROP TABLE IF EXISTS categories CASCADE;
-CREATE TABLE categories (
+CREATE TABLE IF NOT EXISTS categories (
   id INTEGER PRIMARY KEY,
   category TEXT
 );
 
-DROP TABLE IF EXISTS games_categories CASCADE;
-CREATE TABLE games_categories (
+CREATE TABLE IF NOT EXISTS games_categories (
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
   category_id INTEGER REFERENCES categories ON DELETE RESTRICT,
   PRIMARY KEY (game_id, category_id)
 );
 
 
-DROP TABLE IF EXISTS designers CASCADE;
-CREATE TABLE designers (
+CREATE TABLE IF NOT EXISTS designers (
   id INTEGER PRIMARY KEY,
   designer TEXT
 );
 
-DROP TABLE IF EXISTS games_designers CASCADE;
-CREATE TABLE games_designers (
+CREATE TABLE IF NOT EXISTS games_designers (
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
   designer_id INTEGER REFERENCES designers ON DELETE RESTRICT,
   PRIMARY KEY (game_id, designer_id)
 );
 
-DROP TABLE IF EXISTS player_collections CASCADE;
-CREATE TABLE player_collections (
+CREATE TABLE IF NOT EXISTS player_collections (
   username TEXT,
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
   last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
