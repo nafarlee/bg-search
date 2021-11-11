@@ -4,7 +4,7 @@
     [clojure.string :refer [join]]
     [clojure.set :refer [difference]]
     [transpile :refer [transpile]]
-    [interop :refer [parse-int]]
+    [interop :refer [js-error parse-int]]
     [error :as e]
     api
     sql
@@ -141,3 +141,15 @@
                                         (quot 25)
                                         inc)))
   (nxt))
+
+(defn with-game [^js req _res nxt]
+  (let [{:keys [database params]} (.-locals req)
+        {:keys [id]}              params]
+    (-> (sql/get-game database id)
+        (.then (fn [game]
+                 (if-not game
+                   (nxt (js-error (str "No game found with ID " id)))
+                   (do
+                     (assoc-locals! :req :game (js->clj game))
+                     (nxt)))))
+        (.catch nxt))))
