@@ -6,6 +6,11 @@
     sql
     [image-mirror :as im]))
 
+(defn log-error-cause [^js err _req _res nxt]
+  (when (.-cause err)
+    (js/console.error #js{:cause (.-cause err)}))
+  (nxt err))
+
 (defn with-header [header value]
   (fn [_req res nxt]
     (.set res header value)
