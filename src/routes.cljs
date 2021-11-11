@@ -152,15 +152,13 @@
                    parse-int)]
     (inc (quot offset 25))))
 
-(defn search [^js req res nxt]
-  (let [{:keys [database query transpiled-query]} (.-locals req)
-        {:keys [direction order query]}           query]
-    (-> (sql/query database transpiled-query)
-        (.then #(.send res (v/search {:query        query
-                                      :order        order
-                                      :direction    direction
-                                      :games        (js->clj (.-rows %))
-                                      :previous-url (previous-url req)
-                                      :page-number  (page-number req)
-                                      :next-url     (next-url req (.-rows %))})))
-        (.catch nxt))))
+(defn search [^js req res]
+  (let [{:keys [query searched-games]}  (.-locals req)
+        {:keys [direction order query]} query]
+    (.send res (v/search {:query        query
+                          :order        order
+                          :direction    direction
+                          :games        searched-games
+                          :previous-url (previous-url req)
+                          :page-number  (page-number req)
+                          :next-url     (next-url req searched-games)}))))
