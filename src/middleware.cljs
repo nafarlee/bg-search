@@ -132,3 +132,12 @@
                                                   (assoc query :offset)
                                                   clj->js)}))))
   (nxt))
+
+(defn with-search-page-number [^js req _res nxt]
+  (let [{{:keys [offset]
+          :or   {offset "0"}} :query} (.-locals req)]
+    (assoc-locals! req :page-number (-> offset
+                                        parse-int
+                                        (quot 25)
+                                        inc)))
+  (nxt))
