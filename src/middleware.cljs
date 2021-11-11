@@ -96,3 +96,11 @@
       (nxt)
       (catch :default err
         (e/transpile err res query)))))
+
+(defn with-searched-games [^js req _res nxt]
+  (let [{:keys [database transpiled-query]} (.-locals req)]
+    (-> (sql/query database transpiled-query)
+        (.then (fn [results]
+                 (assoc-locals! req :searched-games (.-rows results))
+                 (nxt)))
+        (.catch nxt))))
