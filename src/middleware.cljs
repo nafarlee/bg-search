@@ -118,3 +118,17 @@
                                                         :query    new-query})]
     (assoc-locals! req :next-url next-url)
     (nxt)))
+
+(defn with-previous-search-url [^js req _res nxt]
+  (let [{:keys [query]}  (.-locals req)
+        {:keys [offset]} query]
+    (when (and (string? offset) (not= "0" offset))
+      (assoc-locals! req
+                     :previous-url
+                     (u/format #js{:host     (.get req "host")
+                                   :protocol (.-protocol req)
+                                   :pathname (.-path req)
+                                   :query    (->> (- (parse-int offset) 25)
+                                                  (assoc query :offset)
+                                                  clj->js)}))))
+  (nxt))
