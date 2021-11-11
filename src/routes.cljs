@@ -155,23 +155,10 @@
                    parse-int)]
     (inc (quot offset 25))))
 
-(defn search [^js req res]
-  (let [{database                         :database
-         {:keys [query
-                 order
-                 direction
-                 offset]
-          :or   {query     ""
-                 order     "bayes_rating"
-                 direction "DESC"
-                 offset    "0"}
-          :as   qp}                       :query}   (.-locals req)
-        offset                                      (parse-int offset)]
-    (prn qp)
-    (-> (rs/attempt transpile query order direction offset)
-        rs/->js-promise
-        (.catch #(throw (ex-info "Could not transpile" {:error %} :transpile-error)))
-        (.then #(sql/query database %))
+(defn search [^js req res nxt]
+  (let [{:keys [database query transpiled-query]} (.-locals req)
+        {:keys [direction order query]}           query]
+    (-> (sql/query database transpiled-query)
         (.then #(.send res (v/search {:query        query
                                       :order        order
                                       :direction    direction
@@ -179,8 +166,4 @@
                                       :previous-url (previous-url req)
                                       :page-number  (page-number req)
                                       :next-url     (next-url req (.-rows %))})))
-        (.catch #(case (ex-cause %)
-                       :transpile-error (err/transpile (:error (ex-data %)) res query)
-                       (do
-                         (js/console.error %)
-                         (err/generic (:error (ex-data %)) res 500)))))))
+        (.catch #(nxt)))))

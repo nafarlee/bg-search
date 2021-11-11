@@ -32,6 +32,7 @@
            (m/with-database-pool pool)
            (m/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24 7)))
            m/with-query-params
+           m/with-transpiled-query
            r/search)
 
           (.post
