@@ -125,15 +125,6 @@
           (err/generic (str "No game found with id '" id "'") res 404)
           (.send res (v/games (js->clj game))))))))
 
-(defn- previous-url [req]
-  (let [query (js->clj   (.-query req))
-        {:strs [offset]} query]
-    (when (and (string? offset) (not= "0" offset))
-      (u/format #js{:host     (.get req "host")
-                      :protocol (.-protocol req)
-                      :pathname (.-path req)
-                      :query    (clj->js (assoc query :offset (- (parse-int offset) 25)))}))))
-
 (defn- page-number [req]
   (let [offset (-> req
                    (.. -query -offset)
