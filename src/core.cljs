@@ -75,7 +75,6 @@
            m/with-game
            (fn [^js req res]
              (let [{:keys [game]} (.-locals req)]
-               (prn game)
                (.send res (v/games game)))))
 
           (.use m/log-error-cause)
