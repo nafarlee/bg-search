@@ -101,6 +101,6 @@
   (let [{:keys [database transpiled-query]} (.-locals req)]
     (-> (sql/query database transpiled-query)
         (.then (fn [results]
-                 (assoc-locals! req :searched-games (.-rows results))
+                 (assoc-locals! req :searched-games (-> results .-rows js->clj))
                  (nxt)))
         (.catch nxt))))
