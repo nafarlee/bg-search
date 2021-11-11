@@ -1,5 +1,6 @@
 (ns middleware
   (:require
+    ["url" :as u]
     [clojure.string :refer [join]]
     [clojure.set :refer [difference]]
     [transpile :refer [transpile]]
@@ -104,3 +105,16 @@
                  (assoc-locals! req :searched-games (-> results .-rows js->clj))
                  (nxt)))
         (.catch nxt))))
+
+(defn with-next-search-url [^js req _res nxt]
+  (let [{:keys [query searched-games]}    (.-locals req)
+        {:keys [offset] :or {offset "0"}} query
+        new-offset                        (+ (parse-int offset) (count searched-games))
+        new-query                         (clj->js (assoc query :offset new-offset))]
+    (assoc-locals! req
+                   :next-url
+                   (u/format #js{:host     (.get req "host")
+                                 :protocol (.-protocol req)
+                                 :pathname (.-path req)
+                                 :query    new-query}))
+    (nxt)))
