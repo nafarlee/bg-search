@@ -150,6 +150,6 @@
                  (if-not game
                    (nxt (js-error (str "No game found with ID " id)))
                    (do
-                     (assoc-locals! :req :game (js->clj game))
+                     (assoc-locals! req :game (js->clj game))
                      (nxt)))))
         (.catch nxt))))
