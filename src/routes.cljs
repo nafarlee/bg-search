@@ -1,16 +1,13 @@
 (ns routes
   (:require
    ["url" :as u]
-   [image-mirror :as im]
    [interop :refer [parse-int]]
    [view :as v]
-   [transpile :refer [transpile]]
    [sql.insert :refer [insert]]
    [sql :as sql]
    [promise :refer [then-not js-promise?]]
    [api :as api]
-   [error :as err]
-   [result :as rs]))
+   [error :as err]))
 
 (defn error [res status message js-error]
   (js/console.log js-error)
