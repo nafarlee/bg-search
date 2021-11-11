@@ -108,13 +108,13 @@
 
 (defn with-next-search-url [^js req _res nxt]
   (let [{:keys [query searched-games]}    (.-locals req)
-        {:keys [offset] :or {offset "0"}} query
+        {:keys [offset]
+         :or   {offset "0"}}              query
         new-offset                        (+ (parse-int offset) (count searched-games))
-        new-query                         (clj->js (assoc query :offset new-offset))]
-    (assoc-locals! req
-                   :next-url
-                   (u/format #js{:host     (.get req "host")
-                                 :protocol (.-protocol req)
-                                 :pathname (.-path req)
-                                 :query    new-query}))
+        new-query                         (clj->js (assoc query :offset new-offset))
+        next-url                          (u/format #js{:host     (.get req "host")
+                                                        :protocol (.-protocol req)
+                                                        :pathname (.-path req)
+                                                        :query    new-query})]
+    (assoc-locals! req :next-url next-url)
     (nxt)))
