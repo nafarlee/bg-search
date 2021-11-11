@@ -34,6 +34,7 @@
            m/with-query-params
            m/with-transpiled-query
            m/with-searched-games
+           m/with-next-search-url
            r/search)
 
           (.post

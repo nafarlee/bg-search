@@ -153,7 +153,7 @@
     (inc (quot offset 25))))
 
 (defn search [^js req res]
-  (let [{:keys [query searched-games]}  (.-locals req)
+  (let [{:keys [next-url query searched-games]}  (.-locals req)
         {:keys [direction order query]} query]
     (.send res (v/search {:query        query
                           :order        order
@@ -161,4 +161,4 @@
                           :games        searched-games
                           :previous-url (previous-url req)
                           :page-number  (page-number req)
-                          :next-url     (next-url req searched-games)}))))
+                          :next-url     next-url}))))
