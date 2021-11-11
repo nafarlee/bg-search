@@ -79,7 +79,7 @@
   (let [{:keys [redirect-url]} (.-locals req)]
     (.redirect res 301 redirect-url)))
 
-(defn with-transpiled-query [req res nxt]
+(defn with-transpiled-query [^js req res nxt]
   (let [{qp :query}                   (.-locals req)
         {:keys [query
                 order
