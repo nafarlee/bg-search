@@ -190,3 +190,13 @@
   (let [{:keys [games]} (.-locals req)]
     (assoc-locals! req :insertions (insert games)))
   (nxt))
+
+(defn insert-games [^js req res nxt]
+  (let [{:keys [database insertions checkpoint new-checkpoint]} (.-locals req)]
+    (-> (sql/insert-games database insertions new-checkpoint)
+        (.then (fn []
+                 (prn :save-games checkpoint (dec new-checkpoint))
+                 (nxt)))
+        (.catch (fn [e]
+                  (prn :save-games-error checkpoint (dec new-checkpoint))
+                  (nxt e))))))
