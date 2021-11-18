@@ -228,3 +228,14 @@
                  (assoc-locals! req :play-checkpoint {:play-id play-id :play-page play-page})
                  (nxt)))
         (.catch nxt))))
+
+(defn maybe-mobius-plays [^js req res nxt]
+  (let [{:keys [last-game play-checkpoint database]} (.-locals req)
+        {:keys [play-id]}                            play-checkpoint]
+    (if (< play-id last-game)
+      (nxt)
+      (-> (sql/mobius-plays database)
+          (.then (fn []
+                   (prn :mobius-plays)
+                   (.sendStatus res 200)))
+          (.catch nxt)))))
