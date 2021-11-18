@@ -239,3 +239,12 @@
                    (prn :mobius-plays)
                    (.sendStatus res 200)))
           (.catch nxt)))))
+
+(defn with-game? [^js req _res nxt]
+  (let [{database          :database
+         {:keys [play-id]} :play-checkpoint} (.-locals req)]
+    (-> (sql/game? database play-id)
+        (.then (fn [game?]
+                 (assoc-locals! req :game? game?)
+                 (nxt)))
+        (.catch nxt))))
