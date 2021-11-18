@@ -8,6 +8,7 @@
     [error :as e]
     api
     sql
+    [sql.insert :refer [insert]]
     [image-mirror :as im]))
 
 (defn log-error-cause [^js err _req _res nxt]
@@ -184,3 +185,8 @@
                    (prn :mobius-games)
                    (.sendStatus res 200)))
           (.catch nxt)))))
+
+(defn with-game-insertions [^js req res nxt]
+  (let [{:keys [games]} (.-locals req)]
+    (assoc-locals! req :insertions (insert games)))
+  (nxt))
