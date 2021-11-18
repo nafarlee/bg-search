@@ -174,3 +174,13 @@
                  (assoc-locals! req :games games)
                  (nxt)))
         (.catch nxt))))
+
+(defn maybe-mobius [^js req res nxt]
+  ({:keys [games database]} (.-locals req)
+    (if (seq games)
+      (nxt)
+      (-> (sql/mobius-games database)
+          (.then (fn []
+                   (prn :mobius-games)
+                   (.sendStatus res 200)))
+          (.catch nxt)))))
