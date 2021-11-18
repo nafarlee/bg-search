@@ -211,5 +211,12 @@
                        (.map <> #(g/get % "QUERY PLAN"))
                        (join "\n" <>)
                        (assoc-locals! req :explanation <>)
-                       (nxt))))
+                       (nxt)))))))
+
+(defn with-last-game [^js req res nxt]
+  (let [{:keys [database]} (.-locals req)]
+    (-> (sql/get-last-game database)
+        (.then (fn [last-game]
+                 (assoc-locals! req :last-game last-game)
+                 (nxt)))
         (.catch nxt))))
