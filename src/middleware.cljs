@@ -161,3 +161,8 @@
                  (assoc-locals! req :checkpoint checkpoint)
                  (nxt)))
         (.catch nxt))))
+
+(defn with-new-game-checkpoint [^js req res nxt]
+  (let [{:keys [checkpoint]} (.-locals req)]
+    (assoc-locals! req :new-checkpoint (+ 200 checkpoint)))
+  (nxt))
