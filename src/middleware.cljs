@@ -153,3 +153,11 @@
                      (assoc-locals! req :game (js->clj game))
                      (nxt)))))
         (.catch nxt))))
+
+(defn with-game-checkpoint [^js req res nxt]
+  (let [{:keys [database]} (.-locals req)]
+    (-> (sql/get-game-checkpoint database)
+        (.then (fn [checkpoint]
+                 (assoc-locals! req :checkpoint checkpoint)
+                 (nxt)))
+        (.catch nxt))))
