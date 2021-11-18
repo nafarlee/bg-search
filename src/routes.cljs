@@ -75,33 +75,3 @@
                               (.then #(.sendStatus res 200)))
 
                           (err/generic e res 500))))))))
-
-(defn pull [^js req ^js res]
-  {:post [(js-promise? %)]}
-  (let [{:keys [database]} (.-locals req)]
-    (-> (sql/get-game-checkpoint database)
-        (.then #(hash-map :checkpoint % :new-checkpoint (+ 200 %)))
-        (.then (fn [{:keys [checkpoint new-checkpoint] :as ctx}]
-                 (.then (api/get-games (range checkpoint new-checkpoint))
-                        #(assoc ctx :games %))))
-        (.then (fn [{:keys [games] :as ctx}]
-                 (if-not (seq games)
-                   (throw (ex-info "Mobius Games" ctx :mobius-games))
-                   ctx)))
-        (.then (fn [{:keys [games] :as ctx}]
-                 (assoc ctx :insertions (insert games))))
-        (.then (fn [{:keys [insertions checkpoint new-checkpoint] :as ctx}]
-                 (-> (sql/insert-games database insertions new-checkpoint)
-                     (.then #(prn :save-games checkpoint (dec new-checkpoint)))
-                     (.then #(.sendStatus res 200))
-                     (.catch #(do (prn :save-games-error checkpoint (dec new-checkpoint))
-                                  (err/generic % res 500))))))
-        (.catch (fn [e]
-                  (let [{:keys [checkpoint new-checkpoint]} (ex-data e)]
-                    (case (ex-cause e)
-                          :mobius-games
-                          (-> (sql/mobius-games database)
-                              (.then #(prn :mobius-games))
-                              (.then #(.sendStatus res 200)))
-
-                          (err/generic e res 500))))))))
