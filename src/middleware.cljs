@@ -175,8 +175,8 @@
                  (nxt)))
         (.catch nxt))))
 
-(defn maybe-mobius [^js req res nxt]
-  ({:keys [games database]} (.-locals req)
+(defn maybe-mobius [^js req ^js res nxt]
+  (let [{:keys [games database]} (.-locals req)]
     (if (seq games)
       (nxt)
       (-> (sql/mobius-games database)
