@@ -220,3 +220,11 @@
                  (assoc-locals! req :last-game last-game)
                  (nxt)))
         (.catch nxt))))
+
+(defn with-plays-checkpoint [^js req _res nxt]
+  (let [{:keys [database]} (.-locals req)]
+    (-> (sql/get-plays-checkpoint database)
+        (.then (fn [[play-id play-page]]
+                 (assoc-locals! req :play-checkpoint {:play-id play-id :play-page play-page})
+                 (nxt)))
+        (.catch nxt))))
