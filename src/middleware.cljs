@@ -166,3 +166,11 @@
   (let [{:keys [checkpoint]} (.-locals req)]
     (assoc-locals! req :new-checkpoint (+ 200 checkpoint)))
   (nxt))
+
+(defn with-pulled-games [^js req res nxt]
+  (let [{:keys [checkpoint new-checkpoint]} (.-locals req)]
+    (-> (api/get-games (range checkpoint new-checkpoint))
+        (.then (fn [games]
+                 (assoc-locals! req :games games)
+                 (nxt)))
+        (.catch nxt))))
