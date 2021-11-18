@@ -229,7 +229,7 @@
                  (nxt)))
         (.catch nxt))))
 
-(defn maybe-mobius-plays [^js req res nxt]
+(defn maybe-mobius-plays [^js req ^js res nxt]
   (let [{:keys [last-game play-checkpoint database]} (.-locals req)
         {:keys [play-id]}                            play-checkpoint]
     (if (< play-id last-game)
