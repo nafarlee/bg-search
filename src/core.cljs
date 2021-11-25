@@ -23,6 +23,7 @@
 
           (.get
            "/image-mirror/:url(\\S+)"
+           (m/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24)))
            m/with-params
            m/with-image-mirror
            m/with-permanent-redirect)
