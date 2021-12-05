@@ -117,9 +117,9 @@
      :best-players        (partial recommendation
                                    (clj->sql :best :> (list :recommended :+ :not_recommended)))
      :quorum-players      (partial recommendation
-                                   (clj->sql (list :best :+ :recommended)
-                                                 :>=
-                                                 (list :not_recommended "/" :3.0 :* :7.0)))
+                                   (clj->sql (list :best :+ :recommended
+                                                   :>=
+                                                   (list :not_recommended :* :13.0 "/" :7.0))))
      :median-playtime     (partial median-playtime 0)
      :median-playtime-1   (partial median-playtime 1)
      :median-playtime-2   (partial median-playtime 2)

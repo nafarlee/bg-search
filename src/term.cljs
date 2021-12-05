@@ -99,7 +99,7 @@
     {:term        :quorum-players
      :alias       :qp
      :description "Matches against games that play well at a particular player count according to
-                   feedback given by a quorum (currently 70%) of the players of said game. This
+                   feedback given by a quorum (currently 65%) of the players of said game. This
                    quorum includes both **best** and **recommended** player ratings"
      :example     "`quorum-players=3` Matches any game that plays well with 3 people as rated by at
                    least 4 out of 5 players"}
