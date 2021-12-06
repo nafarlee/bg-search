@@ -20,7 +20,7 @@
          [:option {:value (name k) :selected (= (name k) selected)} v])
        m))
 
-(defn search-form [{:keys [query order direction]}]
+(defn search-form [{:keys [query order direction action]}]
   (let [possible-orders {:id "ID"
                          :primary_name "Name"
                          :rating_votes "Number of Ratings"
@@ -47,7 +47,7 @@
                            :type "search"
                            :mozactionhint "search"
                            :name "query"}]
-    [:form {:method "get" :action "/search"}
+    [:form {:method "get" :action action}
      [:input.box-border.w-full search-attributes]
      [:div.flex.flex-wrap.gap-2
       [:div.flex-grow
