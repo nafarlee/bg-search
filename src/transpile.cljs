@@ -64,8 +64,13 @@
               :inner :join :games :e :on :mid.expansion := :e.id
             :where (when negate :not) :e.maximum_players :> :b.maximum_players))
 
-
 (def exported-fields
+  ["id"
+   "primary_name"
+   "thumbnail"
+   "year"])
+
+(def orderable-fields
   ["id"
    "primary_name"
    "thumbnail"
@@ -160,14 +165,14 @@
                                  (:text cur))})))))
 
 (defn transpile [query order direction offset]
-  {:pre [(some (partial = order) exported-fields)
+  {:pre [(some (partial = order) orderable-fields)
          (#{"ASC" "DESC"} direction)]}
   (if (empty? query)
-    (clj->sql :select :distinct exported-fields
+    (clj->sql :select :distinct (conj exported-fields order)
                   :from :games
                   :order :by order direction
                   :limit :25 :offset #{offset})
-    (clj->sql :select :distinct exported-fields
+    (clj->sql :select :distinct (conj exported-fields order)
                   :from (list (to-sql (js->clj (.tryParse lang query)))) :as :GameSubquery
                     :natural :inner :join :games
                   :order :by order direction
