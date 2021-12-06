@@ -1,5 +1,6 @@
 (ns view
   (:require
+    [clojure.pprint :refer [pprint]]
     [term :refer [terms]]
     [component :as c]
     [clojure.string :as s]
@@ -204,7 +205,7 @@
                      :direction      "DESC"
                      :submit-message "Explain"})])))
 
-(defn explain-results [{:keys [explanation query order direction offset]}]
+(defn explain-results [{:keys [explanation query order direction offset sql]}]
   (html
    (list
     doctype
@@ -218,6 +219,5 @@
       (when order [:li (str "Order: " order)])
       (when direction [:li (str "Direction: " direction)])
       (when offset [:li (str "Offset: " offset)])]
-     [:pre
-      [:code
-       explanation]]])))
+     [:pre [:code (with-out-str (pprint sql))]]
+     [:pre [:code explanation]]])))

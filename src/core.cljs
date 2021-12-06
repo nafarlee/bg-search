@@ -102,13 +102,14 @@
            m/with-transpiled-query
            m/with-query-explanation
            (fn [^js req res]
-             (let [{:keys [explanation query]}            (.-locals req)
-                   {:keys [query order direction offset]} query]
+             (let [{:keys [explanation query transpiled-query]} (.-locals req)
+                   {:keys [query order direction offset]}       query]
                (.send res (v/explain-results {:explanation explanation
                                               :query       query
                                               :order       order
                                               :direction   direction
-                                              :offset      offset})))))
+                                              :offset      offset
+                                              :sql         transpiled-query})))))
 
           (.use m/log-error-cause)
 
