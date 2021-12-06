@@ -37,7 +37,11 @@
       [:html
        [:head (c/head)]
        [:body
-        (c/search-form {:query query :order order :direction direction})
+        (c/query-form  {:action         "/search"
+                        :query          query
+                        :order          order
+                        :direction      direction
+                        :submit-message "Search"})
         (if (empty? games)
           [:h1 "No more results!"]
           [:div.grid.grid-cols-4.gap-4.justify-items-start.items-center
@@ -169,7 +173,10 @@
      [:title "Board Game Search"]]
     [:body
      [:h1.text-center "Board Game Search"]
-     (c/search-form {:order "bayes_rating" :direction "DESC"})
+     (c/query-form  {:action         "/search"
+                     :order          "bayes_rating"
+                     :direction      "DESC"
+                     :submit-message "Search"})
      [:hr]
      (c/collection-form)
      (c/tutorial)
@@ -182,3 +189,35 @@
         [:th "Description"]
         [:th "Examples"]]]
       [:tbody (map c/term (sort-by :term terms))]]])))
+
+(defn explain []
+  (html
+   (list
+    doctype
+    [:head
+     (c/head)
+     [:title "Explain Query"]]
+    [:body
+     [:h1.text-center "Explain Query"]
+     (c/query-form  {:action         "/admin/explain-results"
+                     :order          "bayes_rating"
+                     :direction      "DESC"
+                     :submit-message "Explain"})])))
+
+(defn explain-results [{:keys [explanation query order direction offset]}]
+  (html
+   (list
+    doctype
+    [:head
+     (c/head)
+     [:title "Explain Query Results"]]
+    [:body
+     [:h1.text-center "Explain Query Results"]
+     [:ul
+      (when query [:li (str "Query: " query)])
+      (when order [:li (str "Order: " order)])
+      (when direction [:li (str "Direction: " direction)])
+      (when offset [:li (str "Offset: " offset)])]
+     [:pre
+      [:code
+       explanation]]])))
