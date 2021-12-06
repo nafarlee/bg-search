@@ -90,6 +90,11 @@
              (let [{:keys [game]} (.-locals req)]
                (.send res (v/games game)))))
 
+          (.get
+           "/admin/explain"
+           (fn [^js _req res]
+             (.send res (v/explain))))
+
           (.use m/log-error-cause)
 
           (.listen 8080 #(prn "Listening on 8080...")))))

@@ -189,3 +189,17 @@
         [:th "Description"]
         [:th "Examples"]]]
       [:tbody (map c/term (sort-by :term terms))]]])))
+
+(defn explain []
+  (html
+   (list
+    doctype
+    [:head
+     (c/head)
+     [:title "Explain Query"]]
+    [:body
+     [:h1.text-center "Explain Query"]
+     (c/query-form  {:action         "/admin/explain-results"
+                     :order          "bayes_rating"
+                     :direction      "DESC"
+                     :submit-message "Explain"})])))
