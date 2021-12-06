@@ -95,6 +95,21 @@
            (fn [^js _req res]
              (.send res (v/explain))))
 
+          (.get
+           "/admin/explain-results"
+           (m/with-database-pool pool)
+           m/with-query-params
+           m/with-transpiled-query
+           m/with-query-explanation
+           (fn [^js req res]
+             (let [{:keys [explanation query]}            (.-locals req)
+                   {:keys [query order direction offset]} query]
+               (.send res (v/explain-results {:explanation explanation
+                                              :query       query
+                                              :order       order
+                                              :direction   direction
+                                              :offset      offset})))))
+
           (.use m/log-error-cause)
 
           (.listen 8080 #(prn "Listening on 8080...")))))
