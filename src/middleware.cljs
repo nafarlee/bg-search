@@ -156,7 +156,7 @@
                      (nxt)))))
         (.catch nxt))))
 
-(defn with-game-checkpoint [^js req res nxt]
+(defn with-game-checkpoint [^js req _res nxt]
   (let [{:keys [database]} (.-locals req)]
     (-> (sql/get-game-checkpoint database)
         (.then (fn [checkpoint]
@@ -164,12 +164,12 @@
                  (nxt)))
         (.catch nxt))))
 
-(defn with-new-game-checkpoint [^js req res nxt]
+(defn with-new-game-checkpoint [^js req _res nxt]
   (let [{:keys [checkpoint]} (.-locals req)]
     (assoc-locals! req :new-checkpoint (+ 200 checkpoint)))
   (nxt))
 
-(defn with-pulled-games [^js req res nxt]
+(defn with-pulled-games [^js req _res nxt]
   (let [{:keys [checkpoint new-checkpoint]} (.-locals req)]
     (-> (api/get-games (range checkpoint new-checkpoint))
         (.then (fn [games]
@@ -187,12 +187,12 @@
                    (.sendStatus res 200)))
           (.catch nxt)))))
 
-(defn with-game-insertions [^js req res nxt]
+(defn with-game-insertions [^js req _res nxt]
   (let [{:keys [games]} (.-locals req)]
     (assoc-locals! req :insertions (insert games)))
   (nxt))
 
-(defn insert-games [^js req res nxt]
+(defn insert-games [^js req _res nxt]
   (let [{:keys [database insertions checkpoint new-checkpoint]} (.-locals req)]
     (-> (sql/insert-games database insertions new-checkpoint)
         (.then (fn []
