@@ -20,7 +20,7 @@
          [:option {:value (name k) :selected (= (name k) selected)} v])
        m))
 
-(defn search-form [{:keys [query order direction action]}]
+(defn search-form [{:keys [query order direction action submit-message]}]
   (let [possible-orders {:id "ID"
                          :primary_name "Name"
                          :rating_votes "Number of Ratings"
@@ -58,7 +58,7 @@
        [:label {:for "direction"} "Direction"]
        [:select.min-w-max.w-full {:name "direction"}
         (options direction possible-directions)]]]
-     [:input.w-full {:type "submit" :value "Search"}]]))
+     [:input.w-full {:type "submit" :value submit-message}]]))
 
 (defn collection-form []
   [:form {:method "post" :action "/pull-collection"}

@@ -37,7 +37,11 @@
       [:html
        [:head (c/head)]
        [:body
-        (c/search-form {:action "/search" :query query :order order :direction direction})
+        (c/search-form {:action         "/search"
+                        :query          query
+                        :order          order
+                        :direction      direction
+                        :submit-message "Search"})
         (if (empty? games)
           [:h1 "No more results!"]
           [:div.grid.grid-cols-4.gap-4.justify-items-start.items-center
@@ -169,7 +173,10 @@
      [:title "Board Game Search"]]
     [:body
      [:h1.text-center "Board Game Search"]
-     (c/search-form {:action "/search" :order "bayes_rating" :direction "DESC"})
+     (c/search-form {:action         "/search"
+                     :order          "bayes_rating"
+                     :direction      "DESC"
+                     :submit-message "Search"})
      [:hr]
      (c/collection-form)
      (c/tutorial)
