@@ -190,3 +190,4 @@ CREATE TABLE IF NOT EXISTS player_collections (
 
 CREATE INDEX IF NOT EXISTS games_average_rating_index ON games (average_rating);
 CREATE INDEX IF NOT EXISTS games_rating_votes_index ON games (rating_votes);
+CREATE INDEX IF NOT EXISTS games_steamdb_rating_index ON games (steamdb_rating);
