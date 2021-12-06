@@ -37,7 +37,7 @@
       [:html
        [:head (c/head)]
        [:body
-        (c/search-form {:action         "/search"
+        (c/query-form  {:action         "/search"
                         :query          query
                         :order          order
                         :direction      direction
@@ -173,7 +173,7 @@
      [:title "Board Game Search"]]
     [:body
      [:h1.text-center "Board Game Search"]
-     (c/search-form {:action         "/search"
+     (c/query-form  {:action         "/search"
                      :order          "bayes_rating"
                      :direction      "DESC"
                      :submit-message "Search"})
