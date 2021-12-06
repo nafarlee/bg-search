@@ -203,3 +203,21 @@
                      :order          "bayes_rating"
                      :direction      "DESC"
                      :submit-message "Explain"})])))
+
+(defn explain-results [{:keys [explanation query order direction offset]}]
+  (html
+   (list
+    doctype
+    [:head
+     (c/head)
+     [:title "Explain Query Results"]]
+    [:body
+     [:h1.text-center "Explain Query Results"]
+     [:ul
+      (when query [:li (str "Query: " query)])
+      (when order [:li (str "Order: " order)])
+      (when direction [:li (str "Direction: " direction)])
+      (when offset [:li (str "Offset: " offset)])]
+     [:pre
+      [:code
+       explanation]]])))
