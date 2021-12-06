@@ -89,6 +89,7 @@ CREATE TABLE IF NOT EXISTS player_recommendations (
   PRIMARY KEY (id, players)
 );
 CREATE INDEX IF NOT EXISTS player_recommendations_is_quorum_index on player_recommendations (is_quorum);
+CREATE INDEX IF NOT EXISTS player_recommendations_players_index ON player_recommendations USING gist (players);
 
 
 CREATE TABLE IF NOT EXISTS reimplementations (
