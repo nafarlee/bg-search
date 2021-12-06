@@ -85,8 +85,10 @@ CREATE TABLE IF NOT EXISTS player_recommendations (
   best INTEGER CHECK (best >= 0),
   recommended INTEGER CHECK (recommended >= 0),
   not_recommended INTEGER CHECK (not_recommended >= 0),
+  is_quorum BOOLEAN GENERATED ALWAYS AS ((best + recommended) >= (not_recommended * 13.0 / 7.0)) STORED,
   PRIMARY KEY (id, players)
 );
+CREATE INDEX IF NOT EXISTS player_recommendations_is_quorum_index on player_recommendations (is_quorum);
 
 
 CREATE TABLE IF NOT EXISTS reimplementations (
