@@ -1,6 +1,7 @@
 (ns middleware
   (:require
     ["url" :as u]
+    [goog.object :as g]
     [clojure.string :refer [join]]
     [clojure.set :refer [difference]]
     [transpile :refer [transpile]]
@@ -200,3 +201,15 @@
         (.catch (fn [e]
                   (prn :save-games-error checkpoint (dec new-checkpoint))
                   (nxt e))))))
+
+(defn with-query-explanation [^js req _res nxt]
+  (let [{:keys [database transpiled-query]} (.-locals req)]
+    (-> (sql/query database (update transpiled-query :text #(cons "explain" %)))
+        (.then (fn [result]
+                 (as-> result <>
+                       (.-rows <>)
+                       (.map <> #(g/get % "QUERY PLAN"))
+                       (join "\n" <>)
+                       (assoc-locals! req :explanation <>)
+                       (nxt))))
+        (.catch nxt))))
