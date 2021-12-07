@@ -206,7 +206,11 @@
         #(regexp #"\"([^\"]+)\"" 1)
 
         :RelationalTag
-        #(apply alt (map string (keys relational-tags)))
+        #(->> relational-tags
+              keys
+              (sort-by (comp - count))
+              (map string)
+              (apply alt))
 
         :RelationalOperator
         #(apply alt (map string operators))})))
