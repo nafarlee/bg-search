@@ -11,11 +11,14 @@
 
 (defn junction [{:keys [table field]} {:strs [value negate]}]
   (clj->sql :select :a.id
-                :from ["games a" (str "games_" table " ab") (str table " b")]
-                :where :a.id := :ab.game_id
-                  :and (str "ab." field "_id") := :b.id
-                :group :by :a.id
-                :having :bool_or (list field "~~*" #{(str "%" value "%")}) :!= (-> negate boolean str)))
+            :from :games :a
+            :inner :join
+              (str "games_" table) :ab
+              :on :a.id := :ab.game_id
+            :inner :join
+              table :b
+              :on (str "ab." field "_id") := :b.id
+            :where (str "b." field) (when negate :not) :ilike #{(str "%" value "%")}))
 
 (defn relational [field {:strs [value operator negate]}]
   (clj->sql :select :id
