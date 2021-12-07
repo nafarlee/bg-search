@@ -204,7 +204,7 @@
 
 (defn with-query-explanation [^js req _res nxt]
   (let [{:keys [database transpiled-query]} (.-locals req)]
-    (-> (sql/query database (update transpiled-query :text #(cons "explain" %)))
+    (-> (sql/query database (update transpiled-query :text #(concat ["explain" "analyze"] %)))
         (.then (fn [result]
                  (as-> result <>
                        (.-rows <>)
