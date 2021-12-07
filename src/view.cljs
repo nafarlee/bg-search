@@ -196,8 +196,7 @@
    (list
     doctype
     [:head
-     (c/head)
-     [:title "Explain Query"]]
+     (c/head)]
     [:body
      [:h1.text-center "Explain Query"]
      (c/query-form  {:action         "/admin/explain-results"
@@ -210,8 +209,7 @@
    (list
     doctype
     [:head
-     (c/head)
-     [:title "Explain Query Results"]]
+     (c/head)]
     [:body
      [:h1.text-center "Explain Query Results"]
      [:ul
