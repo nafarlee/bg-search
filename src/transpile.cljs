@@ -55,10 +55,15 @@
                   :and (when negate :not) :median operator #{value}))
 
 (defn own [{:strs [value negate]}]
-  (clj->sql :select :game_id :as :id
-            :from :player_collections
-            :where :username := #{value}
-              :and (when negate :not) :own := :TRUE))
+  (clj->sql
+   :select :id
+   :from :games
+   :left :join :player_collections
+     :on :id := :game_id
+   :where
+     (if negate
+       (list :username :!= #{value} :or :not :own)
+       (list :username := #{value} :and :own))))
 
 (defn player-count-expansion [{:strs [negate]}]
   (clj->sql :select :e.id :as :id
