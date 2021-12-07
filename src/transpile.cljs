@@ -36,10 +36,8 @@
     nil))
 
 (defn recommendation [clause {:strs [operator value negate]}]
-  (clj->sql :select :a.id
-            :from :games :a
-            :natural :inner :join
-              :player_recommendations :b
+  (clj->sql :select :id
+            :from :player_recommendations
             :where :players "&&" #{(->range operator value)} "::int4range"
               :and (when negate :not) clause))
 
