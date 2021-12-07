@@ -215,9 +215,9 @@
     [:body
      [:h1.text-center "Explain Query Results"]
      [:ul
-      (when query [:li (str "Query: " query)])
-      (when order [:li (str "Order: " order)])
-      (when direction [:li (str "Direction: " direction)])
-      (when offset [:li (str "Offset: " offset)])]
+      (when query [:li "Query: " [:code query]])
+      (when order [:li "Order: " [:code order]])
+      (when direction [:li "Direction: " [:code direction]])
+      (when offset [:li "Offset: " [:code offset]])]
      [:pre [:code (with-out-str (pprint sql))]]
      [:pre [:code explanation]]])))
