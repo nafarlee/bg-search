@@ -15,7 +15,11 @@
             :inner :join
               table :b
               :on (str "ab." field "_id") := :b.id
-            :where (str "b." field) (when negate :not) :ilike #{(str "%" value "%")}))
+            :group :by :ab.game_id
+            :having
+              :bool_or (list (str "b." field) :ilike #{(str "%" value "%")})
+              :=
+              (if negate :FALSE :TRUE)))
 
 (defn relational [field {:strs [value operator negate]}]
   (clj->sql :select :id
