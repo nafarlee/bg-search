@@ -178,10 +178,12 @@
   (if (empty? query)
     (clj->sql :select :distinct (conj exported-fields order)
                   :from :games
+                  :where order :is :not :null
                   :order :by order direction
                   :limit :25 :offset #{offset})
     (clj->sql :select :distinct (conj exported-fields order)
                   :from (list (to-sql (js->clj (.tryParse lang query)))) :as :GameSubquery
                     :natural :inner :join :games
+                  :where order :is :not :null
                   :order :by order direction
                   :limit :25 :offset #{offset})))
