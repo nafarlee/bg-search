@@ -10,11 +10,8 @@
             :where field (when negate :not) :ilike #{(str "%" value "%")}))
 
 (defn junction [{:keys [table field]} {:strs [value negate]}]
-  (clj->sql :select :a.id
-            :from :games :a
-            :inner :join
-              (str "games_" table) :ab
-              :on :a.id := :ab.game_id
+  (clj->sql :select :ab.game_id :as :id
+            :from (str "games_" table) :ab
             :inner :join
               table :b
               :on (str "ab." field "_id") := :b.id
