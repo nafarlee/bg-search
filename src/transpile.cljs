@@ -60,7 +60,7 @@
             :where :username := #{value}
               :and (when negate :not) :own := :TRUE))
 
-(defn player-count-expansion [{:strs [value negate]}]
+(defn player-count-expansion [{:strs [negate]}]
   (clj->sql :select :e.id :as :id
             :from :expansions :mid
               :inner :join :games :b :on :mid.base := :b.id
