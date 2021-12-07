@@ -6,8 +6,8 @@
 
 (defn simple [field {:strs [value negate]}]
   (clj->sql :select :id
-                :from :games
-                :where field (if negate "!~~*" "~~*") #{(str "%" value "%")}))
+            :from :games
+            :where field (when negate :not) :ilike #{(str "%" value "%")}))
 
 (defn junction [{:keys [table field]} {:strs [value negate]}]
   (clj->sql :select :a.id
