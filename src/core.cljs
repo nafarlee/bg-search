@@ -3,7 +3,6 @@
     ["express" :as express]
     [view :as v]
     [sql :as sql]
-    [routes :as r]
     [middleware :as m]))
 
 (defonce ^:export app (express))
