@@ -251,3 +251,11 @@
                        (.then #(prn :not-a-game play-id))
                        (.then #(.sendStatus res 200))))))
         (.catch nxt))))
+
+(defn with-plays [^js req _res nxt]
+  (let [{{:keys [play-id play-page]} :play-checkpoint} (.-locals req)]
+    (-> (api/get-plays play-id play-page)
+        (.then (fn [plays]
+                 (assoc-locals! req :plays plays)
+                 (nxt)))
+        (.catch nxt))))
