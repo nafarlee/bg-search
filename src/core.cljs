@@ -3,7 +3,6 @@
     ["express" :as express]
     [view :as v]
     [sql :as sql]
-    [routes :as r]
     [middleware :as m]))
 
 (defonce ^:export app (express))
@@ -69,7 +68,17 @@
           (.post
            "/pubsub/pull-plays"
            (m/with-database-pool pool)
-           r/pull-plays)
+           m/with-last-game
+           m/with-plays-checkpoint
+           m/maybe-mobius-plays
+           m/require-play-id-game
+           m/with-plays
+           m/require-plays
+           m/with-positive-plays
+           m/require-positive-plays
+           m/require-new-plays
+           m/save-plays
+           m/with-success)
 
           (.post
            "/pull-collection"
