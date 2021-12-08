@@ -291,7 +291,8 @@
           (.catch nxt)))))
 
 (defn require-new-plays [^js req ^js res nxt]
-  (let [{:keys [database positive-plays]} (.-locals req)]
+  (let [{:keys [database play-checkpoint positive-plays]} (.-locals req)
+        {:keys [play-id play-page]}                       play-checkpoint]
     (-> (sql/play? database (ffirst positive-plays))
         (.then (fn [existing-play?]
                  (if-not existing-play?
