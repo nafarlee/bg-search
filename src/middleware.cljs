@@ -240,7 +240,7 @@
                    (.sendStatus res 200)))
           (.catch nxt)))))
 
-(defn require-play-id-game [^js req _res nxt]
+(defn require-play-id-game [^js req ^js res nxt]
   (let [{database          :database
          {:keys [play-id]} :play-checkpoint} (.-locals req)]
     (-> (sql/game? database play-id)
