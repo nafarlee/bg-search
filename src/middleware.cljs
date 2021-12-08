@@ -301,3 +301,12 @@
                                 (prn :no-new-plays play-id play-page)
                                 (.sendStatus res 200)))))))
         (.catch nxt))))
+
+(defn save-plays [^js req _res nxt]
+  (let [{:keys [database play-checkpoint positive-plays]} (.-locals req)
+        {:keys [play-id play-page]}              positive-plays]
+    (-> (sql/save-plays database play-id play-page positive-plays)
+        (.then (fn []
+                 (prn :save-plays play-id play-page)
+                 (nxt)))
+        (.catch nxt))))
