@@ -289,3 +289,15 @@
                    (prn :no-positive-plays play-id play-page)
                    (.sendStatus res 200)))
           (.catch nxt)))))
+
+(defn require-new-plays [^js req ^js res nxt]
+  (let [{:keys [database positive-plays]} (.-locals req)]
+    (-> (sql/play? database (ffirst positive-plays))
+        (.then (fn [existing-play?]
+                 (if-not existing-play?
+                   (nxt)
+                   (-> (sql/update-plays-checkpoint database (inc play-id) 1)
+                       (.then (fn []
+                                (prn :no-new-plays play-id play-page)
+                                (.sendStatus res 200)))))))
+        (.catch nxt))))
