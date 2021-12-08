@@ -278,3 +278,14 @@
                    (filter (fn [[_ _ play-time]] (pos? play-time))
                            plays)))
   (nxt))
+
+(defn require-positive-plays [^js req ^js res nxt]
+  (let [{:keys [database play-checkpoint positive-plays]} (.-locals req)
+        {:keys [play-id play-page]}                       play-checkpoint]
+    (if (not-empty positive-plays)
+      (nxt)
+      (-> (sql/update-plays-checkpoint database play-id (inc play-page))
+          (.then (fn []
+                   (prn :no-positive-plays play-id play-page)
+                   (.sendStatus res 200)))
+          (.catch nxt)))))
