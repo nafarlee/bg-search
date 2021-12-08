@@ -259,3 +259,14 @@
                  (assoc-locals! req :plays plays)
                  (nxt)))
         (.catch nxt))))
+
+(defn require-plays [^js req ^js res nxt]
+  (let [{:keys [plays database play-checkpoint]} (.-locals req)
+        {:keys [play-id play-page]}              play-checkpoint]
+    (if (not-empty plays)
+      (nxt)
+      (-> (sql/update-plays-checkpoint database (inc play-id) 1)
+          (.then (fn []
+                   (prn :no-plays play-id play-page)
+                   (.sendStatus res 200)))
+          (.catch nxt)))))
