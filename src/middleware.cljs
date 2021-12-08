@@ -270,3 +270,11 @@
                    (prn :no-plays play-id play-page)
                    (.sendStatus res 200)))
           (.catch nxt)))))
+
+(defn with-positive-plays [^js req _res nxt]
+  (let [{:keys [plays]} (.-locals req)]
+    (assoc-locals! req
+                   :positive-plays
+                   (filter (fn [[_ _ play-time]] (pos? play-time))
+                           plays)))
+  (nxt))
