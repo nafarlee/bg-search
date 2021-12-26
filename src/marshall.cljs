@@ -6,17 +6,18 @@
 
 (defn- get-id [{:strs [$_id]}] $_id)
 
-(defn get-int-in [m path]
+
+(defn- get-int-in [m path]
   (-> m
       (get-in path "0")
       (js/parseInt 10)))
 
-(defn get-float-in [m path]
+(defn- get-float-in [m path]
   (-> m
       (get-in path "0")
       js/parseFloat))
 
-(defn id-bundle [x]
+(defn- id-bundle [x]
   {:id    (-> x get-id (js/parseInt 10))
    :value (get-value x)})
 
