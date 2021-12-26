@@ -1,10 +1,10 @@
 (ns marshall)
 
-(defn get-type [{:strs [$_type]}] $_type)
+(defn- get-type [{:strs [$_type]}] $_type)
 
-(defn get-value [{:strs [$_value]}] $_value)
+(defn- get-value [{:strs [$_value]}] $_value)
 
-(defn get-id [{:strs [$_id]}] $_id)
+(defn- get-id [{:strs [$_id]}] $_id)
 
 (defn get-int-in [m path]
   (-> m
