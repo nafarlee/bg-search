@@ -56,6 +56,7 @@
       WHERE id = $1) AS player_recommendations,
     games.id,
     image,
+    language_dependence,
     average_rating,
     average_weight,
     bayes_rating,

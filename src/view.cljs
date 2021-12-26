@@ -4,6 +4,8 @@
     [term :refer [terms]]
     [component :as c]
     [clojure.string :as s]
+    [constants :refer [language-dependencies]]
+    [clojure.set :refer [map-invert]]
     [html :refer [html doctype]]))
 
 (defn- percentage-of
@@ -67,6 +69,7 @@
 
 (defn games
   [{:strs [primary_name
+           language_dependence
            image
            player_recommendations
            median_playtimes
@@ -157,6 +160,12 @@
          [:ul
           [:li "Votes: " weight_votes]
           [:li "Average: " average_weight]]]
+        (when language_dependence
+          [:details
+           [:summary "Language Dependence"]
+           [:p
+            [:code language_dependence]
+            (get (map-invert language-dependencies) language_dependence)]])
         (maybe-details-list "Categories" categories)
         (maybe-details-list "Mechanics" mechanics)
         (maybe-details-list "Families" families)
