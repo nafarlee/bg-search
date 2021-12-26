@@ -40,6 +40,17 @@
    :id
    (get-int-in game ["$_id"])
 
+   :language-dependence
+   (->> (get game "poll")
+        (filter (comp (partial = "language_dependence") get-name))
+        (filter (comp pos? #(get-int-in % ["$_totalvotes"])))
+        (map #(get-in % ["results" "result"]))
+        (map (fn [polls]
+               (apply max-key #(get-int-in % ["$_numvotes"]) polls)))
+        (map get-value)
+        (map (partial get language-dependencies))
+        first)
+
    :image
    (get game "image")
 
