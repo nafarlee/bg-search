@@ -1,5 +1,7 @@
 (ns marshall)
 
+(defn- get-name [{:strs [$_name]}] $_name)
+
 (defn- get-type [{:strs [$_type]}] $_type)
 
 (defn- get-value [{:strs [$_value]}] $_value)
