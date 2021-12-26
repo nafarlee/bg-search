@@ -46,6 +46,20 @@
      :description "Matches a part of the name of any of the game's designers"
      :example     "`design:uwe` Matches any game designed by someone named **Uwe**"}
 
+    {:term        :language-dependence
+     :alias       :ld
+     :example     "
+- `language-dependence<=1` Matches any game that may easily be played in other languages
+- `ld=4` Matches any game that must be played in the published language"
+     :description "
+Matches against the community-submitted language dependence level of the game.
+The possible values are as follows:
+- `0` No necessary in-game text
+- `1` Some necessary text - easily memorized or small crib sheet
+- `2` Moderate in-game text - needs crib sheet or paste ups
+- `3` Extensive use of text - massive conversion needed to be playable
+- `4` Unplayable in another language"}
+
     {:term        :rating-votes
      :alias       :rv
      :description "Compares against the number of user ratings the game has received"
