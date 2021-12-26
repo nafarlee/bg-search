@@ -9,6 +9,7 @@ VALUES (1, 1, 1, 1);
 
 CREATE TABLE IF NOT EXISTS games (
   id INTEGER PRIMARY KEY,
+  language_dependence SMALLINT CHECK (language_dependence >= 0),
   image TEXT,
   thumbnail TEXT,
   last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
