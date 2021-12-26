@@ -8,7 +8,6 @@
 
 (defn- get-id [{:strs [$_id]}] $_id)
 
-
 (defn- get-int-in [m path]
   (-> m
       (get-in path "0")
