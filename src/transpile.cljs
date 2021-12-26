@@ -113,6 +113,7 @@
      :publisher           (partial junction {:table "publishers" :field "publisher"})
      :designer            (partial junction {:table "designers" :field "designer"})
      :rating-votes        (partial relational :rating_votes)
+     :language-dependence (partial relational :language_dependence)
      :average-rating      (partial relational :average_rating)
      :geek-rating         (partial relational :bayes_rating)
      :steamdb-rating      (partial relational :steamdb_rating)

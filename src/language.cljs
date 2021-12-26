@@ -42,6 +42,8 @@
 (def ^:private relational-tags
   {"rating-votes"      "RATING_VOTES"
    "rv"                "RATING_VOTES"
+   "language-dependence" "LANGUAGE_DEPENDENCE"
+   "ld"                "LANGUAGE_DEPENDENCE"
    "average-rating"    "AVERAGE_RATING"
    "ar"                "AVERAGE_RATING"
    "geek-rating"       "GEEK_RATING"
