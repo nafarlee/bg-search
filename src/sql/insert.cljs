@@ -60,6 +60,7 @@
 
 (defn games [gs]
   (let [columns     ["id"
+                     "language_dependence"
                      "primary_name"
                      "year"
                      "last_updated"
