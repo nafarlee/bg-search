@@ -4,7 +4,7 @@
     [term :refer [terms]]
     [component :as c]
     [clojure.string :as s]
-    [constants :refer [language-dependencies]]
+    [constants :refer [language-dependencies results-per-page]]
     [clojure.set :refer [map-invert]]
     [constants :refer [results-per-page]]
     [html :refer [html doctype]]))
@@ -187,7 +187,7 @@
     [:body
      [:h1.text-center "Board Game Search"]
      (c/query-form  {:action         "/search"
-                     :limit          "10"
+                     :limit          (str results-per-page)
                      :order          "bayes_rating"
                      :direction      "DESC"
                      :submit-message "Search"})
@@ -213,7 +213,7 @@
     [:body
      [:h1.text-center "Explain Query"]
      (c/query-form  {:action         "/admin/explain-results"
-                     :limit          "10"
+                     :limit          (str results-per-page)
                      :order          "bayes_rating"
                      :direction      "DESC"
                      :submit-message "Explain"})])))
