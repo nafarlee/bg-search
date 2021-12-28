@@ -9,7 +9,6 @@
     [error :as e]
     api
     sql
-    [constants :refer [results-per-page]]
     [sql.insert :refer [insert]]
     [image-mirror :as im]))
 
@@ -137,11 +136,11 @@
   (nxt))
 
 (defn with-search-page-number [^js req _res nxt]
-  (let [{{:keys [offset]
+  (let [{{:keys [offset limit]
           :or   {offset "0"}} :query} (.-locals req)]
     (assoc-locals! req :page-number (-> offset
                                         parse-int
-                                        (quot results-per-page)
+                                        (quot limit)
                                         inc)))
   (nxt))
 
