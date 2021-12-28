@@ -45,8 +45,10 @@
                            searched-games]}  (.-locals req)
                    {:keys [direction
                            order
+                           limit
                            query]}           query]
                (.send res (v/search {:query        query
+                                     :limit        limit
                                      :order        order
                                      :direction    direction
                                      :games        searched-games
