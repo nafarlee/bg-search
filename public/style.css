@@ -126,3 +126,8 @@
 .pl-0 {
   padding-left: 0;
 }
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
