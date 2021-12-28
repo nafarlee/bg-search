@@ -182,11 +182,11 @@
               :from :games
               :where order :is :not :null
               :order :by order direction
-              :limit results-per-page :offset #{offset})
+              :limit (str results-per-page) :offset #{offset})
     (clj->sql :select :distinct (conj exported-fields order)
               :from (list (to-sql (js->clj (.tryParse lang query))))
                 :as :GameSubquery
               :natural :inner :join :games
               :where order :is :not :null
               :order :by order direction
-              :limit results-per-page :offset #{offset})))
+              :limit (str results-per-page) :offset #{offset})))
