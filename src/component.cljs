@@ -2,6 +2,19 @@
   (:require
     [markdown.core :refer [md->html]]))
 
+(defn navigation []
+  [:nav
+   [:menu.list-none.flex.gap-6.pl-0.text-xl
+    [:li
+     [:a {:href "/"}
+      "BGS"]]
+    [:li.ml-auto
+     [:a {:href "https://github.com/nafarlee/bg-search/issues/new"}
+      "Report an Issue"]]
+    [:li
+     [:a {:href "https://github.com/nafarlee/bg-search"}
+      "Contribute"]]]])
+
 (defn head []
   (list
    [:link
