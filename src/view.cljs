@@ -28,7 +28,7 @@
   (sort-by #(-> % (get "players") range->text (js/parseInt 10))
            recommendations))
 
-(defn search [{:keys [games query next-url direction order previous-url page-number]}]
+(defn search [{:keys [games limit query next-url direction order previous-url page-number]}]
   (let [game->heading (fn [{:strs [id year primary_name thumbnail]}]
                         (list
                          [:img.h-28.w-full.object-cover.object-top
@@ -42,6 +42,7 @@
        [:head (c/head)]
        [:body
         (c/query-form  {:action         "/search"
+                        :limit          limit
                         :query          query
                         :order          order
                         :direction      direction
@@ -186,6 +187,7 @@
     [:body
      [:h1.text-center "Board Game Search"]
      (c/query-form  {:action         "/search"
+                     :limit          "10"
                      :order          "bayes_rating"
                      :direction      "DESC"
                      :submit-message "Search"})
@@ -211,6 +213,7 @@
     [:body
      [:h1.text-center "Explain Query"]
      (c/query-form  {:action         "/admin/explain-results"
+                     :limit          "10"
                      :order          "bayes_rating"
                      :direction      "DESC"
                      :submit-message "Explain"})])))
