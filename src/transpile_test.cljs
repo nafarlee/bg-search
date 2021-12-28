@@ -34,12 +34,11 @@
 
 (deftest junction
   (is (= (t/junction {:table "recipes" :field "fruit"} {"value" "pear"})
-         (clj->sql :select :a.id
-                       :from ["games a" "games_recipes ab" "recipes b"]
-                       :where :a.id := :ab.game_id
-                         :and :ab.fruit_id := :b.id
-                       :group :by :a.id
-                       :having :bool_or (list :fruit :ilike #{"%pear%"}) :!= :false))))
+         (clj->sql :select :ab.game_id :as :id
+                   :from :games_recipes :ab
+                     :inner :join :recipes :b :on :ab.fruit_id := :b.id
+                   :group :by :ab.game_id
+                   :having :bool_or (list :b.fruit :ilike #{"%pear%"}) := :TRUE))))
 
 (deftest relational
   (is (= (t/relational "fruit" {"value" "pear" "operator" "="})
