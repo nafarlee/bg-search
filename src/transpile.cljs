@@ -74,10 +74,10 @@
             :where (when negate :not) :e.maximum_players :> :b.maximum_players))
 
 (def exported-fields
-  ["id"
-   "primary_name"
-   "thumbnail"
-   "year"])
+  #{"id"
+    "primary_name"
+    "thumbnail"
+    "year"})
 
 (def orderable-fields
   ["id"
@@ -178,12 +178,12 @@
   {:pre [(some (partial = order) orderable-fields)
          (#{"ASC" "DESC"} direction)]}
   (if (empty? query)
-    (clj->sql :select :distinct (conj exported-fields order)
+    (clj->sql :select :distinct (vec (conj exported-fields order))
               :from :games
               :where order :is :not :null
               :order :by order direction
               :limit (str results-per-page) :offset #{offset})
-    (clj->sql :select :distinct (conj exported-fields order)
+    (clj->sql :select :distinct (vec (conj exported-fields order))
               :from (list (to-sql (js->clj (.tryParse lang query))))
                 :as :GameSubquery
               :natural :inner :join :games

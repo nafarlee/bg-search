@@ -11,7 +11,7 @@
 
 (deftest transpile
   (is (= (t/transpile "n:scythe" "id" "DESC" 0)
-          (clj->sql :select :distinct t/exported-fields
+          (clj->sql :select :distinct (vec t/exported-fields)
                         :from (list :select :id
                                     :from :games
                                     :where :primary_name "~~*" #{"%scythe%"}) :as :GameSubquery
@@ -19,7 +19,7 @@
                         :order :by :id :DESC
                         :limit results-per-page :offset #{0})))
   (is (= (t/transpile "" "id" "DESC" 0)
-         (clj->sql :select :distinct t/exported-fields
+         (clj->sql :select :distinct (vec t/exported-fields)
                        :from :games
                        :order :by :id :DESC
                        :limit results-per-page :offset #{0}))))
