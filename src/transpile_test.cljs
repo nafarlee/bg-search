@@ -16,13 +16,14 @@
                                     :from :games
                                     :where :primary_name :ilike #{"%scythe%"}) :as :GameSubquery
                           :natural :inner :join :games
+                        :where :id :is :not :null
                         :order :by :id :DESC
-                        :limit results-per-page :offset #{0})))
+                        :limit (str results-per-page) :offset #{0})))
   (is (= (t/transpile "" "id" "DESC" 0)
          (clj->sql :select :distinct (vec t/exported-fields)
                        :from :games
                        :order :by :id :DESC
-                       :limit results-per-page :offset #{0}))))
+                       :limit (str results-per-page) :offset #{0}))))
 
 (deftest simple
   (is (= (t/simple :fruit {"value" "pear"})
