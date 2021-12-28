@@ -22,6 +22,7 @@
   (is (= (t/transpile "" "id" "DESC" 0)
          (clj->sql :select :distinct (vec t/exported-fields)
                        :from :games
+                       :where :id :is :not :null
                        :order :by :id :DESC
                        :limit (str results-per-page) :offset #{0}))))
 
