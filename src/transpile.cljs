@@ -2,6 +2,7 @@
   (:require
     [sql.dsl :refer [clj->sql]]
     [clojure.string :as s]
+    [constants :refer [results-per-page]]
     [language :refer [language] :rename {language lang}]))
 
 (defn simple [field {:strs [value negate]}]
@@ -73,10 +74,10 @@
             :where (when negate :not) :e.maximum_players :> :b.maximum_players))
 
 (def exported-fields
-  ["id"
-   "primary_name"
-   "thumbnail"
-   "year"])
+  #{"id"
+    "primary_name"
+    "thumbnail"
+    "year"})
 
 (def orderable-fields
   ["id"
@@ -177,15 +178,15 @@
   {:pre [(some (partial = order) orderable-fields)
          (#{"ASC" "DESC"} direction)]}
   (if (empty? query)
-    (clj->sql :select :distinct (conj exported-fields order)
+    (clj->sql :select :distinct (vec (conj exported-fields order))
               :from :games
               :where order :is :not :null
               :order :by order direction
-              :limit :25 :offset #{offset})
-    (clj->sql :select :distinct (conj exported-fields order)
+              :limit (str results-per-page) :offset #{offset})
+    (clj->sql :select :distinct (vec (conj exported-fields order))
               :from (list (to-sql (js->clj (.tryParse lang query))))
                 :as :GameSubquery
               :natural :inner :join :games
               :where order :is :not :null
               :order :by order direction
-              :limit :25 :offset #{offset})))
+              :limit (str results-per-page) :offset #{offset})))

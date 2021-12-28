@@ -6,3 +6,5 @@
    "Moderate in-game text - needs crib sheet or paste ups"            2
    "Extensive use of text - massive conversion needed to be playable" 3
    "Unplayable in another language"                                   4})
+
+(def results-per-page 10)
