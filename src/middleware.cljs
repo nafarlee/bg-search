@@ -124,14 +124,14 @@
 
 (defn with-previous-search-url [^js req _res nxt]
   (let [{:keys [query]}  (.-locals req)
-        {:keys [offset]} query]
+        {:keys [limit offset]} query]
     (when (and (string? offset) (not= "0" offset))
       (assoc-locals! req
                      :previous-url
                      (u/format #js{:host     (.get req "host")
                                    :protocol (.-protocol req)
                                    :pathname (.-path req)
-                                   :query    (->> (- (parse-int offset) results-per-page)
+                                   :query    (->> (- (parse-int offset) limit)
                                                   (assoc query :offset)
                                                   clj->js)}))))
   (nxt))
