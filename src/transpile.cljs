@@ -2,7 +2,6 @@
   (:require
     [sql.dsl :refer [clj->sql]]
     [clojure.string :as s]
-    [constants :refer [results-per-page]]
     [language :refer [language] :rename {language lang}]))
 
 (defn simple [field {:strs [value negate]}]
@@ -174,7 +173,7 @@
                                  (if intersect ["intersect" "all"] ["union" "all"])
                                  (:text cur))})))))
 
-(defn transpile [query order direction offset]
+(defn transpile [query order direction offset limit]
   {:pre [(some (partial = order) orderable-fields)
          (#{"ASC" "DESC"} direction)]}
   (if (empty? query)
@@ -182,11 +181,11 @@
               :from :games
               :where order :is :not :null
               :order :by order direction
-              :limit (str results-per-page) :offset #{offset})
+              :limit limit :offset #{offset})
     (clj->sql :select :distinct (vec (conj exported-fields order))
               :from (list (to-sql (js->clj (.tryParse lang query))))
                 :as :GameSubquery
               :natural :inner :join :games
               :where order :is :not :null
               :order :by order direction
-              :limit (str results-per-page) :offset #{offset})))
+              :limit limit :offset #{offset})))

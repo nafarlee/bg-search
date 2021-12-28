@@ -4,9 +4,8 @@
     [term :refer [terms]]
     [component :as c]
     [clojure.string :as s]
-    [constants :refer [language-dependencies]]
+    [constants :refer [language-dependencies results-per-page]]
     [clojure.set :refer [map-invert]]
-    [constants :refer [results-per-page]]
     [html :refer [html doctype]]))
 
 (defn- percentage-of
@@ -28,7 +27,7 @@
   (sort-by #(-> % (get "players") range->text (js/parseInt 10))
            recommendations))
 
-(defn search [{:keys [games query next-url direction order previous-url page-number]}]
+(defn search [{:keys [games limit query next-url direction order previous-url page-number]}]
   (let [game->heading (fn [{:strs [id year primary_name thumbnail]}]
                         (list
                          [:img.h-28.w-full.object-cover.object-top
@@ -42,6 +41,7 @@
        [:head (c/head)]
        [:body
         (c/query-form  {:action         "/search"
+                        :limit          limit
                         :query          query
                         :order          order
                         :direction      direction
@@ -54,7 +54,7 @@
         [:div.grid.grid-rows-1.grid-cols-3
          (when previous-url [:p.grid-col-1.text-left [:a {:href previous-url} "Previous"]])
          [:p.grid-col-2.text-center page-number]
-         (when (= results-per-page (count games))
+         (when (= limit (str (count games)))
            [:p.grid-col-3.text-right [:a {:href next-url} "Next"]])]]]))))
 
 (defn error [{:keys [code message block]}]
@@ -186,6 +186,7 @@
     [:body
      [:h1.text-center "Board Game Search"]
      (c/query-form  {:action         "/search"
+                     :limit          (str results-per-page)
                      :order          "bayes_rating"
                      :direction      "DESC"
                      :submit-message "Search"})
@@ -211,6 +212,7 @@
     [:body
      [:h1.text-center "Explain Query"]
      (c/query-form  {:action         "/admin/explain-results"
+                     :limit          (str results-per-page)
                      :order          "bayes_rating"
                      :direction      "DESC"
                      :submit-message "Explain"})])))

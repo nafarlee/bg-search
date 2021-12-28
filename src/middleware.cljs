@@ -9,8 +9,8 @@
     [error :as e]
     api
     sql
-    [constants :refer [results-per-page]]
     [sql.insert :refer [insert]]
+    [constants :refer [results-per-page]]
     [image-mirror :as im]))
 
 (defn log-error-cause [^js err _req _res nxt]
@@ -86,17 +86,19 @@
 (defn with-transpiled-query [^js req res nxt]
   (let [{qp :query}                   (.-locals req)
         {:keys [query
+                limit
                 order
                 direction
                 offset]
          :or   {query ""
+                limit (str results-per-page)
                 order "bayes_rating"
                 direction "DESC"
                 offset "0"}}          qp
         offset                        (parse-int offset)]
     (prn qp)
     (try
-      (assoc-locals! req :transpiled-query (transpile query order direction offset))
+      (assoc-locals! req :transpiled-query (transpile query order direction offset limit))
       (nxt)
       (catch :default err
         (e/transpile err res query)))))
@@ -124,24 +126,24 @@
 
 (defn with-previous-search-url [^js req _res nxt]
   (let [{:keys [query]}  (.-locals req)
-        {:keys [offset]} query]
+        {:keys [limit offset]} query]
     (when (and (string? offset) (not= "0" offset))
       (assoc-locals! req
                      :previous-url
                      (u/format #js{:host     (.get req "host")
                                    :protocol (.-protocol req)
                                    :pathname (.-path req)
-                                   :query    (->> (- (parse-int offset) results-per-page)
+                                   :query    (->> (- (parse-int offset) limit)
                                                   (assoc query :offset)
                                                   clj->js)}))))
   (nxt))
 
 (defn with-search-page-number [^js req _res nxt]
-  (let [{{:keys [offset]
+  (let [{{:keys [offset limit]
           :or   {offset "0"}} :query} (.-locals req)]
     (assoc-locals! req :page-number (-> offset
                                         parse-int
-                                        (quot results-per-page)
+                                        (quot limit)
                                         inc)))
   (nxt))
 
