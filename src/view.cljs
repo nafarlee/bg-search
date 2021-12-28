@@ -6,7 +6,6 @@
     [clojure.string :as s]
     [constants :refer [language-dependencies results-per-page]]
     [clojure.set :refer [map-invert]]
-    [constants :refer [results-per-page]]
     [html :refer [html doctype]]))
 
 (defn- percentage-of
