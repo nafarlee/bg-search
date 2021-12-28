@@ -95,6 +95,10 @@
   gap: 1rem;
 }
 
+.gap-6 {
+  gap: 1.5rem;
+}
+
 .h-28 {
   height: 7rem;
 }
@@ -113,4 +117,17 @@
 
 .object-top {
   object-position: top;
+}
+
+.list-none {
+  list-style-type: none;
+}
+
+.pl-0 {
+  padding-left: 0;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }

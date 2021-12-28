@@ -40,6 +40,7 @@
       [:html
        [:head (c/head)]
        [:body
+        (c/navigation)
         (c/query-form  {:action         "/search"
                         :limit          limit
                         :query          query
@@ -122,6 +123,7 @@
         (c/head)
         [:title primary_name]]
        [:body
+        (c/navigation)
         [:h1.text-center (str primary_name " (" year ")")]
         [:img.block.mx-auto {:src (str "/image-mirror/" image)}]
         [:h2.text-center [:a {:href (str "https://boardgamegeek.com/boardgame/" id)} "BGG"]]
@@ -184,6 +186,7 @@
      (c/head)
      [:title "Board Game Search"]]
     [:body
+     (c/navigation)
      [:h1.text-center "Board Game Search"]
      (c/query-form  {:action         "/search"
                      :limit          (str results-per-page)
