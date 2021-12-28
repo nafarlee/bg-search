@@ -14,7 +14,7 @@
           (clj->sql :select :distinct (vec t/exported-fields)
                         :from (list :select :id
                                     :from :games
-                                    :where :primary_name "~~*" #{"%scythe%"}) :as :GameSubquery
+                                    :where :primary_name :ilike #{"%scythe%"}) :as :GameSubquery
                           :natural :inner :join :games
                         :order :by :id :DESC
                         :limit results-per-page :offset #{0})))
@@ -28,7 +28,7 @@
   (is (= (t/simple :fruit {"value" "pear"})
          (clj->sql :select :id
                        :from :games
-                       :where :fruit "~~*" #{"%pear%"}))))
+                       :where :fruit :ilike #{"%pear%"}))))
 
 (deftest junction
   (is (= (t/junction {:table "recipes" :field "fruit"} {"value" "pear"})
@@ -37,7 +37,7 @@
                        :where :a.id := :ab.game_id
                          :and :ab.fruit_id := :b.id
                        :group :by :a.id
-                       :having :bool_or (list :fruit "~~*" #{"%pear%"}) :!= :false))))
+                       :having :bool_or (list :fruit :ilike #{"%pear%"}) :!= :false))))
 
 (deftest relational
   (is (= (t/relational "fruit" {"value" "pear" "operator" "="})
