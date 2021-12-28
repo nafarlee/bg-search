@@ -118,3 +118,7 @@
 .object-top {
   object-position: top;
 }
+
+.list-none {
+  list-style-type: none;
+}
