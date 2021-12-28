@@ -20,7 +20,7 @@
          [:option {:value (name k) :selected (= (name k) selected)} v])
        m))
 
-(defn query-form [{:keys [query order direction action submit-message]}]
+(defn query-form [{:keys [query order direction action limit submit-message]}]
   (let [possible-orders {:id "ID"
                          :primary_name "Name"
                          :rating_votes "Number of Ratings"
@@ -38,6 +38,10 @@
                          :maximum_playtime "Maximum Playtime"}
         possible-directions {:DESC "Descending"
                              :ASC "Ascending"}
+        possible-limits {:10  10
+                         :25  25
+                         :50  50
+                         :100 100}
         search-attributes {:spellcheck "false"
                            :placeholder "n:catan"
                            :autocomplete "off"
@@ -50,6 +54,10 @@
     [:form {:method "get" :action action}
      [:input.box-border.w-full search-attributes]
      [:div.flex.flex-wrap.gap-2
+      [:div.flex-grow
+       [:label {:for "limit"} "Limit"]
+       [:select.min-w-max.w-full {:name "limit"}
+        (options limit possible-limits)]]
       [:div.flex-grow
        [:label {:for "order"} "Sort"]
        [:select.min-w-max.w-full {:name "order"}
