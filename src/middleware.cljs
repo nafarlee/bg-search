@@ -10,6 +10,7 @@
     api
     sql
     [sql.insert :refer [insert]]
+    [constants :refer [results-per-page]]
     [image-mirror :as im]))
 
 (defn log-error-cause [^js err _req _res nxt]
@@ -85,17 +86,19 @@
 (defn with-transpiled-query [^js req res nxt]
   (let [{qp :query}                   (.-locals req)
         {:keys [query
+                limit
                 order
                 direction
                 offset]
          :or   {query ""
+                limit (str results-per-page)
                 order "bayes_rating"
                 direction "DESC"
                 offset "0"}}          qp
         offset                        (parse-int offset)]
     (prn qp)
     (try
-      (assoc-locals! req :transpiled-query (transpile query order direction offset))
+      (assoc-locals! req :transpiled-query (transpile query order direction offset limit))
       (nxt)
       (catch :default err
         (e/transpile err res query)))))

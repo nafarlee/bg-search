@@ -10,7 +10,7 @@
   (s/replace s #"\s+" " "))
 
 (deftest transpile
-  (is (= (t/transpile "n:scythe" "id" "DESC" 0)
+  (is (= (t/transpile "n:scythe" "id" "DESC" 0 "10")
           (clj->sql :select :distinct (vec t/exported-fields)
                         :from (list :select :id
                                     :from :games
@@ -19,7 +19,7 @@
                         :where :id :is :not :null
                         :order :by :id :DESC
                         :limit (str results-per-page) :offset #{0})))
-  (is (= (t/transpile "" "id" "DESC" 0)
+  (is (= (t/transpile "" "id" "DESC" 0 "10")
          (clj->sql :select :distinct (vec t/exported-fields)
                        :from :games
                        :where :id :is :not :null
