@@ -54,7 +54,7 @@
         [:div.grid.grid-rows-1.grid-cols-3
          (when previous-url [:p.grid-col-1.text-left [:a {:href previous-url} "Previous"]])
          [:p.grid-col-2.text-center page-number]
-         (when (= limit (count games))
+         (when (= limit (str (count games)))
            [:p.grid-col-3.text-right [:a {:href next-url} "Next"]])]]]))))
 
 (defn error [{:keys [code message block]}]
