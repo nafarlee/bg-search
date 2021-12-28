@@ -2,6 +2,7 @@
   (:require
     [sql.dsl :refer [clj->sql]]
     [clojure.string :as s]
+    [constants :refer [results-per-page]]
     [language :refer [language] :rename {language lang}]))
 
 (defn simple [field {:strs [value negate]}]
@@ -181,11 +182,11 @@
               :from :games
               :where order :is :not :null
               :order :by order direction
-              :limit :25 :offset #{offset})
+              :limit results-per-page :offset #{offset})
     (clj->sql :select :distinct (conj exported-fields order)
               :from (list (to-sql (js->clj (.tryParse lang query))))
                 :as :GameSubquery
               :natural :inner :join :games
               :where order :is :not :null
               :order :by order direction
-              :limit :25 :offset #{offset})))
+              :limit results-per-page :offset #{offset})))

@@ -9,6 +9,7 @@
     [error :as e]
     api
     sql
+    [constants :refer [results-per-page]]
     [sql.insert :refer [insert]]
     [image-mirror :as im]))
 
@@ -130,7 +131,7 @@
                      (u/format #js{:host     (.get req "host")
                                    :protocol (.-protocol req)
                                    :pathname (.-path req)
-                                   :query    (->> (- (parse-int offset) 25)
+                                   :query    (->> (- (parse-int offset) results-per-page)
                                                   (assoc query :offset)
                                                   clj->js)}))))
   (nxt))
@@ -140,7 +141,7 @@
           :or   {offset "0"}} :query} (.-locals req)]
     (assoc-locals! req :page-number (-> offset
                                         parse-int
-                                        (quot 25)
+                                        (quot results-per-page)
                                         inc)))
   (nxt))
 

@@ -16,12 +16,12 @@
                                     :where :primary_name "~~*" #{"%scythe%"}) :as :GameSubquery
                           :natural :inner :join :games
                         :order :by :id :DESC
-                        :limit :25 :offset #{0})))
+                        :limit results-per-page :offset #{0})))
   (is (= (t/transpile "" "id" "DESC" 0)
          (clj->sql :select :distinct t/exported-fields
                        :from :games
                        :order :by :id :DESC
-                       :limit :25 :offset #{0}))))
+                       :limit results-per-page :offset #{0}))))
 
 (deftest simple
   (is (= (t/simple :fruit {"value" "pear"})
