@@ -200,7 +200,7 @@
      (c/collection-form)
      (c/tutorial)
      [:h2 "Term Reference"]
-     [:table
+     [:table.table-auto
       [:thead
        [:tr
         [:th "Term"]
