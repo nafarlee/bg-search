@@ -157,28 +157,28 @@ The possible values are as follows:
      :alias       :mdpt2
      :description "Matches against the median number of minutes required to play a game with 2
                    player, as sourced by BGG user play data"
-     :example     "`median-playtime-1<=60` Matches against any game that typically plays in an hour
+     :example     "`median-playtime-2<=60` Matches against any game that typically plays in an hour
                    or less with 2 players"}
 
     {:term        :median-playtime-3
      :alias       :mdpt3
      :description "Matches against the median number of minutes required to play a game with 3
                    player, as sourced by BGG user play data"
-     :example     "`median-playtime-1<=60` Matches against any game that typically plays in an hour
+     :example     "`median-playtime-3<=60` Matches against any game that typically plays in an hour
                    or less with 3 players"}
 
     {:term        :median-playtime-4
      :alias       :mdpt4
      :description "Matches against the median number of minutes required to play a game with 4
                    player, as sourced by BGG user play data"
-     :example     "`median-playtime-1<=60` Matches against any game that typically plays in an hour
+     :example     "`median-playtime-4<=60` Matches against any game that typically plays in an hour
                    or less with 4 players"}
 
     {:term        :median-playtime-5
      :alias       :mdpt5
      :description "Matches against the median number of minutes required to play a game with 5
                    player, as sourced by BGG user play data"
-     :example     "`median-playtime-1<=60` Matches against any game that typically plays in an hour
+     :example     "`median-playtime-5<=60` Matches against any game that typically plays in an hour
                    or less with 5 players"}
 
     {:term        :is:expansion
