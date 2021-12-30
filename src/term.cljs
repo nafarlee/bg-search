@@ -184,8 +184,9 @@ The possible values are as follows:
     {:term        :is:expansion
      :alias       :is:e
      :description "Only matches against expansions"
-     :example     "- `is:expansion family:carcassonne` Expansions for Carcassonne
-                   - `-is:expansion` Only standalone games"}
+     :example     "
+- `is:expansion family:carcassonne` Expansions for Carcassonne
+- `-is:expansion` Only standalone games"}
 
     {:term        :is:collection
      :alias       :is:c
