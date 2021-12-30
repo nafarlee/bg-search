@@ -2,6 +2,7 @@
   (:require
     [sql.dsl :refer [clj->sql]]
     [clojure.string :as s]
+    [interop :refer [parse-int]]
     [language :refer [language] :rename {language lang}]))
 
 (defn simple [field {:strs [value negate]}]
@@ -175,6 +176,7 @@
 
 (defn transpile [query order direction offset limit]
   {:pre [(some (partial = order) orderable-fields)
+         (>= 100 (parse-int limit))
          (#{"ASC" "DESC"} direction)]}
   (if (empty? query)
     (clj->sql :select :distinct (vec (conj exported-fields order))
