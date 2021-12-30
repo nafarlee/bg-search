@@ -200,7 +200,7 @@
      (c/collection-form)
      (c/tutorial)
      [:h2 "Term Reference"]
-     [:table.table-auto
+     [:table.table-auto.block.overflow-x-auto
       [:thead
        [:tr
         [:th "Term"]
