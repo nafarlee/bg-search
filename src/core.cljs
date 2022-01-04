@@ -56,8 +56,8 @@
                                      :page-number  page-number
                                      :next-url     next-url})))))
 
-          (.post
-           "/pubsub/pull"
+          (.get
+           "/cron/pull"
            (m/with-database-pool pool)
            m/with-game-checkpoint
            m/with-new-game-checkpoint
@@ -67,8 +67,8 @@
            m/insert-games
            m/with-success)
 
-          (.post
-           "/pubsub/pull-plays"
+          (.get
+           "/cron/pull-plays"
            (m/with-database-pool pool)
            m/with-last-game
            m/with-plays-checkpoint
@@ -82,8 +82,8 @@
            m/save-plays
            m/with-success)
 
-          (.put
-           "/scheduler/refresh-play-medians"
+          (.get
+           "/cron/refresh-play-medians"
            (m/with-database-pool pool)
            (m/sql "REFRESH MATERIALIZED VIEW CONCURRENTLY play_medians")
            m/with-success)
