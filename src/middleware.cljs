@@ -314,3 +314,10 @@
                  (prn :save-plays play-id play-page)
                  (nxt)))
         (.catch nxt))))
+
+(defn sql [text]
+  (fn [^js req _res nxt]
+    (let [{:keys [database]} (.-locals req)]
+      (-> (.query database text)
+          (.then #(nxt))
+          (.catch nxt)))))
