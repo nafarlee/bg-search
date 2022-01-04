@@ -7,27 +7,11 @@ env_variables:
   PGHOST: /cloudsql/bg-search:us-east1:postgres-next
   PGDATABASE: bg_search
 handlers:
-  - url: /
-    secure: always
-    script: auto
-
   - url: /style.css
     secure: always
     static_files: public/style.css
     upload: public/style.css
 
-  - url: /pubsub/pull
-    secure: always
-    script: auto
-
-  - url: /pubsub/pull-plays
-    secure: always
-    script: auto
-
-  - url: /pull-collection
-    secure: always
-    script: auto
-
-  - url: /search
+  - url: /.*
     secure: always
     script: auto
