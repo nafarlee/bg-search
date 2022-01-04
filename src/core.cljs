@@ -82,6 +82,12 @@
            m/save-plays
            m/with-success)
 
+          (.put
+           "/scheduler/refresh-play-medians"
+           (m/with-database-pool pool)
+           (m/sql "REFRESH MATERIALIZED VIEW CONCURRENTLY play_medians")
+           m/with-success)
+
           (.post
            "/pull-collection"
            m/with-body
