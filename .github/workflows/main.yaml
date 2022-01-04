@@ -33,4 +33,4 @@ jobs:
           service_account_key: ${{ secrets.GOOGLE_CREDENTIALS }}
 
       - if: github.ref == 'refs/heads/master'
-        run: gcloud app deploy -q -v alpha
+        run: gcloud app deploy --quiet --version alpha app.yaml cron.yaml
