@@ -308,7 +308,7 @@
 
 (defn save-plays [^js req _res nxt]
   (let [{:keys [database play-checkpoint positive-plays]} (.-locals req)
-        {:keys [play-id play-page]}              positive-plays]
+        {:keys [play-id play-page]}                       play-checkpoint]
     (-> (sql/save-plays database play-id play-page positive-plays)
         (.then (fn []
                  (prn :save-plays play-id play-page)
