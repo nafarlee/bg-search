@@ -1,5 +1,6 @@
 **
 !app.yaml
+!cron.yaml
 !package.json
 !package-lock.json
 !app.js
