@@ -37,10 +37,10 @@
       m
       (assoc m id own))))
 
-(defn- ->collection-row [username game]
-  {:id      (parse-int (get game "$_objectid"))
-   :username username
-   :own      (= "1" (get-in game ["status" "$_own"]))})
+(defn- ->collection-row [username [id own]]
+  {:id id
+   :own own
+   :username username})
 
 (defn get-collection [username]
   (-> (construct-url base-url "xmlapi2/collection" {:brief 1 :username username})
@@ -53,7 +53,9 @@
                          tree  (parse-xml xml)
                          games (get-in tree ["items" "item"])]
                      (if games
-                       (map (partial ->collection-row username) games)
+                       (->> games
+                            (reduce ->collection-map {})
+                            (map (partial ->collection-row username)))
                        (throw (js-error "Invalid username" username))))
                (throw (js-error "Could not pull collection" res)))))))
 
