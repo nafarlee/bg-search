@@ -30,6 +30,13 @@
                :attrValueProcessor  #(.decode he % #js{:attribute true})
                :tagValueProcessor   #(.decode he %)})))
 
+(defn- ->collection-map [m game]
+  (let [id  (parse-int (get game "$_objectid"))
+        own (= "1" (get-in game ["status" "$_own"]))]
+    (if (get m id)
+      m
+      (assoc m id own))))
+
 (defn- ->collection-row [username game]
   {:id      (parse-int (get game "$_objectid"))
    :username username
