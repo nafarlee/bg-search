@@ -8,7 +8,7 @@
     [http :as h]
     [marshall :refer [marshall]]))
 
-(def ^:private base-url "https://www.boardgamegeek.com")
+(def ^:private base-url "https://boardgamegeek.com")
 
 (defn- construct-url [base path qp]
   {:pre [(string? base)
