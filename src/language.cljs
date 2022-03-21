@@ -199,7 +199,7 @@
         #(regexp #"(?i)or")
 
         :DeclarativeTag
-        #(apply alt (map string (keys declarative-tags)))
+        #(apply alt (map string (sort-by (comp - count) (keys declarative-tags))))
 
         :SimpleValue
         #(regexp #"[^\"][^) ]*")
