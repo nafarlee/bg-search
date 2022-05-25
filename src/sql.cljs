@@ -55,6 +55,7 @@
       FROM player_recommendations
       WHERE id = $1) AS player_recommendations,
     games.id,
+    last_updated,
     image,
     language_dependence,
     average_rating,

@@ -74,7 +74,7 @@
 (defn games
   [{:strs [primary_name
            language_dependence
-           image
+           last_updated
            player_recommendations
            median_playtimes
            minimum_playtime
@@ -178,7 +178,9 @@
         (maybe-details-list "Designers" designers)
         (maybe-details-list "Publishers" publishers)
         (maybe-details-list "Artists" artists)
-        (maybe-details-list "Alternate Names" alternate_names)]]))))
+        (maybe-details-list "Alternate Names" alternate_names)
+        [:hr]
+        [:p.text-center "Last Updated: " last_updated]]]))))
 
 (defn index []
   (html
