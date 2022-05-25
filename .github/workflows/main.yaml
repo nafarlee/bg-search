@@ -27,7 +27,7 @@ jobs:
 
       - run: npm run release
 
-      - uses: google-github-actions/setup-gcloud@master
+      - uses: google-github-actions/setup-gcloud@v0
         with:
           project_id: bg-search
           service_account_key: ${{ secrets.GOOGLE_CREDENTIALS }}
