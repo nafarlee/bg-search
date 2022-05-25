@@ -70,3 +70,5 @@ typings/
 /test.js
 /public/image
 /env.fish
+/.clj-kondo/
+/.lsp/
