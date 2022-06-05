@@ -64,6 +64,8 @@
    "bp"                  "BEST_PLAYERS"
    "quorum-players"      "QUORUM_PLAYERS"
    "qp"                  "QUORUM_PLAYERS"
+   "majority-players"    "MAJORITY_PLAYERS"
+   "mp"                  "MAJORITY_PLAYERS"
    "min-players"         "MINIMUM_PLAYERS"
    "mnpr"                "MINIMUM_PLAYERS"
    "max-players"         "MAXIMUM_PLAYERS"
