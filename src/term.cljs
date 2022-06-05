@@ -118,6 +118,15 @@ The possible values are as follows:
      :example     "`quorum-players=3` Matches any game that plays well with 3 people as rated by at
                    least 4 out of 5 players"}
 
+    {:term        :majority-players
+     :alias       :mp
+     :description "Matches against games that play well at a particular player
+                   count according to feedback given by a simple majority of
+                   the players of said game. This majority includes both
+                   **best** and **recommended** player ratings"
+     :example     "`majority-players=3` Matches any game that plays well with 3
+                   people as rated by more than 50% of players"}
+
     {:term        :min-players
      :alias       :mnpr
      :description "Matches against the minimum number of required players"
