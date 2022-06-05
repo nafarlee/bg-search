@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS player_recommendations (
   best INTEGER CHECK (best >= 0),
   recommended INTEGER CHECK (recommended >= 0),
   not_recommended INTEGER CHECK (not_recommended >= 0),
+  is_recommended BOOLEAN GENERATED ALWAYS AS (recommended >= best AND recommended >= not_recommended) STORED,
   is_best BOOLEAN GENERATED ALWAYS AS (best >= recommended AND best >= not_recommended) STORED,
   is_quorum BOOLEAN GENERATED ALWAYS AS ((best + recommended) >= (not_recommended * 13.0 / 7.0)) STORED,
   PRIMARY KEY (id, players)
