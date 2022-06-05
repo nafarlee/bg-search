@@ -130,6 +130,7 @@
      :recommended-players (partial recommendation :is_recommended)
      :best-players        (partial recommendation :is_best)
      :quorum-players      (partial recommendation :is_quorum)
+     :majority-players    (partial recommendation :is_majority)
      :median-playtime     (partial median-playtime 0)
      :median-playtime-1   (partial median-playtime 1)
      :median-playtime-2   (partial median-playtime 2)
