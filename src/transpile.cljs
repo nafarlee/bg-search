@@ -129,8 +129,7 @@
      :maximum-playtime    (partial relational :maximum_playtime)
      :recommended-players (partial recommendation
                                    (clj->sql :recommended :> (list :best :+ :not_recommended)))
-     :best-players        (partial recommendation
-                                   (clj->sql :best :> (list :recommended :+ :not_recommended)))
+     :best-players        (partial recommendation :is_best)
      :quorum-players      (partial recommendation :is_quorum)
      :median-playtime     (partial median-playtime 0)
      :median-playtime-1   (partial median-playtime 1)
