@@ -24,6 +24,7 @@
 (def ^:private declarative-tags
   {"name"     "NAME"
    "n"        "NAME"
+   "expands"  "EXPANDS"
    "own"      "OWN"
    "art"      "ARTIST"
    "a"        "ARTIST"
