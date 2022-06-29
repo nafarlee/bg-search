@@ -73,6 +73,11 @@
               :inner :join :games :e :on :mid.expansion := :e.id
             :where (when negate :not) :e.maximum_players :> :b.maximum_players))
 
+(defn- expands [{:strs [value negate]}]
+  (clj->sql :select :expansion :as :id
+            :from :expansions
+            :where :base (if negate :!= :=) #{value}))
+
 (def exported-fields
   #{"id"
     "primary_name"
