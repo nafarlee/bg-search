@@ -111,6 +111,7 @@
              v))
     {}
     {:name                (partial simple :primary_name)
+     :expands             expands
      :description         (partial simple :description)
      :artist              (partial junction {:table "artists" :field "artist"})
      :category            (partial junction {:table "categories" :field "category"})
