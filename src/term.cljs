@@ -6,6 +6,10 @@
      :description "Matches a part of the games primary name"
      :example     "`name:catan` Games with **Catan** in the name"}
 
+    {:term        :expands
+     :description "Matches any games that expands the supplied game ID"
+     :example     "`expands:13` Expansions for **Catan**"}
+
     {:term        :art
      :alias       :a
      :description "Matches a part of the games primary name"
