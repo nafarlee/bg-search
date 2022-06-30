@@ -140,7 +140,8 @@
 
 (defn with-search-page-number [^js req _res nxt]
   (let [{{:keys [offset limit]
-          :or   {offset "0"}} :query} (.-locals req)]
+          :or   {offset "0"
+                 limit  results-per-page}} :query} (.-locals req)]
     (assoc-locals! req :page-number (-> offset
                                         parse-int
                                         (quot limit)
