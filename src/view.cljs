@@ -129,6 +129,9 @@
         [:h1.text-center (str primary_name " (" year ")")]
         [:img.block.mx-auto {:src (str "/image-mirror/" image)}]
         [:h2.text-center [:a {:href (str "https://boardgamegeek.com/boardgame/" id)} "BGG"]]
+        [:h2.text-center
+         [:a {:href (str "/search?query=expands%3A" id)}
+          "Expansions"]]
         (when description
           [:details
            [:summary "Description"]
