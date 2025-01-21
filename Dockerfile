@@ -1,6 +1,6 @@
 FROM node:18-alpine3.21 AS build
 WORKDIR /root
-RUN apk add openjdk17-jdk
+RUN apk add openjdk11-jdk
 COPY package.json .
 COPY package-lock.json .
 RUN npm ci
