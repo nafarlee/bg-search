@@ -1,4 +1,4 @@
-FROM node:16-alpine3.18 AS build
+FROM node:18-alpine3.21 AS build
 WORKDIR /root
 RUN apk add openjdk17-jdk
 COPY package.json .
@@ -8,7 +8,7 @@ COPY shadow-cljs.edn .
 COPY src/ ./src
 RUN npm run release
 
-FROM node:16-alpine3.18
+FROM node:18-alpine3.21
 USER node
 WORKDIR /home/node
 ENV NODE_ENV=production
