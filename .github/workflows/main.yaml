@@ -7,9 +7,9 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
           node-version: 16
 
@@ -27,10 +27,11 @@ jobs:
 
       - run: npm run release
 
-      - uses: google-github-actions/setup-gcloud@v0
+      - uses: google-github-actions/auth@v2
         with:
-          project_id: bg-search
-          service_account_key: ${{ secrets.GOOGLE_CREDENTIALS }}
+          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      - uses: google-github-actions/setup-gcloud@v2
 
       - if: github.ref == 'refs/heads/master'
         run: gcloud app deploy --quiet --version alpha app.yaml cron.yaml
