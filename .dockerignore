@@ -1,0 +1,6 @@
+*
+!package.json
+!package-lock.json
+!public/
+!shadow-cljs.edn
+!src
