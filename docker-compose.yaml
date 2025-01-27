@@ -1,0 +1,18 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      PGHOST: db
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGDATABASE: bg_search
+    depends_on:
+      - db
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
