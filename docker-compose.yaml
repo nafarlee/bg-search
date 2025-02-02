@@ -8,7 +8,6 @@ services:
       PGHOST: db
       PGUSER: postgres
       PGPASSWORD: password
-      PGDATABASE: bg_search
     depends_on:
       - db
   db:
