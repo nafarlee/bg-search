@@ -170,7 +170,7 @@
 
 (defn with-new-game-checkpoint [^js req _res nxt]
   (let [{:keys [checkpoint]} (.-locals req)]
-    (assoc-locals! req :new-checkpoint (+ 200 checkpoint)))
+    (assoc-locals! req :new-checkpoint (+ 20 checkpoint)))
   (nxt))
 
 (defn with-pulled-games [^js req _res nxt]
