@@ -38,9 +38,7 @@ CREATE TABLE IF NOT EXISTS plays (
 );
 
 
-DROP MATERIALIZED VIEW play_medians;
-
-CREATE MATERIALIZED VIEW play_medians AS
+CREATE MATERIALIZED VIEW IF NOT EXISTS play_medians AS
 SELECT game_id,
        COUNT(id) AS count,
        0 AS players,
