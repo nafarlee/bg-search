@@ -5,6 +5,7 @@ COPY package.json .
 COPY package-lock.json .
 RUN npm ci
 COPY shadow-cljs.edn .
+RUN npm run deps
 COPY src/ ./src
 RUN npm run release
 
