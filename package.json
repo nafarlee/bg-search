@@ -5,6 +5,7 @@
     "repl": "shadow-cljs node-repl",
     "build": "shadow-cljs compile app",
     "release": "shadow-cljs release app",
+    "deps": "shadow-cljs classpath",
     "start": "node --unhandled-rejections=strict app.js"
   },
   "devDependencies": {
