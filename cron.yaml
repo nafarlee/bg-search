@@ -1,6 +1,6 @@
 cron:
   - url: /cron/pull
-    schedule: every 10 minutes
+    schedule: every 1 minute
   - url: /cron/pull-plays
     schedule: every 1 minutes
   - url: /cron/refresh-play-medians
