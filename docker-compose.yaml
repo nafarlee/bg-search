@@ -10,8 +10,20 @@ services:
       PGPASSWORD: password
     depends_on:
       - db
+      - cdn
   db:
     build: db/
     restart: always
     environment:
       POSTGRES_PASSWORD: password
+  cdn:
+    ports:
+      - 8080:8080
+    image: ghcr.io/nafarlee/s3-hotlink-cache:8db6c392f0255fad9754b04aa2c93466545526ec
+    environment:
+      - ALLOWED_DOMAIN=cf.geekdo-images.com
+      - S3_ENDPOINT
+      - S3_BUCKET
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_KEY
+      - AWS_DEFAULT_REGION
