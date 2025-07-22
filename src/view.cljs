@@ -8,7 +8,7 @@
     [clojure.set :refer [map-invert]]
     [html :refer [html doctype]]))
 
-(defn- get-cdn-link [url]
+(defn- get-mirror-link [url]
   (str "http://localhost:8080?url=" (js/encodeURIComponent url)))
 
 (defn- percentage-of
@@ -34,7 +34,7 @@
   (let [game->heading (fn [{:strs [id year primary_name thumbnail]}]
                         (list
                          [:img.h-28.w-full.object-cover.object-top
-                          {:src (get-cdn-link thumbnail)}]
+                          {:src (get-mirror-link thumbnail)}]
                          [:h3.col-span-3.m-0
                           [:a {:href (str "/games/" id)} (str primary_name " (" year ")")]]))]
     (html
@@ -130,7 +130,7 @@
         (c/navigation)
         [:hr]
         [:h1.text-center (str primary_name " (" year ")")]
-        [:img.block.mx-auto {:src (get-cdn-link image)}]
+        [:img.block.mx-auto {:src (get-mirror-link image)}]
         [:h2.text-center [:a {:href (str "https://boardgamegeek.com/boardgame/" id)} "BGG"]]
         [:h2.text-center
          [:a {:href (str "/search?query=expands%3A" id)}
