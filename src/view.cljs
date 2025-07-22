@@ -9,7 +9,7 @@
     [html :refer [html doctype]]))
 
 (defn- get-mirror-link [url]
-  (str "http://localhost:8080?url=" (js/encodeURIComponent url)))
+  (str js/process.env.MIRROR_BASE_URL "?url=" (js/encodeURIComponent url)))
 
 (defn- percentage-of
   ([numer denom]

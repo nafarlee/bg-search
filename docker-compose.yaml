@@ -8,6 +8,7 @@ services:
       PGHOST: db
       PGUSER: postgres
       PGPASSWORD: password
+      MIRROR_BASE_URL: http://localhost:8080
     depends_on:
       - db
       - mirror
