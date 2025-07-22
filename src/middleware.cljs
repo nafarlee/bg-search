@@ -10,8 +10,7 @@
     api
     sql
     [sql.insert :refer [insert]]
-    [constants :refer [results-per-page]]
-    [image-mirror :as im]))
+    [constants :refer [results-per-page]]))
 
 (defn log-error-cause [^js err _req _res nxt]
   (when (.-cause err)
@@ -68,20 +67,8 @@
         (.then #(nxt))
         (.catch nxt))))
 
-(defn with-image-mirror [^js req _res nxt]
-  (let [{{:keys [url]} :params} (.-locals req)]
-    (-> (im/serve #{"cf.geekdo-images.com"} url)
-        (.then (fn [redirect-url]
-                 (assoc-locals! req :redirect-url redirect-url)
-                 (nxt)))
-        (.catch nxt))))
-
 (defn with-success [_req ^js res]
   (.sendStatus res 200))
-
-(defn with-permanent-redirect [^js req res]
-  (let [{:keys [redirect-url]} (.-locals req)]
-    (.redirect res 301 redirect-url)))
 
 (defn with-transpiled-query [^js req res nxt]
   (let [{qp :query}                   (.-locals req)
