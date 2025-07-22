@@ -10,13 +10,13 @@ services:
       PGPASSWORD: password
     depends_on:
       - db
-      - cdn
+      - mirror
   db:
     build: db/
     restart: always
     environment:
       POSTGRES_PASSWORD: password
-  cdn:
+  mirror:
     ports:
       - 8080:8080
     image: ghcr.io/nafarlee/s3-hotlink-cache:8db6c392f0255fad9754b04aa2c93466545526ec
