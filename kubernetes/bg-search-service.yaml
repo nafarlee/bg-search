@@ -1,0 +1,10 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: bg-search
+spec:
+  selector:
+    app: bg-search
+  ports:
+    - port: 80
+      targetPort: 8080

@@ -1,0 +1,8 @@
+namespace: bg-search
+
+resources:
+  - namespace.yaml
+  - bg-search-deployment.yaml
+  - bg-search-service.yaml
+  - mirror-deployment.yaml
+  - mirror-service.yaml
