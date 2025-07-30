@@ -1,0 +1,18 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mirror
+spec:
+  selector:
+    matchLabels:
+      app: mirror
+  template:
+    metadata:
+      labels:
+        app: mirror
+    spec:
+      containers:
+        - name: default
+          image: ghcr.io/nafarlee/s3-hotlink-cache:8db6c392f0255fad9754b04aa2c93466545526ec
+          ports:
+            - containerPort: 8080
