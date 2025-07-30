@@ -16,3 +16,14 @@ spec:
           image: ghcr.io/nafarlee/s3-hotlink-cache:8db6c392f0255fad9754b04aa2c93466545526ec
           ports:
             - containerPort: 8080
+          env:
+            - name: ALLOWED_DOMAIN
+              value: cf.geekdo-images.com
+            - name: S3_BUCKET
+              value: bg-search-images
+            - name: S3_ENDPOINT
+              value: storage.googleapis.com
+            - name: AWS_DEFAULT_REGION
+              value: us
+            - name: AWS_ACCESS_KEY_ID
+              value: GOOG1EW7G7UYJZFJ7APAPNULRKHUHOFQJ3QGRVPUKRAU466LRGVUYCESSNMA5
