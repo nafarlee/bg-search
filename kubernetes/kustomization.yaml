@@ -6,3 +6,8 @@ resources:
   - bg-search-service.yaml
   - mirror-deployment.yaml
   - mirror-service.yaml
+
+secretGenerator:
+  - name: cloud-storage-key
+    files:
+      - cloud-storage-key=cloud-storage-key.secret

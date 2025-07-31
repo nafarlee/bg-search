@@ -27,3 +27,8 @@ spec:
               value: us
             - name: AWS_ACCESS_KEY_ID
               value: GOOG1EW7G7UYJZFJ7APAPNULRKHUHOFQJ3QGRVPUKRAU466LRGVUYCESSNMA5
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloud-storage-key
+                  key: cloud-storage-key
