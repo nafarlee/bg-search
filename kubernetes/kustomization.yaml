@@ -9,6 +9,7 @@ resources:
   - database-statefulset.yaml
   - database-service.yaml
   - pull-deployment.yaml
+  - pull-plays-deployment.yaml
 
 secretGenerator:
   - name: cloud-storage-key
