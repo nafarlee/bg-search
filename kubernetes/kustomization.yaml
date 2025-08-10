@@ -6,8 +6,17 @@ resources:
   - bg-search-service.yaml
   - mirror-deployment.yaml
   - mirror-service.yaml
+  - database-statefulset.yaml
 
 secretGenerator:
   - name: cloud-storage-key
     files:
       - cloud-storage-key=cloud-storage-key.secret
+  - name: postgres-password
+    files:
+      - postgres-password=postgres-password.secret
+
+configMapGenerator:
+  - name: db-init
+    files:
+      - db.sql
