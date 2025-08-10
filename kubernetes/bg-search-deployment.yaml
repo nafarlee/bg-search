@@ -16,3 +16,15 @@ spec:
           image: ghcr.io/nafarlee/bg-search:ac823e472ec9a8f0a39ba3bddec34e008da5404b
           ports:
             - containerPort: 8080
+          env:
+            - name: PGUSER
+              value: postgres
+            - name: PGDATABASE
+              value: bg_search
+            - name: PGHOST
+              value: database
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-password
+                  value: postgres-password
