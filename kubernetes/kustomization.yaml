@@ -8,6 +8,7 @@ resources:
   - mirror-service.yaml
   - database-statefulset.yaml
   - database-service.yaml
+  - pull-deployment.yaml
 
 secretGenerator:
   - name: cloud-storage-key
