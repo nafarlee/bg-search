@@ -19,8 +19,6 @@ spec:
           env:
             - name: PGUSER
               value: postgres
-            - name: PGDATABASE
-              value: bg_search
             - name: PGHOST
               value: database
             - name: PGPASSWORD
