@@ -1,0 +1,31 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: database
+spec:
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      volumes:
+        - name: db-init-volume
+          configMap:
+            name: db-init
+      containers:
+        - name: default
+          image: postgres:17.2-alpine3.21
+          ports:
+            - containerPort: 8080
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-password
+                  key: postgres-password
+          volumeMounts:
+            - name: db-init-volume
+              mountPath: /docker-entrypoint-initdb.d
