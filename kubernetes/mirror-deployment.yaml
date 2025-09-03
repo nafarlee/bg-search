@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: default
-          image: ghcr.io/nafarlee/s3-hotlink-cache:8db6c392f0255fad9754b04aa2c93466545526ec
+          image: ghcr.io/nafarlee/s3-hotlink-cache:f6faaa27507e12744b01a37f0dca6b235489f7ed
           ports:
             - containerPort: 8080
           env:
