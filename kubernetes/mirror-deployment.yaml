@@ -16,7 +16,7 @@ spec:
           image: ghcr.io/nafarlee/s3-hotlink-cache:fa4622ad85a1103bcabbfeb4e5735b3a0d980628
           ports:
             - containerPort: 8080
-          command:
+          args:
             - "--allowed-domains"
             - "cf.geekdo-images.com"
             - "--s3-bucket"
