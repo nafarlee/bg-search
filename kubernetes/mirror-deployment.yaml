@@ -13,20 +13,23 @@ spec:
     spec:
       containers:
         - name: default
-          image: ghcr.io/nafarlee/s3-hotlink-cache:f6faaa27507e12744b01a37f0dca6b235489f7ed
+          image: ghcr.io/nafarlee/s3-hotlink-cache:fa4622ad85a1103bcabbfeb4e5735b3a0d980628
           ports:
             - containerPort: 8080
+          command:
+            - "--allowed-domains"
+            - "cf.geekdo-images.com"
+            - "--s3-bucket"
+            - "bg-search-images"
+            - "--s3-endpoint"
+            - "storage.googleapis.com"
+            - "--access-key"
+            - "GOOG1EW7G7UYJZFJ7APAPNULRKHUHOFQJ3QGRVPUKRAU466LRGVUYCESSNMA5"
+            - "--s3-bucket-region"
+            - "us"
+            - "--secret-key-env"
+            - "AWS_SECRET_KEY"
           env:
-            - name: ALLOWED_DOMAIN
-              value: cf.geekdo-images.com
-            - name: S3_BUCKET
-              value: bg-search-images
-            - name: S3_ENDPOINT
-              value: storage.googleapis.com
-            - name: AWS_DEFAULT_REGION
-              value: us
-            - name: AWS_ACCESS_KEY_ID
-              value: GOOG1EW7G7UYJZFJ7APAPNULRKHUHOFQJ3QGRVPUKRAU466LRGVUYCESSNMA5
             - name: AWS_SECRET_KEY
               valueFrom:
                 secretKeyRef:
