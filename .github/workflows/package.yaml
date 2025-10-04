@@ -1,6 +1,7 @@
 on:
   push:
     paths:
+      - Dockerfile
       - package.json
       - package-lock.json
       - shadow-cljs.edn
