@@ -6,6 +6,14 @@ spec:
   selector:
     matchLabels:
       app: database
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10G
   template:
     metadata:
       labels:
@@ -29,3 +37,5 @@ spec:
           volumeMounts:
             - name: db-init-volume
               mountPath: /docker-entrypoint-initdb.d
+            - name: data
+              mountPath: /var/lib/postgresql
