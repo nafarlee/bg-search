@@ -16,11 +16,25 @@
                           .toString
                           cb)))))
 
-(defn get [url]
+(defn- sleep [duration]
   (js/Promise.
-   (fn [fulfill reject]
-     (-> (js-https/get url (partial handle-response fulfill))
-         (.on "error" reject)))))
+   (fn [fulfill]
+     (js/setTimeout fulfill duration))))
+
+(defn- rate-limit [duration f]
+  (let [timer (atom (js/Promise.resolve))]
+    (fn [& args]
+      (let [return (.then @timer #(apply f args))]
+        (reset! timer (.finally return #(sleep duration)))
+        return))))
+
+(def get
+  (rate-limit 5000
+    (fn [url]
+      (js/Promise.
+       (fn [fulfill reject]
+         (-> (js-https/get url (partial handle-response fulfill))
+             (.on "error" reject)))))))
 
 (defn unwrap [{:keys [status body] :as response}]
   (if (success? status)
