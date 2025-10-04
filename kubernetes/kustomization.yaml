@@ -10,6 +10,7 @@ resources:
   - database-service.yaml
   - pull-deployment.yaml
   - pull-plays-deployment.yaml
+  - refresh-play-medians-cronjob.yaml
 
 secretGenerator:
   - name: cloud-storage-key
