@@ -20,5 +20,4 @@ spec:
               while true; do 
                 date
                 wget -q -O- http://bg-search/cron/pull
-                sleep 10
               done
