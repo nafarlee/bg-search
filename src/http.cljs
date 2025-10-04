@@ -31,7 +31,6 @@
 (def get
   (rate-limit 5000
     (fn [url]
-      (print [(.toISOString (js/Date.)) url])
       (js/Promise.
        (fn [fulfill reject]
          (-> (js-https/get url (partial handle-response fulfill))
