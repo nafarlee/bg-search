@@ -4,8 +4,10 @@ resources:
   - namespace.yaml
   - bg-search-deployment.yaml
   - bg-search-service.yaml
+  - bg-search-ingress.yaml
   - mirror-deployment.yaml
   - mirror-service.yaml
+  - mirror-ingress.yaml
   - database-statefulset.yaml
   - database-service.yaml
   - pull-deployment.yaml
