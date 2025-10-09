@@ -2,15 +2,22 @@ kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
   name: bg-search
+  annotations:
+    cert-manager.io/cluster-issuer: "lets-encrypt-staging"
 spec:
+  ingressClassName: nginx
   rules:
-    - host: bgs.nafarlee.dev
+    - host: staging.bgs.nafarlee.dev
       http:
         paths:
-          - path: /*
-            pathType: ImplementationSpecific
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: bg-search
                 port:
                   number: 80
+  tls:
+    - secretName: bg-search-tls
+      hosts:
+        - staging.bgs.nafarlee.dev

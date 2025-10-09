@@ -18,7 +18,7 @@ spec:
             - containerPort: 8080
           env:
             - name: MIRROR_BASE_URL
-              value: https://mirror.bgs.nafarlee.dev
+              value: https://mirror.staging.bgs.nafarlee.dev
             - name: PGUSER
               value: postgres
             - name: PGHOST
