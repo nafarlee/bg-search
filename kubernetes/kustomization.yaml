@@ -3,6 +3,7 @@ namespace: bg-search
 resources:
   - namespace.yaml
   - bg-search-deployment.yaml
+  - bg-search-vpa.yaml
   - bg-search-service.yaml
   - bg-search-ingress.yaml
   - mirror-deployment.yaml
