@@ -11,6 +11,7 @@ resources:
   - mirror-ingress.yaml
   - mirror-vpa.yaml
   - database-statefulset.yaml
+  - database-vpa.yaml
   - database-service.yaml
   - pull-deployment.yaml
   - pull-plays-deployment.yaml
