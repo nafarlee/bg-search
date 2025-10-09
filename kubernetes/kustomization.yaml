@@ -9,6 +9,7 @@ resources:
   - mirror-deployment.yaml
   - mirror-service.yaml
   - mirror-ingress.yaml
+  - mirror-vpa.yaml
   - database-statefulset.yaml
   - database-service.yaml
   - pull-deployment.yaml
