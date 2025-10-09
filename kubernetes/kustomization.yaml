@@ -16,6 +16,7 @@ resources:
   - pull-deployment.yaml
   - pull-vpa.yaml
   - pull-plays-deployment.yaml
+  - pull-plays-vpa.yaml
   - refresh-play-medians-cronjob.yaml
 
 secretGenerator:

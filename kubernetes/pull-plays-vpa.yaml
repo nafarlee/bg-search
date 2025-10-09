@@ -1,0 +1,11 @@
+kind: VerticalPodAutoscaler
+apiVersion: autoscaling.k8s.io/v1
+metadata:
+  name: pull-plays
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: pull-plays
+  updatePolicy:
+    updateMode: Auto
