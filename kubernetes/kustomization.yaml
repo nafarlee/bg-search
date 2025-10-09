@@ -1,0 +1,28 @@
+namespace: bg-search
+
+resources:
+  - namespace.yaml
+  - bg-search-deployment.yaml
+  - bg-search-service.yaml
+  - bg-search-ingress.yaml
+  - mirror-deployment.yaml
+  - mirror-service.yaml
+  - mirror-ingress.yaml
+  - database-statefulset.yaml
+  - database-service.yaml
+  - pull-deployment.yaml
+  - pull-plays-deployment.yaml
+  - refresh-play-medians-cronjob.yaml
+
+secretGenerator:
+  - name: cloud-storage-key
+    files:
+      - cloud-storage-key=cloud-storage-key.secret
+  - name: postgres-password
+    files:
+      - postgres-password=postgres-password.secret
+
+configMapGenerator:
+  - name: db-init
+    files:
+      - db.sql

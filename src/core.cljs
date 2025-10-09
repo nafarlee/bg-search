@@ -8,6 +8,7 @@
 (defonce ^:export app (express))
 
 (defn main []
+  (assert (some? js/process.env.MIRROR_BASE_URL))
   (let [pool (delay (sql/pool))]
     (doto app
           (.use (.urlencoded express #js{:extended true}))
@@ -19,13 +20,6 @@
              (.send res (v/index))))
 
           (.use (.static express "public"))
-
-          (.get
-           "/image-mirror/:url(\\S+)"
-           (m/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24)))
-           m/with-params
-           m/with-image-mirror
-           m/with-permanent-redirect)
 
           (.get
            "/search"

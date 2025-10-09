@@ -1,0 +1,23 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: mirror
+  annotations:
+    cert-manager.io/cluster-issuer: "lets-encrypt-staging"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: mirror.staging.bgs.nafarlee.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mirror
+                port:
+                  number: 80
+  tls:
+    - secretName: mirror-tls
+      hosts:
+        - mirror.staging.bgs.nafarlee.dev

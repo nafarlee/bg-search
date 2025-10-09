@@ -1,0 +1,23 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: pull-plays
+spec:
+  selector:
+    matchLabels:
+      app: pull-plays
+  template:
+    metadata:
+      labels:
+        app: pull-plays
+    spec:
+      containers:
+        - name: default
+          image: busybox
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              while true; do 
+                date
+                wget -q -O- http://bg-search/cron/pull-plays
+              done

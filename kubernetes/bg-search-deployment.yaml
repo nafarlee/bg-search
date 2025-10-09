@@ -1,0 +1,30 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: bg-search
+spec:
+  selector:
+    matchLabels:
+      app: bg-search
+  template:
+    metadata:
+      labels:
+        app: bg-search
+    spec:
+      containers:
+        - name: default
+          image: ghcr.io/nafarlee/bg-search:ac823e472ec9a8f0a39ba3bddec34e008da5404b
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MIRROR_BASE_URL
+              value: https://mirror.staging.bgs.nafarlee.dev
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: database
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-password
+                  key: postgres-password

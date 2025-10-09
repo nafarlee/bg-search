@@ -1,0 +1,37 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mirror
+spec:
+  selector:
+    matchLabels:
+      app: mirror
+  template:
+    metadata:
+      labels:
+        app: mirror
+    spec:
+      containers:
+        - name: default
+          image: ghcr.io/nafarlee/s3-hotlink-cache:fa4622ad85a1103bcabbfeb4e5735b3a0d980628
+          ports:
+            - containerPort: 8080
+          args:
+            - "--allowed-domains"
+            - "cf.geekdo-images.com"
+            - "--s3-bucket"
+            - "bg-search-images"
+            - "--s3-endpoint"
+            - "storage.googleapis.com"
+            - "--access-key"
+            - "GOOG1EW7G7UYJZFJ7APAPNULRKHUHOFQJ3QGRVPUKRAU466LRGVUYCESSNMA5"
+            - "--s3-bucket-region"
+            - "us"
+            - "--secret-key-env"
+            - "AWS_SECRET_KEY"
+          env:
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloud-storage-key
+                  key: cloud-storage-key

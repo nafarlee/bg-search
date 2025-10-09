@@ -72,3 +72,5 @@ typings/
 /env.fish
 /.clj-kondo/
 /.lsp/
+*.secret
+kubernetes/db.sql

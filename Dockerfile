@@ -18,4 +18,6 @@ COPY --from=build /root/package-lock.json .
 RUN npm ci
 COPY --from=build /root/app.js .
 COPY public/ ./public
+
+LABEL org.opencontainers.image.source=https://github.com/nafarlee/bg-search
 ENTRYPOINT ["node", "app.js"]

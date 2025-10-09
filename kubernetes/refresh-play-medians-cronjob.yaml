@@ -1,0 +1,17 @@
+kind: CronJob
+apiVersion: batch/v1
+metadata:
+  name: refresh-play-medians
+spec:
+  schedule: "@midnight"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: default
+              image: busybox
+              command: ["/bin/sh", "-c"]
+              args:
+                - wget -q -O- http://bg-search/cron/refresh-play-medians
