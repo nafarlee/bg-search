@@ -8,4 +8,4 @@ spec:
     kind: Deployment
     name: mirror
   updatePolicy:
-    updateMode: Auto
+    updateMode: Off

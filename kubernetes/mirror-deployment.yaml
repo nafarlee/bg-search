@@ -29,6 +29,10 @@ spec:
             - "us"
             - "--secret-key-env"
             - "AWS_SECRET_KEY"
+          resources:
+            requests:
+              cpu: 1m
+              memory: 28311552
           env:
             - name: AWS_SECRET_KEY
               valueFrom:
