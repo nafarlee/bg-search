@@ -28,6 +28,10 @@ spec:
           image: postgres:18.0-alpine3.22
           ports:
             - containerPort: 8080
+          resources:
+            requests:
+              cpu: 6m
+              memory: 92274688
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:

@@ -8,4 +8,4 @@ spec:
     kind: StatefulSet
     name: database
   updatePolicy:
-    updateMode: Auto
+    updateMode: Off
