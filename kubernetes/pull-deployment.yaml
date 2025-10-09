@@ -18,7 +18,6 @@ spec:
           args:
             - |
               while true; do 
-                date
                 wget -q -O- http://bg-search/cron/pull
               done
           resources:
