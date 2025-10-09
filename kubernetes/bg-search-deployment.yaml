@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: default
-          image: ghcr.io/nafarlee/bg-search:ac823e472ec9a8f0a39ba3bddec34e008da5404b
+          image: ghcr.io/nafarlee/bg-search:eb102a138f1e84b97098b3d7bca523efb6d94336
           ports:
             - containerPort: 8080
           env:
