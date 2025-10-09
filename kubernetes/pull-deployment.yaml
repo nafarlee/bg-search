@@ -21,3 +21,7 @@ spec:
                 date
                 wget -q -O- http://bg-search/cron/pull
               done
+          resources:
+            requests:
+              cpu: 2m
+              memory: 4194304
