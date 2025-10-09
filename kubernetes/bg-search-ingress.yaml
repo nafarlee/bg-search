@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 metadata:
   name: bg-search
   annotations:
-    cert-manager.io/cluster-issuer: "lets-encrypt-staging"
+    cert-manager.io/cluster-issuer: "lets-encrypt"
 spec:
   ingressClassName: nginx
   rules:
