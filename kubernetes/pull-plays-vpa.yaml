@@ -8,4 +8,4 @@ spec:
     kind: Deployment
     name: pull-plays
   updatePolicy:
-    updateMode: Auto
+    updateMode: Off
