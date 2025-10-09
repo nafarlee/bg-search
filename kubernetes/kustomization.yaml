@@ -14,6 +14,7 @@ resources:
   - database-vpa.yaml
   - database-service.yaml
   - pull-deployment.yaml
+  - pull-vpa.yaml
   - pull-plays-deployment.yaml
   - refresh-play-medians-cronjob.yaml
 
