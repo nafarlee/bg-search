@@ -16,6 +16,10 @@ spec:
           image: ghcr.io/nafarlee/bg-search:eb102a138f1e84b97098b3d7bca523efb6d94336
           ports:
             - containerPort: 8080
+          resources:
+            requests:
+              cpu: 75m
+              memory: 94371840
           env:
             - name: MIRROR_BASE_URL
               value: https://mirror.staging.bgs.nafarlee.dev
