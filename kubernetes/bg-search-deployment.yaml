@@ -11,6 +11,9 @@ spec:
       labels:
         app: bg-search
     spec:
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
+      terminationGracePeriodSeconds: 15
       containers:
         - name: default
           image: ghcr.io/nafarlee/bg-search:eb102a138f1e84b97098b3d7bca523efb6d94336

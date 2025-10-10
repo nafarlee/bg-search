@@ -11,6 +11,9 @@ spec:
       labels:
         app: mirror
     spec:
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
+      terminationGracePeriodSeconds: 15
       containers:
         - name: default
           image: ghcr.io/nafarlee/s3-hotlink-cache:fa4622ad85a1103bcabbfeb4e5735b3a0d980628

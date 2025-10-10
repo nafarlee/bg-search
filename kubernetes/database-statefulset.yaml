@@ -19,6 +19,9 @@ spec:
       labels:
         app: database
     spec:
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
+      terminationGracePeriodSeconds: 15
       volumes:
         - name: db-init-volume
           configMap:
