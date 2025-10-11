@@ -10,6 +10,7 @@ spec:
     metadata:
       labels:
         app: pull-plays
+        type: cron
     spec:
       nodeSelector:
         cloud.google.com/gke-spot: "true"

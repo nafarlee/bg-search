@@ -10,6 +10,7 @@ spec:
     metadata:
       labels:
         app: pull
+        type: cron
     spec:
       nodeSelector:
         cloud.google.com/gke-spot: "true"
