@@ -21,7 +21,10 @@ spec:
           args:
             - |
               while true; do 
-                wget -q -O- http://bg-search/cron/pull
+                if ! wget -q -O- http://bg-search/cron/pull > /dev/null; then
+                  echo FAIL
+                  sleep 30
+                fi
               done
           resources:
             requests:
