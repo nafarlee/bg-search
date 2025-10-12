@@ -19,7 +19,7 @@
     (set! (.-search u) (URLSearchParams. (clj->js qp)))
     (.toString u)))
 
-(defn- parse-xml [xml]
+(defn parse-xml [xml]
   {:pre  [(string? xml)]
    :post [(map? %)]}
   (js->clj
