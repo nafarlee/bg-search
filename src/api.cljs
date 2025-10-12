@@ -21,12 +21,11 @@
 (defn parse-xml [xml]
   {:pre  [(string? xml)]
    :post [(map? %)]}
-  (js->clj
-   (.parse
-    (XMLParser. #js{:ignoreAttributes    false
-                    :ignoreDeclaration   true
-                    :attributeNamePrefix "$_"})
-    xml)))
+  (-> (XMLParser. #js{:ignoreAttributes    false
+                      :ignoreDeclaration   true
+                      :attributeNamePrefix "$_"})
+      (.parse xml)
+      js->clj))
 
 (defn- ->collection-map [m game]
   (let [id  (parse-int (get game "$_objectid"))
