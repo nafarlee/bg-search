@@ -1,6 +1,5 @@
 (ns api
   (:require
-    ["html-entities" :as he]
     ["fast-xml-parser" :refer [XMLParser]]
     ["url" :refer [URL URLSearchParams]]
     [promise :refer [js-promise? wait]]
