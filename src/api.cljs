@@ -1,7 +1,6 @@
 (ns api
   (:require
-    ["html-entities" :as he]
-    ["fast-xml-parser" :as fxp]
+    ["fast-xml-parser" :refer [XMLParser]]
     ["url" :refer [URL URLSearchParams]]
     [promise :refer [js-promise? wait]]
     [interop :refer [js-error parse-int]]
@@ -19,16 +18,14 @@
     (set! (.-search u) (URLSearchParams. (clj->js qp)))
     (.toString u)))
 
-(defn- parse-xml [xml]
+(defn parse-xml [xml]
   {:pre  [(string? xml)]
    :post [(map? %)]}
-  (js->clj
-   (.parse fxp
-           xml
-           #js{:ignoreAttributes    false
-               :attributeNamePrefix "$_"
-               :attrValueProcessor  #(.decode he % #js{:attribute true})
-               :tagValueProcessor   #(.decode he %)})))
+  (-> (XMLParser. #js{:ignoreAttributes    false
+                      :ignoreDeclaration   true
+                      :attributeNamePrefix "$_"})
+      (.parse xml)
+      js->clj))
 
 (defn- ->collection-map [m game]
   (let [id  (parse-int (get game "$_objectid"))
