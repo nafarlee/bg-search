@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items termsofuse="https://boardgamegeek.com/xmlapi/termsofuse">
+  <item type="boardgame" id="1">
+    <thumbnail>https://cf.geekdo-images.com/rpwCZAjYLD940NWwP3SRoA__small/img/YT6svCVsWqLrDitcMEtyazVktbQ=/fit-in/200x150/filters:strip_icc()/pic4718279.jpg</thumbnail>
+    <image>https://cf.geekdo-images.com/rpwCZAjYLD940NWwP3SRoA__original/img/yR0aoBVKNrAmmCuBeSzQnMflLYg=/0x0/filters:format(jpeg)/pic4718279.jpg</image>
+    <name type="primary" sortindex="5" value="Die Macher"></name>
+    <name type="alternate" sortindex="1" value="德国大选"></name>
+    <name type="alternate" sortindex="1" value="디 마허"></name>
+    <description>Die Macher is a game about seven sequential political races in different regions of Germany. Players are in charge of national political parties, and must manage limited resources to help their party to victory. The winning party will have the most victory points after all the regional elections. There are four different ways of scoring victory points. First, each regional election can supply one to eighty victory points, depending on the size of the region and how well your party does in it. Second, if a party wins a regional election and has some media influence in the region, then the party will receive some media-control victory points. Third, each party has a national party membership which will grow as the game progresses and this will supply a fair number of victory points. Lastly, parties score some victory points if their party platform matches the national opinions at the end of the game.&amp;#10;&amp;#10;The 1986 edition featured four parties from the old West Germany and supported 3-4 players. The 1997 edition supports up to five players in the re-united Germany and updated several features of the rules as well.  The 2006 edition also supports up to five players and adds a shorter five-round variant and additional rules updates by the original designer.&amp;#10;&amp;#10;</description>
+    <yearpublished value="1986"></yearpublished>
+    <minplayers value="3"></minplayers>
+    <maxplayers value="5"></maxplayers>
+    <poll name="suggested_numplayers" title="User Suggested Number of Players" totalvotes="142">
+      <results numplayers="1">
+        <result value="Best" numvotes="0"></result>
+        <result value="Recommended" numvotes="1"></result>
+        <result value="Not Recommended" numvotes="89"></result>
+      </results>
+      <results numplayers="2">
+        <result value="Best" numvotes="0"></result>
+        <result value="Recommended" numvotes="1"></result>
+        <result value="Not Recommended" numvotes="93"></result>
+      </results>
+      <results numplayers="3">
+        <result value="Best" numvotes="2"></result>
+        <result value="Recommended" numvotes="28"></result>
+        <result value="Not Recommended" numvotes="78"></result>
+      </results>
+      <results numplayers="4">
+        <result value="Best" numvotes="26"></result>
+        <result value="Recommended" numvotes="91"></result>
+        <result value="Not Recommended" numvotes="9"></result>
+      </results>
+      <results numplayers="5">
+        <result value="Best" numvotes="120"></result>
+        <result value="Recommended" numvotes="12"></result>
+        <result value="Not Recommended" numvotes="2"></result>
+      </results>
+      <results numplayers="5+">
+        <result value="Best" numvotes="1"></result>
+        <result value="Recommended" numvotes="0"></result>
+        <result value="Not Recommended" numvotes="64"></result>
+      </results>
+    </poll>
+    <poll name="suggested_playerage" title="User Suggested Player Age" totalvotes="32">
+      <results>
+        <result value="2" numvotes="0"></result>
+        <result value="3" numvotes="0"></result>
+        <result value="4" numvotes="0"></result>
+        <result value="5" numvotes="0"></result>
+        <result value="6" numvotes="0"></result>
+        <result value="8" numvotes="0"></result>
+        <result value="10" numvotes="0"></result>
+        <result value="12" numvotes="6"></result>
+        <result value="14" numvotes="19"></result>
+        <result value="16" numvotes="4"></result>
+        <result value="18" numvotes="2"></result>
+        <result value="21 and up" numvotes="1"></result>
+      </results>
+    </poll>
+    <poll name="language_dependence" title="Language Dependence" totalvotes="49">
+      <results>
+        <result level="1" value="No necessary in-game text" numvotes="37"></result>
+        <result level="2" value="Some necessary text - easily memorized or small crib sheet" numvotes="5"></result>
+        <result level="3" value="Moderate in-game text - needs crib sheet or paste ups" numvotes="7"></result>
+        <result level="4" value="Extensive use of text - massive conversion needed to be playable" numvotes="0"></result>
+        <result level="5" value="Unplayable in another language" numvotes="0"></result>
+      </results>
+    </poll>
+    <poll-summary name="suggested_numplayers" title="User Suggested Number of Players">
+      <result name="bestwith" value="Best with 5 players"></result>
+      <result name="recommmendedwith" value="Recommended with 4–5 players"></result>
+    </poll-summary>
+    <playingtime value="240"></playingtime>
+    <minplaytime value="240"></minplaytime>
+    <maxplaytime value="240"></maxplaytime>
+    <minage value="14"></minage>
+    <link type="boardgamecategory" id="1021" value="Economic"></link>
+    <link type="boardgamecategory" id="1026" value="Negotiation"></link>
+    <link type="boardgamecategory" id="1001" value="Political"></link>
+    <link type="boardgamemechanic" id="2916" value="Alliances"></link>
+    <link type="boardgamemechanic" id="2080" value="Area Majority / Influence"></link>
+    <link type="boardgamemechanic" id="2012" value="Auction / Bidding"></link>
+    <link type="boardgamemechanic" id="2072" value="Dice Rolling"></link>
+    <link type="boardgamemechanic" id="2040" value="Hand Management"></link>
+    <link type="boardgamemechanic" id="2020" value="Simultaneous Action Selection"></link>
+    <link type="boardgamefamily" id="10643" value="Country: Germany"></link>
+    <link type="boardgamefamily" id="81575" value="Digital Implementations: VASSAL"></link>
+    <link type="boardgamefamily" id="34116" value="Political: Elections"></link>
+    <link type="boardgamefamily" id="91" value="Series: Classic Line (Valley Games)"></link>
+    <link type="boardgamedesigner" id="1" value="Karl-Heinz Schmiel"></link>
+    <link type="boardgameartist" id="928" value="Bernd Brunnhofer"></link>
+    <link type="boardgameartist" id="12517" value="Marcus Gschwendtner"></link>
+    <link type="boardgameartist" id="4959" value="Harald Lieske"></link>
+    <link type="boardgamepublisher" id="133" value="Hans im Glück"></link>
+    <link type="boardgamepublisher" id="2" value="Moskito Spiele"></link>
+    <link type="boardgamepublisher" id="24883" value="Ediciones MasQueOca"></link>
+    <link type="boardgamepublisher" id="2726" value="Portal Games"></link>
+    <link type="boardgamepublisher" id="15108" value="Spielworxx"></link>
+    <link type="boardgamepublisher" id="39249" value="sternenschimmermeer"></link>
+    <link type="boardgamepublisher" id="11652" value="Stronghold Games"></link>
+    <link type="boardgamepublisher" id="5382" value="Valley Games, Inc."></link>
+    <link type="boardgamepublisher" id="8147" value="YOKA Games"></link>
+  </item>
+</items>
