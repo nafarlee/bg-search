@@ -11,8 +11,6 @@ spec:
       labels:
         app: mirror
     spec:
-      nodeSelector:
-        cloud.google.com/gke-spot: "true"
       terminationGracePeriodSeconds: 15
       containers:
         - name: default
