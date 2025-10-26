@@ -3,20 +3,15 @@ namespace: bg-search
 resources:
   - namespace.yaml
   - bg-search-deployment.yaml
-  - bg-search-vpa.yaml
   - bg-search-service.yaml
   - bg-search-ingress.yaml
   - mirror-deployment.yaml
   - mirror-service.yaml
   - mirror-ingress.yaml
-  - mirror-vpa.yaml
   - database-statefulset.yaml
-  - database-vpa.yaml
   - database-service.yaml
   - pull-deployment.yaml
-  - pull-vpa.yaml
   - pull-plays-deployment.yaml
-  - pull-plays-vpa.yaml
   - refresh-play-medians-cronjob.yaml
 
 secretGenerator:
