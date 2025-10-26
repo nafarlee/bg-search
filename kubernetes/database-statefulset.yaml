@@ -13,7 +13,7 @@ spec:
         accessModes: ["ReadWriteOnce"]
         resources:
           requests:
-            storage: 10G
+            storage: 3G
   template:
     metadata:
       labels:
