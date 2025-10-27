@@ -60,7 +60,8 @@
          (when previous-url [:p.grid-col-1.text-left [:a {:href previous-url} "Previous"]])
          [:p.grid-col-2.text-center page-number]
          (when (= limit (str (count games)))
-           [:p.grid-col-3.text-right [:a {:href next-url} "Next"]])]]]))))
+           [:p.grid-col-3.text-right [:a {:href next-url} "Next"]])]
+        (c/powered-by-bgg)]]))))
 
 (defn error [{:keys [code message block]}]
   (html
@@ -72,7 +73,8 @@
       [:h1 code]
       [:h3 message]
       (when block
-        [:pre [:code block]])]])))
+        [:pre [:code block]])
+      (c/powered-by-bgg)]])))
 
 (defn games
   [{:strs [primary_name
@@ -186,7 +188,8 @@
         (maybe-details-list "Artists" artists)
         (maybe-details-list "Alternate Names" alternate_names)
         [:hr]
-        [:p.text-center "Last Updated: " last_updated]]]))))
+        [:p.text-center "Last Updated: " last_updated]
+        (c/powered-by-bgg)]]))))
 
 (defn index []
   (html
@@ -215,7 +218,8 @@
         [:th "Shortcuts"]
         [:th "Description"]
         [:th "Examples"]]]
-      [:tbody (map c/term (sort-by :term terms))]]])))
+      [:tbody (map c/term (sort-by :term terms))]]
+     (c/powered-by-bgg)])))
 
 (defn explain []
   (html
@@ -229,7 +233,8 @@
                      :limit          (str results-per-page)
                      :order          "bayes_rating"
                      :direction      "DESC"
-                     :submit-message "Explain"})])))
+                     :submit-message "Explain"})
+     (c/powered-by-bgg)])))
 
 (defn explain-results [{:keys [explanation query order direction offset sql]}]
   (html
@@ -245,4 +250,5 @@
       (when direction [:li "Direction: " [:code direction]])
       (when offset [:li "Offset: " [:code offset]])]
      [:pre [:code (with-out-str (pprint sql))]]
-     [:pre [:code explanation]]])))
+     [:pre [:code explanation]]
+     (c/powered-by-bgg)])))
