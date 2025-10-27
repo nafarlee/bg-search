@@ -4,7 +4,7 @@
 
 (defn powered-by-bgg []
   [:a {:href "https://boardgamegeek.com"}
-   [:img {:src "/logo.svg"}]])
+   [:img {:src "/light.svg"}]])
 
 (defn navigation []
   [:nav
