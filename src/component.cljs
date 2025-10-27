@@ -2,6 +2,10 @@
   (:require
     [markdown.core :refer [md->html]]))
 
+(defn powered-by-bgg []
+  [:a {:href "https://boardgamegeek.com"}
+   [:img {:src "/logo.svg"}]])
+
 (defn navigation []
   [:nav
    [:menu.list-none.flex.gap-6.pl-0.text-xl

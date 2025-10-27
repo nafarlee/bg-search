@@ -12,6 +12,11 @@ handlers:
     static_files: public/style.css
     upload: public/style.css
 
+  - url: /logo.svg
+    secure: always
+    static_files: public/logo.svg
+    upload: public/logo.svg
+
   - url: /.*
     secure: always
     script: auto
