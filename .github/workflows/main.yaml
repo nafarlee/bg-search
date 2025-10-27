@@ -31,8 +31,8 @@ jobs:
         with:
           credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-      - if: github.ref == 'refs/heads/master'
+      - if: github.ref == 'refs/heads/app-engine'
         uses: google-github-actions/setup-gcloud@6189d56e4096ee891640bb02ac264be376592d6a
 
-      - if: github.ref == 'refs/heads/master'
+      - if: github.ref == 'refs/heads/app-engine'
         run: gcloud app deploy --quiet --version alpha app.yaml cron.yaml
