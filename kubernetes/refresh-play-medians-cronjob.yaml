@@ -3,6 +3,7 @@ apiVersion: batch/v1
 metadata:
   name: refresh-play-medians
 spec:
+  timeZone: US/Eastern
   schedule: "@midnight"
   jobTemplate:
     spec:
