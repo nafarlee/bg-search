@@ -21,6 +21,9 @@ secretGenerator:
   - name: postgres-password
     files:
       - postgres-password=postgres-password.secret
+  - name: bgg-api-key
+    files:
+      - bgg-api-key=bgg-api-key.secret
 
 configMapGenerator:
   - name: db-init
