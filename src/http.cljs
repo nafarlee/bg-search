@@ -33,7 +33,12 @@
     (fn [url]
       (js/Promise.
        (fn [fulfill reject]
-         (-> (js-https/get url (partial handle-response fulfill))
+         (-> (js-https/get url
+                           (clj->js
+                            {:headers
+                             {:Authorization
+                              (str "Bearer " js/process.env.BGG_API_KEY)}})
+                           (partial handle-response fulfill))
              (.on "error" reject)))))))
 
 (defn unwrap [{:keys [status body] :as response}]

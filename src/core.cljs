@@ -9,6 +9,7 @@
 
 (defn main []
   (assert (some? js/process.env.MIRROR_BASE_URL))
+  (assert (some? js/process.env.BGG_API_KEY))
   (let [pool (delay (sql/pool))]
     (doto app
           (.use (.urlencoded express #js{:extended true}))
