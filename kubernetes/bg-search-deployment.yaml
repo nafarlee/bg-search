@@ -23,7 +23,7 @@ spec:
               memory: 94371840
           env:
             - name: MIRROR_BASE_URL
-              value: https://mirror.staging.bgs.nafarlee.dev
+              value: https://mirror.bgs.nafarlee.dev
             - name: PGUSER
               value: postgres
             - name: PGHOST
