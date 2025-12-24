@@ -1,6 +1,6 @@
 FROM node@sha256:48022836f3fbf7d8cd398114b5091cbe3c4b6cd5a4f37f0e5b2aece7fd6d2fc4 AS build
 WORKDIR /root
-RUN apk add openjdk11-jdk
+RUN apk add openjdk21-jdk
 COPY package.json .
 COPY package-lock.json .
 RUN npm ci
