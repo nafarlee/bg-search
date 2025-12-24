@@ -3,8 +3,8 @@
     "test": "shadow-cljs compile test",
     "watch:app": "shadow-cljs watch app",
     "repl": "shadow-cljs node-repl",
-    "build:app": "shadow-cljs compile app",
     "release:app": "shadow-cljs release app",
+    "compile:app": "shadow-cljs compile app",
     "deps": "shadow-cljs classpath",
     "start:app": "node --unhandled-rejections=strict app.js"
   },
