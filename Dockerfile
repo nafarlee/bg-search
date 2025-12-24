@@ -7,7 +7,7 @@ RUN npm ci
 COPY shadow-cljs.edn .
 RUN npm run deps
 COPY src/ ./src
-RUN npm run release
+RUN npm run release:app
 
 FROM node@sha256:48022836f3fbf7d8cd398114b5091cbe3c4b6cd5a4f37f0e5b2aece7fd6d2fc4
 USER node

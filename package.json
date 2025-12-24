@@ -1,12 +1,12 @@
 {
   "scripts": {
     "test": "shadow-cljs compile test",
-    "watch": "shadow-cljs watch app",
+    "watch:app": "shadow-cljs watch app",
     "repl": "shadow-cljs node-repl",
-    "build": "shadow-cljs compile app",
-    "release": "shadow-cljs release app",
+    "build:app": "shadow-cljs compile app",
+    "release:app": "shadow-cljs release app",
     "deps": "shadow-cljs classpath",
-    "start": "node --unhandled-rejections=strict app.js"
+    "start:app": "node --unhandled-rejections=strict app.js"
   },
   "devDependencies": {
     "shadow-cljs": "^2.15.12",
