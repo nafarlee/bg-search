@@ -57,4 +57,5 @@
 
 (defn main []
   (-> (find-max-id)
-      (.then prn)))
+      (.then prn)
+      (.catch prn)))
