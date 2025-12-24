@@ -14,4 +14,9 @@
   :app
   {:target :node-script
    :main core/main
-   :output-to "app.js"}}}
+   :output-to "app.js"}
+
+  :set-game-limit
+  {:target :node-script
+   :main set-game-limit/main
+   :output-to "set-game-limit.js"}}}
