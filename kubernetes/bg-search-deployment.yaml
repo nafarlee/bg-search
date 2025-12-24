@@ -14,7 +14,7 @@ spec:
       terminationGracePeriodSeconds: 15
       containers:
         - name: default
-          image: ghcr.io/nafarlee/bg-search:ca38b5f0af816d0a65cc34b176890dc4401b08ee
+          image: ghcr.io/nafarlee/bg-search:b00d75961ec33b1a7f1c33470bd991ea83bbc3ce
           ports:
             - containerPort: 8080
           resources:
