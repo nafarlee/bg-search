@@ -1,14 +1,14 @@
 {
   "scripts": {
     "test": "shadow-cljs compile test",
-    "watch": "shadow-cljs watch app",
     "repl": "shadow-cljs node-repl",
-    "build": "shadow-cljs compile app",
-    "release": "shadow-cljs release app",
     "deps": "shadow-cljs classpath",
-    "start": "node --unhandled-rejections=strict app.js"
+    "watch:app": "shadow-cljs watch app",
+    "release:app": "shadow-cljs release app && esbuild app.js --bundle --platform=node --target=node20 --external:pg-native --outfile=app.dist.js",
+    "compile:app": "shadow-cljs compile app"
   },
   "devDependencies": {
+    "esbuild": "^0.27.2",
     "shadow-cljs": "^2.15.12",
     "source-map-support": "^0.5.20",
     "ws": "^8.2.3"
