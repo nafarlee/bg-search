@@ -3,7 +3,7 @@
     "test": "shadow-cljs compile test",
     "watch:app": "shadow-cljs watch app",
     "repl": "shadow-cljs node-repl",
-    "release:app": "shadow-cljs release app",
+    "release:app": "shadow-cljs release app && esbuild app.js --bundle --platform=node --target=node20 --external:pg-native --outfile=app.dist.js",
     "compile:app": "shadow-cljs compile app",
     "deps": "shadow-cljs classpath",
     "start:app": "node --unhandled-rejections=strict app.js"
