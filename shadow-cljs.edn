@@ -1,9 +1,22 @@
-{:source-paths ["src"]
- :dependencies [[cider/cider-nrepl "0.24.0"]
-                [markdown-clj "1.12.4"]]
- :builds {:test {:target :node-test
-                 :output-to "test.js"
-                 :autorun true}
-          :app  {:target :node-script
-                 :main core/main
-                 :output-to "app.js"}}}
+{:source-paths
+ ["src"]
+
+ :dependencies
+ [[cider/cider-nrepl "0.24.0"]
+  [markdown-clj "1.12.4"]]
+
+ :builds
+ {:test
+  {:target :node-test
+   :output-to "test.js"
+   :autorun true}
+
+  :app
+  {:target :node-script
+   :main core/main
+   :output-to "app.js"}
+
+  :set-game-id-cliff
+  {:target :node-script
+   :main set-game-id-cliff/main
+   :output-to "set-game-id-cliff.js"}}}
