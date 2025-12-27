@@ -1,5 +1,6 @@
 (ns set-game-id-cliff
  (:require
+  [sql :refer [pool]]
   [sql.dsl :refer [clj->sql]]
   [api :refer [get-games]]))
 
@@ -63,6 +64,7 @@
 
 
 (defn main []
-  (-> (find-max-id)
-      (.then prn)
-      (.catch prn)))
+  (let [db (pool)]
+    (-> (find-max-id)
+        (.then #(set-cliff db %))
+        (.catch prn))))
