@@ -7,6 +7,13 @@ CREATE TABLE IF NOT EXISTS globals (
 INSERT INTO globals
 VALUES (1, 1, 1, 1);
 
+CREATE TABLE IF NOT EXISTS kv (
+  key TEXT PRIMARY KEY,
+  value JSONB
+);
+INSERT INTO kv
+VALUES ("game-id-cliff", 460000);
+
 CREATE TABLE IF NOT EXISTS games (
   id INTEGER PRIMARY KEY,
   language_dependence SMALLINT CHECK (language_dependence >= 0),
