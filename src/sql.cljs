@@ -125,6 +125,11 @@
 (defn update-game-checkpoint [database checkpoint]
   (.query database "UPDATE globals SET count = $1 WHERE id = $2" #js[checkpoint 1]))
 
+(defn get-game-id-cliff [database]
+  (-> database
+      (.query "SELECT value FROM kv WHERE key = 'game-id-cliff'")
+      (.then #(-> % .-rows first .-value))))
+
 (defn mobius-games [database]
   (update-game-checkpoint database 1))
 

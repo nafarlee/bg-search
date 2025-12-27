@@ -57,6 +57,7 @@
            m/with-game-checkpoint
            m/with-new-game-checkpoint
            m/with-pulled-games
+           m/with-game-id-cliff
            m/maybe-mobius
            m/with-game-insertions
            m/insert-games
