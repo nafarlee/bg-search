@@ -16,7 +16,7 @@
    :main core/main
    :output-to "app.js"}
 
-  :set-game-limit
+  :set-game-id-cliff
   {:target :node-script
-   :main set-game-limit/main
-   :output-to "set-game-limit.js"}}}
+   :main set-game-id-cliff/main
+   :output-to "set-game-id-cliff.js"}}}
