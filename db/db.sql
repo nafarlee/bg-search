@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS kv (
   value JSONB
 );
 INSERT INTO kv
-VALUES ('game-id-cliff', 460000);
+VALUES ('game-id-cliff', to_jsonb(460000));
 
 CREATE TABLE IF NOT EXISTS games (
   id INTEGER PRIMARY KEY,
