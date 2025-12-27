@@ -178,6 +178,14 @@
                    (.sendStatus res 200)))
           (.catch nxt)))))
 
+(defn with-game-id-cliff [^js req _res nxt]
+  (let [{:keys [database]} (.-locals req)]
+    (-> (sql/get-game-id-cliff database)
+        (.then (fn [game-id-cliff]
+                 (assoc-locals! req :game-id-cliff game-id-cliff)
+                 (nxt)))
+        (.catch nxt))))
+
 (defn with-game-insertions [^js req _res nxt]
   (let [{:keys [games]} (.-locals req)]
     (assoc-locals! req :insertions (insert games)))
