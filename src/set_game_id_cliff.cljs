@@ -1,4 +1,4 @@
-(ns set-game-limit
+(ns set-game-id-cliff
  (:require
   [api :refer [get-games]]))
 
