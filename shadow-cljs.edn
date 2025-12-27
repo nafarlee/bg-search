@@ -1,6 +1,6 @@
 {:source-paths ["src"]
  :dependencies [[cider/cider-nrepl "0.24.0"]
-                [markdown-clj "1.10.6"]]
+                [markdown-clj "1.12.4"]]
  :builds {:test {:target :node-test
                  :output-to "test.js"
                  :autorun true}
