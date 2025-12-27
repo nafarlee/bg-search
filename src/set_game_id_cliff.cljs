@@ -1,5 +1,6 @@
 (ns set-game-id-cliff
  (:require
+  [sql.dsl :refer [clj->sql]]
   [api :refer [get-games]]))
 
 
@@ -53,6 +54,12 @@
 (defn- find-max-id []
   (-> (exponential-search)
       (.then binary-search)))
+
+
+(defn- set-cliff [db cliff]
+  (.query db (clj->sql :UPDATE :kv
+                       :SET :value := #{cliff}
+                       :WHERE :key := :game-id-cliff)))
 
 
 (defn main []
