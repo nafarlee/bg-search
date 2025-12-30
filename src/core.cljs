@@ -124,6 +124,16 @@
                                               :offset      offset
                                               :sql         transpiled-query})))))
 
-          (.use m/log-error-cause)
+          (.use m/log-error-cause))
 
-          (.listen 8080 #(prn "Listening on 8080...")))))
+    (let [server (.listen app 8080)]
+      (println "Listening on 8080...")
+      (.on js/process
+           "SIGTERM"
+           (fn []
+             (println "SIGTERM received: closing HTTP server")
+             (.close server
+                     (fn []
+                       (println "HTTP server closed")
+                       (when (realized? pool)
+                         (.end @pool)))))))))
