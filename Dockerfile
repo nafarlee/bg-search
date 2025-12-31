@@ -13,8 +13,8 @@ FROM node@sha256:48022836f3fbf7d8cd398114b5091cbe3c4b6cd5a4f37f0e5b2aece7fd6d2fc
 USER node
 WORKDIR /home/node
 ENV NODE_ENV=production
-COPY --from=build /root/app.dist.js .
+COPY --from=build /root/app.dist.js ./main.js
 COPY public/ ./public
 
 LABEL org.opencontainers.image.source=https://github.com/nafarlee/bg-search
-ENTRYPOINT ["./app.dist.js"]
+ENTRYPOINT ["./main.js"]
