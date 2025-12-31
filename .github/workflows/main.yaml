@@ -52,3 +52,4 @@ jobs:
           context: .
           push: ${{ github.ref == 'refs/heads/master' }}
           tags: ${{ env.REGISTRY}}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          build-args: BUILD_ID=app
