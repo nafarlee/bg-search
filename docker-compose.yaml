@@ -1,7 +1,10 @@
 version: '3'
 services:
   web:
-    build: .
+    build:
+      context: .
+      args:
+        BUILD_ID: app
     ports:
       - 8080:8080
     environment:
