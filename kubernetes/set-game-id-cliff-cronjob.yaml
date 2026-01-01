@@ -1,0 +1,30 @@
+kind: CronJob
+apiVersion: batch/v1
+metadata:
+  name: set-game-id-cliff
+spec:
+  timeZone: US/Eastern
+  schedule: "@weekly"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: default
+              image: ghcr.io/nafarlee/bg-search-set-game-id-cliff:cb1360cc511e8bcecbc2312df0f35761eb90b81d
+              env:
+                - name: PGHOST
+                  value: database
+                - name: PGUSER
+                  value: postgres
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgres-password
+                      key: postgres-password
+                - name: BGG_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: bgg-api-key
+                      key: bgg-api-key

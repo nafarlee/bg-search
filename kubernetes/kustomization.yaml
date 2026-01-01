@@ -13,6 +13,7 @@ resources:
   - pull-deployment.yaml
   - pull-plays-deployment.yaml
   - refresh-play-medians-cronjob.yaml
+  - set-game-id-cliff-cronjob.yaml
 
 secretGenerator:
   - name: cloud-storage-key
