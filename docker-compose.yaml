@@ -15,6 +15,19 @@ services:
       BGG_API_KEY:
     depends_on:
       - db
+  set-game-id-cliff:
+    build:
+      context: .
+      args:
+        BUILD_ID: set-game-id-cliff
+    restart: "no"
+    environment:
+      PGHOST: db
+      PGUSER: postgres
+      PGPASSWORD: password
+      BGG_API_KEY:
+    depends_on:
+      - db
   db:
     image: docker.io/postgres:18.0-alpine3.22
     restart: always
