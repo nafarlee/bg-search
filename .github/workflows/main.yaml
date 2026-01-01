@@ -29,10 +29,16 @@ jobs:
 
   package:
     needs: test
+    strategy:
+      matrix:
+        include:
+          - build-id: app
+            image-name: ${{ github.repository }}-web
+          - build-id: set-game-id-cliff
+            image-name: ${{ github.repository }}-set-game-id-cliff
     runs-on: ubuntu-latest
     env:
       REGISTRY: ghcr.io
-      IMAGE_NAME: ${{ github.repository }}
     permissions:
       contents: read
       packages: write
@@ -51,5 +57,5 @@ jobs:
         with:
           context: .
           push: ${{ github.ref == 'refs/heads/master' }}
-          tags: ${{ env.REGISTRY}}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          build-args: BUILD_ID=app
+          tags: ${{ env.REGISTRY}}/${{ matrix.image-name }}:${{ github.sha }}
+          build-args: BUILD_ID=${{ matrix.build-id }}

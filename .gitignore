@@ -74,3 +74,4 @@ typings/
 /.lsp/
 *.secret
 kubernetes/db.sql
+*.js
