@@ -1,7 +1,6 @@
 (ns set-game-id-cliff
  (:require
   [sql :refer [pool]]
-  [sql.dsl :refer [clj->sql]]
   [api :refer [get-games]]))
 
 
@@ -58,9 +57,10 @@
 
 
 (defn- set-cliff [db cliff]
-  (.query db (clj->sql :UPDATE :kv
-                       :SET :value := #{cliff}
-                       :WHERE :key := :game-id-cliff)))
+  (.query
+   db
+   "UPDATE kv SET value = $1 WHERE key = 'game-id-cliff'"
+   #js[cliff]))
 
 
 (defn main []
