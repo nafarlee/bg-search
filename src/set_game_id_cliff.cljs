@@ -58,11 +58,10 @@
 
 (defn- set-cliff [db cliff]
   (println "Setting game ID cliff to " cliff)
-  (.then (.query
-          db
-          "UPDATE kv SET value = $1 WHERE key = 'game-id-cliff'"
-          #js[cliff])
-         #(println "Successfully set game ID cliff to " cliff)))
+  (-> (.query db
+              "UPDATE kv SET value = $1 WHERE key = 'game-id-cliff'"
+              #js[cliff])
+      (.then #(println "Successfully set game ID cliff to " cliff))))
 
 
 (defn main []
