@@ -3,6 +3,8 @@
     "test": "shadow-cljs compile test",
     "repl": "shadow-cljs node-repl",
     "deps": "shadow-cljs classpath",
+    "release:pull-games": "shadow-cljs release pull-games && esbuild pull-games.js --bundle --platform=node --target=node20 --external:pg-native --outfile=pull-games.dist.js",
+    "compile:pull-games": "shadow-cljs compile pull-games",
     "release:set-game-id-cliff": "shadow-cljs release set-game-id-cliff && esbuild set-game-id-cliff.js --bundle --platform=node --target=node20 --external:pg-native --outfile=set-game-id-cliff.dist.js",
     "compile:set-game-id-cliff": "shadow-cljs compile set-game-id-cliff",
     "release:app": "shadow-cljs release app && esbuild app.js --bundle --platform=node --target=node20 --external:pg-native --outfile=app.dist.js",
