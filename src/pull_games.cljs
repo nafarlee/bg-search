@@ -12,24 +12,24 @@
                pool]]))
 
 (defn pull-games [db]
-  (go-loop []
-    (try
-      (<p! (with-retry #(.query db "SELECT 0") 3))
-      (let [checkpoint     (<p! (get-game-checkpoint db))
-            new-checkpoint (+ 20 checkpoint)
-            cliff          (<p! (get-game-id-cliff db))
-            games          (<p! (get-games (range checkpoint new-checkpoint)))
-            insertions     (insert games)]
-        (<p! (insert-games db insertions new-checkpoint))
-        (when (< cliff new-checkpoint)
-          (<p! (mobius-games db)))
-        (prn {:checkpoint     checkpoint
-              :new-checkpoint new-checkpoint
-              :cliff          cliff
-              :games-inserted (count games)}))
-      (catch js/Error err
-        (js/console.error err)))
-    (recur)))
+    (go-loop [checkpoint (<p! (get-game-checkpoint db))]
+      (let [new-checkpoint (+ 20 checkpoint)]
+        (try
+          (let [cliff      (<p! (get-game-id-cliff db))
+                games      (<p! (get-games (range checkpoint new-checkpoint)))
+                insertions (insert games)]
+            (<p! (insert-games db insertions new-checkpoint))
+            (when (< cliff new-checkpoint)
+              (<p! (mobius-games db)))
+            (prn {:checkpoint     checkpoint
+                  :new-checkpoint new-checkpoint
+                  :cliff          cliff
+                  :games-inserted (count games)}))
+          (catch js/Error e
+            (js/console.error e)))
+        (recur new-checkpoint))))
 
 (defn main []
-  (pull-games (pool)))
+  (let [db (pool)]
+    (.then (with-retry #(.query db "SELECT 0") 3)
+           #(pull-games (pool)))))
