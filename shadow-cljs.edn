@@ -3,6 +3,7 @@
 
  :dependencies
  [[cider/cider-nrepl "0.24.0"]
+  [org.clojure/core.async "1.8.741"]
   [markdown-clj "1.12.4"]]
 
  :builds
