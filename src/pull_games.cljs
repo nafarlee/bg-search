@@ -1,5 +1,7 @@
 (ns pull-games
  (:require
+  [cljs.core.async :refer [go-loop]]
+  [cljs.core.async.interop :refer-macros [<p!]]
   [api :refer [get-games]]
   [util :refer [with-retry]]
   [sql.insert :refer [insert]]
@@ -10,40 +12,24 @@
                pool]]))
 
 (defn pull-games [db]
-  (let [checkpoint-p
-        (with-retry #(get-game-checkpoint db) 3)
-
-        new-checkpoint-p
-        (.then checkpoint-p
-               #(+ % 20))
-
-        cliff-p
-        (with-retry #(get-game-id-cliff db) 3)
-
-        games-p
-        (.then (js/Promise.all #js[checkpoint-p new-checkpoint-p])
-               (fn [[checkpoint new-checkpoint]]
-                 (get-games (range checkpoint new-checkpoint))))
-        
-        insertions-p
-        (.then games-p #(insert %))
-
-        did-insert-p?
-        (.then (js/Promise.all #js[insertions-p new-checkpoint-p])
-               (fn [[insertions new-checkpoint]]
-                 (insert-games db insertions new-checkpoint)))
-
-        mobius-p
-        (.then (js/Promise.all #js[did-insert-p? new-checkpoint-p cliff-p])
-               (fn [[_ new-checkpoint cliff]]
-                 (when (< cliff new-checkpoint)
-                   (mobius-games db))))]
-    (-> mobius-p
-        (.then (fn [_]
-                 (pull-games db)
-                 nil))
-        (.catch js/console.error))))
-  
+  (go-loop []
+    (try
+      (<p! (with-retry #(.query db "SELECT 0") 3))
+      (let [checkpoint     (<p! (get-game-checkpoint db))
+            new-checkpoint (+ 20 checkpoint)
+            cliff          (<p! (get-game-id-cliff db))
+            games          (<p! (get-games (range checkpoint new-checkpoint)))
+            insertions     (insert games)]
+        (<p! (insert-games db insertions new-checkpoint))
+        (when (< cliff new-checkpoint)
+          (<p! (mobius-games db)))
+        (prn {:checkpoint     checkpoint
+              :new-checkpoint new-checkpoint
+              :cliff          cliff
+              :games-inserted (count games)}))
+      (catch js/Error err
+        (js/console.error err)))
+    (recur)))
 
 (defn main []
   (pull-games (pool)))
