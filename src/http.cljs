@@ -16,7 +16,7 @@
                           .toString
                           cb)))))
 
-(defn- sleep [duration]
+(defn sleep [duration]
   (js/Promise.
    (fn [fulfill]
      (js/setTimeout fulfill duration))))

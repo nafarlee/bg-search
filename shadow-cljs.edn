@@ -3,6 +3,7 @@
 
  :dependencies
  [[cider/cider-nrepl "0.24.0"]
+  [org.clojure/core.async "1.8.741"]
   [markdown-clj "1.12.4"]]
 
  :builds
@@ -15,6 +16,11 @@
   {:target :node-script
    :main core/main
    :output-to "app.js"}
+
+  :pull-games
+  {:target :node-script
+   :main pull-games/main
+   :output-to "pull-games.js"}
 
   :set-game-id-cliff
   {:target :node-script
