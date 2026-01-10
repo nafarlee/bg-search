@@ -147,27 +147,6 @@
                      (nxt)))))
         (.catch nxt))))
 
-(defn with-game-checkpoint [^js req _res nxt]
-  (let [{:keys [database]} (.-locals req)]
-    (-> (sql/get-game-checkpoint database)
-        (.then (fn [checkpoint]
-                 (assoc-locals! req :checkpoint checkpoint)
-                 (nxt)))
-        (.catch nxt))))
-
-(defn with-new-game-checkpoint [^js req _res nxt]
-  (let [{:keys [checkpoint]} (.-locals req)]
-    (assoc-locals! req :new-checkpoint (+ 20 checkpoint)))
-  (nxt))
-
-(defn with-pulled-games [^js req _res nxt]
-  (let [{:keys [checkpoint new-checkpoint]} (.-locals req)]
-    (-> (api/get-games (range checkpoint new-checkpoint))
-        (.then (fn [games]
-                 (assoc-locals! req :games games)
-                 (nxt)))
-        (.catch nxt))))
-
 (defn maybe-mobius [^js req ^js res nxt]
   (let [{:keys [database new-checkpoint game-id-cliff]} (.-locals req)]
     (if (< new-checkpoint game-id-cliff)
@@ -185,21 +164,6 @@
                  (assoc-locals! req :game-id-cliff game-id-cliff)
                  (nxt)))
         (.catch nxt))))
-
-(defn with-game-insertions [^js req _res nxt]
-  (let [{:keys [games]} (.-locals req)]
-    (assoc-locals! req :insertions (insert games)))
-  (nxt))
-
-(defn insert-games [^js req _res nxt]
-  (let [{:keys [database insertions checkpoint new-checkpoint]} (.-locals req)]
-    (-> (sql/insert-games database insertions new-checkpoint)
-        (.then (fn []
-                 (prn :save-games checkpoint (dec new-checkpoint))
-                 (nxt)))
-        (.catch (fn [e]
-                  (prn :save-games-error checkpoint (dec new-checkpoint))
-                  (nxt e))))))
 
 (defn with-query-explanation [^js req _res nxt]
   (let [{:keys [database transpiled-query]} (.-locals req)]
