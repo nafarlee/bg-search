@@ -29,7 +29,7 @@
         return))))
 
 (def get
-  (rate-limit 5000
+  (rate-limit 10000
     (fn [url]
       (js/Promise.
        (fn [fulfill reject]
