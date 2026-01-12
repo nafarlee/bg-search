@@ -43,4 +43,4 @@
 (defn main []
   (let [db (pool)]
     (.then (with-retry #(.query db "SELECT 0") 3)
-           #(pull-games (pool)))))
+           #(pull-games db))))
