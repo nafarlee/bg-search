@@ -41,6 +41,7 @@ services:
     depends_on:
       - db
   pull-plays:
+    restart: unless-stopped
     build:
       context: .
       args:
@@ -52,6 +53,7 @@ services:
       BGG_API_KEY:
     depends_on:
       - db
+      - pull-games
   db:
     image: docker.io/postgres:18.0-alpine3.22
     restart: always
