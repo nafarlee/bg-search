@@ -52,21 +52,6 @@
                                      :next-url     next-url})))))
 
           (.get
-           "/cron/pull-plays"
-           (m/with-database-pool pool)
-           m/with-last-game
-           m/with-plays-checkpoint
-           m/maybe-mobius-plays
-           m/require-play-id-game
-           m/with-plays
-           m/require-plays
-           m/with-positive-plays
-           m/require-positive-plays
-           m/require-new-plays
-           m/save-plays
-           m/with-success)
-
-          (.get
            "/cron/refresh-play-medians"
            (m/with-database-pool pool)
            (m/sql "REFRESH MATERIALIZED VIEW CONCURRENTLY play_medians")
