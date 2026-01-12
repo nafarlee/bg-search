@@ -22,6 +22,11 @@
    :main pull-games/main
    :output-to "pull-games.js"}
 
+  :pull-plays
+  {:target :node-script
+   :main pull-plays/main
+   :output-to "pull-plays.js"}
+
   :set-game-id-cliff
   {:target :node-script
    :main set-game-id-cliff/main
