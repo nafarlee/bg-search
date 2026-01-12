@@ -52,18 +52,6 @@
                                      :next-url     next-url})))))
 
           (.get
-           "/cron/pull"
-           (m/with-database-pool pool)
-           m/with-game-checkpoint
-           m/with-new-game-checkpoint
-           m/with-pulled-games
-           m/with-game-id-cliff
-           m/maybe-mobius
-           m/with-game-insertions
-           m/insert-games
-           m/with-success)
-
-          (.get
            "/cron/pull-plays"
            (m/with-database-pool pool)
            m/with-last-game
