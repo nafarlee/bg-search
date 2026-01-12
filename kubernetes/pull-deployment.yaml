@@ -15,19 +15,19 @@ spec:
       terminationGracePeriodSeconds: 15
       containers:
         - name: default
-          image: busybox
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              while true; do 
-                if wget -q -O- http://bg-search/cron/pull > /dev/null; then
-                  sleep 20
-                else
-                  echo FAIL
-                  sleep 60
-                fi
-              done
-          resources:
-            requests:
-              cpu: 2m
-              memory: 4194304
+          image: ghcr.io/nafarlee/bg-search-pull-games:8a7ee77f6f302607570c89eb4d97814a853395b9
+          env:
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: database
+            - name: BGG_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bgg-api-key
+                  key: bgg-api-key
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-password
+                  key: postgres-password
