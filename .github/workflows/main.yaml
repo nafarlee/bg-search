@@ -38,6 +38,8 @@ jobs:
             image-name: ${{ github.repository }}-set-game-id-cliff
           - build-id: pull-games
             image-name: ${{ github.repository }}-pull-games
+          - build-id: pull-plays
+            image-name: ${{ github.repository }}-pull-plays
     runs-on: ubuntu-latest
     env:
       REGISTRY: ghcr.io
