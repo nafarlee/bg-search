@@ -41,6 +41,17 @@
                            (partial handle-response fulfill))
              (.on "error" reject)))))))
 
+(defn fetch
+  ([url]         (fetch url {}))
+  ([url options] (let [message "A call to fetch has failed"]
+                   (.then (js/fetch url (clj->js options))
+                          (fn [response]
+                            (if response.ok
+                              response
+                              (throw (ex-info message {:response response}))))
+                          (fn [e]
+                            (ex-info message {} e))))))
+
 (defn unwrap [{:keys [status body] :as response}]
   (if (success? status)
     body
