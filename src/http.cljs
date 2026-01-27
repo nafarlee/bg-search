@@ -47,6 +47,7 @@
   ([url options] (js/fetch url (clj->js options))))
 
 (defn fetch-with-backoff
+  ([url] (fetch-with-backoff url {}))
   ([url options] (fetch-with-backoff url
                                      options
                                      (fn [attempt]
