@@ -56,20 +56,28 @@
                        (throw (js-error "Invalid username" username))))
                (throw (js-error "Could not pull collection" res)))))))
 
-(defn get-games [ids]
-  {:pre [(sequential? ids)]
+(defn get-games [api-key ids]
+  {:pre [(string? api-key)
+         (sequential? ids)]
    :post [(js-promise? %)]}
-  (-> (construct-url base-url "xmlapi2/thing" {:stats 1
-                                               :type ["boardgame" "boardgameexpansion"]
-                                               :id ids})
-      h/get
-      (.then #(as-> % $
-                    (h/unwrap $)
-                    (parse-xml $)
-                    (get-in $ ["items" "item"])
-                    (if (map? $)
-                      [(marshall $)]
-                      (map marshall $))))))
+  (-> (h/fetch-with-backoff (str base-url
+                                 "/xmlapi2/thing?"
+                                 (h/map->params {:stats 1
+                                                 :type [:boardgame
+                                                        :boardgameexpansion]
+                                                 :id ids}))
+                            {:headers {:Authorization (str "Bearer " api-key)}})
+      (.then (fn [response]
+               (if response.ok
+                 (.text response)
+                 (throw (ex-info "Could not retrieve games"
+                                 {:response response})))))
+      (.then #(as-> % <>
+                    (parse-xml <>)
+                    (get-in <> ["items" "item"])
+                    (if (map? <>)
+                      [(marshall <>)]
+                      (map marshall <>))))))
 
 (defn get-plays [game-id page]
   {:pre [(pos-int? game-id)
