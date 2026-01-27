@@ -40,21 +40,26 @@
    :username username})
 
 (defn get-collection [username]
-  (-> (construct-url base-url "xmlapi2/collection" {:brief 1 :username username})
-      h/get
-      (.then
-       (fn [res]
-         (case (:status res)
-               202 (.then (wait 5000) #(get-collection username))
-               200 (let [xml   (:body res)
-                         tree  (parse-xml xml)
-                         games (get-in tree ["items" "item"])]
-                     (if games
-                       (->> games
-                            (reduce ->collection-map {})
-                            (map (partial ->collection-row username)))
-                       (throw (js-error "Invalid username" username))))
-               (throw (js-error "Could not pull collection" res)))))))
+  (-> (h/fetch-with-backoff
+       (str base-url
+            "/xmlapi2/collection?"
+            (h/map->params {:brief 1 :username username}))
+       {:headers
+        {:Authorization
+         (str "Bearer " js/process.env.BGG_API_KEY)}})
+      (.then (fn [response]
+               (case response.status
+                     200 (.text response)
+                     202 (-> (wait 5000) (.then #(get-collection username)))
+                     (throw (js-error "Could not pull collection" response)))))
+      (.then (fn [xml]
+               (let [tree  (parse-xml xml)
+                     games (get-in tree ["items" "item"])]
+                 (if-not games
+                   (throw (js-error "Invalid username" username))
+                   (->> games
+                        (reduce ->collection-map {})
+                        (map (partial ->collection-row username)))))))))
 
 (defn get-games [api-key ids]
   {:pre [(string? api-key)
