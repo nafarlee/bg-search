@@ -52,7 +52,7 @@
 
 
 (defn- find-max-id [api-key]
-  (-> (exponential-search js/process.env.BGG_API_KEY)
+  (-> (exponential-search api-key)
       (.then #(binary-search api-key %))))
 
 
