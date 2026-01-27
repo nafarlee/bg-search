@@ -83,20 +83,26 @@
   {:pre [(pos-int? game-id)
          (pos-int? page)]
    :post [(js-promise? %)]}
-  (let [url         (construct-url base-url
-                                   "xmlapi2/plays"
-                                   {:type "thing"
-                                    :subtype "boardgame"
-                                    :id game-id
-                                    :page page})
-        play->chunk (fn [{:strs [$_id $_length players]}]
-                      [(js/parseInt $_id 10)
-                       game-id
-                       (js/parseInt $_length 10)
-                       (some-> players (get "player") count)])]
-    (.then (h/get url)
-           #(as-> % $
-                  (h/unwrap $)
-                  (parse-xml $)
-                  (get-in $ ["plays" "play"] [])
-                  (map play->chunk $)))))
+  (-> (h/fetch-with-backoff (str base-url
+                                 "/xmlapi2/plays?"
+                                 (h/map->params {:type "thing"
+                                                 :subtype "boardgame"
+                                                 :id game-id
+                                                 :page page}))
+                            {:headers
+                             {:Authorization
+                              (str "Bearer " js/process.env.BGG_API_KEY)}})
+      (.then (fn [response]
+               (if response.ok
+                 (.text response)
+                 (throw (ex-info "Could not retrieve plays"
+                                 {:response response})))))
+      (.then #(as-> % <>
+                    (parse-xml <>)
+                    (get-in <> ["plays" "play"] [])
+                    (map (fn [{:strs [$_id $_length players]}]
+                           [(js/parseInt $_id 10)
+                            game-id
+                            (js/parseInt $_length 10)
+                            (some-> players (get "player") count)])
+                         <>)))))
