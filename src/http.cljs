@@ -69,6 +69,12 @@
                                                       backoff-fn
                                                       (inc attempt))))))))))))
 
+(defn map->params [m]
+  (-> m
+      clj->js
+      js/URLSearchParams.
+      .toString))
+
 (defn unwrap [{:keys [status body] :as response}]
   (if (success? status)
     body
