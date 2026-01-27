@@ -79,7 +79,7 @@
                       [(marshall <>)]
                       (map marshall <>))))))
 
-(defn get-plays [game-id page]
+(defn get-plays [api-key game-id page]
   {:pre [(pos-int? game-id)
          (pos-int? page)]
    :post [(js-promise? %)]}
@@ -89,9 +89,7 @@
                                                  :subtype "boardgame"
                                                  :id game-id
                                                  :page page}))
-                            {:headers
-                             {:Authorization
-                              (str "Bearer " js/process.env.BGG_API_KEY)}})
+                            {:headers {:Authorization (str "Bearer " api-key)}})
       (.then (fn [response]
                (if response.ok
                  (.text response)

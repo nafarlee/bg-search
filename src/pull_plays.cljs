@@ -15,7 +15,7 @@
 (defn positive-play? [[_ _ play-time]]
   (pos? play-time))
 
-(defn pull-plays [db]
+(defn pull-plays [db api-key]
   (go-loop [[game-id page] (<p! (get-plays-checkpoint db))]
     (cond
       (< (<p! (get-last-game db)) game-id)
@@ -31,7 +31,7 @@
         (recur [(inc game-id) 1]))
 
       :else
-      (let [plays (<p! (get-plays game-id page))
+      (let [plays (<p! (get-plays api-key game-id page))
             positive-plays (filter positive-play? plays)]
         (cond
           (empty? plays)
@@ -61,4 +61,4 @@
 (defn main []
   (let [db (pool)]
     (.then (with-retry #(.query db "SELECT 0") 3)
-           #(pull-plays db))))
+           #(pull-plays db js/process.env.BGG_API_KEY))))
