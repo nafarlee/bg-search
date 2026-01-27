@@ -39,7 +39,7 @@
    :own own
    :username username})
 
-(defn get-collection [username]
+(defn get-collection [api-key username]
   (-> (h/fetch-with-backoff
        (str base-url
             "/xmlapi2/collection?"
@@ -50,7 +50,8 @@
       (.then (fn [response]
                (case response.status
                      200 (.text response)
-                     202 (-> (wait 5000) (.then #(get-collection username)))
+                     202 (-> (wait 5000) (.then #(get-collection api-key
+                                                                 username)))
                      (throw (js-error "Could not pull collection" response)))))
       (.then (fn [xml]
                (let [tree  (parse-xml xml)
