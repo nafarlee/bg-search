@@ -46,7 +46,7 @@
             (h/map->params {:brief 1 :username username}))
        {:headers
         {:Authorization
-         (str "Bearer " js/process.env.BGG_API_KEY)}})
+         (str "Bearer " api-key)}})
       (.then (fn [response]
                (case response.status
                      200 (.text response)
