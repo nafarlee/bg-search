@@ -51,7 +51,7 @@
   ([url options] (fetch-with-backoff url
                                      options
                                      (fn [attempt]
-                                       (when (<= attempt 2)
+                                       (when (<= attempt 5)
                                          (* 2000 (pow 2 attempt))))
                                      0))
   ([url options backoff-fn] (fetch-with-backoff url options backoff-fn 0))
