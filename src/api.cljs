@@ -39,56 +39,74 @@
    :own own
    :username username})
 
-(defn get-collection [username]
-  (-> (construct-url base-url "xmlapi2/collection" {:brief 1 :username username})
-      h/get
-      (.then
-       (fn [res]
-         (case (:status res)
-               202 (.then (wait 5000) #(get-collection username))
-               200 (let [xml   (:body res)
-                         tree  (parse-xml xml)
-                         games (get-in tree ["items" "item"])]
-                     (if games
-                       (->> games
-                            (reduce ->collection-map {})
-                            (map (partial ->collection-row username)))
-                       (throw (js-error "Invalid username" username))))
-               (throw (js-error "Could not pull collection" res)))))))
+(defn get-collection [api-key username]
+  (-> (h/fetch-with-backoff
+       (str base-url
+            "/xmlapi2/collection?"
+            (h/map->params {:brief 1 :username username}))
+       {:headers
+        {:Authorization
+         (str "Bearer " js/process.env.BGG_API_KEY)}})
+      (.then (fn [response]
+               (case response.status
+                     200 (.text response)
+                     202 (-> (wait 5000) (.then #(get-collection api-key
+                                                                 username)))
+                     (throw (js-error "Could not pull collection" response)))))
+      (.then (fn [xml]
+               (let [tree  (parse-xml xml)
+                     games (get-in tree ["items" "item"])]
+                 (if-not games
+                   (throw (js-error "Invalid username" username))
+                   (->> games
+                        (reduce ->collection-map {})
+                        (map (partial ->collection-row username)))))))))
 
-(defn get-games [ids]
-  {:pre [(sequential? ids)]
+(defn get-games [api-key ids]
+  {:pre [(string? api-key)
+         (sequential? ids)]
    :post [(js-promise? %)]}
-  (-> (construct-url base-url "xmlapi2/thing" {:stats 1
-                                               :type ["boardgame" "boardgameexpansion"]
-                                               :id ids})
-      h/get
-      (.then #(as-> % $
-                    (h/unwrap $)
-                    (parse-xml $)
-                    (get-in $ ["items" "item"])
-                    (if (map? $)
-                      [(marshall $)]
-                      (map marshall $))))))
+  (-> (h/fetch-with-backoff (str base-url
+                                 "/xmlapi2/thing?"
+                                 (h/map->params {:stats 1
+                                                 :type [:boardgame
+                                                        :boardgameexpansion]
+                                                 :id ids}))
+                            {:headers {:Authorization (str "Bearer " api-key)}})
+      (.then (fn [response]
+               (if response.ok
+                 (.text response)
+                 (throw (ex-info "Could not retrieve games"
+                                 {:response response})))))
+      (.then #(as-> % <>
+                    (parse-xml <>)
+                    (get-in <> ["items" "item"])
+                    (if (map? <>)
+                      [(marshall <>)]
+                      (map marshall <>))))))
 
-(defn get-plays [game-id page]
+(defn get-plays [api-key game-id page]
   {:pre [(pos-int? game-id)
          (pos-int? page)]
    :post [(js-promise? %)]}
-  (let [url         (construct-url base-url
-                                   "xmlapi2/plays"
-                                   {:type "thing"
-                                    :subtype "boardgame"
-                                    :id game-id
-                                    :page page})
-        play->chunk (fn [{:strs [$_id $_length players]}]
-                      [(js/parseInt $_id 10)
-                       game-id
-                       (js/parseInt $_length 10)
-                       (some-> players (get "player") count)])]
-    (.then (h/get url)
-           #(as-> % $
-                  (h/unwrap $)
-                  (parse-xml $)
-                  (get-in $ ["plays" "play"] [])
-                  (map play->chunk $)))))
+  (-> (h/fetch-with-backoff (str base-url
+                                 "/xmlapi2/plays?"
+                                 (h/map->params {:type "thing"
+                                                 :subtype "boardgame"
+                                                 :id game-id
+                                                 :page page}))
+                            {:headers {:Authorization (str "Bearer " api-key)}})
+      (.then (fn [response]
+               (if response.ok
+                 (.text response)
+                 (throw (ex-info "Could not retrieve plays"
+                                 {:response response})))))
+      (.then #(as-> % <>
+                    (parse-xml <>)
+                    (get-in <> ["plays" "play"] [])
+                    (map (fn [{:strs [$_id $_length players]}]
+                           [(js/parseInt $_id 10)
+                            game-id
+                            (js/parseInt $_length 10)
+                            (some-> players (get "player") count)])
+                         <>)))))

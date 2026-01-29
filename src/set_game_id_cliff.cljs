@@ -4,8 +4,8 @@
   [api :refer [get-games]]))
 
 
-(defn- filter-valid-ids [ids]
-  (-> (get-games ids)
+(defn- filter-valid-ids [api-key ids]
+  (-> (get-games api-key ids)
       (.then (fn [games]
                (when (seq games)
                  (into #{} (map :id) games))))))
@@ -27,33 +27,33 @@
 
 
 (defn- exponential-search
-  ([] (exponential-search 1 10))
-  ([current potential]
+  ([api-key] (exponential-search api-key 1 10))
+  ([api-key current potential]
    (prn :exponential-search {:current current :potential potential})
-   (-> (filter-valid-ids (range-between current potential))
+   (-> (filter-valid-ids api-key (range-between current potential))
        (.then (fn [valid-ids]
                 (if valid-ids
-                    (exponential-search potential (* potential 10))
+                    (exponential-search api-key potential (* potential 10))
                     current))))))
 
 
 (defn- binary-search
-  ([top] (binary-search 1 top))
-  ([bottom top]
+  ([api-key top] (binary-search api-key 1 top))
+  ([api-key bottom top]
    (let [mid (middle bottom top)]
      (prn :binary-search {:bottom bottom :mid mid :top top})
      (if (or (= bottom mid) (= mid top))
          mid
-         (-> (filter-valid-ids (range-between mid top))
+         (-> (filter-valid-ids api-key (range-between mid top))
              (.then (fn [valid-ids]
                       (if valid-ids
-                          (binary-search (apply max valid-ids) top)
-                          (binary-search bottom mid)))))))))
+                          (binary-search api-key (apply max valid-ids) top)
+                          (binary-search api-key bottom mid)))))))))
 
 
-(defn- find-max-id []
-  (-> (exponential-search)
-      (.then binary-search)))
+(defn- find-max-id [api-key]
+  (-> (exponential-search api-key)
+      (.then #(binary-search api-key %))))
 
 
 (defn- set-cliff [db cliff]
@@ -66,6 +66,6 @@
 
 (defn main []
   (let [db (pool)]
-    (-> (find-max-id)
+    (-> (find-max-id js/process.env.BGG_API_KEY)
         (.then #(set-cliff db %))
         (.catch prn))))

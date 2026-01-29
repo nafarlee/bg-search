@@ -11,11 +11,12 @@
                mobius-games
                pool]]))
 
-(defn pull-games [db]
+(defn pull-games [db api-key]
     (go-loop [checkpoint (<p! (get-game-checkpoint db))]
       (let [new-checkpoint (+ 20 checkpoint)]
         (if-not (try
-                  (let [games (<p! (get-games (range checkpoint
+                  (let [games (<p! (get-games api-key
+                                              (range checkpoint
                                                      new-checkpoint)))]
                     (<p! (insert-games db (insert games) new-checkpoint))
                     (prn {:message        :insert-games
@@ -43,4 +44,4 @@
 (defn main []
   (let [db (pool)]
     (.then (with-retry #(.query db "SELECT 0") 3)
-           #(pull-games db))))
+           #(pull-games db js/process.env.BGG_API_KEY))))

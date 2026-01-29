@@ -54,12 +54,13 @@
   (assoc-locals! req :params (js->clj (.-params req) :keywordize-keys true))
   (nxt))
 
-(defn with-scraped-collection [^js req _res nxt]
-  (let [{{:keys [username]} :body} (.-locals req)]
-    (-> (api/get-collection username)
-        (.then #(assoc-locals! req :collection %))
-        (.then #(nxt))
-        (.catch nxt))))
+(defn with-scraped-collection [api-key]
+  (fn [^js req _res nxt]
+    (let [{{:keys [username]} :body} (.-locals req)]
+      (-> (api/get-collection api-key username)
+          (.then #(assoc-locals! req :collection %))
+          (.then #(nxt))
+          (.catch nxt)))))
 
 (defn with-save-collection [^js req _res nxt]
   (let [{:keys [database collection]} (.-locals req)]

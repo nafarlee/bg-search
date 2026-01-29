@@ -1,6 +1,7 @@
 (ns http
   (:refer-clojure :exclude [get])
   (:require
+    [clojure.math :refer [pow]]
     ["https" :as js-https]))
 
 (defn- success? [code]
@@ -40,6 +41,40 @@
                               (str "Bearer " js/process.env.BGG_API_KEY)}})
                            (partial handle-response fulfill))
              (.on "error" reject)))))))
+
+(defn fetch
+  ([url]         (fetch url {}))
+  ([url options] (js/fetch url (clj->js options))))
+
+(defn fetch-with-backoff
+  ([url] (fetch-with-backoff url {}))
+  ([url options] (fetch-with-backoff url
+                                     options
+                                     (fn [attempt]
+                                       (when (<= attempt 2)
+                                         (* 2000 (pow 2 attempt))))
+                                     0))
+  ([url options backoff-fn] (fetch-with-backoff url options backoff-fn 0))
+  ([url options backoff-fn attempt]
+   (-> (fetch url options)
+       (.then (fn [response]
+                (let [backoff (backoff-fn attempt)]
+                  (if (or (not= 429 response.status)
+                          (nil? backoff))
+                    response
+                    (do
+                      (println "Waiting" backoff "ms...")
+                      (-> (sleep backoff)
+                          (.then #(fetch-with-backoff url
+                                                      options
+                                                      backoff-fn
+                                                      (inc attempt))))))))))))
+
+(defn map->params [m]
+  (-> m
+      clj->js
+      js/URLSearchParams.
+      .toString))
 
 (defn unwrap [{:keys [status body] :as response}]
   (if (success? status)
