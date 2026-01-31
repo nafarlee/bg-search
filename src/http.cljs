@@ -1,8 +1,4 @@
-(ns http
-  (:refer-clojure :exclude [get])
-  (:require
-    [clojure.math :refer [pow]]
-    ["https" :as js-https]))
+(ns http)
 
 (defn sleep [duration]
   (js/Promise.

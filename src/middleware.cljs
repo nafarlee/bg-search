@@ -9,7 +9,6 @@
     [error :as e]
     api
     sql
-    [sql.insert :refer [insert]]
     [constants :refer [results-per-page]]))
 
 (defn log-error-cause [^js err _req _res nxt]

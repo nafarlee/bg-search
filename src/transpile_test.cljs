@@ -1,7 +1,6 @@
 (ns transpile-test
   (:require
     [sql.dsl :refer [clj->sql]]
-    [clojure.string :as s]
     [transpile :as t]
     [constants :refer [results-per-page]]
     [cljs.test :refer [deftest is]]))

@@ -1,7 +1,6 @@
 (ns api
   (:require
     ["fast-xml-parser" :refer [XMLParser]]
-    ["url" :refer [URL URLSearchParams]]
     [promise :refer [js-promise? wait]]
     [interop :refer [js-error parse-int]]
     [http :as h]
