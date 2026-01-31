@@ -9,15 +9,6 @@
 
 (def ^:private base-url "https://boardgamegeek.com")
 
-(defn- construct-url [base path qp]
-  {:pre [(string? base)
-         (string? path)
-         (map? qp)]
-   :post [(string? %)]}
-  (let [u (URL. path base)]
-    (set! (.-search u) (URLSearchParams. (clj->js qp)))
-    (.toString u)))
-
 (defn parse-xml [xml]
   {:pre  [(string? xml)]
    :post [(map? %)]}

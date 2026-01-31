@@ -6,9 +6,6 @@
     [constants :refer [results-per-page]]
     [cljs.test :refer [deftest is]]))
 
-(defn compact-whitespace [s]
-  (s/replace s #"\s+" " "))
-
 (deftest transpile
   (is (= (t/transpile "n:scythe" "id" "DESC" 0 "10")
           (clj->sql :select :distinct (vec t/exported-fields)

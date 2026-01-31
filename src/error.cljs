@@ -15,10 +15,3 @@
         (.send (v/error {:code    code
                          :message message
                          :block   block})))))
-
-(defn generic [error res code]
-  (js/console.error error)
-  (-> res
-      (.status code)
-      (.send (v/error {:code    code
-                       :message error}))))

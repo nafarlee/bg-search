@@ -148,24 +148,6 @@
                      (nxt)))))
         (.catch nxt))))
 
-(defn maybe-mobius [^js req ^js res nxt]
-  (let [{:keys [database new-checkpoint game-id-cliff]} (.-locals req)]
-    (if (< new-checkpoint game-id-cliff)
-      (nxt)
-      (-> (sql/mobius-games database)
-          (.then (fn []
-                   (prn :mobius-games)
-                   (.sendStatus res 200)))
-          (.catch nxt)))))
-
-(defn with-game-id-cliff [^js req _res nxt]
-  (let [{:keys [database]} (.-locals req)]
-    (-> (sql/get-game-id-cliff database)
-        (.then (fn [game-id-cliff]
-                 (assoc-locals! req :game-id-cliff game-id-cliff)
-                 (nxt)))
-        (.catch nxt))))
-
 (defn with-query-explanation [^js req _res nxt]
   (let [{:keys [database transpiled-query]} (.-locals req)]
     (-> (sql/query database (update transpiled-query :text #(concat ["explain" "analyze"] %)))
