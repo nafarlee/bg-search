@@ -12,7 +12,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: default
-              image: ghcr.io/nafarlee/bg-search-set-game-id-cliff:d1fe91ec11ffe69ed3aafd65a07d7571c09d934e
+              image: ghcr.io/nafarlee/bg-search-set-game-id-cliff:e5746026a492a602ea649bd98a28de773b4a12c3
               env:
                 - name: PGHOST
                   value: database
