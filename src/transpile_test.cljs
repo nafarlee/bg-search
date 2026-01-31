@@ -1,13 +1,9 @@
 (ns transpile-test
   (:require
     [sql.dsl :refer [clj->sql]]
-    [clojure.string :as s]
     [transpile :as t]
     [constants :refer [results-per-page]]
     [cljs.test :refer [deftest is]]))
-
-(defn compact-whitespace [s]
-  (s/replace s #"\s+" " "))
 
 (deftest transpile
   (is (= (t/transpile "n:scythe" "id" "DESC" 0 "10")

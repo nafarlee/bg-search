@@ -1,7 +1,6 @@
 (ns language
   (:refer-clojure :exclude [seq string])
   (:require
-    [clojure.string :refer [join]]
     ["parsimmon" :as ps]))
 
 (def ^:private operators

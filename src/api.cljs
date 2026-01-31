@@ -1,22 +1,12 @@
 (ns api
   (:require
     ["fast-xml-parser" :refer [XMLParser]]
-    ["url" :refer [URL URLSearchParams]]
     [promise :refer [js-promise? wait]]
     [interop :refer [js-error parse-int]]
     [http :as h]
     [marshall :refer [marshall]]))
 
 (def ^:private base-url "https://boardgamegeek.com")
-
-(defn- construct-url [base path qp]
-  {:pre [(string? base)
-         (string? path)
-         (map? qp)]
-   :post [(string? %)]}
-  (let [u (URL. path base)]
-    (set! (.-search u) (URLSearchParams. (clj->js qp)))
-    (.toString u)))
 
 (defn parse-xml [xml]
   {:pre  [(string? xml)]
