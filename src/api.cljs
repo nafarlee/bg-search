@@ -66,8 +66,7 @@
       (.then (fn [response]
                (if response.ok
                  (.text response)
-                 (throw (ex-info "Could not retrieve games"
-                                 {:response response})))))
+                 (throw (js-error "Could not retrieve games" response)))))
       (.then #(as-> % <>
                     (parse-xml <>)
                     (get-in <> ["items" "item"])
@@ -89,8 +88,7 @@
       (.then (fn [response]
                (if response.ok
                  (.text response)
-                 (throw (ex-info "Could not retrieve plays"
-                                 {:response response})))))
+                 (throw (js-error "Could not retrieve plays" response)))))
       (.then #(as-> % <>
                     (parse-xml <>)
                     (get-in <> ["plays" "play"] [])
