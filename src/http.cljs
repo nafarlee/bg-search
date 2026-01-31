@@ -6,14 +6,13 @@
   ([url]         (fetch url {}))
   ([url options] (js/fetch url (clj->js options))))
 
+(defn- backoff [failed-attempt-count]
+  (when (<= failed-attempt-count 5)
+    (+ 10000 (* 5000 failed-attempt-count))))
+
 (defn fetch-with-backoff
-  ([url] (fetch-with-backoff url {}))
-  ([url options] (fetch-with-backoff url
-                                     options
-                                     (fn [attempt]
-                                       (when (<= attempt 5)
-                                         (+ 10000 (* 5000 attempt))))
-                                     0))
+  ([url] (fetch-with-backoff url {} backoff 0))
+  ([url options] (fetch-with-backoff url options backoff 0))
   ([url options backoff-fn] (fetch-with-backoff url options backoff-fn 0))
   ([url options backoff-fn attempt]
    (-> (fetch url options)
