@@ -8,7 +8,7 @@
 
 (defn- backoff [failed-attempt-count]
   (when (<= failed-attempt-count 5)
-    (+ 10000 (* 5000 failed-attempt-count))))
+    (rand-int 30000)))
 
 (defn fetch-with-backoff
   ([url] (fetch-with-backoff url {} backoff 0))
