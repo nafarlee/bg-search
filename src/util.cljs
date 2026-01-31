@@ -1,6 +1,6 @@
 (ns util
  (:require
-  (http :refer [sleep])))
+  [promise :refer [wait]]))
 
 (defn with-retry
   ([f n] (with-retry f n 1000))
@@ -11,5 +11,5 @@
                    (throw e)
                    (do
                      (println "Retrying after" ms "ms...")
-                     (-> (sleep ms)
+                     (-> (wait ms)
                          (.then #(with-retry f (dec n) (* ms 2)))))))))))

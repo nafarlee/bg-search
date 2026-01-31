@@ -1,9 +1,6 @@
-(ns http)
-
-(defn sleep [duration]
-  (js/Promise.
-   (fn [fulfill]
-     (js/setTimeout fulfill duration))))
+(ns http
+ (:require
+  [promise :refer [wait]]))
 
 (defn fetch
   ([url]         (fetch url {}))
@@ -27,7 +24,7 @@
                     response
                     (do
                       (println "Waiting" backoff "ms...")
-                      (-> (sleep backoff)
+                      (-> (wait backoff)
                           (.then #(fetch-with-backoff url
                                                       options
                                                       backoff-fn
