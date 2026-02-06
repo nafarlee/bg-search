@@ -45,19 +45,7 @@
                      (throw (js-error "Could not pull collection" response)))))))
 
 (defn get-collection [api-key username]
-  (-> (h/fetch-with-backoff
-       (str base-url
-            "/xmlapi2/collection?"
-            (h/map->params {:brief 1 :username username}))
-       {:headers
-        {:Authorization
-         (str "Bearer " api-key)}})
-      (.then (fn [response]
-               (case response.status
-                     200 (.text response)
-                     202 (-> (wait 5000) (.then #(get-collection api-key
-                                                                 username)))
-                     (throw (js-error "Could not pull collection" response)))))
+  (-> (fetch-collection api-key username)
       (.then (fn [xml]
                (let [tree  (parse-xml xml)
                      games (get-in tree ["items" "item"])]
