@@ -62,6 +62,9 @@
           (.then #(nxt))
           (.catch nxt)))))
 
+(defn- redirect-with-toast [res message]
+  (.redirect res (str "/?" (map->params {:toast message}))))
+                                
 (defn with-save-collection [^js req res _nxt]
   (let [{:keys [database collection body]} (.-locals req)]
     (-> (sql/save-collection database collection)
