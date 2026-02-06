@@ -29,6 +29,21 @@
    :own own
    :username username})
 
+(defn fetch-collection [api-key username]
+  (-> (h/fetch-with-backoff
+       (str base-url
+            "/xmlapi2/collection?"
+            (h/map->params {:brief 1 :username username}))
+       {:headers
+        {:Authorization
+         (str "Bearer " api-key)}})
+      (.then (fn [response]
+               (case response.status
+                     200 (.text response)
+                     202 (-> (wait 5000)
+                             (.then #(fetch-collection api-key username)))
+                     (throw (js-error "Could not pull collection" response)))))))
+
 (defn get-collection [api-key username]
   (-> (h/fetch-with-backoff
        (str base-url
