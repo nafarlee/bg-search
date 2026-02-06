@@ -139,3 +139,7 @@
 .overflow-x-auto {
   overflow-x: auto;
 }
+
+.background-color {
+  background-color: var(--background);
+}
