@@ -191,7 +191,7 @@
         [:p.text-center "Last Updated: " last_updated]
         (c/powered-by-bgg)]]))))
 
-(defn index []
+(defn index [& {:keys [toast]}]
   (html
    (list
     doctype
@@ -199,6 +199,9 @@
      (c/head)
      [:title "Board Game Search"]]
     [:body
+     (when toast
+       [:output.background-color.block.p10.border-left {:role "status"}
+        toast])
      (c/navigation)
      [:hr]
      [:h1.text-center "Board Game Search"]
