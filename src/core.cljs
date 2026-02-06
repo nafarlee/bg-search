@@ -66,8 +66,7 @@
            (m/with-required-body-parameters #{:username})
            (m/with-scraped-collection js/process.env.BGG_API_KEY)
            (m/with-database-pool pool)
-           m/with-save-collection
-           m/with-success)
+           m/with-save-collection)
 
           (.get
            "/games/:id"
