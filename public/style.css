@@ -148,3 +148,6 @@
   border-left: 4px solid var(--focus);
 }
 
+.p10 {
+  padding: 10px;
+}
