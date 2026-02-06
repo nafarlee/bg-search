@@ -29,7 +29,7 @@
    :own own
    :username username})
 
-(defn fetch-collection [api-key username]
+(defn- fetch-collection [api-key username]
   (-> (h/fetch-with-backoff
        (str base-url
             "/xmlapi2/collection?"
