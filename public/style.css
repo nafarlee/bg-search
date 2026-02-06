@@ -143,3 +143,8 @@
 .background-color {
   background-color: var(--background);
 }
+
+.border-left {
+  border-left: 4px solid var(--focus);
+}
+
