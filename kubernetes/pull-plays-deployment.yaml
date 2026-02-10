@@ -15,7 +15,7 @@ spec:
       terminationGracePeriodSeconds: 15
       containers:
         - name: default
-          image: ghcr.io/nafarlee/bg-search-pull-plays:e5746026a492a602ea649bd98a28de773b4a12c3
+          image: ghcr.io/nafarlee/bg-search-pull-plays:eb34bc2d461323612944792bc983bc778a4bf191
           env:
             - name: PGUSER
               value: postgres
