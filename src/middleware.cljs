@@ -55,12 +55,17 @@
   (nxt))
 
 (defn with-scraped-collection [api-key]
-  (fn [^js req _res nxt]
+  (fn [^js req res nxt]
     (let [{{:keys [username]} :body} (.-locals req)]
       (-> (api/get-collection api-key username)
-          (.then #(assoc-locals! req :collection %))
-          (.then #(nxt))
-          (.catch nxt)))))
+          (.then (fn [collection]
+                   (assoc-locals! req :collection collection)
+                   (nxt)))
+          (.catch (fn [e]
+                    (js/console.error e)
+                    (redirect-with-toast
+                     res
+                     (str "&#x274C Username " username " not found"))))))))
 
 (defn- redirect-with-toast [res message]
   (.redirect res (str "/?" (map->params {:toast message}))))
