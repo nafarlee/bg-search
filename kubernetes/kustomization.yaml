@@ -30,3 +30,13 @@ configMapGenerator:
   - name: db-init
     files:
       - db.sql
+
+images:
+  - name: ghcr.io/nafarlee/bg-search-web
+    newTag: eb34bc2d461323612944792bc983bc778a4bf191
+  - name: ghcr.io/nafarlee/bg-search-pull-games
+    newTag: eb34bc2d461323612944792bc983bc778a4bf191
+  - name: ghcr.io/nafarlee/bg-search-pull-plays
+    newTag: eb34bc2d461323612944792bc983bc778a4bf191
+  - name: ghcr.io/nafarlee/bg-search-set-game-id-cliff
+    newTag: eb34bc2d461323612944792bc983bc778a4bf191
