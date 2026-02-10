@@ -203,7 +203,9 @@ The possible values are as follows:
 
     {:term        :is:collection
      :alias       :is:c
-     :description "Only matches against games which are collections of other games"
+     :description "Only matches games which are collections of other games. In
+                  BGG terms, this means the game must have at least one item
+                  listed in the 'Contains' section of its profile"
      :example     "`is:collection family:carcassonne` Show any games that collects other games in
                    the Carcassonne family"}
 
