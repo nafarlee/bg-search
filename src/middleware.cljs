@@ -68,7 +68,13 @@
                     (js/console.error e)
                     (redirect-with-toast
                      res
-                     (str "&#x274C Username " username " not found"))))))))
+                     (str
+                      "
+                        &#x274C Username " username " not found. This may be
+                        because they don't exist, or their profile isn't public.
+                        Double-check your spelling, and if all else fails,
+                        please Report an Issue below
+                      "))))))))
                                 
 (defn with-save-collection [^js req res _nxt]
   (let [{:keys [database collection body]} (.-locals req)
