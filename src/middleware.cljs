@@ -12,6 +12,9 @@
     [http :refer [map->params]]
     [constants :refer [results-per-page]]))
 
+(defn- redirect-with-toast [res message]
+  (.redirect res (str "/?" (map->params {:toast message}))))
+
 (defn log-error-cause [^js err _req _res nxt]
   (when (.-cause err)
     (js/console.error #js{:cause (.-cause err)}))
@@ -55,15 +58,23 @@
   (nxt))
 
 (defn with-scraped-collection [api-key]
-  (fn [^js req _res nxt]
+  (fn [^js req res nxt]
     (let [{{:keys [username]} :body} (.-locals req)]
       (-> (api/get-collection api-key username)
-          (.then #(assoc-locals! req :collection %))
-          (.then #(nxt))
-          (.catch nxt)))))
-
-(defn- redirect-with-toast [res message]
-  (.redirect res (str "/?" (map->params {:toast message}))))
+          (.then (fn [collection]
+                   (assoc-locals! req :collection collection)
+                   (nxt)))
+          (.catch (fn [e]
+                    (js/console.error e)
+                    (redirect-with-toast
+                     res
+                     (str
+                      "
+                        &#x274C Username " username " not found. This may be
+                        because they don't exist, or their profile isn't public.
+                        Double-check your spelling, and if all else fails,
+                        please Report an Issue below
+                      "))))))))
                                 
 (defn with-save-collection [^js req res _nxt]
   (let [{:keys [database collection body]} (.-locals req)
