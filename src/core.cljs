@@ -17,8 +17,11 @@
           (.get
            "/"
            (m/with-header "Cache-Control" (str "public, max-age=" (* 60 60 24)))
-           (fn [_req res]
-             (.send res (v/index))))
+           m/with-query-params
+           (fn [^js req res]
+             (let [{:keys [query]} (.-locals req)
+                   {:keys [toast]} query]
+               (.send res (v/index :toast toast)))))
 
           (.use (.static express "public"))
 
@@ -63,8 +66,7 @@
            (m/with-required-body-parameters #{:username})
            (m/with-scraped-collection js/process.env.BGG_API_KEY)
            (m/with-database-pool pool)
-           m/with-save-collection
-           m/with-success)
+           m/with-save-collection)
 
           (.get
            "/games/:id"

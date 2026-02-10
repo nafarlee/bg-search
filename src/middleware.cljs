@@ -9,6 +9,7 @@
     [error :as e]
     api
     sql
+    [http :refer [map->params]]
     [constants :refer [results-per-page]]))
 
 (defn log-error-cause [^js err _req _res nxt]
@@ -61,11 +62,20 @@
           (.then #(nxt))
           (.catch nxt)))))
 
-(defn with-save-collection [^js req _res nxt]
-  (let [{:keys [database collection]} (.-locals req)]
+(defn- redirect-with-toast [res message]
+  (.redirect res (str "/?" (map->params {:toast message}))))
+                                
+(defn with-save-collection [^js req res _nxt]
+  (let [{:keys [database collection body]} (.-locals req)
+        {:keys [username]} body]
     (-> (sql/save-collection database collection)
-        (.then #(nxt))
-        (.catch nxt))))
+        (.then #(redirect-with-toast
+                 res
+                 (str "&#x2705 Imported " username "'s collection")))
+        (.catch #(redirect-with-toast
+                  res
+                  (str "&#x274C Couldn't import " username "'s collection"))))))
+                  
 
 (defn with-success [_req ^js res]
   (.sendStatus res 200))

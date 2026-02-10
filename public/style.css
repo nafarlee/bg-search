@@ -139,3 +139,15 @@
 .overflow-x-auto {
   overflow-x: auto;
 }
+
+.background-color {
+  background-color: var(--background);
+}
+
+.border-left {
+  border-left: 4px solid var(--focus);
+}
+
+.p10 {
+  padding: 10px;
+}
