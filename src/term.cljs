@@ -203,13 +203,18 @@ The possible values are as follows:
 
     {:term        :is:collection
      :alias       :is:c
-     :description "Only matches against games which are collections of other games"
+     :description "Only matches games which are collections of other games. In
+                  BGG terms, this means the game must have at least one item
+                  listed in the 'Contains' section of its profile"
      :example     "`is:collection family:carcassonne` Show any games that collects other games in
                    the Carcassonne family"}
 
     {:term        :is:reimplementation
      :alias       :is:r
-     :description "Games which are reimplementations of others"
+     :description "Only matches games which are reimplementations of other
+                  games. In BGG terms, this means the game must say
+                  'Reimplements: ...' at the top of its BGG profile, listing at
+                  least one other game"
      :example     "`-is:reimplementation -is:collection -is:expansion` Only shows standalone games
                    which are the original version"}
 
