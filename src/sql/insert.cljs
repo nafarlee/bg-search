@@ -117,6 +117,23 @@
               (mapset (partial many-to-many-symmetric :expanded-by :expands)
                       games))))
 
+(defn- chunk-integrations [game]
+  {:post [(set? %)]}
+  (->> (get game :integrates-with)
+       (map (fn [integration]
+              (let [game-id        (:id game)
+                    integration-id (:id integration)]
+                [(min game-id integration-id)
+                 (max game-id integration-id)])))
+       set))
+
+(defn integrations [games]
+  (let [columns ["a" "b"]]
+    (generate "integrations"
+              columns
+              columns
+              (mapset chunk-integrations games))))
+
 (defn publishers [games]
   (generate "publishers"
             ["id" "publisher"]
@@ -215,6 +232,7 @@
         reimplementations
         collections
         expansions
+        integrations
         publishers
         games-publishers
         mechanics
