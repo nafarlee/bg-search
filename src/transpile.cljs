@@ -79,6 +79,20 @@
             :from :expansions
             :where :base (if negate :!= :=) #{value}))
 
+(defn- integration [{:strs [negate]}]
+  (if negate
+    (clj->sql :select :id
+              :from :games
+              :where :not :exists
+              (list :select :1
+                    :from :integrations
+                    :where :a := :id :or :b := :id))
+    (clj->sql :select :a :as :id
+              :from :integrations
+              :union
+              :select :b :as :id
+              :from :integrations)))
+
 (defn- integrates-with [{:strs [value negate]}]
   (if negate
     (clj->sql :select :id
@@ -164,6 +178,7 @@
      :median-playtime-5   (partial median-playtime 5)
      :own                 own
      :player-count-expansion player-count-expansion
+     :integration         integration
      :reimplementation    (partial self-junction {:table "reimplementations"
                                                   :join-field "reimplementation"
                                                   :nullable-field "original"})
