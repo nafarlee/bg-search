@@ -21,23 +21,25 @@
    "r"                      "REIMPLEMENTATION"})
 
 (def ^:private declarative-tags
-  {"name"     "NAME"
-   "n"        "NAME"
-   "expands"  "EXPANDS"
-   "own"      "OWN"
-   "art"      "ARTIST"
-   "a"        "ARTIST"
-   "category" "CATEGORY"
-   "c"        "CATEGORY"
-   "desc"     "DESCRIPTION"
-   "family"   "FAMILY"
-   "f"        "FAMILY"
-   "mechanic" "MECHANIC"
-   "m"        "MECHANIC"
-   "publish"  "PUBLISHER"
-   "p"        "PUBLISHER"
-   "design"   "DESIGNER"
-   "desi"     "DESIGNER"})
+  {"name"            "NAME"
+   "n"               "NAME"
+   "expands"         "EXPANDS"
+   "integrates-with" "INTEGRATES_WITH"
+   "iw"              "INTEGRATES_WITH"
+   "own"             "OWN"
+   "art"             "ARTIST"
+   "a"               "ARTIST"
+   "category"        "CATEGORY"
+   "c"               "CATEGORY"
+   "desc"            "DESCRIPTION"
+   "family"          "FAMILY"
+   "f"               "FAMILY"
+   "mechanic"        "MECHANIC"
+   "m"               "MECHANIC"
+   "publish"         "PUBLISHER"
+   "p"               "PUBLISHER"
+   "design"          "DESIGNER"
+   "desi"            "DESIGNER"})
 
 (def ^:private relational-tags
   {"rating-votes"        "RATING_VOTES"
