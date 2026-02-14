@@ -15,6 +15,8 @@
    "expansion"              "EXPANSION"
    "pce"                    "PLAYER_COUNT_EXPANSION"
    "player-count-expansion" "PLAYER_COUNT_EXPANSION"
+   "i"                      "INTEGRATION"
+   "integration"            "INTEGRATION"
    "c"                      "COLLECTION"
    "collection"             "COLLECTION"
    "reimplementation"       "REIMPLEMENTATION"
