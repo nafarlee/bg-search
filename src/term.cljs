@@ -199,6 +199,15 @@ The possible values are as follows:
      :example     "`median-playtime-5<=60` Matches against any game that typically plays in an hour
                    or less with 5 players"}
 
+    {:term        :is:integration
+     :alias       :is:i
+     :description "Matches against any game that integrates with at least one
+                  other game. In BGG terms, this means the game must have at
+                  least one item listed in the 'Integrates With' section of its
+                  profile"
+     :example     "`(is:integration or is:expansion) c:card` Matches any
+                  extended content for card games"}
+
     {:term        :is:expansion
      :alias       :is:e
      :description "Only matches against expansions"
