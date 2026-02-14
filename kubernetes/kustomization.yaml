@@ -33,10 +33,10 @@ configMapGenerator:
 
 images:
   - name: ghcr.io/nafarlee/bg-search-web
-    newTag: 825272e6f6f82d5bc33d0dbbfe7ec839c857a4ce
+    newTag: e94dac900150a78b99b874a8edf45cff26995634
   - name: ghcr.io/nafarlee/bg-search-pull-games
-    newTag: 825272e6f6f82d5bc33d0dbbfe7ec839c857a4ce
+    newTag: e94dac900150a78b99b874a8edf45cff26995634
   - name: ghcr.io/nafarlee/bg-search-pull-plays
-    newTag: 825272e6f6f82d5bc33d0dbbfe7ec839c857a4ce
+    newTag: e94dac900150a78b99b874a8edf45cff26995634
   - name: ghcr.io/nafarlee/bg-search-set-game-id-cliff
-    newTag: 825272e6f6f82d5bc33d0dbbfe7ec839c857a4ce
+    newTag: e94dac900150a78b99b874a8edf45cff26995634
