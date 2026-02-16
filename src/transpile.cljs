@@ -191,7 +191,8 @@
                      (to-sql true)
                      (update :text #(concat ["("] % [")"])))
 
-                 ((get terms tag) term))))
+                 (-> ((get terms tag) term)
+                     (update :text #(concat ["("] % [")"]))))))
         (reduce (fn [acc cur]
                   {:values (concat (:values acc) (:values cur))
                    :text (concat (:text acc)
