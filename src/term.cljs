@@ -10,6 +10,11 @@
      :description "Matches any games that expands the supplied game ID"
      :example     "`expands:13` Expansions for **Catan**"}
 
+    {:term        :integrates-with
+     :alias       :iw
+     :description "Matches any game that integrates with the supplied game ID"
+     :example     "`integrates-with:13` All games that integrate with **Catan**"}
+
     {:term        :art
      :alias       :a
      :description "Matches a part of the games primary name"

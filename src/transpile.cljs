@@ -79,6 +79,23 @@
             :from :expansions
             :where :base (if negate :!= :=) #{value}))
 
+(defn- integrates-with [{:strs [value negate]}]
+  (if negate
+    (clj->sql :select :id
+              :from :games
+              :where :not :exists
+              (list :select :1
+                    :from :integrations
+                    :where (list :a := :id :and :b := #{value})
+                       :or (list :b := :id :and :a := #{value})))
+    (clj->sql :select :a :as :id
+              :from :integrations
+              :where :b := #{value}
+              :union
+              :select :b :as :id
+              :from :integrations
+              :where :a := #{value}))) 
+
 (def exported-fields
   #{"id"
     "primary_name"
@@ -113,6 +130,7 @@
     {}
     {:name                (partial simple :primary_name)
      :expands             expands
+     :integrates-with     integrates-with
      :description         (partial simple :description)
      :artist              (partial junction {:table "artists" :field "artist"})
      :category            (partial junction {:table "categories" :field "category"})
