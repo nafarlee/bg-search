@@ -9,8 +9,7 @@
  :builds
  {:test
   {:target :node-test
-   :output-to "test.js"
-   :autorun true}
+   :output-to "test.js"}
 
   :app
   {:target :node-script
