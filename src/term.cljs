@@ -202,7 +202,7 @@ The possible values are as follows:
     {:term        :is:integration
      :alias       :is:i
      :description "Matches against any game that integrates with at least one
-                  other game. In BGG terms, this means the game must have at
+                  other game. In BGG terms, this means the game must have at
                   least one item listed in the 'Integrates With' section of its
                   profile"
      :example     "`(is:integration or is:expansion) c:card` Matches any
