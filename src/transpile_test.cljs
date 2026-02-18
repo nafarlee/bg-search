@@ -8,9 +8,10 @@
 (deftest transpile
   (is (= (t/transpile "n:scythe" "id" "DESC" 0 "10")
          (clj->sql :select :distinct (vec t/exported-fields)
-                   :from (list :select :id
-                               :from :games
-                               :where :primary_name :ilike #{"%scythe%"}) :as :GameSubquery
+                   :from (list (list :select :id
+                                     :from :games
+                                     :where :primary_name :ilike #{"%scythe%"}))
+                         :as :GameSubquery
                    :natural :inner :join :games
                    :where :id :is :not :null
                    :order :by :id :DESC
