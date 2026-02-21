@@ -235,6 +235,14 @@
             ["id"]
             (mapv play->row ps)))
 
+(defn- play->players-rows [{:keys [players]}]
+  {:post [(set? %)]}
+  (into #{}
+        (comp (map #(when (:id %)
+                     [(:id %) (:username %)]))
+              (filter some?))
+        players))
+
 (defn insert [gs]
   (->> [games
         alternate-names
