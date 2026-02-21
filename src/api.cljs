@@ -77,6 +77,10 @@
                       [(marshall <>)]
                       (map marshall <>))))))
 
+(defn api-player->player [{:strs [$_username $_userid]}]
+  {:username (when-not (= "" $_username) $_username)
+   :id       (when-not (= "0" $_userid) $_userid)})
+
 (defn get-plays [api-key game-id page]
   {:pre [(pos-int? game-id)
          (pos-int? page)]
