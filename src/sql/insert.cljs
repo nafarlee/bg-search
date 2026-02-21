@@ -226,6 +226,9 @@
               ["id" "players"]
               (mapset game->chunk games))))
 
+(defn- play->row [{:keys [id game-id length players]}]
+  [id game-id length (count players)])
+
 (defn insert [gs]
   (->> [games
         alternate-names
