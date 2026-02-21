@@ -243,6 +243,12 @@
               (filter some?))
         players))
 
+(defn- players [ps]
+  (generate "players"
+            ["id" "username"]
+            ["id"]
+            (mapset play->players-rows ps)))
+
 (defn insert [gs]
   (->> [games
         alternate-names
