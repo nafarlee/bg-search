@@ -107,9 +107,4 @@
       (.then #(as-> % <>
                     (parse-xml <>)
                     (get-in <> ["plays" "play"] [])
-                    (map (fn [{:strs [$_id $_length players]}]
-                           [(js/parseInt $_id 10)
-                            game-id
-                            (js/parseInt $_length 10)
-                            (some-> players (get "player") count)])
-                         <>)))))
+                    (map api-play->play <>)))))

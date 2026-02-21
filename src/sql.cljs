@@ -150,7 +150,7 @@
         (.then #(query db-client (generate "plays"
                                            ["id" "game_id" "length" "players"]
                                            ["id"]
-                                           plays)))
+                                           (mapv play->row plays))))
         (.then #(commit db-client))
         (.catch #(rollback db-client))
         (.finally #(release db-client))))))

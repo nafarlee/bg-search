@@ -12,8 +12,8 @@
                update-plays-checkpoint]]
   [util :refer [with-retry]]))
 
-(defn positive-play? [[_ _ play-time]]
-  (pos? play-time))
+(defn positive-play? [{:keys [length]}]
+  (pos? length))
 
 (defn pull-plays [db api-key]
   (go-loop [[game-id page] (<p! (get-plays-checkpoint db))]
@@ -46,7 +46,7 @@
             (prn :no-positive-plays {:game-id game-id :page page})
             (recur [game-id (inc page)]))
 
-          (<p! (play? db (ffirst positive-plays)))
+          (<p! (play? db (-> positive-plays first :id)))
           (do
             (<p! (update-plays-checkpoint db (inc game-id) 1))
             (prn :no-new-plays {:game-id game-id :page page})
