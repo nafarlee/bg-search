@@ -249,6 +249,14 @@
             ["id"]
             (mapset play->players-rows ps)))
 
+(defn- play->plays_players-row [{:keys [id players]}]
+  {:post [(set %)]}
+  (into #{}
+        (comp (map #(when (:id %)
+                     [id (:id %)]))
+              (filter some?))
+        players))
+
 (defn insert [gs]
   (->> [games
         alternate-names
