@@ -2,7 +2,7 @@
   (:require
     ["pg" :refer [Pool]]
     [sql.dsl :refer [realize-query]]
-    [sql.insert :refer [generate]]))
+    [sql.insert :refer [insert-plays generate]]))
 
 (defn pool []
   (Pool.))
@@ -147,10 +147,8 @@
    (fn [db-client]
     (-> (begin db-client)
         (.then #(update-plays-checkpoint db-client play-id (inc play-page)))
-        (.then #(query db-client (generate "plays"
-                                           ["id" "game_id" "length" "players"]
-                                           ["id"]
-                                           (mapv play->row plays))))
+        (.then #(js/Promise.all (map (partial query db-client)
+                                     (insert-plays plays))))
         (.then #(commit db-client))
         (.catch #(rollback db-client))
         (.finally #(release db-client))))))
