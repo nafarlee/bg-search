@@ -263,6 +263,11 @@
             ["play_id" "player_id"]
             (mapset play->plays_players-row ps)))
 
+(defn insert-plays [ps]
+  [(plays ps)
+   (players ps)
+   (plays_players ps)])
+
 (defn insert [gs]
   (->> [games
         alternate-names
