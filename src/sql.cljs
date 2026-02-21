@@ -138,9 +138,6 @@
           "UPDATE globals SET play_id=$1, play_page=$2 WHERE id=1"
           #js[play-id play-page]))
 
-(defn- play->row [{:keys [id game-id length players]}]
-  [id game-id length (count players)])
-
 (defn save-plays [db-pool play-id play-page plays]
   (.then
    (client db-pool)
