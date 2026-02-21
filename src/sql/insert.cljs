@@ -229,6 +229,12 @@
 (defn- play->row [{:keys [id game-id length players]}]
   [id game-id length (count players)])
 
+(defn- plays [ps]
+  (generate "plays"
+            ["id" "game_id" "length" "players"]
+            ["id"]
+            (mapv play->row ps)))
+
 (defn insert [gs]
   (->> [games
         alternate-names
