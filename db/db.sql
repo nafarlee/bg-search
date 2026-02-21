@@ -44,6 +44,12 @@ CREATE TABLE IF NOT EXISTS plays (
   players INTEGER CHECK (players > 0)
 );
 
+CREATE TABLE IF NOT EXISTS plays_players (
+  play_id INTEGER REFERENCES plays,
+  player_id INTEGER REFERENCES players,
+  PRIMARY KEY (play_id, player_id)
+);
+
 CREATE TABLE IF NOT EXISTS players (
   id INTEGER PRIMARY KEY,
   username TEXT
