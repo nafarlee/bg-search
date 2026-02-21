@@ -81,6 +81,14 @@
   {:username (when-not (= "" $_username) $_username)
    :id       (when-not (= "0" $_userid) $_userid)})
 
+(defn api-play->play [{:strs [$_id $_length players item]}]
+  (let [{:strs [$_objectid]} item]
+    {:id      (parse-int $_id) 
+     :game-id (parse-int $_objectid)
+     :length  (parse-int $_length)
+     :players (mapv api-player->player
+                    (get players "player" []))}))
+
 (defn get-plays [api-key game-id page]
   {:pre [(pos-int? game-id)
          (pos-int? page)]
