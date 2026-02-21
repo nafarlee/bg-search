@@ -44,6 +44,10 @@ CREATE TABLE IF NOT EXISTS plays (
   players INTEGER CHECK (players > 0)
 );
 
+CREATE TABLE IF NOT EXISTS players (
+  id INTEGER PRIMARY KEY,
+  username TEXT
+);
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS play_medians AS
 SELECT game_id,
