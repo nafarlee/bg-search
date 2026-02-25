@@ -226,6 +226,48 @@
               ["id" "players"]
               (mapset game->chunk games))))
 
+(defn- play->row [{:keys [id game-id length players]}]
+  [id game-id length (count players)])
+
+(defn- plays [ps]
+  (generate "plays"
+            ["id" "game_id" "length" "players"]
+            ["id"]
+            (mapv play->row ps)))
+
+(defn- play->players-rows [{:keys [players]}]
+  {:post [(set? %)]}
+  (into #{}
+        (comp (map #(when (:id %)
+                     [(:id %) (:username %)]))
+              (filter some?))
+        players))
+
+(defn- players [ps]
+  (generate "players"
+            ["id" "username"]
+            ["id"]
+            (mapset play->players-rows ps)))
+
+(defn- play->plays_players-row [{:keys [id players]}]
+  {:post [(set %)]}
+  (into #{}
+        (comp (map #(when (:id %)
+                     [id (:id %)]))
+              (filter some?))
+        players))
+
+(defn- plays_players [ps]
+  (generate "plays_players"
+            ["play_id" "player_id"]
+            ["play_id" "player_id"]
+            (mapset play->plays_players-row ps)))
+
+(defn insert-plays [ps]
+  [(plays ps)
+   (players ps)
+   (plays_players ps)])
+
 (defn insert [gs]
   (->> [games
         alternate-names

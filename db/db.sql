@@ -40,10 +40,20 @@ CREATE TABLE IF NOT EXISTS games (
 CREATE TABLE IF NOT EXISTS plays (
   id INTEGER PRIMARY KEY,
   game_id INTEGER REFERENCES games ON DELETE CASCADE,
-  length INTEGER CHECK (length > 0) NOT NULL,
-  players INTEGER CHECK (players > 0)
+  length INTEGER NOT NULL,
+  players INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS players (
+  id INTEGER PRIMARY KEY,
+  username TEXT
+);
+
+CREATE TABLE IF NOT EXISTS plays_players (
+  play_id INTEGER REFERENCES plays,
+  player_id INTEGER REFERENCES players,
+  PRIMARY KEY (play_id, player_id)
+);
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS play_medians AS
 SELECT game_id,
