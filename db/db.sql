@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS integrations (
   a INTEGER,
   b INTEGER,
   PRIMARY KEY (a, b),
-  CHECK (a < b)
+  CHECK (a <= b)
 );
 
 CREATE TABLE IF NOT EXISTS publishers (
