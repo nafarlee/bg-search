@@ -46,7 +46,8 @@
             (prn :no-positive-plays {:game-id game-id :page page})
             (recur [game-id (inc page)]))
 
-          (<p! (play? db (-> positive-plays first :id)))
+          ; Temporary short-circuit to allow re-pulling existing plays
+          (and false (<p! (play? db (-> positive-plays first :id))))
           (do
             (<p! (update-plays-checkpoint db (inc game-id) 1))
             (prn :no-new-plays {:game-id game-id :page page})
