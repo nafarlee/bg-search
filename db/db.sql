@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS plays_players (
 CREATE MATERIALIZED VIEW IF NOT EXISTS play_medians AS
 SELECT game_id,
        COUNT(id) AS count,
-       0 AS players,
+       -1 AS players,
        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY length) AS median
 FROM plays
 GROUP BY game_id
